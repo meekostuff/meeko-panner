@@ -1,0 +1,69 @@
+<p><style>
+html { width: 100%; text-align: center; }
+body { width: 72ex; margin: 0 auto; text-align: left; }
+abbr { border-bottom: 1px dotted; }
+</style></p>
+
+<h1>meeko-panner</h1>
+
+<p><strong>meeko-panner</strong> is a javascript bookmarklet that can enhance a site with 
+support for <code>pushState</code>-assisted-navigation (panning)
+and, optionally, a richer UI. </p>
+
+<p>The primary purpose of <strong>meeko-panner</strong> is to demonstrate <a href="http://github.com/shogun70/HTMLDecor">HTMLDecor</a>.
+I consider it obvious that this approach would have better performance and flexibility
+if integrated into a site rather than being implemented as a js bookmarklet. </p>
+
+<h2>Requirements</h2>
+
+<p>You need a browser with javascript support enabled. Your browser <script>document.write("DOES")</script><noscript>DOES NOT</noscript></p>
+
+<p>You need a browser that implements <code>history.pushState()</code>. Your browser <script>document.write(!!history.pushState ? "DOES" : "DOES NOT")</script>.
+<small><b>HTMLDecor doesn't require <code>pushState</code> if integrated into a site,
+but to use it in a bookmarklet would require the bookmarklet to be run on every page. </b></small></p>
+
+<p>The following browsers have been tested:</p>
+
+<ul>
+<li>Chrome 19/20 (recommended)</li>
+<li>Safari 5.1 / Webkit nightlies</li>
+<li>Opera 12</li>
+<li>Firefox 14</li>
+</ul>
+
+<p>IE10 supports <code>pushState</code> but has not been tested.</p>
+
+<h2>Installation</h2>
+
+<p><em>Be sure to read the <strong>Notes and Warnings</strong> section</em></p>
+
+<ol>
+<li><p>Drag the
+<a title="meeko-panner" href="javascript:var decorBase = (location.protocol == 'https:') ? 'https://d3g4qkktqnw71.cloudfront.net/meeko-panner/' : 'http://dist.meekostuff.net/meeko-panner/'; var script=document.createElement('script'); script.src=decorBase + 'loader.js'; document.getElementsByTagName('head')[0].appendChild(script); void(0);">
+meeko-panner</a> bookmarklet to your bookmark bar.</p></li>
+<li><p>Go to a supported site. </p></li>
+<li><p>Click on the meeko-panner bookmarklet you just installed. </p></li>
+</ol>
+
+<h2>Supported sites</h2>
+
+<ul>
+<li><a href="http://docs.oracle.com">docs.oracle.com</a> (<small><a href="docs.oracle.com/">details</a></small>)</li>
+<li><a href="http://adactio.com">adactio.com</a> (<small><a href="adactio.com/">details</a></small>)</li>
+</ul>
+
+<h2>Notes and Warnings</h2>
+
+<ul>
+<li><p>This is a minimally tested and unsupported project. Use at your own risk.</p></li>
+<li><p>Features may not work or break without warning. </p></li>
+<li><p>Some sites send different markup to different users, depending on device, region, etc.
+So this may not work at all for you even with the browsers I have tested. </p></li>
+<li><p>Having said that, if something fails you can usually just refresh the page (and run meeko-panner again).</p></li>
+<li><p>The speed and functionality of <strong>meeko-panner</strong> is limited primarily by the site it is running on. </p></li>
+</ul>
+
+<h2>Contact</h2>
+
+<p>If you do find problems, or if you would like to know more, you can contact me at <a href="https://twitter.com/Meekostuff">twitter</a>
+or on <a href="http://meekostuff.net">my web-site</a>.</p>

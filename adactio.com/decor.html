@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Adactio: Jeremy Keith</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="search" type="application/opensearchdescription+xml" href="http://adactio.com/opensearch.xml" title="Adactio" />
+<link rel="openid.server" href="http://www.myopenid.com/server" />
+<link rel="openid.delegate" href="http://adactio.myopenid.com/" />
+<link rel="feed" type="application/rss+xml" title="Journal RSS" href="base-uri:/journal/rss" />
+<link rel="feed" type="application/rss+xml" title="Links RSS" href="base-uri:/links/rss" />
+<link rel="feed" type="application/rss+xml" title="Articles RSS" href="base-uri:/articles/rss" />
+<link rel="feed" type="application/rss+xml" title="Journal, links and articles RSS" href="base-uri:/rss/" />
+<link rel="Shortcut Icon" type="image/ico" href="base-uri:/favicon.ico" />
+<link rel="apple-touch-icon" type="image/png" href="base-uri:/apple-touch-icon.png" />
+<meta http-equiv="Default-Style" content="default" id="defaultStyle" /><!-- this is ignored anyway -->
+<link rel="stylesheet" href="base-uri:/skins/default/global.css" title="default" />
+<link rel="alternate stylesheet" href="base-uri:/skins/tatemodern/global.css" title="tatemodern" />
+<link rel="alternate stylesheet" href="base-uri:/skins/seaside/global.css" title="seaside" />
+<link rel="alternate stylesheet" href="base-uri:/skins/zeldman/global.css" title="zeldman" />
+<link rel="alternate stylesheet" href="base-uri:/skins/adactizilla/global.css" title="adactizilla" />
+<link rel="alternate stylesheet" href="base-uri:/skins/sci-fi/global.css" title="sci-fi" />
+<link rel="alternate stylesheet" href="base-uri:/skins/renaissance/global.css" title="renaissance" />
+<link rel="alternate stylesheet" href="base-uri:/skins/hirnlego/global.css" title="hirnlego" />
+<link rel="stylesheet" href="base-uri:/includes/css/print.css" media="print" title="print" />
+
+<script>
+var body = document.body;
+body.removeAttribute('id');
+body.removeAttribute('class');
+Meeko.decor.configurePaging({
+	duration: 250,
+	pageIn: {
+		before: function() {
+			document.getElementById('presentation').className = location.pathname.split('/')[1] || 'home';
+			[].forEach.call(document.querySelectorAll("#navigation a"), function(link) {
+				if (document.URL.indexOf(link.href) == 0) link.className = "selected";
+				else link.className = null;
+			})
+		}
+	}
+});
+
+</script>
+<style type="text/css">
+#main { 
+-webkit-transition: opacity 0.5s linear;
+-moz-transition: opacity 0.5s linear;
+-ms-transition: opacity 0.5s linear;
+-o-transition: opacity 0.5s linear;
+transition: opacity 0.5s linear;
+}
+#main[hidden] {
+display: block;
+visibility: visible;
+opacity: 0;
+}
+#navigation a.selected { color: inherit; }
+
+</style>
+</head>
+<body>
+
+<header role="banner">
+
+<!-- Begin with the logo -->
+
+<div id="logo">
+<a href="http://adactio.com" accesskey="1" title="Home"><span>adactio</span></a>
+</div>
+
+
+<!-- Show any nice pictures here -->
+
+<div role="presentation">
+<div id="presentation"></div>
+</div>
+
+<!-- Now we have the navigation -->
+
+<div id="navigation" role="navigation">
+
+<nav>
+<ul>
+<li><a href="base-uri:/journal/" title="My thoughts and ramblings">Journal</a></li>
+<li><a href="base-uri:/links/" title="Handpicked hyperlinks">Links</a></li>
+<li><a href="base-uri:/articles/" title="Longer thoughts and ramblings">Articles</a></li>
+<li><a href="base-uri:/about/" title="Background information">About</a></li>
+<li><a href="base-uri:/contact/" accesskey="9" title="Get in touch">Contact</a></li>
+</ul>
+</nav>
+
+</div>
+
+</header>
+
+<!-- Here's the main content -->
+
+<div id="main" role="main"><div style="width: 100%; text-align: center;"><img src="../waiting-big.gif" style="border: none;" /></div></div>
+
+<div role="complementary">
+
+<h2>More information</h2>
+
+<!-- Begin the extra content -->
+
+<div class="box">
+
+<h3>About this site</h3>
+
+<address class="vcard">
+<a href="http://adactio.com/" class="url" rel="me">Adactio</a> is the online home of <a href="mailto:&#106;&#101;&#114;&#101;&#109;&#121;&#64;&#97;&#100;&#97;&#99;&#116;&#105;&#111;&#46;&#99;&#111;&#109;" class="email fn">Jeremy Keith</a>, a <span class="role">web developer</span> and <span class="title">author</span> living and working in <span class="adr"><span class="locality">Brighton</span>, <span class="country-name">England</span></span>.
+</address>
+
+</div>
+
+<div class="box">
+
+<h3>Customise</h3>
+
+<form method="get" id="skinselection">
+<p>
+<label for="skin">Choose a theme&hellip;</label><br />
+<select name="skin" id="skin">
+<option value="default" selected="selected">default</option>
+<option value="tatemodern">tatemodern</option>
+<option value="seaside">seaside</option>
+<option value="zeldman">zeldman</option>
+<option value="adactizilla">adactizilla</option>
+<option value="sci-fi">sci-fi</option>
+<option value="renaissance">renaissance</option>
+<option value="hirnlego">hirnlego</option>
+</select>
+<a href="base-uri:/about/site/" title="what is this?">?</a>
+</p>
+</form>
+<p>This is the plain vanilla look.</p>
+
+<script>
+var skin = localStorage['skinselection'] || 'default';
+Meeko.panner.setActiveStylesheet(skin);
+var skinSel = document.getElementById("skin");
+skinSel.value = skin;
+skinSel.onchange = function(e) {
+	skin = skinSel.value;
+	localStorage['skinselection'] = skin;
+	Meeko.panner.setActiveStylesheet(skin);
+}
+</script>
+
+</div>
+
+<div class="box">
+
+<h3>Search</h3>
+
+<form action="base-uri:/journal/search/" method="get" role="search">
+<p><label for="query">Search the journal:</label><br /><input accesskey="4" type="search" name="query" id="query" value="" />
+<input type="submit" value="Go!" /></p>
+</form>
+<ul>
+<li>Peruse the <a rel="contents" href="base-uri:/journal/archive/" title="chronologically ordered">archive</a></li>
+<li>Browse the <a href="base-uri:/journal/tags/">tags</a></li>
+</ul>
+
+</div>
+<div class="box">
+
+<h3>Subscribe</h3>
+
+<p>You can subscribe to the <a href="base-uri:/journal/rss" rel="alternate" type="application/rss+xml" title="Journal RSS">journal RSS feed</a>.</p>
+
+</div>
+
+<div class="box">
+
+<h3>Recommended reading</h3>
+<p>Hand-picked highlights from the archive.</p>
+<ul>
+<li>
+<h4><a href="base-uri:/journal/1283/">Hyperdrive</a></h4>
+Last night in San Francisco.
+</li>
+<li>
+<h4><a href="base-uri:/journal/1357/">The password anti-pattern</a></h4>
+It’s time we took a stand: let’s stop teaching people how to be phished.
+</li>
+<li>
+<h4><a href="base-uri:/journal/1376/">Design doing</a></h4>
+The opposite of design thinking.
+</li>
+<li>
+<h4><a href="base-uri:/journal/1530/">Iron Man and me</a></h4>
+The story of how one of my Flickr pictures came to be used in a Hollywood movie.
+</li>
+</ul>
+
+</div>
+
+<div class="box">
+
+<h3>Elsewhere</h3>
+
+<p>You can find me scattered across these sites:</p>
+
+<ul>
+<li>Podcasting on <a rel="me" href="http://huffduffer.com/adactio/" title="what I'm listening to">Huffduffer</a></li>
+<li>Updating <a rel="me" href="https://twitter.com/adactio/" title="what I'm doing">Twitter</a></li>
+<li>Putting pictures on <a rel="me" href="http://flickr.com/photos/adactio/" title="photographs I've taken">Flickr</a></li>
+<li>Collecting on <a rel="me" href="http://adactio.tumblr.com/" title="quotes and videos">Tumblr</a></li>
+<li>Broadcasting with <a rel="me" href="http://www.last.fm/user/adactio/" title="my music">Last.fm</a></li>
+<li>Travelling at <a rel="me" href="http://www.dopplr.com/traveller/adactio/public" title="where I'm going">Dopplr</a></li>
+<li>Uploading to <a rel="me" href="http://www.vimeo.com/user196031" title="videos">Vimeo</a></li>
+<li>Curating on <a rel="me" href="http://ffffound.com/home/adactio/found/" title="images, collected">Ffffound</a></li>
+<li>Reading at <a rel="me" href="http://readernaut.com/adactio" title="books, listed">Readernaut</a></li>
+<li>Speaking on <a rel="me" href="http://lanyrd.com/people/adactio/" title="conferences, attended">Lanyrd</a></li>
+<li>Snapping to <a rel="me" href="http://web.stagram.com/n/adactio" title="phone photos">Instagram</a></li>
+<li>Coding on <a rel="me" href="https://github.com/adactio" title="code projects">Github</a></li>
+<li>Teasing on <a rel="me" href="http://dribbble.com/adactio" title="sneak peaks">Dribbble</a></li>
+<li>Clipping to <a rel="me" href="https://findings.com/adactio" title="quotations">Findings</a></li>
+</ul>
+
+</div>
+
+<div class="box">
+
+<h3>Bedroll</h3>
+
+<p>I had the pleasure of welcoming these people into <a href="http://gowalla.com/spots/1597181">my home</a>:</p>
+
+<ul>
+<li class="vcard">
+<a class="fn url" href="http://www.easy-reader.net/" rel="friend met colleague">Aaron Gustafson</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://ben-ward.co.uk/" rel="friend met colleague">Ben Ward</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://suda.co.uk/" rel="friend met colleague">Brian Suda</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://themaninblue.com/" rel="friend met colleague">Cameron Adams</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://cindyli.com/" rel="friend met colleague">Cindy Li</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://boudist.com/" rel="friend met">Daniel Boud</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://deltatangobravo.com/" rel="friend met colleague">Daniel Burka</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://superfluousbanter.org/" rel="friend met colleague">Dan Rubin</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://mezzoblue.com/" rel="friend met colleague">Dave Shea</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://boxofchocolates.ca/" rel="friend met colleague">Derek Featherstone</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://schepers.cc/" rel="friend met colleague">Doug Schepers</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://drinkerthinker.com/" rel="friend met colleague">Elizabeth Galle</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://elsakawai.com/" rel="friend met colleague">Elsa Kawai</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://ebdesign.se/" rel="friend met colleague">Emil Bj&ouml;rklund</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://www.erinjorichey.com/" rel="friend met colleague">Erin Jo Richey</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://unstoppablerobotninja.com/" rel="friend met colleague">Ethan Marcotte</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://fberriman.com/" rel="friend met colleague">Frances Berriman</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://blog.hannahdonovan.com/" rel="friend met colleague">Hannah Donovan</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://www.indiyoung.com/" rel="acquaintance met colleague">Indi Young</a>
+</li>
+<li class="vcard">
+<a class="fn n url" href="http://jasonsantamaria.com/" rel="friend met colleague"><span class="given-name">Jason</span> <span class="family-name">Santa Maria</span></a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://www.blackphoebe.com/" rel="friend met colleague">Jenifer Hanen</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://jinabolton.com/" rel="friend met colleague">Jina Bolton</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://fawny.org/" rel="friend met colleague">Joe Clark</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://subism.com/" rel="friend met colleague">John Morrison</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://binarytales.co.uk" rel="friend met colleague">Jon Linklater-Johnson</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://scenariogirl.com/" rel="friend met colleague">Lisa Herrod</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://www.lyza.com/" rel="friend met colleague">Lyza Danger Gardner</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://aworkinglibrary.com/" rel="friend met colleague">Mandy Brown</a>
+</li>
+<li class="vcard">
+<a class="fn n url" href="http://marknormanfrancis.com/" rel="friend met colleague"><span class="given-name">Mark</span> <span class="additional-name">Norman</span> <span class="family-name">Francis</span></a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://themattharris.com/" rel="friend met colleague">Matt Harris</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://dracos.co.uk/" rel="friend met colleague">Matthew Somerville</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://www.marxandmarzipan.com/" rel="friend met colleague">Maxine Sherrin</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://molly.com/" rel="friend met colleague">Molly Holzschlag</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://notes.natbat.net/" rel="friend met colleague">Natalie Downe</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://sonspring.com/" rel="acquaintance met colleague">Nathan Smith</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://htmldog.com/" rel="friend met colleague">Patrick Griffiths</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://petragregorova.com/" rel="friend met colleague">Petra Gregorová</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://simonwillison.net/" rel="friend met colleague">Simon Willison</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://stephaniehobson.ca/" rel="friend met colleague">Stephanie Hobson</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://tantek.com/" rel="friend met colleague">Tantek &Ccedil;elik</a>
+</li>
+<li class="vcard">
+<a class="fn url" href="http://www.pollenation.net/journal/tim" rel="acquaintance met colleague">Tim Parkin</a>
+</li>
+</ul>
+
+</div>
+
+<div class="box">
+
+<h3>Read my book</h3>
+
+<p><a href="http://html5forwebdesigners.com/" rel="me"><img src="base-uri:/images/html5_cover_small.gif" alt="HTML5 for Web Designers" /></a></p>
+
+</div>
+
+<div class="box">
+
+<h3>Search</h3>
+
+<form action="base-uri:/articles/search" method="get" role="search">
+<p><label for="query">Search articles:</label><br /><input accesskey="4" type="search" name="query" id="query" value="" class="searchbox" />
+<input type="submit" value="Go!" /></p>
+</form>
+</div>
+<div class="box">
+
+<h3>Subscribe</h3>
+
+<p>You can subscribe to the <a href="base-uri:/articles/rss"><abbr title="Really Simple Syndication">RSS</abbr> feed of articles</a>.</p>
+
+</div>
+<div class="box">
+
+<h3>Slides</h3>
+
+<p>Download <abbr title="Portable Document Format">PDF</abbr> versions of the slides I've used to accompany presentations. Beware: they won't wont make much sense outside the context of the talks.</p>
+
+<ul>
+<li><a href="base-uri:/extras/slides/paranormalinteractivity.pdf" type="application/pdf">Paranormal Interactivity</a></li>
+<li><a href="base-uri:/extras/slides/oneweb.pdf" type="application/pdf">One Web</a></li>
+<li><a href="base-uri:/extras/slides/designofhtml5.pdf" type="application/pdf">The Design of HTML5</a></li>
+<li><a href="base-uri:/extras/slides/futureshocktreatment.pdf" type="application/pdf">Future Shock Treatment</a></li>
+<li><a href="base-uri:/extras/slides/huffduffer.pdf" type="application/pdf">Huffduffer</a></li>
+<li><a href="base-uri:/extras/slides/TheSystemOfTheWorld.pdf" type="application/pdf">The System Of The World</a></li>
+<li><a href="base-uri:/extras/slides/portability.pdf" type="application/pdf">Creating Portable Social Networks with Microformats</a></li>
+<li><a href="base-uri:/extras/slides/bulletproof.pdf" type="application/pdf">Bulletproof Ajax</a></li>
+<li><a href="base-uri:/extras/slides/hypertext.pdf" type="application/pdf">Hypertext</a></li>
+<li><a href="base-uri:/extras/slides/soul.pdf" type="application/pdf">Soul</a></li>
+<li><a href="base-uri:/extras/slides/nanotech.pdf" type="application/pdf">Microformats: The nanotechnology of the semantic web</a></li>
+<li><a href="base-uri:/extras/slides/ajax.pdf" type="application/pdf">Ajax</a></li>
+<li><a href="base-uri:/extras/slides/beauty.pdf" type="application/pdf">The Beauty in Standards &amp; Accessibility</a></li>
+<li><a href="base-uri:/extras/slides/ajaxkungfu.pdf" type="application/pdf">Ajax Kung Fu</a></li>
+</ul>
+
+</div>
+<div class="box">
+
+<h3>Elsewhere</h3>
+
+<ul>
+<li>Web Standardistas &mdash; <a href="http://www.webstandardistas.com/2009/12/a-dozen-questions-for-mr-keith.php">A Dozen Questions for Mr. Keith</a></li>
+<li>An Event Apart &mdash; <a href="http://aneventapart.com/news/2007/07/18/better-know-a-speaker-jeremy-keith/">Better Know A Speaker: Jeremy Keith</a></li>
+<li>Digital Web Magazine &mdash; <a href="http://www.digital-web.com/articles/jeremy_keith_2/">Jeremy Keith</a></li>
+<li>Web Standards Group &mdash; <a href="http://webstandardsgroup.org/features/jeremy-keith.cfm">Ten questions for Jeremy Keith</a></li>
+</ul>
+
+</div>
+
+<div class="box">
+
+<h3>Subscribe</h3>
+
+<p>You can subscribe to the <a href="base-uri:/links/rss" rel="alternate"><abbr title="Really Simple Syndication">RSS</abbr> feed of links</a>.</p>
+
+</div>
+
+<div class="box vcard">
+
+<h2>Contact Details</h2>
+
+<a class="fn url" href="http://adactio.com/">
+<span class="given-name">Jeremy</span>
+<span class="family-name">Keith</span>
+</a>
+<div class="adr">
+<span class="street-address">48 Sandown Road</span><br />
+<span class="locality">Brighton</span>
+<a class="postal-code" href="http://maps.google.co.uk/maps?q=bn2+3ej" title="map">BN2 3EJ</a><br />
+<span class="country-name">England</span>
+</div>
+
+<p><abbr title="Telephone">Phone</abbr>: <a class="tel" href="callto:+44-1273-771485">+44 1273 692778</a></p>
+
+<p class="tel"><abbr class="type" title="cell">Mobile</abbr>: <a class="value" href="callto:+44-7792-069292">+44 7792 069292</a></p>
+
+<p>Skype: <a rel="me" href="callto:adactio">adactio</a></p> 
+
+<p>iChat/<abbr title="AOL instant Messenger">AIM</abbr>: <a rel="me"  href="aim:goim?screenname=adactio" title="My screen name">adactio</a></p>
+
+<p><a href="http://h2vx.com/vcf/adactio.com/contact/" title="my vcard"><img src="base-uri:/images/vcard.gif" alt="vcard" /></a> Download <a href="http://h2vx.com/vcf/http://adactio.com/contact/">my vcard</a>.</p>
+
+</div>
+
+</div>
+
+<!-- TODO contact form 
+<div id="contact">
+
+<h1>Get in touch</h1>
+<form action="base-uri:/contact/index.php" method="post" id="contactform">
+<p><label for="body">Your message:</label><br />
+<textarea name="body" id="body" rows="12" cols="45"></textarea></p>
+<p><label for="name">Your name:</label> <input type="text" name="name" id="name" value="" /></p>
+<p><label for="email">Your email:</label> <input type="email" name="email" id="email" value="" /></p>
+<p><input type="submit" name="submit" value="Send" /></p>
+</form>
+
+</div>
+-->
+
+<!-- The large print giveth and the small print taketh away -->
+
+<div role="contentinfo">
+<footer>
+<p>&copy; 1998 - 2012 <a href="mailto:&#106;&#101;&#114;&#101;&#109;&#121;&#64;&#97;&#100;&#97;&#99;&#116;&#105;&#111;&#46;&#99;&#111;&#109;" title="jeremy&#064;adactio.com">Jeremy Keith</a>.</p>
+<p><a href="http://validator.w3.org/check/referer" title="I came, I saw, I validated">Veni, vidi, validatio</a>. <a href="http://jigsaw.w3.org/css-validator/check/referer" title="CSS too">Et tu, CSS?</a>.</p>
+<p><a accesskey="0" href="base-uri:/about/accessibility/" title="access key: 0">Accessibility statement</a></p>
+</footer>
+</div>
+
+</body>
+</html>
