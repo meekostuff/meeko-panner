@@ -31,10 +31,9 @@ but to use it in a bookmarklet would require the bookmarklet to be run on every 
 
 The following browsers have been tested:
 
-- Chrome 19/20 (recommended)
+- Chrome 22 (recommended)
 - Safari 5.1 / Webkit nightlies
-- Opera 12
-- Firefox 14
+- Firefox 17
 
 IE10 supports `pushState` but has not been tested.
 
