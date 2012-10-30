@@ -17,7 +17,7 @@ Meeko.config = {
 function urlPath(url) {
 	var a = document.createElement("a");
 	a.href = url;
-	return a.pathname;	
+	return (a.pathname + a.search);
 }
 
 function loadScript(url, callback) {
@@ -44,7 +44,7 @@ function delay(callback, timeout) {
 /* now do start-up */
 
 queue([
-	function(callback) { loadScript(decorBase + 'HTMLDecor.js', callback); },
+	function(callback) { loadScript(decorBase + 'HTMLDecor/HTMLDecor.js', callback); },
 	init,
 	function(callback) { loadScript(decorBase + location.hostname + '/' + 'config.js', callback); },
 	start
@@ -52,14 +52,13 @@ queue([
 
 function init(callback) {
 
-var decor = Meeko.decor, stuff = Meeko.stuff, DOM = Meeko.DOM, Callback = Meeko.Callback,
+var decor = Meeko.decor, stuff = Meeko.stuff, DOM = Meeko.DOM, 
 	extend = stuff.extend, each = stuff.each, forEach = stuff.forEach, words = stuff.words, 
-	$id = DOM.$id, $$ = DOM.$$,
-	$ = function(selector, context) {
-		if (!context) context = document;
-		return context.querySelector(selector);
-	},
-	async = Callback.async;
+	Callback = Meeko.Callback, async = Callback.async;
+	
+var	$id = DOM.$id;
+var $ = DOM.$ = function(selector, context) { if (!context) context = document; return context.querySelector(selector); }
+var $$ = DOM.$$ = function(selector, context) { if (!context) context = document; return [].slice.call(context.querySelectorAll(selector), 0); }
 
 var panner = Meeko.panner = {}
 var options = Meeko.panner.options = {}
@@ -123,9 +122,11 @@ beforePageIn: beforePageIn
 });
 
 /*
- Over-ride url loader to allow javascript caching of pages
-*/
-
+ Over-ride decor loader to rebase URIs:
+	base-uri:{path}
+ is rewritten with `path` being relative to the current `document.URL`.
+ Usually `path` should be an absolute path, i.e. starts with `/`.
+ */
 	
 decor.load = async(function(url, cb) {
 	DOM.loadHTML(url, function(doc) {
@@ -161,7 +162,10 @@ forEach(words("link@href a@href script@src img@src iframe@src video@src audio@sr
 	var m = text.split("@"), tag = m[0], attrName = m[1];
 	uriAttrs[tag] = attrName;
 });
-	
+
+/*
+ Over-ride url loader to allow javascript caching of pages
+*/
 
 decor.options.load = async(function(url, cb) {
   var pathname = urlPath(url);
@@ -192,7 +196,10 @@ decor.configurePaging({
 	}
 });
 
-window.addEventListener("submit", onSubmit, false);
+/*
+ Override form submission
+ */
+document.addEventListener("submit", onSubmit, false);
 function onSubmit(e) {
 	e.preventDefault();
 	var form = e.target;
