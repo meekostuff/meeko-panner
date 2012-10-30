@@ -25,21 +25,102 @@
 <link rel="stylesheet" href="base-uri:/includes/css/print.css" media="print" title="print" />
 
 <script>
+var DOM = Meeko.DOM, 
+	each = Meeko.stuff.each, 
+	$id = DOM.$id, $$ = DOM.$$;
+
+(function() {
+
 var body = document.body;
 body.removeAttribute('id');
 body.removeAttribute('class');
+
+var screens = {
+	home: {
+		modules: [ "mod_about", "mod_customise" ]
+	},
+	journal: {
+		tab: "journal",
+		modules: [ "mod_about", "mod_customise", "mod_search", "mod_subscribe", "mod_recommended", "mod_elsewhere", "mod_bedroll", "mod_book" ]
+	},
+	links: {
+		tab: "links",
+		modules: [ "mod_about", "mod_customise", "mod_search", "mod_subscribe",  ]
+	},
+	articles: {
+		tab: "articles",
+		modules: [ "mod_about", "mod_customise", "mod_search", "mod_subscribe", "mod_slides", "mod_offsite" ]
+	},
+	about: {
+		tab: "about",
+		modules: [ "mod_about", "mod_customise" ]
+	},
+	contact: {
+		tab: "contact",
+		modules: [ "mod_address" ]
+	}
+}
+
+modules = { // not including always visible modules
+	mod_about: {},
+	mod_customise: {},
+	mod_search: {},
+	mod_subscribe: {},
+	mod_recommended: {},
+	mod_elsewhere: {},
+	mod_bedroll: {},
+	mod_book: {},
+	mod_slides: {},
+	mod_offsite: {},
+	mod_address: {}
+}
+
+function getScreen(pathname) {
+	var rdirs = pathname.substr(1).split('/'), rdir, name;
+	if (!rdirs[rdirs.length-1]) rdirs.pop();
+	var name = rdirs[0] || "home";
+	return screens[name];
+}
+
+function beforePageIn() {
+	$id('presentation').className = location.pathname.split('/')[1] || 'home';
+	$$("#navigation a").forEach(function(link) {
+		if (document.URL.indexOf(link.href) == 0) link.className = "selected";
+		else link.className = null;
+	})
+	
+	var path = location.pathname,
+	    screen = getScreen(path);
+
+	each(modules, function(id, conf) {
+		var module = $id(id);
+		if (!module) return;
+		if (screen.modules.indexOf(id) < 0) {
+			module.hidden = true;
+			return;
+		}
+		if (conf.require) {
+			var require = conf.require.replace('{user_id}', spec.user_id);
+			decor.options.load(require, function(doc) {
+				var content = $id(conf.id, doc).innerHTML;
+				module.innerHTML = content;
+				module.hidden = false;				
+			})
+		}
+		else {
+			module.hidden = false;
+		}
+	});
+}
+
 Meeko.decor.configurePaging({
 	duration: 250,
 	pageIn: {
-		before: function() {
-			document.getElementById('presentation').className = location.pathname.split('/')[1] || 'home';
-			[].forEach.call(document.querySelectorAll("#navigation a"), function(link) {
-				if (document.URL.indexOf(link.href) == 0) link.className = "selected";
-				else link.className = null;
-			})
-		}
+		before: beforePageIn
 	}
 });
+
+})();
 
 </script>
 <style type="text/css">
@@ -104,7 +185,7 @@ opacity: 0;
 
 <!-- Begin the extra content -->
 
-<div class="box">
+<div class="box" id="mod_about">
 
 <h3>About this site</h3>
 
@@ -114,7 +195,7 @@ opacity: 0;
 
 </div>
 
-<div class="box">
+<div class="box" id="mod_customise">
 
 <h3>Customise</h3>
 
@@ -122,24 +203,23 @@ opacity: 0;
 <p>
 <label for="skin">Choose a theme&hellip;</label><br />
 <select name="skin" id="skin">
-<option value="default" selected="selected">default</option>
-<option value="tatemodern">tatemodern</option>
-<option value="seaside">seaside</option>
-<option value="zeldman">zeldman</option>
-<option value="adactizilla">adactizilla</option>
-<option value="sci-fi">sci-fi</option>
-<option value="renaissance">renaissance</option>
-<option value="hirnlego">hirnlego</option>
+<option value="default" selected="selected" title="This is the plain vanilla look.">default</option>
+<option value="tatemodern" title="The Tate Modern gallery in London - great architectural achievement or just plain oppressive?">tatemodern</option>
+<option value="seaside" title="This design is inspired by the place where I live - Brighton in southern England.">seaside</option>
+<option value="zeldman" title="Homage or rip-off? You decide... but he told me to steal the icons.">zeldman</option>
+<option value="adactizilla" title="Nowhere is safe from the ravages of this beast that is in no way affiliated with the Toho corporation.">adactizilla</option>
+<option value="sci-fi" title="Visionary science fiction and fantasy movies inspired this look.">sci-fi</option>
+<option value="renaissance" title="Inspired by the colours of Bologna.">renaissance</option>
+<option value="hirnlego" title="Brain Lego. A song by Einstuerzende Neubauten and an attempted CSS Zen garden entry.">hirnlego</option>
 </select>
 <a href="base-uri:/about/site/" title="what is this?">?</a>
 </p>
 </form>
-<p>This is the plain vanilla look.</p>
 
 <script>
 var skin = localStorage['skinselection'] || 'default';
 Meeko.panner.setActiveStylesheet(skin);
-var skinSel = document.getElementById("skin");
+var skinSel = $id("skin");
 skinSel.value = skin;
 skinSel.onchange = function(e) {
 	skin = skinSel.value;
@@ -150,7 +230,7 @@ skinSel.onchange = function(e) {
 
 </div>
 
-<div class="box">
+<div class="box" id="mod_search">
 
 <h3>Search</h3>
 
@@ -164,15 +244,19 @@ skinSel.onchange = function(e) {
 </ul>
 
 </div>
-<div class="box">
+
+<div class="box" id="mod_subscribe">
 
 <h3>Subscribe</h3>
 
-<p>You can subscribe to the <a href="base-uri:/journal/rss" rel="alternate" type="application/rss+xml" title="Journal RSS">journal RSS feed</a>.</p>
+<p>You can subscribe to the <a href="base-uri:/journal/rss" type="application/rss+xml" title="Journal RSS">journal RSS feed</a>.</p>
+<p>You can subscribe to the <a href="base-uri:/links/rss" type="application/rss+xml" title="Links RSS"><abbr title="Really Simple Syndication">RSS</abbr> feed of links</a>.</p>
+<p>You can subscribe to the <a href="base-uri:/articles/rss" type="application/rss+xml" title="Articles RSS"><abbr title="Really Simple Syndication">RSS</abbr> feed of articles</a>.</p>
 
 </div>
 
-<div class="box">
+<div class="box" id="mod_recommended">
+<a href="base-uri:/journal/#recommended"></a>
 
 <h3>Recommended reading</h3>
 <p>Hand-picked highlights from the archive.</p>
@@ -197,7 +281,8 @@ The story of how one of my Flickr pictures came to be used in a Hollywood movie.
 
 </div>
 
-<div class="box">
+<div class="box" id="mod_elsewhere">
+<a href="base-uri:/journal/#elsewhere"></a>
 
 <h3>Elsewhere</h3>
 
@@ -222,7 +307,8 @@ The story of how one of my Flickr pictures came to be used in a Hollywood movie.
 
 </div>
 
-<div class="box">
+<div class="box" id="mod_bedroll">
+<a href="base-uri:/journal/#bedroll"></a>
 
 <h3>Bedroll</h3>
 
@@ -356,7 +442,8 @@ The story of how one of my Flickr pictures came to be used in a Hollywood movie.
 
 </div>
 
-<div class="box">
+<div class="box" id="mod_book">
+<a href="base-uri:/journal/#book"></a>
 
 <h3>Read my book</h3>
 
@@ -364,23 +451,8 @@ The story of how one of my Flickr pictures came to be used in a Hollywood movie.
 
 </div>
 
-<div class="box">
-
-<h3>Search</h3>
-
-<form action="base-uri:/articles/search" method="get" role="search">
-<p><label for="query">Search articles:</label><br /><input accesskey="4" type="search" name="query" id="query" value="" class="searchbox" />
-<input type="submit" value="Go!" /></p>
-</form>
-</div>
-<div class="box">
-
-<h3>Subscribe</h3>
-
-<p>You can subscribe to the <a href="base-uri:/articles/rss"><abbr title="Really Simple Syndication">RSS</abbr> feed of articles</a>.</p>
-
-</div>
-<div class="box">
+<div class="box" id="mod_slides">
+<a href="base-uri:/articles/#slides"></a>
 
 <h3>Slides</h3>
 
@@ -404,7 +476,8 @@ The story of how one of my Flickr pictures came to be used in a Hollywood movie.
 </ul>
 
 </div>
-<div class="box">
+<div class="box" id="mod_offsite">
+<a href="base-uri:/articles/#offsite"></a>
 
 <h3>Elsewhere</h3>
 
@@ -417,15 +490,8 @@ The story of how one of my Flickr pictures came to be used in a Hollywood movie.
 
 </div>
 
-<div class="box">
-
-<h3>Subscribe</h3>
-
-<p>You can subscribe to the <a href="base-uri:/links/rss" rel="alternate"><abbr title="Really Simple Syndication">RSS</abbr> feed of links</a>.</p>
-
-</div>
-
-<div class="box vcard">
+<div class="box vcard" id="mod_address">
+<a href="base-uri:/contact/#address"></a>
 
 <h2>Contact Details</h2>
 
@@ -448,7 +514,7 @@ The story of how one of my Flickr pictures came to be used in a Hollywood movie.
 
 <p>iChat/<abbr title="AOL instant Messenger">AIM</abbr>: <a rel="me"  href="aim:goim?screenname=adactio" title="My screen name">adactio</a></p>
 
-<p><a href="http://h2vx.com/vcf/adactio.com/contact/" title="my vcard"><img src="base-uri:/images/vcard.gif" alt="vcard" /></a> Download <a href="http://h2vx.com/vcf/http://adactio.com/contact/">my vcard</a>.</p>
+<p><a href="http://h2vx.com/vcf/adactio.com/contact/" title="my vcard"><img src="base-uri:/contact/images/vcard.gif" alt="vcard" /></a> Download <a href="http://h2vx.com/vcf/http://adactio.com/contact/">my vcard</a>.</p>
 
 </div>
 
