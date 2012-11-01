@@ -29,7 +29,12 @@ function(object, fn) {
 	}
 }
 
-var extend = function(dest, src) {
+var extend = (Object.defineProperty) ?
+function(dest, src) {
+	each(src, function(key) { Object.defineProperty(dest, key, Object.getOwnPropertyDescriptor(src, key)); });
+	return dest;
+} :
+function(dest, src) {
 	each(src, function(key, val) { dest[key] = val; });
 	return dest;
 }
@@ -101,8 +106,9 @@ var Binding = function() {
 
 Binding.create = function(prototype, handlers) {
 	var binding = new Binding();
-	binding.setImplementation(prototype || Object.prototype);
+	binding.setImplementation(prototype || {});
 	if (handlers) handlers.forEach(function(handler) { binding.addHandler(handler); });
+	return binding;
 }
 
 extend(Binding.prototype, {
@@ -596,6 +602,8 @@ nodeRemoved: function(node) { // NOTE called BEFORE node removed from document
 });
 
 xbl.Binding = Binding;
+xbl.baseBinding = Binding.create(); // NOTE now we can extend baseBinding.prototype
+
 return xbl;
 
 })();

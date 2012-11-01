@@ -5,25 +5,16 @@
  Assumes Binding.js already loaded
 */
 
-
-/* NOTE
-Requires some features not implemented on older browsers:
-[].forEach - IE9+
-element.matchesSelector (or prefixed equivalent) - IE9+
-element.querySelector* - IE8+
-*/
-
 Meeko.UI = (function() {
 
 var _ = Meeko.stuff, extend = _.extend, forEach = _.forEach;
 var DOM = Meeko.DOM, $id = DOM.$id, $ = DOM.$, $$ = DOM.$$;
-var xbl = Meeko.xbl, Binding = xbl.Binding;
+var xbl = Meeko.xbl, Binding = xbl.Binding, baseBinding = xbl.baseBinding;
 
 var box = (function() {
 	
-var box = Binding();
-var prototype = Object.create(Object.prototype);
-
+var box = baseBinding.create();
+var prototype = box.prototype;
 extend(prototype, {
 
 setHidden: function(state) {
@@ -44,7 +35,6 @@ hidden: { get: prototype.getHidden, set: prototype.setHidden }
 
 });
 
-box.setImplementation(prototype);
 return box;
 
 })();
@@ -52,8 +42,8 @@ return box;
 
 var treeitem = (function() {
 
-var treeitem = Binding();
-var prototype = Object.create(Object.prototype);
+var treeitem = baseBinding.create();
+var prototype = treeitem.prototype;
 extend(prototype, {
 
 getListElement: function() {
@@ -104,7 +94,6 @@ expanded: { get: prototype.getExpanded, set: prototype.setExpanded }
 
 });
 
-treeitem.setImplementation(prototype);
 return treeitem;
 
 })();
@@ -113,8 +102,8 @@ var listitem = treeitem;
 
 var list = (function() {
 	
-var list = Binding();
-var prototype = Object.create(box.prototype);
+var list = box.create();
+var prototype = list.prototype;
 
 extend(prototype, {
 
@@ -143,7 +132,6 @@ hidden: { get: prototype.getHidden, set: prototype.setHidden }
 
 });
 
-list.setImplementation(prototype);
 return list;
 
 })();
@@ -151,8 +139,8 @@ return list;
 
 var tree = (function() {
 
-var tree = Binding();
-var prototype = Object.create(box.prototype);
+var tree = box.create();
+var prototype = tree.prototype;
 
 extend(prototype, {
 
@@ -205,7 +193,6 @@ selectedItem: { get: prototype.getSelectedItem }
 
 });
 
-tree.setImplementation(prototype);
 tree.addHandler({
 type: "click",
 action: function(event) {
@@ -225,8 +212,8 @@ return tree;
 
 var navtreeitem = (function() {
 
-var navtreeitem = Binding();
-var prototype = Object.create(treeitem.prototype);
+var navtreeitem = treeitem.create();
+var prototype = navtreeitem.prototype;
 extend(prototype, {
 
 getView: function() {
@@ -260,7 +247,6 @@ Object.defineProperties(prototype, {
 view: { get: prototype.getView }
 
 });
-navtreeitem.setImplementation(prototype);
 
 return navtreeitem;
 })();
@@ -268,8 +254,8 @@ return navtreeitem;
 
 
 var navtree = (function() {
-var navtree = Binding();
-var prototype = Object.create(tree.prototype);
+var navtree = tree.create();
+var prototype = navtree.prototype;
 extend(prototype, {
 
 getView: navtreeitem.prototype.getView
@@ -281,7 +267,6 @@ view: { get: prototype.getView }
 
 });
 
-navtree.setImplementation(prototype);
 navtree.addHandler({
 
 type: "click",
@@ -303,21 +288,19 @@ return navtree;
 
 
 var navlink = (function() {
-var navlink = Binding();
-navlink.setImplementation(Object.prototype);
+var navlink = baseBinding.create();
 navlink.addHandler({
 type: "click",
 preventDefault: true
 });
-
 
 return navlink;
 })();
 
 
 var scrollBox = (function() {
-var scrollBox = Binding();
-var prototype = Object.create(box.prototype);
+var scrollBox = box.create();
+var prototype = scrollBox.prototype;
 extend(prototype, {
 	
 setView: function(item) {
@@ -334,15 +317,14 @@ setView: function(item) {
 }
 
 });
-scrollBox.setImplementation(prototype);
 return scrollBox;
 })();
 
 
 var scrollBoxWithResize = (function() {
-var scrollBoxWithResize = Binding();
 
-var prototype = Object.create(box.prototype);
+var scrollBoxWithResize = box.create();
+var prototype = scrollBoxWithResize.prototype;
 extend(prototype, {
 	
 setView: function(item) {
@@ -368,7 +350,6 @@ xblBindingAttached: function() {
 
 })
 
-scrollBoxWithResize.setImplementation(prototype);
 return scrollBoxWithResize;
 })();
 
@@ -376,9 +357,10 @@ return scrollBoxWithResize;
 var panel = box;
 
 var switchBox = (function() {
-var switchBox = Binding();
+	
+var switchBox = box.create();
+var prototype = switchBox.prototype;
 
-var prototype = Object.create(box.prototype);
 extend(prototype, {
 
 _getPanels: function() {
@@ -414,17 +396,16 @@ xblBindingAttached: function() {
 
 });
 
-switchBox.setImplementation(prototype);
-
 return switchBox;
 })();
 
 
 
 var table = (function() {
-var table = Binding();
 
-var prototype = Object.create(box.prototype);
+var table = box.create();
+var prototype = table.prototype;
+
 extend(prototype, {
 	
 getColumns: function() {
@@ -471,11 +452,11 @@ _sort: function(column, type, reverse) {
 
 			
 },
-toggleColumnSortState: function(column) {
+toggleColumnSortState: function(column) { // TODO shouldn't have hard-wired classes
 
 	var type = "string";
 	var cols = this.getColumns();
-	var classList = cols.item(column).classList;
+	var classList = cols.item(column).classList; // TODO classList isn't backwards compat
 	if (classList.contains("number")) type = "number";
 	if (classList.contains("string")) type = "string";
 	var sortable = classList.contains("sortable");
@@ -504,14 +485,14 @@ toggleColumnSortState: function(column) {
 
 });
 
-table.setImplementation(prototype);
-
 return table;
 })();
 
 var WF2FormElement = (function() {
-var WF2FormElement = Binding();
-var prototype = Object.create(Object.prototype);
+	
+var WF2FormElement = baseBinding.create();
+var prototype = WF2FormElement.prototype;
+
 extend(prototype, {
 encode: function() {
 
@@ -525,7 +506,6 @@ return txt;
 }
 });
 
-WF2FormElement.setImplementation(prototype);
 return WF2FormElement;
 })();
 
