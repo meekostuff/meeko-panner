@@ -3,14 +3,14 @@
 var DOM = Meeko.DOM, $ = DOM.$, $$ = DOM.$$,
     _ = Meeko.stuff;
 
-Meeko.stuff.extend(Meeko.panner.options, {
+_.extend(Meeko.panner.options, {
 	detectView: function(path) {
 		if (path.match("/javase/7/docs/api/")) return "javase7";
 		return null;
 	},
 	views: {
 		"javase7": {
-			decor: "decor.html",
+			decor: "javase7.html",
 			preprocess: function(doc, path) {
 				$$("link", doc).forEach(function(el) { if (/stylesheet/i.test(el.rel)) el.parentNode.removeChild(el); })
 
@@ -55,7 +55,7 @@ Meeko.stuff.extend(Meeko.panner.options, {
 					var title1 = doc.createElement("div");
 					title1.className = "title";
 					var innerHTML;
-					switch (type) {
+					switch (type) { // TODO a lot of repetition here
 					default:
 						innerHTML = '<h1>' + title.innerHTML + '</h1>';
 						break;
