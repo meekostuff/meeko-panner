@@ -56,6 +56,7 @@ Supported sites
 ---------------
 
 - [docs.oracle.com](http://docs.oracle.com) (<small>[details](docs.oracle.com/)</small>)
+- [m.netmagazine.com](http://m.netmagazine.com) (<small>[details](m.netmagazine.com/)</small>)
 - [adactio.com](http://adactio.com) (<small>[details](adactio.com/)</small>)
 
 Notes and Warnings
