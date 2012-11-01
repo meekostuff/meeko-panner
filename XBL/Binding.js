@@ -98,6 +98,13 @@ var Binding = function() {
 	this.prototype = null;
 	this.handlers = [];
 }
+
+Binding.create = function(prototype, handlers) {
+	var binding = new Binding();
+	binding.setImplementation(prototype || Object.prototype);
+	if (handlers) handlers.forEach(function(handler) { binding.addHandler(handler); });
+}
+
 extend(Binding.prototype, {
 setImplementation: function(prototype) {
 	if (this.prototype) throw "Implementation already set";
@@ -117,11 +124,13 @@ removeHandler: function(handler) {
 getBindingFor: function(element) {
 	return Element.getBinding(element, this, true);
 },
-subClass: function() { // inherit prototype and copy handlers
-	var sub = Binding();
+create: function(properties, handlers) { // inherit this.prototype, extend with prototype and copy this.handlers and handlers
+	var sub = new Binding();
 	var prototype = Object.create(this.prototype);
+	if (properties) extend(prototype, properties);
 	sub.setImplementation(prototype);
 	this.handlers.forEach(function(handler) { sub.addHandler(handler); });
+	if (handlers) handlers.forEach(function(handler) { sub.addHandler(handler); });
 	return sub;
 }
 
@@ -133,7 +142,6 @@ CONFIGURATION_CONTEXT: 1,
 CSS_CONTEXT: 2,
 IMMEDIATE_CONTEXT: 3
 });
-
 
 var ElementXBL = function(element) {
 	this.xblImplementations = [];
