@@ -59,6 +59,7 @@ Supported sites
 - [m.netmagazine.com](http://m.netmagazine.com) (<small>[details](m.netmagazine.com/)</small>)
 - [adactio.com](http://adactio.com) (<small>[details](adactio.com/)</small>)
 
+
 Notes and Warnings
 ------------------
 
@@ -72,6 +73,12 @@ So this may not work at all for you even with the browsers I have tested.
 - Having said that, if something fails you can usually just refresh the page (and run meeko-panner again).
 
 - The speed and functionality of **meeko-panner** is limited primarily by the site it is running on. 
+
+
+TODO
+----
+
+- separate XBL into its own project
 
 
 Contact
