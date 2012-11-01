@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html">
+  <meta charset="utf-8">
+
+  <title>Java Platform SE</title>
+  <link rel="stylesheet" type="text/css" href="base-uri:/javase/7/docs/api/stylesheet.css" title="Style">
+<style>
+#content .block, #content dd, #content th.colLast, #content td.colLast { max-width: 80ex; }
+#quickLinks { position: fixed; width: 20%; height: 100%; border-right: 2px ridge #777777; }
+#indexContainer { height: 100%; overflow-x: hidden; overflow-y: auto; padding-left: 10px; margin: 0; }
+#main { width: 80%; margin-left: 20%; margin-right: 0; padding-right: 0; }
+#header .title h1 { display: inline-block; vertical-align: bottom; margin-right: 0.5em; }
+.contextNav { display: inline-block; margin-left: 0.5em; }
+.contextNav li { display: inline; margin: 0 0.2em; padding: 0 0.5em; background: url(http://docs.oracle.com/javase/7/docs/api/resources/background.gif) repeat-x; border: 1px solid #4C6B87; }
+.contextNav .navBarCell1Rev { background: url(http://docs.oracle.com/javase/7/docs/api/resources/tab.gif) repeat-x; border: 1px solid #C9AA44; }
+.contextNav a:link, .contextNav a:visited, .contextNav a:active { color: white; text-decoration: none; }
+.contextNav a:active { color: #A88834; }
+</style>
+<script>
+Meeko.decor.configurePaging({
+	duration: 250,
+    pageIn: function() {
+      var topNav = document.getElementById("hierarchy");
+      var links = topNav.querySelectorAll("a[href]");
+      var tree = Meeko.UI.tree.getBindingFor(topNav);
+      tree.selectItem();
+      [].every.call(links, function(link) {
+        if (link.href != document.URL) return true;
+        tree.selectItem(link.parentNode);
+        return false;
+      });
+    }
+});
+</script>
+<style type="text/css">
+#header, #content { 
+-webkit-transition: opacity 0.5s linear;
+-moz-transition: opacity 0.5s linear;
+-ms-transition: opacity 0.5s linear;
+-o-transition: opacity 0.5s linear;
+transition: opacity 0.5s linear;
+}
+#header[hidden], #content[hidden] {
+display: block;
+visibility: visible;
+opacity: 0;
+}
+</style>
+
+</head>
+<body>
+  
+<div id="quickLinks">
+<div class="topNav">
+<a href="#indexContainer"></a>
+<ul class="navList" title="Navigation">
+<li><a href="#packages">Packages</a></li>
+<li><a href="#classes">Classes</a></li>
+</ul>
+</div>
+
+<div id="indexContainer" class="indexContainer">
+
+<div id="packages"><a href="base-uri:/javase/7/docs/api/overview-frame.html"></a><div style="width: 100%; text-align: center;"><img src="../images/waiting-small.gif" /></div></div> 
+<div id="classes"><a href="base-uri:/javase/7/docs/api/allclasses-noframe.html"></a><div style="width: 100%; text-align: center;"><img src="../images/waiting-small.gif" /></div></div> 
+
+</div>
+
+</div>
+
+<div id="main">
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div id="hierarchy" class="topNav">
+<ul class="navList" title="Navigation">
+<li><a href="base-uri:/javase/7/docs/api/overview-summary.html">Overview</a></li>
+<li><a href="base-uri:/javase/7/docs/api/overview-tree.html">Tree</a></li>
+<li><a href="base-uri:/javase/7/docs/api/index-files/index-1.html">Index</a></li> 
+<li><a href="base-uri:/javase/7/docs/api/deprecated-list.html">Deprecated</a></li>
+<li><a href="base-uri:/javase/7/docs/api/help-doc.html">Help</a></li>
+</ul>
+<div class="aboutLanguage"><em><strong>Java&trade;&nbsp;Platform<br>Standard&nbsp;Ed.&nbsp;7</strong></em></div>
+</div>
+<!--
+<div class="subNav">
+<ul class="navList">
+<li>Prev</li>
+<li>Next</li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="base-uri:/javase/7/docs/api/allclasses-noframe.html">All Classes</a></li>
+</ul>
+</div>
+-->
+<!-- ========= END OF TOP NAVBAR ========= -->
+<div id="header">
+</div>
+
+<div id="content" class="contentContainer">
+<div style="width: 100%; text-align: center;"><img src="../images/waiting-big.gif" style="border: none;" />
+</div>
+
+<div id="footer" class="footer"></div>
+
+</div>
+<script src="../XBL/Binding.js"></script>
+<script src="../XBL/UI.js"></script>
+<script>
+(function() {
+  var DOM = Meeko.DOM;
+      $id = DOM.$id, $$ = DOM.$$,
+      _ = Meeko.stuff, extend = _.extend;
+
+  var xbl = Meeko.xbl;
+  var UI = Meeko.UI;
+  
+  var panel = UI.panel.create({ // panel is an abstract class. Sub-classes must define the load() method
+    setHidden: function(state) {
+      UI.panel.prototype.setHidden.apply(this, arguments);
+      if (!!state) return; 
+      if (this.loaded) return;
+      // if panel is to be shown and content not already loaded ...
+      this.load();
+      this.loaded = true; // assume that the load succeeds
+    }
+  });
+  
+  var packagesPanel = panel.create({
+    load: function() {
+      var element = this.boundElement;
+      DOM.loadHTML("http://docs.oracle.com/javase/7/docs/api/overview-summary.html", function(doc) { // TODO get this URL from the DOM
+        var items = DOM.$$("table.overviewSummary tbody + tbody > tr", doc).map(function(row) {
+          var link = DOM.$('a', row), title = DOM.$('div.block', row);
+          return '<li><a title="' + (title ? title.textContent : '') + '" h'+'ref="' + link.href + '">' + link.textContent + '</a></li>\n';
+        });
+        element.innerHTML = '<ul>\n' + items.join('\n') + '\n</ul>';
+      });
+    }
+  });
+  
+  var classesPanel = panel.create({
+    load: function() {
+      var element = this.boundElement;
+      DOM.loadHTML("http://docs.oracle.com/javase/7/docs/api/allclasses-noframe.html", function(doc) {
+        element.innerHTML = DOM.$(".indexContainer ul", doc).outerHTML;
+      });
+    }
+  });
+  
+  var navtree = UI.navtree.create({
+    xblEnteredDocument: function() {
+      this.selectItem(this.getListElement().children[0]);
+    }
+  },
+  [
+  {
+    type: "change",
+    action: function(event) {
+      var viewer = this.getView();
+      var target = UI.navtreeitem.getBindingFor(this.getSelectedItem()).getView();
+      UI.switchBox.getBindingFor(viewer).setView(target);
+    }
+  }
+  ]);
+  var navtreeitem = UI.navtreeitem.create({
+    setSelected: function(state) {
+        this.boundElement.className = !!state ? "navBarCell1Rev" : null;
+    },
+    getSelected: function() {
+        return this.boundElement.className == "navBarCell1Rev";
+    }
+  });
+  Object.defineProperties(navtreeitem.prototype, { // FIXME should be part of binding.create()
+    selected: { get: navtreeitem.prototype.getSelected, set: navtreeitem.prototype.setSelected }  
+  });
+
+  xbl.CSS.addBinding("#packages", packagesPanel); // #quickLinks #indexContainer > div#packages
+  xbl.CSS.addBinding("#classes", classesPanel); // #quickLinks #indexContainer > div#classes
+  xbl.CSS.addBinding("#indexContainer", UI.switchBox); // #quickLinks #indexContainer
+  xbl.CSS.addBinding("#quickLinks .navList li a", UI.navlink);
+  xbl.CSS.addBinding("#quickLinks .navList li", navtreeitem);
+  xbl.CSS.addBinding("#quickLinks .navList", UI.list);
+  xbl.CSS.addBinding("#quickLinks .topNav", navtree)
+  
+  xbl.CSS.addBinding("#hierarchy .navList li", navtreeitem);
+  xbl.CSS.addBinding("#hierarchy .navList", UI.list);
+  xbl.CSS.addBinding("#hierarchy", UI.tree);
+})();
+</script>
+  
+</body>
+</html>
