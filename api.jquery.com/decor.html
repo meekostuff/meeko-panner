@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>jQuery API</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="http://static.jquery.com/files/rocker/css/reset.css" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="http://static.jquery.com/api/style.css" />
+  <link rel="stylesheet" href="http://static.jquery.com/api/prettify.css">
+  <script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="http://static.jquery.com/files/rocker/scripts/custom.js"></script>
+  <script type="text/javascript" src="http://static.jquery.com/api/jquery.livesearch.js"></script>
+  <script type="text/javascript" src="http://static.jquery.com/api/navi.js"></script>
+  <link rel="shortcut icon" href="http://static.jquery.com/favicon.ico" type="image/x-icon"/>
+<script type="text/javascript">
+var noop = function() {}
+Meeko.decor.configurePaging({
+	duration: 400,
+	nodeInserted: noop,
+	nodeRemoved: noop,
+	pageIn: {
+		before: function(doc) {
+			if (doc.body) document.body.className = doc.body.className + " jq-enhanced";
+		}
+	}
+});
+</script>
+</head>
+
+<body id="jq-interior" class="api-jquery-com">
+
+
+  <div id="jq-siteContain">
+      <div id="jq-header">
+        <a id="jq-siteLogo" href="http://jquery.com/" title="jQuery Home"><img src="http://static.jquery.com/files/rocker/images/logo_jquery_215x53.gif" width="215" height="53" alt="jQuery: Write Less, Do More." /></a>
+        <div id="jq-primaryNavigation">
+          <ul>
+<li class="jq-jquery jq-current"><a href="http://jquery.com/" title="jQuery Home">jQuery</a></li>
+<li class="jq-ui"><a href="http://jqueryui.com/" title="jQuery UI">UI</a></li>
+<li class="jq-mobile"><a href="http://jquerymobile.com/" title="jQuery Mobile">Mobile</a></li>
+<li class="jq-meetup"><a href="http://meetups.jquery.com/" title="jQuery Meetups">Meetups</a></li>
+<li class="jq-forum"><a href="http://forum.jquery.com/" title="jQuery Forum">Forum</a></li>
+<li class="jq-blog"><a href="http://blog.jquery.com/" title="jQuery Blog">Blog</a></li>
+<li class="jq-about"><a href="http://jquery.org/about" title="About jQuery">About</a></li>
+<li class="jq-donate"><a href="http://jquery.org/donate" title="Donate to jQuery">Donate</a></li>
+          </ul>
+        </div><!-- /#primaryNavigation -->
+
+        <div id="jq-secondaryNavigation">
+          <ul>
+            <li class="jq-download jq-first"><a href="http://docs.jquery.com/Downloading_jQuery">Download</a></li>
+            <li class="jq-documentation jq-current"><a href="http://docs.jquery.com/">Documentation</a></li>
+            <li class="jq-tutorials"><a href="http://docs.jquery.com/Tutorials">Tutorials</a></li>
+            <li class="jq-bugTracker"><a href="http://bugs.jquery.com/">Bug Tracker</a></li>
+            <li class="jq-discussion jq-last"><a href="http://docs.jquery.com/Discussion">Discussion</a></li>
+          </ul>
+        </div><!-- /#secondaryNavigation -->
+
+        <form id="jq-primarySearchForm" action="http://api.jquery.com" method="get" autocomplete="off">
+          <div>
+            <input type="hidden" value="1" name="ns0"/>
+            <label for="jq-primarySearch">Search <span class="jq-jquery">jQuery</span></label>
+            <input type="text" value="" accesskey="f" title="Search jQuery" name="s" id="jq-primarySearch" class=""/>
+            <button type="submit" name="go" id="jq-searchGoButton"><span>Go</span></button>
+          </div>
+        </form>
+
+<!--
+        <h1 id="blog-title"><span><a href="http://api.jquery.com/" title="jQuery API" rel="home">jQuery API</a></span></h1>
+        <div id="blog-description">jQuery API Reference</div>
+-->
+        <h1>jQuery API</h1>
+
+
+      </div><!-- /#header -->
+
+      <div id="jq-content" class="jq-clearfix">
+
+  <div id="access">
+    <div class="skip-link"><a href="#content" title="Skip to content">Skip to content</a></div>
+    <div id="menu"><ul><li class="page_item page-item-1295"><a href="base-uri:/api/">api</a></li><li class="page_item page-item-1772"><a href="base-uri:/jsonp/">jsonp</a></li><li class="page_item page-item-3413"><a href="base-uri:/Types/">Types</a></li><li class="page_item page-item-3608"><a href="base-uri:/extending-ajax/">Extending Ajax: Prefilters, Converters, and Transports</a></li></ul></div>
+  </div>
+<!-- #access -->
+
+	<div id="jq-primaryContent" class="jq-box round">
+	</div><!-- #jq-primaryContent -->
+
+  <div id="jq-interiorNavigation" >
+
+    <h2 class="jq-clearfix roundTop section-title">Browse the jQuery API</h2>
+    <div class="roundBottom jq-box">
+    <ul class="xoxo">
+
+      <li id="categories">
+        <ul>
+        <li><a href="base-uri:/">All</a></li>
+	<li class="cat-item cat-item-13"><a href="base-uri:/category/ajax/" title="View all posts filed under Ajax">Ajax</a>
+<ul class='children'>
+	<li class="cat-item cat-item-39"><a href="base-uri:/category/ajax/global-ajax-event-handlers/" title="View all posts filed under Global Ajax Event Handlers">Global Ajax Event Handlers</a>
+</li>
+	<li class="cat-item cat-item-40"><a href="base-uri:/category/ajax/helper-functions/" title="View all posts filed under Helper Functions">Helper Functions</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="base-uri:/category/ajax/low-level-interface/" title="View all posts filed under Low-Level Interface">Low-Level Interface</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="base-uri:/category/ajax/shorthand-methods/" title="View all posts filed under Shorthand Methods">Shorthand Methods</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-7"><a href="base-uri:/category/attributes/" title="View all posts filed under Attributes">Attributes</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="base-uri:/category/callbacks-object/" title="View all posts filed under Callbacks Object">Callbacks Object</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="base-uri:/category/core/" title="View all posts filed under Core">Core</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="base-uri:/category/css/" title="View all posts filed under CSS">CSS</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="base-uri:/category/data/" title="View all posts filed under Data">Data</a>
+</li>
+	<li class="cat-item cat-item-93"><a href="base-uri:/category/deferred-object/" title="View all posts filed under Deferred Object">Deferred Object</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="base-uri:/category/deprecated/" title="View all posts filed under Deprecated">Deprecated</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="base-uri:/category/dimensions/" title="View all posts filed under Dimensions">Dimensions</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="base-uri:/category/effects/" title="View all posts filed under Effects">Effects</a>
+<ul class='children'>
+	<li class="cat-item cat-item-52"><a href="base-uri:/category/effects/basics/" title="View all posts filed under Basics">Basics</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="base-uri:/category/effects/custom-effects/" title="View all posts filed under Custom">Custom</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="base-uri:/category/effects/fading/" title="View all posts filed under Fading">Fading</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="base-uri:/category/effects/sliding/" title="View all posts filed under Sliding">Sliding</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-11"><a href="base-uri:/category/events/" title="View all posts filed under Events">Events</a>
+<ul class='children'>
+	<li class="cat-item cat-item-36"><a href="base-uri:/category/events/browser-events/" title="View all posts filed under Browser Events">Browser Events</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="base-uri:/category/events/document-loading/" title="View all posts filed under Document Loading">Document Loading</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="base-uri:/category/events/event-handler-attachment/" title="View all posts filed under Event Handler Attachment">Event Handler Attachment</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="base-uri:/category/events/event-object/" title="View all posts filed under Event Object">Event Object</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="base-uri:/category/events/form-events/" title="View all posts filed under Form Events">Form Events</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="base-uri:/category/events/keyboard-events/" title="View all posts filed under Keyboard Events">Keyboard Events</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="base-uri:/category/events/mouse-events/" title="View all posts filed under Mouse Events">Mouse Events</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-56"><a href="base-uri:/category/forms/" title="View all posts filed under Forms">Forms</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="base-uri:/category/internals/" title="View all posts filed under Internals">Internals</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="base-uri:/category/manipulation/" title="View all posts filed under Manipulation">Manipulation</a>
+<ul class='children'>
+	<li class="cat-item cat-item-25"><a href="base-uri:/category/manipulation/class-attribute/" title="View all posts filed under Class Attribute">Class Attribute</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="base-uri:/category/manipulation/copying/" title="View all posts filed under Copying">Copying</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="base-uri:/category/manipulation/dom-insertion-around/" title="View all posts filed under DOM Insertion, Around">DOM Insertion, Around</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="base-uri:/category/manipulation/dom-insertion-inside/" title="View all posts filed under DOM Insertion, Inside">DOM Insertion, Inside</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="base-uri:/category/manipulation/dom-insertion-outside/" title="View all posts filed under DOM Insertion, Outside">DOM Insertion, Outside</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="base-uri:/category/manipulation/dom-removal/" title="View all posts filed under DOM Removal">DOM Removal</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="base-uri:/category/manipulation/dom-replacement/" title="View all posts filed under DOM Replacement">DOM Replacement</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="base-uri:/category/manipulation/general-attributes/" title="View all posts filed under General Attributes">General Attributes</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="base-uri:/category/manipulation/style-properties/" title="View all posts filed under Style Properties">Style Properties</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-41"><a href="base-uri:/category/miscellaneous/" title="View all posts filed under Miscellaneous">Miscellaneous</a>
+<ul class='children'>
+	<li class="cat-item cat-item-44"><a href="base-uri:/category/miscellaneous/collection-manipulation/" title="View all posts filed under Collection Manipulation">Collection Manipulation</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="base-uri:/category/miscellaneous/data-storage/" title="View all posts filed under Data Storage">Data Storage</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="base-uri:/category/miscellaneous/dom-element-methods/" title="View all posts filed under DOM Element Methods">DOM Element Methods</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="base-uri:/category/miscellaneous/setup-methods/" title="View all posts filed under Setup Methods">Setup Methods</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-49"><a href="base-uri:/category/offset/" title="View all posts filed under Offset">Offset</a>
+</li>
+	<li class="cat-item cat-item-85"><a href="base-uri:/category/plugins/" title="View all posts filed under Plugins">Plugins</a>
+<ul class='children'>
+	<li class="cat-item cat-item-87"><a href="base-uri:/category/plugins/data-link/" title="View all posts filed under Data Link">Data Link</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="base-uri:/category/plugins/templates/" title="View all posts filed under Templates">Templates</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-68"><a href="base-uri:/category/properties/" title="View all posts filed under Properties">Properties</a>
+<ul class='children'>
+	<li class="cat-item cat-item-59"><a href="base-uri:/category/properties/jquery-object-instance-properties/" title="View all posts filed under Properties of jQuery Object Instances">Properties of jQuery Object Instances</a>
+</li>
+	<li class="cat-item cat-item-58"><a href="base-uri:/category/properties/global-jquery-object-properties/" title="View all posts filed under Properties of the Global jQuery Object">Properties of the Global jQuery Object</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-6"><a href="base-uri:/category/selectors/" title="View all posts filed under Selectors">Selectors</a>
+<ul class='children'>
+	<li class="cat-item cat-item-17"><a href="base-uri:/category/selectors/attribute-selectors/" title="View all posts filed under Attribute">Attribute</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="base-uri:/category/selectors/basic-css-selectors/" title="View all posts filed under Basic">Basic</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="base-uri:/category/selectors/basic-filter-selectors/" title="View all posts filed under Basic Filter">Basic Filter</a>
+</li>
+	<li class="cat-item cat-item-65"><a href="base-uri:/category/selectors/child-filter-selectors/" title="View all posts filed under Child Filter">Child Filter</a>
+</li>
+	<li class="cat-item cat-item-62"><a href="base-uri:/category/selectors/content-filter-selector/" title="View all posts filed under Content Filter">Content Filter</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="base-uri:/category/selectors/form-selectors/" title="View all posts filed under Form">Form</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="base-uri:/category/selectors/hierarchy-selectors/" title="View all posts filed under Hierarchy">Hierarchy</a>
+</li>
+	<li class="cat-item cat-item-96"><a href="base-uri:/category/selectors/jquery-selector-extensions/" title="View all posts filed under jQuery Extensions">jQuery Extensions</a>
+</li>
+	<li class="cat-item cat-item-63"><a href="base-uri:/category/selectors/visibility-filter-selectors/" title="View all posts filed under Visibility Filter">Visibility Filter</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-8"><a href="base-uri:/category/traversing/" title="View all posts filed under Traversing">Traversing</a>
+<ul class='children'>
+	<li class="cat-item cat-item-20"><a href="base-uri:/category/traversing/filtering/" title="View all posts filed under Filtering">Filtering</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="base-uri:/category/traversing/miscellaneous-traversal/" title="View all posts filed under Miscellaneous Traversing">Miscellaneous Traversing</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="base-uri:/category/traversing/tree-traversal/" title="View all posts filed under Tree Traversal">Tree Traversal</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-14"><a href="base-uri:/category/utilities/" title="View all posts filed under Utilities">Utilities</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="base-uri:/category/version/" title="View all posts filed under Version">Version</a>
+<ul class='children'>
+	<li class="cat-item cat-item-70"><a href="base-uri:/category/version/1.0/" title="View all posts filed under Version 1.0">Version 1.0</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="base-uri:/category/version/1.0.4/" title="View all posts filed under Version 1.0.4">Version 1.0.4</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="base-uri:/category/version/1.1/" title="View all posts filed under Version 1.1">Version 1.1</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="base-uri:/category/version/1.1.2/" title="View all posts filed under Version 1.1.2">Version 1.1.2</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="base-uri:/category/version/1.1.3/" title="View all posts filed under Version 1.1.3">Version 1.1.3</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="base-uri:/category/version/1.1.4/" title="View all posts filed under Version 1.1.4">Version 1.1.4</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="base-uri:/category/version/1.2/" title="View all posts filed under Version 1.2">Version 1.2</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="base-uri:/category/version/1.2.3/" title="View all posts filed under Version 1.2.3">Version 1.2.3</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="base-uri:/category/version/1.2.6/" title="View all posts filed under Version 1.2.6">Version 1.2.6</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="base-uri:/category/version/1.3/" title="View all posts filed under Version 1.3">Version 1.3</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="base-uri:/category/version/1.4/" title="View all posts filed under Version 1.4">Version 1.4</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="base-uri:/category/version/1.4.1/" title="View all posts filed under Version 1.4.1">Version 1.4.1</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="base-uri:/category/version/1.4.2/" title="View all posts filed under Version 1.4.2">Version 1.4.2</a>
+</li>
+	<li class="cat-item cat-item-90"><a href="base-uri:/category/version/1.4.3/" title="View all posts filed under Version 1.4.3">Version 1.4.3</a>
+</li>
+	<li class="cat-item cat-item-91"><a href="base-uri:/category/version/1.4.4/" title="View all posts filed under Version 1.4.4">Version 1.4.4</a>
+</li>
+	<li class="cat-item cat-item-92"><a href="base-uri:/category/version/1.5/" title="View all posts filed under Version 1.5">Version 1.5</a>
+</li>
+	<li class="cat-item cat-item-94"><a href="base-uri:/category/version/1.5.1/" title="View all posts filed under Version 1.5.1">Version 1.5.1</a>
+</li>
+	<li class="cat-item cat-item-95"><a href="base-uri:/category/version/1.6/" title="View all posts filed under Version 1.6">Version 1.6</a>
+</li>
+	<li class="cat-item cat-item-98"><a href="base-uri:/category/version/1.7/" title="View all posts filed under Version 1.7">Version 1.7</a>
+</li>
+</ul>
+</li>
+        </ul>
+      </li>
+
+  </ul>
+  </div>
+  </div><!-- #jq-interiorNavigation -->
+  </div><!-- /#secondaryNavigation -->
+
+  <div id="jq-footer" class="jq-clearfix">
+    <div id="jq-credits">
+<p id="jq-copyright">&copy; 2012 <a href="http://jquery.org/">The jQuery Foundation</a></p>
+<p id="jq-hosting">Sponsored by <a href="http://mediatemple.net" class="jq-mediaTemple">Media Temple</a> and <a href="http://jquery.org/sponsors">others</a>.</p>
+    </div>
+
+    <div id="jq-footerNavigation">
+      <ul>
+        <li class="jq-download jq-first"><a href="http://docs.jquery.com/Downloading_jQuery">Download</a></li>
+        <li class="jq-documentation"><a href="http://docs.jquery.com">Documentation</a></li>
+        <li class="jq-tutorials"><a href="http://docs.jquery.com/Tutorials">Tutorials</a></li>
+        <li class="jq-bugTracker"><a href="http://bugs.jquery.com/">Bug Tracker</a></li>
+        <li class="jq-discussion jq-last"><a href="http://docs.jquery.com/Discussion">Discussion</a></li>
+      </ul>
+    </div><!-- /#jq-footerNavigation -->
+  </div><!-- /#jq-footer -->
+</div><!-- /#siteContain -->
+<script>
+   // Manage sidebar category display
+   // TODO replace jquery with xbl
+  jQuery("#categories > ul > li.cat-item").each(function(){
+    var item;
+    if ( jQuery(this).has("ul").length ) {
+      item = jQuery("<span class='plus'>+</span>").click(function(e){
+        jQuery(this)
+          .text( jQuery(this).text() === "+" ? "-" : "+" )
+          .parent().next().toggle();
+        return false;
+      });
+      
+      if (/current-cat/.test(this.className)) {
+        item.text('-');
+      } else {
+        jQuery(this).find(".children").hide();  
+      }
+      
+    } else {
+      item = jQuery("<span class='plus'>&nbsp;</span>");
+    }
+
+    jQuery(this).children("a").prepend( item );
+  });
+ 
+</script>
+</body>
+</html>
