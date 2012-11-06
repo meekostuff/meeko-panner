@@ -37,7 +37,7 @@ body.removeAttribute('class');
 
 var screens = {
 	home: {
-		modules: [ "mod_about", "mod_customise" ]
+		modules: [ "mod_about", "mod_customise", "mod_subscribe" ]
 	},
 	journal: {
 		tab: "journal",
@@ -249,11 +249,17 @@ skinSel.onchange = function(e) {
 
 <h3>Subscribe</h3>
 
-<p>You can subscribe to the <a href="base-uri:/journal/rss" type="application/rss+xml" title="Journal RSS">journal RSS feed</a>.</p>
-<p>You can subscribe to the <a href="base-uri:/links/rss" type="application/rss+xml" title="Links RSS"><abbr title="Really Simple Syndication">RSS</abbr> feed of links</a>.</p>
-<p>You can subscribe to the <a href="base-uri:/articles/rss" type="application/rss+xml" title="Articles RSS"><abbr title="Really Simple Syndication">RSS</abbr> feed of articles</a>.</p>
+<p>I have some feeds that you can subscribe to in your <abbr title="Really Simple Syndication">RSS</abbr> reader:</p>
+
+<ul id="rsslinks">
+<li><a href="/journal/rss" rel="alternate" type="application/rss+xml" title="Journal RSS">My journal</a></li>
+<li><a href="/links/rss" type="application/rss+xml" title="Links RSS">My links</a></li>
+<li><a href="/articles/rss" type="application/rss+xml" title="Articles RSS">My articles</a></li>
+<li><a href="/rss/" rel="alternate" type="application/rss+xml" title="Journal, links and articles RSS">My journal, links and articles together</a></li>
+</ul>
 
 </div>
+
 
 <div class="box" id="mod_recommended">
 <a href="base-uri:/journal/#recommended"></a>
