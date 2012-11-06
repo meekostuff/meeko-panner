@@ -10,25 +10,28 @@ abbr { border-bottom: 1px dotted; }
 support for <code>pushState</code>-assisted-navigation (panning)
 and, optionally, a richer UI. </p>
 
-<p>The primary purpose of <strong>meeko-panner</strong> is to demonstrate <a href="http://github.com/shogun70/HTMLDecor">HTMLDecor</a>.
+<p>The primary motivation for <strong>meeko-panner</strong> is to demonstrate <a href="http://github.com/shogun70/HTMLDecor">HTMLDecor</a>.
 I consider it obvious that this approach would have better performance and flexibility
 if integrated into a site rather than being implemented as a js bookmarklet. </p>
 
+<p><small>(And the goal of HTMLDecor is to facilitate web-pages containing only essential content,
+where auxilliary content, styles, even layout can be added from within the browser
+in a device and user appropriate manner.)</small></p>
+
 <h2>Requirements</h2>
 
-<p>You need a browser with javascript support enabled. Your browser <script>document.write("DOES")</script><noscript>DOES NOT</noscript></p>
+<p>You need a browser with javascript support enabled. <script>document.write("Your browser DOES")</script><noscript>Your browser DOES NOT</noscript></p>
 
-<p>You need a browser that implements <code>history.pushState()</code>. Your browser <script>document.write(!!history.pushState ? "DOES" : "DOES NOT")</script>.
+<p>You need a browser that implements <code>history.pushState()</code>. <script>document.write("Your browser", !!history.pushState ? "DOES" : "DOES NOT")</script>.
 <small><b>HTMLDecor doesn't require <code>pushState</code> if integrated into a site,
 but to use it in a bookmarklet would require the bookmarklet to be run on every page. </b></small></p>
 
 <p>The following browsers have been tested:</p>
 
 <ul>
-<li>Chrome 19/20 (recommended)</li>
+<li>Chrome 22 (recommended)</li>
 <li>Safari 5.1 / Webkit nightlies</li>
-<li>Opera 12</li>
-<li>Firefox 14</li>
+<li>Firefox 17</li>
 </ul>
 
 <p>IE10 supports <code>pushState</code> but has not been tested.</p>
@@ -49,6 +52,8 @@ meeko-panner</a> bookmarklet to your bookmark bar.</p></li>
 
 <ul>
 <li><a href="http://docs.oracle.com">docs.oracle.com</a> (<small><a href="docs.oracle.com/">details</a></small>)</li>
+<li><a href="http://api.jquery.com">api.jquery.com</a> (<small><a href="api.jquery.com/">details</a></small>)</li>
+<li><a href="http://m.netmagazine.com">m.netmagazine.com</a> (<small><a href="m.netmagazine.com/">details</a></small>)</li>
 <li><a href="http://adactio.com">adactio.com</a> (<small><a href="adactio.com/">details</a></small>)</li>
 </ul>
 
@@ -61,6 +66,12 @@ meeko-panner</a> bookmarklet to your bookmark bar.</p></li>
 So this may not work at all for you even with the browsers I have tested. </p></li>
 <li><p>Having said that, if something fails you can usually just refresh the page (and run meeko-panner again).</p></li>
 <li><p>The speed and functionality of <strong>meeko-panner</strong> is limited primarily by the site it is running on. </p></li>
+</ul>
+
+<h2>TODO</h2>
+
+<ul>
+<li>separate XBL into its own project</li>
 </ul>
 
 <h2>Contact</h2>

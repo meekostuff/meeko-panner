@@ -23,9 +23,9 @@ in a device and user appropriate manner.)</small>
 Requirements
 ------------
 
-You need a browser with javascript support enabled. Your browser <script>document.write("DOES")</script><noscript>DOES NOT</noscript>
+You need a browser with javascript support enabled. <script>document.write("Your browser DOES")</script><noscript>Your browser DOES NOT</noscript>
 
-You need a browser that implements `history.pushState()`. Your browser <script>document.write(!!history.pushState ? "DOES" : "DOES NOT")</script>.
+You need a browser that implements `history.pushState()`. <script>document.write("Your browser", !!history.pushState ? "DOES" : "DOES NOT")</script>.
 <small><b>HTMLDecor doesn't require `pushState` if integrated into a site,
 but to use it in a bookmarklet would require the bookmarklet to be run on every page. </b></small>
 
@@ -56,6 +56,7 @@ Supported sites
 ---------------
 
 - [docs.oracle.com](http://docs.oracle.com) (<small>[details](docs.oracle.com/)</small>)
+- [api.jquery.com](http://api.jquery.com) (<small>[details](api.jquery.com/)</small>)
 - [m.netmagazine.com](http://m.netmagazine.com) (<small>[details](m.netmagazine.com/)</small>)
 - [adactio.com](http://adactio.com) (<small>[details](adactio.com/)</small>)
 
