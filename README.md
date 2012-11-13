@@ -1,9 +1,3 @@
-<style>
-html { width: 100%; text-align: center; }
-body { width: 72ex; margin: 0 auto; text-align: left; }
-abbr { border-bottom: 1px dotted; }
-</style>
-
 meeko-panner
 =============
 
@@ -13,9 +7,9 @@ and, optionally, a richer UI.
 
 The primary motivation for **meeko-panner** is to demonstrate [HTMLDecor](http://github.com/shogun70/HTMLDecor).
 I consider it obvious that this approach would have better performance and flexibility
-if integrated into a site rather than being implemented as a js bookmarklet. 
+if integrated into a site rather than being implemented as a JS bookmarklet. 
 
-<small>(And the goal of HTMLDecor is to facilitate web-pages containing only essential content,
+<small>(The goal of HTMLDecor is to facilitate web-pages containing only essential content,
 where auxilliary content, styles, even layout can be added from within the browser
 in a device and user appropriate manner.)</small>
 
@@ -23,9 +17,9 @@ in a device and user appropriate manner.)</small>
 Requirements
 ------------
 
-You need a browser with javascript support enabled. <script>document.write("Your browser DOES")</script><noscript>Your browser DOES NOT</noscript>
+You need a browser with javascript support enabled. <script>document.write("Your browser DOES")</script><noscript>Your browser DOES NOT</noscript>  
 
-You need a browser that implements `history.pushState()`. <script>document.write("Your browser", !!history.pushState ? "DOES" : "DOES NOT")</script>.
+You need a browser that implements `history.pushState()`. <script>document.write("Your browser ", !!history.pushState ? "DOES" : "DOES NOT")</script><br />
 <small><b>HTMLDecor doesn't require `pushState` if integrated into a site,
 but to use it in a bookmarklet would require the bookmarklet to be run on every page. </b></small>
 
@@ -87,4 +81,3 @@ Contact
 
 If you do find problems, or if you would like to know more, you can contact me at [twitter](https://twitter.com/Meekostuff)
 or on [my web-site](http://meekostuff.net).
-
