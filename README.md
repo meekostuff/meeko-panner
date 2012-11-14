@@ -24,8 +24,9 @@ Requirements
 You need a browser with javascript support enabled. <script>document.write("Your browser DOES")</script><noscript>Your browser DOES NOT</noscript>  
 
 You need a browser that implements `history.pushState()`. <script>document.write("Your browser ", !!history.pushState ? "DOES" : "DOES NOT")</script><br />
-<small><b>HTMLDecor doesn't require `pushState` if integrated into a site,
-but to use it in a bookmarklet would require the bookmarklet to be run on every page. </b></small>
+
+<small><b>NOTE:</b> HTMLDecor doesn't require `pushState` if integrated into a site,
+but to use it in a bookmarklet would require the bookmarklet to be run on every page. </small>
 
 The following browsers have been tested:
 
@@ -53,7 +54,7 @@ meeko-panner</a> bookmarklet to your bookmark bar.
 Supported sites
 ---------------
 
-You should read the details for each site before using the bookmarklet.
+*You should read the **details** for each site before using the bookmarklet*
 
 - [docs.oracle.com](http://docs.oracle.com) (<small>[details](docs.oracle.com/)</small>)
 - [api.jquery.com](http://api.jquery.com) (<small>[details](api.jquery.com/)</small>)
