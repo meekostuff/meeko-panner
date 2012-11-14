@@ -20,10 +20,11 @@ function urlPath(url) {
 	return (a.pathname + a.search);
 }
 
-function loadScript(url, callback) {
+function loadScript(url, onload, onerror) {
 	var script = document.createElement('script');
 	script.src = url;
-	script.onload = callback;
+	script.onload = onload;
+	script.onerror = onerror;
 	document.body.appendChild(script);
 }
 
@@ -44,9 +45,9 @@ function delay(callback, timeout) {
 /* now do start-up */
 
 queue([
-	function(callback) { loadScript(decorBase + 'HTMLDecor/HTMLDecor.js', callback); },
+	function(oncomplete, onerror) { loadScript(decorBase + 'HTMLDecor/HTMLDecor.js', oncomplete, oncomplete); }, // FIXME onerror handling
 	init,
-	function(callback) { loadScript(decorBase + location.hostname + '/' + 'config.js', callback); },
+	function(oncomplete, onerror) { loadScript(decorBase + location.hostname + '/' + 'config.js', oncomplete, oncomplete); },
 	start
 ]);
 
@@ -107,8 +108,6 @@ function setActiveStylesheet(title) { // see http://www.alistapart.com/articles/
 	});
 }
 
-function beforePageIn(newURL, oldURL) {
-}
 
 extend(panner, {
 
@@ -117,7 +116,6 @@ preprocess: preprocess,
 setDecor: setDecor,
 cloneDocument: cloneDocument,
 setActiveStylesheet: setActiveStylesheet,
-beforePageIn: beforePageIn
 
 });
 
@@ -186,16 +184,19 @@ var oldURL = '';
 decor.onSiteLink = function(url) {
 	var oldURL = document.URL;
 	if (url == oldURL) return false;
+	var oldView = options.detectView(urlPath(oldURL));
+	var view = options.detectView(urlPath(url));
+	if (!view) {
+		alert("The page you are navigating to does not have a corresponding decor in the panner configuration for this site.");
+		return true;
+	}
+	if (view != oldView) {
+		alert("The page you are navigating to has a different decor to that of the current page.\nYou will need to reactivate meeko-panner after the page has loaded.");
+	}
 	decor.navigate(url);
 	return false;
 }
-
-decor.configurePaging({
-	pageIn: {
-		before: function() { beforePageIn(document.URL, oldURL); } 
-	}
-});
-
+ 
 /*
  Override form submission
  */
@@ -222,6 +223,15 @@ callback();
 
 
 function start(callback) {
+	var options = Meeko.panner.options;
+	if (!options.views) {
+		alert("A valid panner configuration for this site could not be loaded.");
+		return false;
+	}
+	if (!options.detectView || !options.detectView(urlPath(document.URL))) {
+		alert("There is no decor for this page in the panner configuration for this site.");
+		return false;
+	}
 	document.body.style.visibility = "hidden";
 	Meeko.panner.preprocess(document, urlPath(document.URL));
 	Meeko.decor.start();
