@@ -5,13 +5,17 @@ meeko-panner
 support for `pushState`-assisted-navigation (panning)
 and, optionally, a richer UI. 
 
-The primary motivation for **meeko-panner** is to demonstrate [HTMLDecor](http://github.com/shogun70/HTMLDecor).
+The intention is to demonstrate the simplicity and flexibility of
+a [content first](http://adactio.com/journal/4523/) approach for web-sites.
+
+**meeko-panner** extracts only the essential content of each page and 
+uses [HTMLDecor](http://github.com/shogun70/HTMLDecor) to 
+decorate it with auxilliary content, styles and layout.
+In the simplest case this is used to recreate the original appearance and behavior of the page,
+except with panning support.
+Another scenario is that a mobile site is enhanced with the appearance of the standard site. 
 I consider it obvious that this approach would have better performance and flexibility
 if integrated into a site rather than being implemented as a JS bookmarklet. 
-
-<small>(The goal of HTMLDecor is to facilitate web-pages containing only essential content,
-where auxilliary content, styles, even layout can be added from within the browser
-in a device and user appropriate manner.)</small>
 
 
 Requirements
@@ -48,6 +52,8 @@ meeko-panner</a> bookmarklet to your bookmark bar.
 
 Supported sites
 ---------------
+
+You should read the details for each site before using the bookmarklet.
 
 - [docs.oracle.com](http://docs.oracle.com) (<small>[details](docs.oracle.com/)</small>)
 - [api.jquery.com](http://api.jquery.com) (<small>[details](api.jquery.com/)</small>)
