@@ -192,6 +192,7 @@ decor.onSiteLink = function(url) {
 	}
 	if (view != oldView) {
 		alert("The page you are navigating to has a different decor to that of the current page.\nYou will need to reactivate meeko-panner after the page has loaded.");
+		return true;
 	}
 	decor.navigate(url);
 	return false;
