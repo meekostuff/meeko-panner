@@ -58,6 +58,7 @@ Supported sites
 
 - [docs.oracle.com](http://docs.oracle.com) (<small>[details](docs.oracle.com/)</small>)
 - [api.jquery.com](http://api.jquery.com) (<small>[details](api.jquery.com/)</small>)
+- [mootools.net](http://mootools.net) (<small>[details](mootools.net/)</small>)
 - [m.netmagazine.com](http://m.netmagazine.com) (<small>[details](m.netmagazine.com/)</small>)
 - [adactio.com](http://adactio.com) (<small>[details](adactio.com/)</small>)
 
