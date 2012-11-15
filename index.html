@@ -20,9 +20,9 @@ if integrated into a site rather than being implemented as a JS bookmarklet. </p
 
 <h2>Requirements</h2>
 
-<p>You need a browser with javascript support enabled. <script>document.write("Your browser DOES")</script><noscript>Your browser DOES NOT</noscript>  </p>
+<p>You need a browser with javascript support enabled. <script type="text/javascript">document.write("Your browser DOES")</script><noscript>Your browser DOES NOT</noscript>  </p>
 
-<p>You need a browser that implements <code>history.pushState()</code>. <script>document.write("Your browser ", !!history.pushState ? "DOES" : "DOES NOT")</script><br /></p>
+<p>You need a browser that implements <code>history.pushState()</code>. <script type="text/javascript">document.write("Your browser ", !!history.pushState ? "DOES" : "DOES NOT")</script><br /></p>
 
 <p><small><b>NOTE:</b> HTMLDecor doesn't require <code>pushState</code> if integrated into a site,
 but to use it in a bookmarklet would require the bookmarklet to be run on every page. </small></p>
