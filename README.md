@@ -61,6 +61,7 @@ Supported sites
 - [mootools.net](http://mootools.net) (<small>[details](mootools.net/)</small>)
 - [m.netmagazine.com](http://m.netmagazine.com) (<small>[details](m.netmagazine.com/)</small>)
 - [adactio.com](http://adactio.com) (<small>[details](adactio.com/)</small>)
+- [www.quirksmode.org](http://www.quirksmode.org) (<small>[details](www.quirksmode.org/)</small>)
 
 
 Notes and Warnings
