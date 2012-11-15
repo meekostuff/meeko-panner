@@ -12,8 +12,8 @@ a <a href="http://adactio.com/journal/4523/">content first</a> approach for web-
 <p><strong>meeko-panner</strong> extracts only the essential content of each page and 
 uses <a href="http://github.com/shogun70/HTMLDecor">HTMLDecor</a> to 
 decorate it with auxilliary content, styles and layout.
-In the simplest case this is used to recreate the original appearance and behavior of the page,
-except with panning support.
+In general this is used to emulate the original appearance and behavior of the site,
+except with panning support. 
 Another scenario is that a mobile site is enhanced with the appearance of the standard site. 
 I consider it obvious that this approach would have better performance and flexibility
 if integrated into a site rather than being implemented as a JS bookmarklet. </p>
@@ -51,16 +51,74 @@ meeko-panner</a> bookmarklet to your bookmark bar.</p></li>
 
 <h2>Supported sites</h2>
 
-<p><em>You should read the <strong>details</strong> for each site before using the bookmarklet</em></p>
+<p><em>Not every site listed here is fully supported. You should read the <strong>details</strong> for each site before using the bookmarklet</em></p>
+
+<h3>Frameset sites</h3>
 
 <ul>
 <li><a href="http://docs.oracle.com">docs.oracle.com</a> (<small><a href="docs.oracle.com/">details</a></small>)</li>
+</ul>
+
+<p>These sites typically have primary content in a frame, with banner, navigation, etc
+in the top window or in other frames of a frameset.</p>
+
+<p>This style of site is actually a good indication that the desire for
+a content-first approach has been around for a long time.
+The downfall of doing this with framesets is the lack of flexibility
+with regards to layout and, especially, the inability to easily bookmark individual pages. </p>
+
+<p><strong>meeko-panner</strong> allows these sites to be bookmarkable by assuming the
+primary content is in the top window and adding the banner and navigation
+into the same window with AJAX. </p>
+
+<p><b>Aside:</b> <a href="http://twitter.com/westonruter">@westonruter</a> <a href="https://twitter.com/westonruter/status/197650657501659137">tweeted</a>
+the idea of making frameset style sites bookmarkable with HTML5 <code>pushState</code>,
+which was (one of) the seeds for meeko-panner.  </p>
+
+<h3>Mobile sites</h3>
+
+<ul>
+<li><a href="http://m.netmagazine.com">m.netmagazine.com</a> (<small><a href="m.netmagazine.com/">details</a></small>)</li>
+</ul>
+
+<p>Many web-sites have a alternate domain for mobile users.
+This allows users to have a light-weight or rich experience of the site,
+but at the cost of maintaining an extra site plus 
+the inelegance of redirecting users to the appropriate site. </p>
+
+<p><strong>meeko-panner</strong> enhances these mobile sites with the decor of the normal site. 
+This demonstrates that with a content-first approach
+(or as some have called it, a <a href="http://www.lukew.com/ff/entry.asp?933">mobile-first</a> approach)
+it can be trivial to have one site providing both the light-weight and rich experience. </p>
+
+<p><b>Aside:</b> <a href="http://dist.meekostuff.net/meeko-twitter/">meeko-twitter</a>
+was the prototype project for <strong>meeko-panner</strong>.
+It enhances <a href="http://mobile.twitter.com">mobile.twitter.com</a> with <code>pushState</code> support and a UI more like <a href="http://twitter.com">twitter.com</a>,
+and was created when it became clear that twitter's
+<a href="http://engineering.twitter.com/2012/05/improving-performance-on-twittercom.html">migration from hashbangs to plain-old-URLs</a>
+wasn't going to address the <a href="http://mike.teczno.com/notes/bandwidth.html">extraordinarily</a>
+<a href="http://www.meekostuff.net/blog/Twitter-without-Hashbangs/">bloated</a> Javascript and HTML.</p>
+
+<h3>General sites</h3>
+
+<ul>
 <li><a href="http://api.jquery.com">api.jquery.com</a> (<small><a href="api.jquery.com/">details</a></small>)</li>
 <li><a href="http://mootools.net">mootools.net</a> (<small><a href="mootools.net/">details</a></small>)</li>
-<li><a href="http://m.netmagazine.com">m.netmagazine.com</a> (<small><a href="m.netmagazine.com/">details</a></small>)</li>
 <li><a href="http://adactio.com">adactio.com</a> (<small><a href="adactio.com/">details</a></small>)</li>
 <li><a href="http://www.quirksmode.org">www.quirksmode.org</a> (<small><a href="www.quirksmode.org/">details</a></small>)</li>
 </ul>
+
+<p>Most (multi-page) sites consists of pages that share site-banner, navigation and other auxiliary content.
+Typically the pages are constructed on the server, either once for static HTML files,
+or on each request for the page.
+In the former case pages are regenerated when the primary content changes and also when the site decor changes.
+In the latter case the server is continuously generating the same pages.</p>
+
+<p>Imagine the improvements in performance and server efficiency if resources were only regenerated when necessary. 
+<strong>meeko-panner</strong> demonstrates how trivial it is to combine primary and auxiliary content within the browser to
+achieve the same appearance and behavior as pages generated on the server.
+(You will need to look at the project source-code to accept this -
+otherwise it will just look like the site is working normally.)</p>
 
 <h2>Notes and Warnings</h2>
 
