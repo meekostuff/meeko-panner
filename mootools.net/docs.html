@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	
+	<!-- Shortcut Icons -->
+	
+	<link href="base-uri:/assets/icons/icon.png" rel="shortcut icon" type="image/x-icon" />
+	<link href="base-uri:/assets/icons/ipod-icon.png" rel="apple-touch-icon" />
+	
+	<!-- BluePrint -->
+	
+	<link href="base-uri:/assets/blueprint/screen.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="base-uri:/assets/blueprint/print.css" rel="stylesheet" type="text/css" media="print" />
+	
+	<!-- StyleSheets -->
+	
+	<link href="base-uri:/assets/styles/layout.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="base-uri:/assets/styles/main.css" rel="stylesheet" type="text/css" media="screen" />
+	
+	<!-- Scripts -->
+	
+	<!-- Section Specific -->
+	
+	<link href="base-uri:/assets/styles/docs.css" rel="stylesheet" type="text/css" media="screen" />	
+	
+	<!-- Decor -->
+	<style type="text/css">
+#main, #menu {
+-webkit-transition: opacity 0.5s linear;
+-moz-transition: opacity 0.5s linear;
+-ms-transition: opacity 0.5s linear;
+-o-transition: opacity 0.5s linear;
+transition: opacity 0.5s linear;
+}
+#main[hidden], #menu[hidden] {
+display: block;
+visibility: visible;
+opacity: 0;
+}
+#main-menu #core-menu, #main-menu #more-menu { text-align: left; }
+#core-menu.hidden, #more-menu.hidden { display: none; }
+	</style>
+	<script type="text/javascript">
+(function() {
+
+var DOM = Meeko.DOM, $id = DOM.$id;
+
+Meeko.decor.configurePaging({
+	duration: 250,
+	nodeInserted: {
+		before: function(node) { 
+			var target = $id(node.id);
+			node.className = target.className;
+			node.setAttribute("hidden", "hidden");
+		},
+		after: function(node) {
+			node.removeAttribute("hidden");
+		}
+	},
+	nodeRemoved: {
+		before: function(node) { 
+			node.setAttribute("hidden", "hidden");
+		},
+		after: function(node) {
+			node.removeAttribute("hidden");
+		}
+	},
+	pageIn: {
+		before: function() {
+			if (/^\/docs\/core/.test(location.pathname)) {
+				$id("core-tab").className = "selected";
+				$id("core-menu").className = null;
+				$id("more-tab").className = null;
+				$id("more-menu").className = "hidden";
+			}
+			if (/^\/docs\/more/.test(location.pathname)) {
+				$id("more-tab").className = "selected";
+				$id("more-menu").className = null;
+				$id("core-tab").className = null;
+				$id("core-menu").className = "hidden";
+			}
+		}
+	}
+});
+
+})();
+	</script>
+</head>
+<body>
+
+<div id="header">
+	
+	<div class="container">
+		<a href="http://mediatemple.net" id="mediatemple"><span>in partnership with mediatemple</span></a>
+        
+		<div id="logo">
+			<h1><a href="base-uri:/"><span>MooTools</span></a></h1>
+			<h2><span>a compact javascript framework</span></h2>
+		</div>
+
+		<div id="navigation">
+			<a href="base-uri:/docs/core" class="first">Docs</a>
+			<a href="base-uri:/">Hey, this isn't the real Mootools site</a>
+		</div>
+		
+	</div>
+	
+</div>
+<div id="submenu">
+		
+		<div class="container" id="submenu-wrapper">
+			<div id="docs-lib-links">
+				<a href="base-uri:/docs/core" id="core-tab">Core</a><span>|</span>
+				<a href="base-uri:/docs/more" id="more-tab">More</a>
+			</div>
+        </div>
+				
+	</div>
+	
+	<div id="wrapper">
+
+		<div class="container">
+		
+		<div id="main-menu" class="span-4">
+			<div id="core-menu">
+			
+			<h6 class="version">MooTools Core v1.4.5</h6>
+<h4>Core</h4>
+<div><a href="base-uri:/docs/core/Core/Core">Core</a></div>
+<h4>Types</h4>
+<div><a href="base-uri:/docs/core/Types/Array">Array</a></div>
+<div><a href="base-uri:/docs/core/Types/String">String</a></div>
+<div><a href="base-uri:/docs/core/Types/Number">Number</a></div>
+<div><a href="base-uri:/docs/core/Types/Function">Function</a></div>
+<div><a href="base-uri:/docs/core/Types/Object">Object</a></div>
+<div><a href="base-uri:/docs/core/Types/DOMEvent">Event</a></div>
+<h4>Browser</h4>
+<div><a href="base-uri:/docs/core/Browser/Browser">Browser</a></div>
+<h4>Class</h4>
+<div><a href="base-uri:/docs/core/Class/Class">Class</a></div>
+<div><a href="base-uri:/docs/core/Class/Class.Extras">Class.Extras</a></div>
+<h4>Slick</h4>
+<div><a href="base-uri:/docs/core/Slick/Slick">Slick</a></div>
+<h4>Element</h4>
+<div><a href="base-uri:/docs/core/Element/Element">Element</a></div>
+<div><a href="base-uri:/docs/core/Element/Element.Style">Element.Style</a></div>
+<div><a href="base-uri:/docs/core/Element/Element.Event">Element.Event</a></div>
+<div><a href="base-uri:/docs/core/Element/Element.Delegation">Element.Delegation</a></div>
+<div><a href="base-uri:/docs/core/Element/Element.Dimensions">Element.Dimensions</a></div>
+<h4>Fx</h4>
+<div><a href="base-uri:/docs/core/Fx/Fx">Fx</a></div>
+<div><a href="base-uri:/docs/core/Fx/Fx.CSS">Fx.CSS</a></div>
+<div><a href="base-uri:/docs/core/Fx/Fx.Tween">Fx.Tween</a></div>
+<div><a href="base-uri:/docs/core/Fx/Fx.Morph">Fx.Morph</a></div>
+<div><a href="base-uri:/docs/core/Fx/Fx.Transitions">Fx.Transitions</a></div>
+<h4>Request</h4>
+<div><a href="base-uri:/docs/core/Request/Request">Request</a></div>
+<div><a href="base-uri:/docs/core/Request/Request.HTML">Request.HTML</a></div>
+<div><a href="base-uri:/docs/core/Request/Request.JSON">Request.JSON</a></div>
+<h4>Utilities</h4>
+<div><a href="base-uri:/docs/core/Utilities/Cookie">Cookie</a></div>
+<div><a href="base-uri:/docs/core/Utilities/JSON">JSON</a></div>
+<div><a href="base-uri:/docs/core/Utilities/DOMReady">DOMReady</a></div>
+<div><a href="base-uri:/docs/core/Utilities/Swiff">Swiff</a></div>
+</div>
+		
+		<div id="more-menu">
+			
+			<h6 class="version">MooTools More v1.4.0.1</h6>
+<h4>More</h4>
+<div><a href="base-uri:/docs/more/More/More">More</a></div>
+<h4>Class</h4>
+<div><a href="base-uri:/docs/more/Class/Events.Pseudos">Events.Pseudos</a></div>
+<div><a href="base-uri:/docs/more/Class/Class.Refactor">Class.Refactor</a></div>
+<div><a href="base-uri:/docs/more/Class/Class.Binds">Class.Binds</a></div>
+<div><a href="base-uri:/docs/more/Class/Class.Occlude">Class.Occlude</a></div>
+<div><a href="base-uri:/docs/more/Class/Chain.Wait">Chain.Wait</a></div>
+<h4>Types</h4>
+<div><a href="base-uri:/docs/more/Types/Array.Extras">Array.Extras</a></div>
+<div><a href="base-uri:/docs/more/Types/Date">Date</a></div>
+<div><a href="base-uri:/docs/more/Types/Date.Extras">Date.Extras</a></div>
+<div><a href="base-uri:/docs/more/Types/Number.Format">Number.Format</a></div>
+<div><a href="base-uri:/docs/more/Types/Object.Extras">Object.Extras</a></div>
+<div><a href="base-uri:/docs/more/Types/String.Extras">String.Extras</a></div>
+<div><a href="base-uri:/docs/more/Types/String.QueryString">String.QueryString</a></div>
+<div><a href="base-uri:/docs/more/Types/URI">URI</a></div>
+<div><a href="base-uri:/docs/more/Types/URI.Relative">URI.Relative</a></div>
+<div><a href="base-uri:/docs/more/Types/Hash">Hash</a></div>
+<div><a href="base-uri:/docs/more/Types/Hash.Extras">Hash.Extras</a></div>
+<h4>Element</h4>
+<div><a href="base-uri:/docs/more/Element/Element.Forms">Element.Forms</a></div>
+<div><a href="base-uri:/docs/more/Element/Elements.From">Elements.From</a></div>
+<div><a href="base-uri:/docs/more/Element/Element.Event.Pseudos">Element.Event.Pseudos</a></div>
+<div><a href="base-uri:/docs/more/Element/Element.Event.Pseudos.Keys">Element.Event.Pseudos.Keys</a></div>
+<div><a href="base-uri:/docs/more/Element/Element.Measure">Element.Measure</a></div>
+<div><a href="base-uri:/docs/more/Element/Element.Pin">Element.Pin</a></div>
+<div><a href="base-uri:/docs/more/Element/Element.Position">Element.Position</a></div>
+<div><a href="base-uri:/docs/more/Element/Element.Shortcuts">Element.Shortcuts</a></div>
+<h4>Forms</h4>
+<div><a href="base-uri:/docs/more/Forms/Form.Request">Form.Request</a></div>
+<div><a href="base-uri:/docs/more/Forms/Form.Request.Append">Form.Request.Append</a></div>
+<div><a href="base-uri:/docs/more/Forms/Form.Validator">Form.Validator</a></div>
+<div><a href="base-uri:/docs/more/Forms/Form.Validator.Inline">Form.Validator.Inline</a></div>
+<div><a href="base-uri:/docs/more/Forms/Form.Validator.Extras">Form.Validator.Extras</a></div>
+<div><a href="base-uri:/docs/more/Forms/OverText">OverText</a></div>
+<h4>Fx</h4>
+<div><a href="base-uri:/docs/more/Fx/Fx.Elements">Fx.Elements</a></div>
+<div><a href="base-uri:/docs/more/Fx/Fx.Accordion">Fx.Accordion</a></div>
+<div><a href="base-uri:/docs/more/Fx/Fx.Move">Fx.Move</a></div>
+<div><a href="base-uri:/docs/more/Fx/Fx.Reveal">Fx.Reveal</a></div>
+<div><a href="base-uri:/docs/more/Fx/Fx.Scroll">Fx.Scroll</a></div>
+<div><a href="base-uri:/docs/more/Fx/Fx.Slide">Fx.Slide</a></div>
+<div><a href="base-uri:/docs/more/Fx/Fx.SmoothScroll">Fx.SmoothScroll</a></div>
+<div><a href="base-uri:/docs/more/Fx/Fx.Sort">Fx.Sort</a></div>
+<h4>Drag</h4>
+<div><a href="base-uri:/docs/more/Drag/Drag">Drag</a></div>
+<div><a href="base-uri:/docs/more/Drag/Drag.Move">Drag.Move</a></div>
+<div><a href="base-uri:/docs/more/Drag/Slider">Slider</a></div>
+<div><a href="base-uri:/docs/more/Drag/Sortables">Sortables</a></div>
+<h4>Request</h4>
+<div><a href="base-uri:/docs/more/Request/Request.JSONP">Request.JSONP</a></div>
+<div><a href="base-uri:/docs/more/Request/Request.Queue">Request.Queue</a></div>
+<div><a href="base-uri:/docs/more/Request/Request.Periodical">Request.Periodical</a></div>
+<h4>Utilities</h4>
+<div><a href="base-uri:/docs/more/Utilities/Assets">Assets</a></div>
+<div><a href="base-uri:/docs/more/Utilities/Color">Color</a></div>
+<div><a href="base-uri:/docs/more/Utilities/Group">Group</a></div>
+<div><a href="base-uri:/docs/more/Utilities/Hash.Cookie">Hash.Cookie</a></div>
+<div><a href="base-uri:/docs/more/Utilities/IframeShim">IframeShim</a></div>
+<div><a href="base-uri:/docs/more/Utilities/Table">Table</a></div>
+<h4>Interface</h4>
+<div><a href="base-uri:/docs/more/Interface/HtmlTable">HtmlTable</a></div>
+<div><a href="base-uri:/docs/more/Interface/HtmlTable.Zebra">HtmlTable.Zebra</a></div>
+<div><a href="base-uri:/docs/more/Interface/HtmlTable.Sort">HtmlTable.Sort</a></div>
+<div><a href="base-uri:/docs/more/Interface/HtmlTable.Select">HtmlTable.Select</a></div>
+<div><a href="base-uri:/docs/more/Interface/Keyboard">Keyboard</a></div>
+<div><a href="base-uri:/docs/more/Interface/Keyboard.Extras">Keyboard.Extras</a></div>
+<div><a href="base-uri:/docs/more/Interface/Mask">Mask</a></div>
+<div><a href="base-uri:/docs/more/Interface/Scroller">Scroller</a></div>
+<div><a href="base-uri:/docs/more/Interface/Tips">Tips</a></div>
+<div><a href="base-uri:/docs/more/Interface/Spinner">Spinner</a></div>
+<h4>Locale</h4>
+<div><a href="base-uri:/docs/more/Locale/Form.Validator">Form.Validator</a></div>
+<div><a href="base-uri:/docs/more/Locale/Date">Date</a></div>
+<div><a href="base-uri:/docs/more/Locale/Locale">Locale</a></div>
+<div><a href="base-uri:/docs/more/Locale/Locale.Set.From">Locale.Set.From</a></div>
+<div><a href="base-uri:/docs/more/Locale/Number">Number</a></div>
+</div>
+
+</div>
+	
+<div id="main" class="l-border r-border span-15">
+<h1 id="title"></h1>
+</div>
+		
+<div id="menu" class="span-2 last">
+</div>
+			
+<div id="footy" class="clear span-24">
+<p class="quiet">This documentation is released under a <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Attribution-NonCommercial-ShareAlike 3.0</a> License.</p>
+</div>
+		
+		</div>
+	
+	</div>
+<div id="footer">
+	<div class="container">
+		<p class="copy"><a href="http://mad4milk.net" id="mucca"></a></p>
+		<p>copyright &copy;2006-2009 <a href="http://mad4milk.net">Valerio Proietti</a></p>
+		<p><a href="http://mediatemple.net">web hosting by (mt)</a></p>
+	</div>
+</div>
+
+</body>
+</html>
