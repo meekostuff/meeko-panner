@@ -25,8 +25,8 @@ You need a browser with javascript support enabled. <script type="text/javascrip
 
 You need a browser that implements `history.pushState()`. <script type="text/javascript">document.write("Your browser ", !!history.pushState ? "DOES" : "DOES NOT")</script><br />
 
-<small><b>NOTE:</b> HTMLDecor doesn't require `pushState` if integrated into a site,
-but to use it in a bookmarklet would require the bookmarklet to be run on every page. </small>
+<b>NOTE:</b> HTMLDecor doesn't require `pushState` if integrated into a site,
+but to use it in a bookmarklet would require the bookmarklet to be run on every page. 
 
 The following browsers have been tested:
 
@@ -72,7 +72,7 @@ with regards to layout and, especially, the inability to easily bookmark individ
 primary content is in the top window and adding the banner and navigation
 into the same window with AJAX. 
 
-<b>Aside:</b> [@westonruter](http://twitter.com/westonruter) [tweeted](https://twitter.com/westonruter/status/197650657501659137)
+<b>ASIDE:</b> [@westonruter](http://twitter.com/westonruter) [tweeted](https://twitter.com/westonruter/status/197650657501659137)
 the idea of making frameset style sites bookmarkable with HTML5 `pushState`,
 which was (one of) the seeds for meeko-panner.  
 
@@ -91,7 +91,7 @@ This demonstrates that with a content-first approach
 (or as some have called it, a [mobile-first](http://www.lukew.com/ff/entry.asp?933) approach)
 it can be trivial to have one site providing both the light-weight and rich experience. 
 
-<b>Aside:</b> [meeko-twitter](http://dist.meekostuff.net/meeko-twitter/)
+<b>ASIDE:</b> [meeko-twitter](http://dist.meekostuff.net/meeko-twitter/)
 was the prototype project for **meeko-panner**.
 It enhances [mobile.twitter.com](http://mobile.twitter.com) with `pushState` support and a UI more like [twitter.com](http://twitter.com),
 and was created when it became clear that twitter's
