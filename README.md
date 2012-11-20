@@ -10,7 +10,8 @@ a [content first](http://adactio.com/journal/4523/) approach for web-sites.
 
 **meeko-panner** extracts only the essential content of each page and 
 uses [HTMLDecor](http://github.com/shogun70/HTMLDecor) to 
-decorate it with auxilliary content, styles and layout.
+decorate it with shared site decor -
+banner, navigation, auxilliary content, styles and layout.
 In general this is used to emulate the original appearance and behavior of the site,
 except with panning support. 
 Another scenario is that a mobile site is enhanced with the appearance of the standard site. 
@@ -30,7 +31,7 @@ but to use it in a bookmarklet would require the bookmarklet to be run on every 
 
 The following browsers have been tested:
 
-- Chrome 22 (recommended)
+- Chrome 23
 - Safari 5.1 / Webkit nightlies
 - Firefox 17
 
@@ -63,7 +64,7 @@ Supported sites
 These sites typically have primary content in a frame, with banner, navigation, etc
 in the top window or in other frames of a frameset.
 
-This style of site is actually a good indication that the desire for
+This site design is actually a good indication that the desire for
 a content-first approach has been around for a long time.
 The downfall of doing this with framesets is the lack of flexibility
 with regards to layout and, especially, the inability to easily bookmark individual pages. 
@@ -91,10 +92,10 @@ This demonstrates that with a content-first approach
 (or as some have called it, a [mobile-first](http://www.lukew.com/ff/entry.asp?933) approach)
 it can be trivial to have one site providing both the light-weight and rich experience. 
 
-<b>ASIDE:</b> [meeko-twitter](http://dist.meekostuff.net/meeko-twitter/)
-was the prototype project for **meeko-panner**.
-It enhances [mobile.twitter.com](http://mobile.twitter.com) with `pushState` support and a UI more like [twitter.com](http://twitter.com),
-and was created when it became clear that twitter's
+<b>ASIDE:</b> the prototype for **meeko-panner** was the
+[meeko-twitter](http://dist.meekostuff.net/meeko-twitter/) project,  
+which is a bookmarklet to enhance [mobile.twitter.com](http://mobile.twitter.com) with `pushState` support and a UI more like [twitter.com](http://twitter.com). 
+It was created to be a demo of progressive enhancement done well when it became clear that twitter's
 [migration from hashbangs to plain-old-URLs](http://engineering.twitter.com/2012/05/improving-performance-on-twittercom.html)
 wasn't going to address the [extraordinarily](http://mike.teczno.com/notes/bandwidth.html)
 [bloated](http://www.meekostuff.net/blog/Twitter-without-Hashbangs/) Javascript and HTML.
@@ -107,15 +108,15 @@ wasn't going to address the [extraordinarily](http://mike.teczno.com/notes/bandw
 - [adactio.com](http://adactio.com) (<small>[details](adactio.com/)</small>)
 - [www.quirksmode.org](http://www.quirksmode.org) (<small>[details](www.quirksmode.org/)</small>)
 
-Most (multi-page) sites consists of pages that share site-banner, navigation and other auxiliary content.
+Most (multi-page) sites consists of pages that share site decor - layout, styles, navigation and other auxiliary content.
 Typically the pages are constructed on the server, either once for static HTML files,
-or on each request for the page.
+or on each request for the page. 
 In the former case pages are regenerated when the primary content changes and also when the site decor changes.
-In the latter case the server is continuously generating the same pages.
+In the latter case the server is continuously generating the same pages. 
 
 Imagine the improvements in performance and server efficiency if resources were only regenerated when necessary. 
-**meeko-panner** demonstrates how trivial it is to combine primary and auxiliary content within the browser to
-achieve the same appearance and behavior as pages generated on the server.
+**meeko-panner** demonstrates how trivial it is to combine primary content with 
+site decor from within the browser.
 (You will need to look at the project source-code to accept this -
 otherwise it will just look like the site is working normally.)
 
@@ -132,7 +133,7 @@ So this may not work at all for you even with the browsers I have tested.
 
 - Having said that, if something fails you can usually just refresh the page (and run meeko-panner again).
 
-- The speed and functionality of **meeko-panner** is limited primarily by the site it is running on. 
+- The speed of **meeko-panner** is limited primarily by the site it is running on. 
 
 
 TODO
