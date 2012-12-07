@@ -2,15 +2,438 @@
 <html lang="en" dir="ltr">
    <head>
 	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	  <link rel="shortcut icon" href="http://media.netmagazine.futurecdn.net/sites/all/themes/netmag/favicon.ico" type="image/x-icon" />
 	  <link rel="image_src" href="http://media.netmagazine.futurecdn.net/files/imagecache/listed_image/articles/feature/2012/08/120801toolsmain.jpg" />
 	  <meta name="robots" content="noodp,noydir" />      
-	  <link href="base-uri:/netmagazine/media/css/common.min.css" rel="stylesheet">
-	  <link type="text/css" rel="stylesheet" media="all" href="http://static.netmagazine.futurecdn.net/files/css/css_6e268687fb8a42d1d4ddeb339ba40dd7.css" />
-	  <link href="http://assets.futurecdn.net/css/future_footer.min.css" rel="stylesheet" type="text/css" />
 	  <link rel="apple-touch-icon" sizes="72x72" href="http://media.netmagazine.futurecdn.net/sites/all/themes/netmag/media/img/icons/icon-ipad.png" />
 	  <link rel="apple-touch-icon" sizes="114x114" href="http://media.netmagazine.futurecdn.net/sites/all/themes/netmag/media/img/icons/icon-iphone4.png" />
+<!-- NOTE the mobile stylesheet messes up the footer. So duplicate and edit below
+	  <link href="http://static.m.futurecdn.net//1351073576/netmagazine/media/css/common.min.css" rel="stylesheet">
+-->
+<style type="text/css">
+.copyright span.logo {
+    background: url("/media/img/future_logo.png") no-repeat scroll 0 0 transparent;
+}
+.listingResultsWrapper {
+    padding: 0 0 0.5em;
+    position: relative;
+}
+.listingResultsWrapper h2 {
+    background-color: #BD070F;
+    background-position: 0 -230px;
+    background-repeat: repeat-x;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #FFFFFF;
+    font-size: 1em;
+    line-height: 1.5em;
+    padding: 0 0.5em;
+    text-transform: capitalize;
+}
+.listingResultsWrapper h2 a {
+    color: #FFFFFF;
+    display: block;
+    text-decoration: none;
+}
+.listingResults {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.listingResult {
+    border-bottom: 1px solid #DEDEDE;
+    clear: both;
+    padding: 0.5em;
+}
+.listingResult .suggest {
+    display: block;
+    font-size: 1em;
+}
+.listingResult .suggest a {
+    font-size: 1em;
+}
+.listingResult h3 {
+    font-size: 1em;
+    line-height: 1em;
+}
+.listingResult.image h3, .listingResult.image .synopsis {
+    margin-left: 120px;
+}
+.listingResult .frame {
+    border: 1px solid #DEDEDE;
+    display: block;
+    float: left;
+    margin: 0 0.5em 0 0;
+    overflow: hidden;
+}
+.listingResult a {
+    color: #006BA6;
+    font-size: 0.9em;
+    text-decoration: none;
+}
+.listingResult .synopsis {
+    font-size: 0.8em;
+}
+.listingResult h3 a, .listingResult .synopsis a {
+    display: block;
+}
+.listingResult .synopsis a {
+    color: #000000;
+}
+#article {
+    background-color: #FFFFFF;
+    border-radius: 5px 5px 5px 5px;
+    margin: 0 0 0.5em;
+}
+#article h3 .title {
+    font-size: 1.2em;
+    line-height: 1.2em;
+}
+#article .publishdate {
+    color: #333333;
+    font-size: 0.8em;
+    line-height: 0.8em;
+}
+.article {
+    font-size: 1em;
+}
+.ob_container .rec-link, .article a {
+    color: #006BA6;
+}
+.article h3 {
+    font-size: 1em;
+    line-height: 1.4em;
+    margin-bottom: 0.8em;
+}
+.article h4 {
+    font-size: 1em;
+    line-height: 1.2em;
+    margin-bottom: 0.5em;
+}
+.article .search_image {
+    margin-bottom: 10px;
+}
+.article .synopsis {
+    clear: both;
+}
+.article p {
+    margin-bottom: 1em;
+}
+.article hr {
+    border: 1px solid #CCCCCC;
+    height: 0;
+    margin: 0 auto;
+    width: 80%;
+}
+.searchInfomation, .article .galleryCaption, .fullPanel {
+    background-color: #FBFBFB;
+    border: 1px solid #EBEBEB;
+    border-radius: 5px 5px 5px 5px;
+}
+#subArticle {
+    margin-bottom: 0.5em;
+    padding: 0;
+}
+#subArticle h4 {
+    color: #333333;
+    font-size: 1em;
+    line-height: 1.5em;
+    padding: 0 0.5em 0.5em 0;
+}
+.searchInfomation {
+    font-size: 0.8em;
+    margin: 0 0 0.5em;
+    padding: 0.5em;
+}
+.searchInfomation span {
+    font-weight: bold;
+}
+h3 .title + .price {
+    color: #F6841F;
+}
+ul.youmightlike {
+    list-style: none outside none;
+}
+.youmightlike li {
+    float: left;
+    margin-bottom: 0.5em;
+    padding: 0;
+    width: 140px;
+}
+.youmightlike li .frame {
+    border: 1px solid #EBEBEB;
+    display: block;
+    margin-bottom: 0.5em;
+    overflow: hidden;
+    width: 130px;
+}
+.youmightlike li:nth-child(2n+1) {
+    clear: left;
+    margin-right: 15px;
+}
+.youmightlike li:after {
+    clear: both;
+}
+#subArticle #fanResults h4 {
+    border-top: 2px solid #EBEBEB;
+    margin: 0.2em 0;
+}
+.ob_org_header {
+    color: #333333;
+    display: block;
+    font-size: 1em;
+    font-weight: bold;
+    line-height: 1.5em;
+    padding: 0 0.5em 0.5em 0;
+}
+.ob_org_header, #subArticle #pollinatedResults h4 {
+    background: none repeat scroll 0 0 #FFFFFF;
+    display: block;
+    font-size: 1em;
+    margin: 0 0 0.5em;
+    padding: 0 0.5em;
+}
+.youMightLike {
+    background: none repeat scroll 0 0 #DEDEDE;
+    display: block;
+    margin-bottom: 0.5em;
+}
+#subArticle .youMightLike h4 {
+    color: #333333;
+    margin: 0.2em 0;
+    padding: 0.5em 0.5em 0;
+}
+.ob_container .rec-link, #pollinatedResults a, .youMightLike a {
+    clear: both;
+    color: #006BA6;
+    display: block;
+    font-size: 0.8em;
+    font-weight: bold;
+    line-height: 1.2em;
+    padding: 0 0.5em 1em;
+    text-decoration: none;
+}
+.ob_container .rec-link {
+    padding: 0 0.5em 1em;
+    text-decoration: underline;
+}
+.ob_source {
+    color: #999999;
+    display: block;
+    font-size: 0.8em;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 1em;
+    padding: 0 0.5em;
+}
+#pollinatedResults a span {
+    color: #999999;
+    display: block;
+    font-size: 0.9em;
+    padding: 0.2em 0 0;
+    text-decoration: none;
+}
+.youmightlike a .image {
+    display: inline-block;
+    margin: 0 0.5em 0.5em 0;
+    vertical-align: top;
+}
+.OUTBRAIN, #pollinatePlaceholder {
+    clear: both;
+}
+a.mobileControl {
+    color: #006BA6;
+    font-size: 1em;
+}
+.article .galleryItem {
+    padding: 0 0.5em;
+}
+#content .article ul li {
+    list-style-type: disc;
+    margin: 0 0 5px 25px;
+}
+#content .article ol li {
+    list-style-type: decimal;
+    margin: 0 0 5px 25px;
+}
+.article h5.galleryName {
+    font-size: 1em;
+    margin: 0 0 10px;
+}
+.article .galleryCaption {
+    background-color: #FBFBFB;
+    border: 1px solid #EBEBEB;
+    clear: both;
+    margin: 0 0 0.5em;
+    padding: 0.5em;
+}
+.article .galleryCaption p {
+    font-size: 0.8em;
+    margin: 0.5em 0 0;
+}
+#article .articleImage, .imageSizer, .galleryImage {
+    margin: 0 0 0.5em;
+    overflow: hidden;
+}
+.imageSizer {
+    border: 1px solid #EBEBEB;
+    padding: 2px;
+    position: relative;
+    width: 274px;
+}
+.imageSizer a {
+    text-decoration: none;
+}
+.imageSizer span {
+    display: none;
+}
+.imageSizer a:hover span {
+    background-color: #EBEBEB;
+    border-top: 1px solid #EBEBEB;
+    bottom: 0;
+    display: block;
+    font-size: 0.8em;
+    left: 0;
+    line-height: 1em;
+    padding: 0.2em;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+}
+.article #currentImageBanner {
+    color: #333333;
+    display: block;
+    font-size: 0.7em;
+    font-weight: bold;
+    margin: 0 0 1em;
+    text-align: center;
+}
+.article #currentImageBanner span {
+    padding: 0 0.2em;
+}
+a.mainsite {
+    float: right;
+    text-align: right;
+}
+a.top {
+    padding-right: 1.2em;
+    position: relative;
+}
+a.top span.link {
+    float: left;
+}
+a.top:after {
+    background: none repeat scroll 0 center transparent;
+    border-color: transparent transparent #323232;
+    border-style: solid;
+    border-width: 0.4em;
+    content: "";
+    display: block;
+    height: 0;
+    position: absolute;
+    right: 0;
+    top: 0.4em;
+    width: 0;
+}
+.clear_both {
+    clear: both;
+}
+.ob_what a {
+    color: #666666;
+    font-size: 0.5em;
+}
+.pagination {
+    background-color: #CCCCCC;
+    border-radius: 5px 5px 5px 5px;
+    display: block;
+    margin: 0 0 0.5em;
+    opacity: 1;
+    padding: 0.5em;
+}
+.pagination .next.disabled, .pagination .previous.disabled, .pagination .previous a, .pagination .next a {
+    display: block;
+    float: left;
+    min-height: 1em;
+    position: relative;
+    width: 40%;
+}
+.pagination .text {
+    display: none;
+}
+.pagination .page .text {
+    display: block;
+}
+.pagination a:after {
+    background: none repeat scroll 0 center transparent;
+    border-color: transparent transparent transparent #FFFFFF;
+    border-style: solid;
+    border-width: 0.6em;
+    content: "";
+    display: block;
+    height: 0;
+    position: absolute;
+    right: -0.6em;
+    top: 0;
+    width: 0;
+}
+.pagination .previous a:after {
+    border-left-color: transparent;
+    border-right-color: #FFFFFF;
+    left: -0.6em;
+}
+.pagination .page {
+    color: #FFFFFF;
+    float: left;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: center;
+    width: 20%;
+}
+#articleTags {
+    display: none;
+}
+.listingResultsWrapper.promotion .listingResults {
+    background-color: #BD070F;
+}
+.listingResultsWrapper.promotion .listingResult a {
+    color: #FFFFFF;
+}
+.listingResult .image {
+    width: 200px;
+}
+.relatedProducts.fanMatches img {
+    width: 70px;
+}
+.youmightlike a img {
+    width: 80px;
+}
+.listingResult .image {
+    width: 250px;
+}
+.relatedProducts.fanMatches img {
+    width: 80px;
+}
+.youmightlike a img {
+    width: 100px;
+}
+.listingResultsWrapper h2 a {
+    color: #FFFFFF;
+}
+a.top:after {
+    border-bottom-color: #000000;
+}
+.listingResultsWrapper h2 {
+    background-color: #151515;
+    border-bottom: 2px solid #000000;
+    color: #FFFFFF;
+}
+.search-result:hover .image {
+    border-color: #ED145B;
+}
+</style>
+	  <link type="text/css" rel="stylesheet" media="all" href="http://static.netmagazine.futurecdn.net/files/css/css_1cc7f6b2dc78d9c36ee5d7eb060bd6a8.css" />
+	  <link href="http://assets.futurecdn.net/css/future_branding.min.css" rel="stylesheet" type="text/css" />
+	  <link type="text/css" rel="stylesheet" media="all" href="http://static.creativebloq.futurecdn.net/sites/creativebloq.com/files/creative_network/widget.css">
 <style>
 /* Minor adjustments */
 .listingResult article a { color: #000000; }
@@ -53,13 +476,10 @@ opacity: 0;
 
    </head>
 
-   <body class=" not- page-node node-type-feature  " >
-      <div id="container" >
-
-         <div id="site-banner" >
-             <div id="site-banner-content" >
-                 <a href="http://www.creativebloq.com" id="creative-bloq-network">Part of the Creative Bloq network. Get your daily dose of design tips and inspiration</a>             </div>
-         </div>
+   <body>
+   <div style="display: none;" id="creativeBanner"><div><a href="http://www.creativebloq.com">Part of the Creative Bloq network. Get your daily dose of design tips and inspiration</a></div></div>
+   
+   <div id="container" >
              
             <div id="site-content" >
                 <div id="site-top" >
@@ -118,10 +538,9 @@ opacity: 0;
 </div>
    
 <div id="right-col">
-   <div id="advertorial_widget_1" class="block block-future" >
 
-   
-   <a href="http://www.netmagazine.com/shop/magazines/summer-2012-231"><img src="http://media.netmagazine.futurecdn.net/files/imagecache/advertorial_widget/advertorial-widgets/mag_kicker_summer2012.jpg" alt="Summer issue on sale now!" title="Summer issue on sale now!"  class="imagecache imagecache-advertorial_widget" width="330" height="246" /></a>
+<div id="advertorial_widget_1" class="block block-future" >
+   <a href="http://www.netmagazine.com/shop/magazines/december-2012-235"><img src="http://media.netmagazine.futurecdn.net/files/imagecache/advertorial_widget/advertorial-widgets/NET235.mag_kicker.jpg" alt="December issue on sale now!" title="October issue on sale now!"  class="imagecache imagecache-advertorial_widget" width="330" height="246" /></a>
    <div class="clear-both" ></div>
 </div>
 
@@ -139,19 +558,15 @@ opacity: 0;
 </div>
 
 <div id="popular-widget_all" class="block block-future" >
+
          <h4 class="std-hdr">Popular this week</h4>
    
-   <div class="item-list">
-	  <ul class="std-list">
-		 <li class="pos-1 first"><a href="base-uri:/features/50-free-web-design-tools-rock">50 free web design tools that rock!</a></li>
-		 <li class="pos-2"><a href="base-uri:/features/50-fantastic-tools-responsive-web-design">50 fantastic tools for responsive web design</a></li>
-		 <li class="pos-3"><a href="base-uri:/features/new-tools-web-design-and-development-july-2012">New tools for web design and development: July 2012</a></li>
-		 <li class="pos-4"><a href="base-uri:/features/15-top-web-design-and-development-trends-2012">15 top web design and development trends for 2012</a></li>
-		 <li class="pos-5 last"><a href="base-uri:/features/how-we-built-msn-uks-responsive-olympics-site">How we built MSN UK&#039;s responsive Olympics site</a></li>
-	  </ul>
-   </div>
-   
-   <span class="arrow" ></span>
+   <div class="item-list"><ul class="std-list"><li class="pos-1 first"><a href="base-uri:/features/top-50-books-web-designers-and-developers">The top 50 books for web designers and developers</a></li>
+<li class="pos-2"><a href="base-uri:/features/24-incredible-html-email-newsletters">24 incredible HTML email newsletters</a></li>
+<li class="pos-3"><a href="base-uri:/features/essential-javascript-top-five-mvc-frameworks">Essential JavaScript: the top five MVC frameworks</a></li>
+<li class="pos-4"><a href="base-uri:/features/50-fantastic-tools-responsive-web-design">50 fantastic tools for responsive web design</a></li>
+<li class="pos-5 last"><a href="base-uri:/features/importance-whitespace-web-design">The importance of whitespace in web design</a></li>
+</ul></div><span class="arrow" ></span>
    <div class="clear-both" ></div>
 </div>
 
@@ -198,9 +613,9 @@ opacity: 0;
    
    <a href="http://www.netmagazine.com/shop"><img src="http://media.netmagazine.futurecdn.net/files/imagecache/advertorial_item/advertorial-widgets/merch.jpg" alt="Treat yourself to our geeky merchandise!" title="Treat yourself to our geeky merchandise!"  class="imagecache imagecache-advertorial_item" width="154" height="191" /></a>
    <div class="clear-both" ></div>
-</div><div id="block-10" class="block block-block" >
-      <p><iframe allowtransparency="true" frameborder="0" scrolling="no" src="http://www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fnetmag&amp;width=330&amp;colorscheme=light&amp;show_faces=true&amp;border_color&amp;stream=false&amp;header=false&amp;height=258" style="border:none; overflow:hidden; width:330px; height:258px;">Your browser does not support inline frames or is currently configured not to display inline frames. View our Facebook page at http://www.facebook.com/netmag</iframe></p>
-</div>                     </div>
+</div>
+
+</div>
                                     <div class="clear-both" ></div>
                 </div>
                <div class="clear-both" ></div>
@@ -211,28 +626,28 @@ opacity: 0;
                <div id="menu-footer-links" class="block block-menu" >
    <h5 class="block-hdr">Other .net sections</h5>
    <ul class="menu"><li class="leaf first"><a href="http://feeds.feedburner.com/net/topstories" title="">RSS</a></li>
-<li class="leaf"><a href="http://www.netmagazine.com/hosting" title="">Hosting directory</a></li>
-<li class="leaf"><a href="http://www.netmagazine.com/premium" title="">Premium area</a></li>
-<li class="leaf"><a href="http://www.netmagazine.com/advertising" title="">Advertising enquiries</a></li>
+<li class="leaf"><a href="base-uri:/hosting" title="">Hosting directory</a></li>
+<li class="leaf"><a href="base-uri:/premium" title="">Premium area</a></li>
+<li class="leaf"><a href="base-uri:/advertising" title="">Advertising enquiries</a></li>
 <li class="leaf"><a href="http://www.futureplc.com/futurenet/terms-and-conditions/" title="">Terms and Conditions</a></li>
 <li class="leaf"><a href="http://www.futurenet.com/futureonline/privacy.asp" title="">Privacy Policy</a></li>
 <li class="leaf last"><a href="http://www.futureplc.com/cookies-policy/" title="">Cookie policy</a></li>
 </ul></div><div id="contact-us" class="block block-block" >
          <h5 class="block-hdr">Contact us</h2>
-      <p>We love to get feedback, and we do our very best to answer every email accurately and promptly. If you&rsquo;ve got an idea for an article that you&rsquo;d like us to run, a product you&rsquo;d like to pimp, or if you simply want to ask a question of the team &ndash; nothing kinky, mind &ndash; then drop us a line. Just click the link below. It really is that easy.</p><ul><li><a href="http://www.netmagazine.com/contact" title="">Contact us</a></li></ul></div><div id="about-net" class="block block-block" >
+      <p>We love to get feedback, and we do our very best to answer every email accurately and promptly. If you&rsquo;ve got an idea for an article that you&rsquo;d like us to run, a product you&rsquo;d like to pimp, or if you simply want to ask a question of the team &ndash; nothing kinky, mind &ndash; then drop us a line. Just click the link below. It really is that easy.</p><ul><li><a href="base-uri:/contact" title="">Contact us</a></li></ul></div><div id="about-net" class="block block-block" >
          <h5 class="block-hdr">About .net</h2>
-      <p>.net is the world&rsquo;s best-selling magazine for web designers and developers, featuring tutorials from leading agencies, interviews with the web&rsquo;s biggest names, and agenda-setting features on the hottest issues affecting the internet today.</p><ul><li><a href="http://www.netmagazine.com/about-us">Read more about us</a></li><li><a href="http://www.netmagazine.com/shop">Subscribe to .net magazine</a></li><li><a href="http://www.netmagazine.com/shop/current-issue">Current issue of .net</a></li></ul></div><div id="twitter" class="block block-future" >
+      <p>.net is the world&rsquo;s best-selling magazine for web designers and developers, featuring tutorials from leading agencies, interviews with the web&rsquo;s biggest names, and agenda-setting features on the hottest issues affecting the internet today.</p><ul><li><a href="base-uri:/about-us">Read more about us</a></li><li><a href="base-uri:/shop">Subscribe to .net magazine</a></li><li><a href="base-uri:/shop/current-issue">Current issue of .net</a></li></ul></div><div id="twitter" class="block block-future" >
 
          <h4 class="block-hdr">@netmag</h4>
    
    <div class="item-list"><ul><li class="first last">   <div class="tweet-content">
       <p class="tweet-txt" >
-         RT @ZinioDeals: Get the world's best selling resource for web designers and developers, @NetMag, and save an extra 25% off  http://t.co/zyX11cCj      </p>
+         The world's best web designers tell their stories | Creative Bloq http://t.co/NeYce6Ho      </p>
       <p class="tweet-info">
-         6:09PM Aug 4th via <a href="http://www.postling.com" rel="nofollow">Postling</a>      </p>
+         1:30AM Nov 30th via <a href="http://www.hootsuite.com">HootSuite</a>      </p>
    </div>
    <ul class="tweet-links">
-      <li><a href="http://twitter.com/?status=RT%20%40netmag%3A%20RT%20%40ZinioDeals%3A%20Get%20the%20world%27s%20best%20selling%20resource%20for%20web%20designers%20and%20developers%2C%20%40NetMag%2C%20and%20save%20an%20extra%2025%25%20off%20%20http%3A%2F%2Ft.co%2FzyX11cCj" title="Retweet">Retweet</a></li>
+      <li><a href="http://twitter.com/?status=RT%20%40netmag%3A%20The%20world%27s%20best%20web%20designers%20tell%20their%20stories%20%7C%20Creative%20Bloq%20http%3A%2F%2Ft.co%2FNeYce6Ho" title="Retweet">Retweet</a></li>
       <li><a href="http://twitter.com/?status=%40netmag%20" title="Reply to Tweet">Reply</a></li>
       <li><a href="http://twitter.com/netmag" title="Follow @netmag on Twitter">Follow us</a></li>
    </ul>
@@ -246,10 +661,11 @@ opacity: 0;
 </div>               <hr class="clear-both" />
             </div>
 			 
-			<div id="future_company_footer"><div><ul class="foot_sites"><li class="footer_logo" title="Future Publishing"><a href="http://www.futureplc.com/" ><img title="Future Publishing" alt="Future Publishing" src="http://assets.futurecdn.net/img/future-logo.png"></a></li><li class="footer_logo" title="AOP Winner 2012"><img title="AOP Winner 2012" alt="AOP Winner 2012" src="http://assets.futurecdn.net/img/aop-awards-2012.png"></li><li title="TechRadar"><a href="http://www.techradar.com/" title="Tech news">TechRadar</a></li><li title="GamesRadar"><a href="http://www.gamesradar.com/" title="Game cheats and news">GamesRadar</a></li><li title="PC Gamer"><a href="http://www.pcgamer.com/" title="PC games">PC Gamer</a></li><li title="ComputerAndVideoGames"><a href="http://www.computerandvideogames.com/" title="Game news and reviews">ComputerAndVideoGames</a></li><li title="BikeRadar"><a href="http://www.bikeradar.com/" title="Bikes and bike reviews">BikeRadar</a></li><li title="Cyclingnews"><a href="http://www.cyclingnews.com/" title="Pro cycling news and reviews">Cyclingnews</a></li><li title="T3"><a href="http://www.t3.com/" title="Technology news and gadget reviews">T3</a></li><li title="Total Film"><a href="http://www.totalfilm.com/" title="Movie news">Total Film</a></li><li title="MusicRadar"><a href="http://www.musicradar.com/" title="Music news">MusicRadar</a></li><li title="Edge"><a href="http://www.edge-online.com/" title="Videogames culture">Edge</a></li><li title="Metal Hammer"><a href="http://www.metalhammer.co.uk/" title="Heavy metal news">Metal Hammer</a></li><li title="Creative Bloq"><a href="http://www.creativebloq.com/" title="Daily design tips &amp; inspiration">Creative Bloq</a></li><li title="SFX"><a href="http://www.sfx.co.uk/" title="Sci fi news and reviews">SFX</a></li><li title="Classic Rock"><a href="http://www.classicrockmagazine.com/" title="Classic Rock">Classic Rock</a></li><li title="Fast Car"><a href="http://www.fastcar.co.uk/" title="Modified and drift cars">Fast Car</a></li><li title="Mollie Makes"><a href="http://www.molliemakes.com/" title="Making, collecting, thrifting, crafting">Mollie Makes</a></li><li title="Gizmodo UK"><a href="http://www.gizmodo.co.uk/" title="Tech news, from off the beaten track">Gizmodo UK</a></li></ul><hr><ul class="foot_legals"><li title="Jobs"><a href="http://www.yourfuturejob.com/" title="Jobs in media" rel="nofollow">Jobs</a></li><li title="Press"><a href="http://www.futureplc.com/news/" title="Press" rel="nofollow">Press</a></li><li title="Advertising"><a href="http://www.futureplc.com/what-we-do/advertising-solutions/" title="Advertising" rel="nofollow">Advertising</a></li><li title="Privacy Policy"><a href="http://www.futureplc.com/privacy-policy/" title="Privacy Policy" rel="nofollow">Privacy Policy</a></li><li title="Cookies Policy"><a href="http://www.futureplc.com/cookies-policy/" title="Cookies Policy" rel="nofollow">Cookies Policy</a></li><li title="Terms &amp; Conditions"><a href="http://www.futureplc.com/terms-and-conditions/" title="Terms and Conditions" rel="nofollow">Terms &amp; Conditions</a></li><li title="International"><a href="http://www.futureplc.com/what-we-do/international-licensing/" title="International" rel="nofollow">International</a></li><li title="DigitalFuture"><a href="http://advertising.digitalfuture.com/" title="Digital Future" rel="nofollow">DigitalFuture</a></li><li title="Magazine Subscriptions"><a href="http://www.myfavouritemagazines.co.uk/" title="Buy magazines online" rel="nofollow">Magazine Subscriptions</a></li><li title="Future MediaStore"><a href="http://www.futuremediastore.com/" title="Exclusive special interest images" rel="nofollow">Future MediaStore</a></li></ul><p class="foot_copyright">&copy; Future Publishing Limited, Beauford Court, 30 Monmouth Street, Bath BA1 2BW. All rights reserved. England and Wales company registration number 2008885.</p></div></div>
+			<div id="future_company_footer"><div><ul class="foot_images"><li class="footer_logo" title="Future Publishing"><a href="http://www.futureplc.com/" class="future-logo"></a></li></ul><div class="text"><ul class="footertext"><li>Future is AOP and PPA Consumer Digital Publisher of the Year.</li><li>This site&nbsp;is part of Future plc, an international media group and leading digital publisher. We produce content across five core areas:</li></ul><ul  class="category"><li><h6>Technology</h6><ul><li title="TechRadar"><a href="http://www.techradar.com/" title="Tech news">TechRadar</a></li><li title="T3"><a href="http://www.t3.com/" title="Technology news and gadget reviews">T3</a></li><li title="MacLife"><a href="http://www.maclife.com/" title="iPhone, iPad, Mac">MacLife</a></li><li title="Gizmodo UK"><a href="http://www.gizmodo.co.uk/" title="Tech news, from off the beaten track">Gizmodo UK</a></li><li title="More..."><a href="http://www.futureplc.com/what-we-do/portfolios/technology/" title="More...">More...</a></li></ul></li><li><h6>Entertainment</h6><ul><li title="CVG"><a href="http://www.computerandvideogames.com/" title="Game news and reviews">CVG</a></li><li title="PC Gamer"><a href="http://www.pcgamer.com/" title="PC games">PC Gamer</a></li><li title="GamesRadar"><a href="http://www.gamesradar.com/" title="Game cheats and news">GamesRadar</a></li><li title="Total Film"><a href="http://www.totalfilm.com/" title="Movie news">Total Film</a></li><li title="More..."><a href="http://www.futureplc.com/what-we-do/portfolios/entertainment/" title="More...">More...</a></li></ul></li><li><h6>Music</h6><ul><li title="Classic Rock"><a href="http://www.classicrockmagazine.com/" title="Classic Rock">Classic Rock</a></li><li title="MusicRadar"><a href="http://www.musicradar.com/" title="Music news">MusicRadar</a></li><li title="Guitarist"><a href="http://www.musicradar.com/guitarist" title="The guitar player's bible">Guitarist</a></li><li title="Metal Hammer"><a href="http://www.metalhammer.co.uk/" title="Heavy metal news">Metal Hammer</a></li><li title="More..."><a href="http://www.futureplc.com/what-we-do/portfolios/music/" title="More...">More...</a></li></ul></li><li><h6>Creative</h6><ul><li title="Digital Camera World"><a href="http://www.digitalcameraworld.com/" title="Digital Camera News, Reviews, Tips and Techniques">Digital Camera World</a></li><li title="Mollie Makes"><a href="http://www.molliemakes.com/" title="Making, collecting, thrifting, crafting">Mollie Makes</a></li><li title="Photography Week"><a href="http://photographyweek.digitalcameraworld.com/" title="The weekly iPad magazine for photographers">Photography Week</a></li><li title="The Simple Things"><a href="http://www.thesimplethings.com/" title="Celebrating the things that matter most">The Simple Things</a></li><li title="More..."><a href="http://www.futureplc.com/what-we-do/portfolios/creative/" title="More...">More...</a></li></ul></li><li><h6>Sport & Auto</h6><ul><li title="BikeRadar"><a href="http://www.bikeradar.com/" title="Bikes and bike reviews">BikeRadar</a></li><li title="Cyclingnews"><a href="http://www.cyclingnews.com/" title="Pro cycling news and reviews">Cyclingnews</a></li><li title="ChopMTB"><a href="http://www.chopmtb.com/" title="Mountain Biking Served Hot">ChopMTB</a></li><li title="TriRadar"><a href="http://www.triradar.com/" title="Triathlon Training, News &amp; Gear">TriRadar</a></li><li title="More..."><a href="http://www.futureplc.com/what-we-do/portfolios/sport-and-auto/" title="More...">More...</a></li></ul></li></ul><ul class="foot_legals"><li title="About Future"><a href="http://www.futureplc.com/about/" title="About Future" rel="nofollow">About Future</a></li><li title="Jobs"><a href="http://www.yourfuturejob.com/" title="Jobs in media" rel="follow">Jobs</a></li><li title="PR"><a href="http://www.futureplc.com/news/" title="Public Relations" rel="nofollow">PR</a></li><li title="Advertising"><a href="http://www.futureplc.com/what-we-do/advertising-solutions/" title="Advertising" rel="nofollow">Advertising</a></li><li title="Privacy Policy"><a href="http://www.futureplc.com/privacy-policy/" title="Privacy Policy" rel="nofollow">Privacy Policy</a></li><li title="Cookies Policy"><a href="http://www.futureplc.com/cookies-policy/" title="Cookies Policy" rel="nofollow">Cookies Policy</a></li><li title="Terms &amp; Conditions"><a href="http://www.futureplc.com/terms-and-conditions/" title="Terms and Conditions" rel="nofollow">Terms &amp; Conditions</a></li><li title="Subscriptions"><a href="http://www.myfavouritemagazines.co.uk/" title="Buy magazines online" rel="follow">Subscriptions</a></li><li title="Investor Relations"><a href="http://www.futureplc.com/investors/" title="Investor Relations" rel="nofollow">Investor Relations</a></li><li title="Contact Future"><a href="http://www.futureplc.com/contact/" title="Contact Future" rel="nofollow">Contact Future</a></li></ul><p>&copy; Future Publishing Limited, Beauford Court, 30 Monmouth Street, Bath BA1 2BW. All rights reserved. England and Wales company registration number 2008885.</p></div></div></div>
+			
+		 </footer>
 
-         </footer>
       </div>
-               <img src="http://www.netmagazine.com/future.php?cmd=site-stats&id=2118" width="1" height="1" alt="site stat collection" style="display:block;position:absolute;bottom:0px;" />
+
     </body>
 </html>

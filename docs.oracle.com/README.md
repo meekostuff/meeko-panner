@@ -2,7 +2,7 @@ docs.oracle.com
 ---------------
 
 This site contains (amongst other things) a lot of Java documentation,
-much of it using the (now deprecated) [frameset](http://en.wikipedia.org/wiki/Framing_(World_Wide_Web)) presentation.
+much of it using the (now deprecated) [frameset](http://en.wikipedia.org/wiki/Framing_\(World_Wide_Web\)) presentation.
 
 [@westonruter](http://twitter.com/westonruter) [tweeted](https://twitter.com/westonruter/status/197650657501659137)
 the idea of making frameset style sites bookmarkable with HTML5 `pushState`,
