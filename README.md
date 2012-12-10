@@ -9,7 +9,7 @@ The intention is to demonstrate the simplicity and flexibility of
 a [content first](http://adactio.com/journal/4523/) approach for web-sites.
 
 **meeko-panner** extracts only the essential content of each page and 
-uses [HTMLDecor](http://github.com/shogun70/HTMLDecor) to 
+uses [HTMLDecor](http://github.com/meekostuff/HTMLDecor) to 
 decorate it with shared site decor -
 banner, navigation, auxilliary content, styles and layout.
 In general this is used to emulate the original appearance and behavior of the site,
