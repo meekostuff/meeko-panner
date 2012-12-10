@@ -37,19 +37,19 @@ body.removeAttribute('class');
 
 var screens = {
 	home: {
-		modules: [ "mod_about", "mod_customise", "mod_subscribe" ]
+		modules: [ "mod_about", "mod_customise", "mod_search", "mod_subscribe" ]
 	},
 	journal: {
 		tab: "journal",
-		modules: [ "mod_about", "mod_customise", "mod_search", "mod_subscribe", "mod_recommended", "mod_elsewhere", "mod_bedroll", "mod_book" ]
+		modules: [ "mod_customise", "mod_search_journal", "mod_subscribe", "mod_recommended", "mod_elsewhere", "mod_bedroll", "mod_book" ]
 	},
 	links: {
 		tab: "links",
-		modules: [ "mod_about", "mod_customise", "mod_search", "mod_subscribe",  ]
+		modules: [ "mod_customise", "mod_search_links", "mod_subscribe",  ]
 	},
 	articles: {
 		tab: "articles",
-		modules: [ "mod_about", "mod_customise", "mod_search", "mod_subscribe", "mod_slides", "mod_offsite" ]
+		modules: [ "mod_customise", "mod_search_articles", "mod_subscribe", "mod_slides", "mod_offsite" ]
 	},
 	about: {
 		tab: "about",
@@ -57,7 +57,7 @@ var screens = {
 	},
 	contact: {
 		tab: "contact",
-		modules: [ "mod_address" ]
+		modules: [ "mod_address", "mod_customise" ]
 	}
 }
 
@@ -65,6 +65,9 @@ modules = { // not including always visible modules
 	mod_about: {},
 	mod_customise: {},
 	mod_search: {},
+	mod_search_journal: {},
+	mod_search_links: {},
+	mod_search_articles: {},
 	mod_subscribe: {},
 	mod_recommended: {},
 	mod_elsewhere: {},
@@ -99,17 +102,7 @@ function beforePageIn() {
 			module.hidden = true;
 			return;
 		}
-		if (conf.require) {
-			var require = conf.require.replace('{user_id}', spec.user_id);
-			decor.options.load(require, function(doc) {
-				var content = $id(conf.id, doc).innerHTML;
-				module.innerHTML = content;
-				module.hidden = false;				
-			})
-		}
-		else {
-			module.hidden = false;
-		}
+		module.hidden = false;
 	});
 }
 
@@ -185,23 +178,10 @@ opacity: 0;
 
 <!-- Begin the extra content -->
 
-<div class="box" id="mod_about">
-
-<h3>About this site</h3>
-
-<address class="vcard">
-<a href="http://adactio.com/" class="url" rel="me">Adactio</a> is the online home of <a href="mailto:&#106;&#101;&#114;&#101;&#109;&#121;&#64;&#97;&#100;&#97;&#99;&#116;&#105;&#111;&#46;&#99;&#111;&#109;" class="email fn">Jeremy Keith</a>, a <span class="role">web developer</span> and <span class="title">author</span> living and working in <span class="adr"><span class="locality">Brighton</span>, <span class="country-name">England</span></span>.
-</address>
-
-</div>
-
 <div class="box" id="mod_customise">
 
-<h3>Customise</h3>
-
-<form method="get" id="skinselection">
-<p>
-<label for="skin">Choose a theme&hellip;</label><br />
+<form id="skinselection">
+<h3>Choose a theme&hellip;
 <select name="skin" id="skin">
 <option value="default" selected="selected" title="This is the plain vanilla look.">default</option>
 <option value="tatemodern" title="The Tate Modern gallery in London - great architectural achievement or just plain oppressive?">tatemodern</option>
@@ -212,8 +192,7 @@ opacity: 0;
 <option value="renaissance" title="Inspired by the colours of Bologna.">renaissance</option>
 <option value="hirnlego" title="Brain Lego. A song by Einstuerzende Neubauten and an attempted CSS Zen garden entry.">hirnlego</option>
 </select>
-<a href="base-uri:/about/site/" title="what is this?">?</a>
-</p>
+</h3>
 </form>
 
 <script>
@@ -230,18 +209,77 @@ skinSel.onchange = function(e) {
 
 </div>
 
+<div class="box" id="mod_about">
+
+<h3>About this site</h3>
+
+<address class="vcard">
+<a href="http://adactio.com/" class="url" rel="me">Adactio</a> is the online home of <a href="mailto:&#106;&#101;&#114;&#101;&#109;&#121;&#64;&#97;&#100;&#97;&#99;&#116;&#105;&#111;&#46;&#99;&#111;&#109;" class="email fn">Jeremy Keith</a>, a <span class="role">web developer</span> and <span class="title">author</span> living and working in <span class="adr"><span class="locality">Brighton</span>, <span class="country-name">England</span></span>.
+</address>
+
+</div>
+
 <div class="box" id="mod_search">
 
 <h3>Search</h3>
 
+<form action="base-uri:/search/" method="get" role="search">
+<p>
+<label for="query">Find</label>
+<input accesskey="4" name="query" id="query" value="" type="search">
+<input value="Go!" type="submit">
+</p>
+<p>
+<label for="section">Within</label>
+<select name="section" id="section">
+<option value="">adactio.com</option>
+<option value="Journal">journal</option>
+<option value="Links">links</option>
+<option value="Articles">articles</option>
+</select>
+</p>
+</form>
+
+</div>
+
+<div class="box" id="mod_search_journal">
+
+<h3>Search</h3>
+
 <form action="base-uri:/journal/search/" method="get" role="search">
-<p><label for="query">Search the journal:</label><br /><input accesskey="4" type="search" name="query" id="query" value="" />
+<p><label for="query">Search the <output>journal</output>:</label><br /><input accesskey="4" type="search" name="query" id="query" value="" />
 <input type="submit" value="Go!" /></p>
 </form>
 <ul>
 <li>Peruse the <a rel="contents" href="base-uri:/journal/archive/" title="chronologically ordered">archive</a></li>
 <li>Browse the <a href="base-uri:/journal/tags/">tags</a></li>
 </ul>
+
+</div>
+
+<div class="box" id="mod_search_links">
+
+<h3>Search</h3>
+
+<form action="base-uri:/links/search/" method="get" role="search">
+<p><label for="query">Search links:</label><br /><input accesskey="4" type="search" name="query" id="query" value="" />
+<input type="submit" value="Go!" /></p>
+</form>
+<ul>
+<li>Peruse the <a rel="contents" href="base-uri:/links/archive/" title="chronologically ordered">archive</a></li>
+<li>Browse the <a href="base-uri:/links/tags/">tags</a></li>
+</ul>
+
+</div>
+
+<div class="box" id="mod_search_articles">
+
+<h3>Search</h3>
+
+<form action="base-uri:/articles/search/" method="get" role="search">
+<p><label for="query">Search articles:</label><br /><input accesskey="4" type="search" name="query" id="query" value="" />
+<input type="submit" value="Go!" /></p>
+</form>
 
 </div>
 
