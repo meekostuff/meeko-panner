@@ -1,339 +1,522 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<!--[if IE 7 ]>		 <html class="js ie ie7 lte7 lte8 lte9" lang="en-US"> <![endif]-->
+<!--[if IE 8 ]>		 <html class="js ie ie8 lte8 lte9" lang="en-US"> <![endif]-->
+<!--[if IE 9 ]>		 <html class="js ie ie9 lte9>" lang="en-US"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="js" lang="en-US"> <!--<![endif]-->
 <head>
-  <title>jQuery API</title>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-  <link rel="stylesheet" href="http://static.jquery.com/files/rocker/css/reset.css" type="text/css" />
-  <link rel="stylesheet" type="text/css" href="http://static.jquery.com/api/style.css" />
-  <link rel="stylesheet" href="http://static.jquery.com/api/prettify.css">
-  <script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
-  <script type="text/javascript" src="http://static.jquery.com/files/rocker/scripts/custom.js"></script>
-  <script type="text/javascript" src="http://static.jquery.com/api/jquery.livesearch.js"></script>
-  <script type="text/javascript" src="http://static.jquery.com/api/navi.js"></script>
-  <link rel="shortcut icon" href="http://static.jquery.com/favicon.ico" type="image/x-icon"/>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>jQuery API Documentation</title>
+
+	<meta name="author" content="jQuery Foundation - jquery.org">
+	<meta name="description" content="jQuery: The Write Less, Do More, JavaScript Library">
+
+	<meta name="viewport" content="width=device-width">
+
+	<link rel="shortcut icon" href="http://api.jquery.com/jquery-wp-content/themes/api.jquery.com/i/favicon.ico">
+
+	<link rel="stylesheet" href="http://api.jquery.com/jquery-wp-content/themes/jquery/css/base.css?v=1">
+	<link rel="stylesheet" href="http://api.jquery.com/jquery-wp-content/themes/api.jquery.com/style.css">
+	<link rel="pingback" href="http://api.jquery.com/xmlrpc.php" />
+	<!--[if lt IE 7]><link rel="stylesheet" href="css/font-awesome-ie7.css"><![endif]-->
+
+	<script src="http://api.jquery.com/jquery-wp-content/themes/jquery/js/modernizr.custom.2.0.6.min.js"></script>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+	<script src="http://api.jquery.com/jquery-wp-content/themes/jquery/js/plugins.js"></script>
+	<script src="http://api.jquery.com/jquery-wp-content/themes/jquery/js/main.js"></script>
+
+<link rel="alternate" type="application/rss+xml" title="jQuery API Documentation &raquo; Feed" href="http://api.jquery.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="jQuery API Documentation &raquo; Comments Feed" href="http://api.jquery.com/comments/feed/" />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://api.jquery.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://api.jquery.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 3.5" />
+
 <script type="text/javascript">
-var noop = function() {}
+var $id = Meeko.DOM.$id;
 Meeko.decor.configurePaging({
-	duration: 400,
-	nodeInserted: noop,
-	nodeRemoved: noop,
+	duration: 300,
 	pageIn: {
-		before: function(doc) {
-			if (doc.body) document.body.className = doc.body.className + " jq-enhanced";
-		}
+	  before: function(doc) {
+		if (!doc) return;
+		document.body.className = doc.body.className;
+	  }
 	}
 });
 </script>
+<style>
+#content { 
+-webkit-transition: opacity 0.3s linear;
+-moz-transition: opacity 0.3s linear;
+-ms-transition: opacity 0.3s linear;
+-o-transition: opacity 0.3s linear;
+transition: opacity 0.3s linear;
+}
+#content[hidden] {
+display: block;
+visibility: visible;
+opacity: 0;
+}  
+</style>
 </head>
+<body class="api jquery home blog single-author">
 
-<body id="jq-interior" class="api-jquery-com">
+<!--[if lt IE 7]>
+<p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+<![endif]-->
 
+<header>
+	<section id="global-nav">
+		<nav>
+			<div class="constrain">
+				<ul class="projects">
+					<li class="project jquery"><a href="http://jquery.com/" title="jQuery">jQuery</a></li>
+					<li class="project jquery-ui"><a href="http://jqueryui.com/" title="jQuery UI">jQuery UI</a></li>
+					<li class="project jquery-mobile"><a href="http://jquerymobile.com/" title="jQuery Mobile">jQuery Mobile</a></li>
+					<li class="project sizzlejs"><a href="http://sizzlejs.com/" title="Sizzle">Sizzle</a></li>
+					<li class="project qunitjs"><a href="http://qunitjs.com/" title="QUnit">QUnit</a></li>
+				</ul>
+				<ul class="links">
+					<li class="dropdown"><a href="http://events.jquery.org/">Events</a>
+						<ul>
+							<li><a href="http://events.jquery.org/2013/eu/">Europe</a></li>
+							<li><a href="http://jqueryto.com">Toronto</a></li>
+							<li><a href="http://events.jquery.org/2013/UK/">UK</a></li>
+						</ul>
+					</li>
+					<li class="dropdown"><a href="#">Support</a>
+						<ul>
+							<li><a href="http://irc.jquery.com/">IRC/Chat</a></li>
+							<li><a href="http://forum.jquery.com/">Forums</a></li>
+							<li><a href="http://stackoverflow.com/tags/jquery/info">Stack Overflow</a></li>
+						</ul>
+					</li>
+					<li class="dropdown"><a href="http://jquery.org/">jQuery Foundation</a>
+						<ul>
+							<li><a href="http://jquery.org/about/">About</a></li>
+							<li><a href="http://jquery.org/history/">History</a></li>
+							<li><a href="http://jquery.org/team/">Team</a></li>
+							<li><a href="http://jquery.org/sponsors/">Sponsors</a></li>
+							<li><a href="http://jquery.org/donate/" >Donate</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</section>
+</header>
 
-  <div id="jq-siteContain">
-      <div id="jq-header">
-        <a id="jq-siteLogo" href="http://jquery.com/" title="jQuery Home"><img src="http://static.jquery.com/files/rocker/images/logo_jquery_215x53.gif" width="215" height="53" alt="jQuery: Write Less, Do More." /></a>
-        <div id="jq-primaryNavigation">
-          <ul>
-<li class="jq-jquery jq-current"><a href="http://jquery.com/" title="jQuery Home">jQuery</a></li>
-<li class="jq-ui"><a href="http://jqueryui.com/" title="jQuery UI">UI</a></li>
-<li class="jq-mobile"><a href="http://jquerymobile.com/" title="jQuery Mobile">Mobile</a></li>
-<li class="jq-meetup"><a href="http://meetups.jquery.com/" title="jQuery Meetups">Meetups</a></li>
-<li class="jq-forum"><a href="http://forum.jquery.com/" title="jQuery Forum">Forum</a></li>
-<li class="jq-blog"><a href="http://blog.jquery.com/" title="jQuery Blog">Blog</a></li>
-<li class="jq-about"><a href="http://jquery.org/about" title="About jQuery">About</a></li>
-<li class="jq-donate"><a href="http://jquery.org/donate" title="Donate to jQuery">Donate</a></li>
-          </ul>
-        </div><!-- /#primaryNavigation -->
+<div id="container">
+	<div id="logo-events" class="constrain clearfix">
+		<h2 class="logo"><a href="/" title="jQuery API Documentation">jQuery API Documentation</a></h2>
 
-        <div id="jq-secondaryNavigation">
-          <ul>
-            <li class="jq-download jq-first"><a href="http://docs.jquery.com/Downloading_jQuery">Download</a></li>
-            <li class="jq-documentation jq-current"><a href="http://docs.jquery.com/">Documentation</a></li>
-            <li class="jq-tutorials"><a href="http://docs.jquery.com/Tutorials">Tutorials</a></li>
-            <li class="jq-bugTracker"><a href="http://bugs.jquery.com/">Bug Tracker</a></li>
-            <li class="jq-discussion jq-last"><a href="http://docs.jquery.com/Discussion">Discussion</a></li>
-          </ul>
-        </div><!-- /#secondaryNavigation -->
+		<!--Ads or events
+		<aside></aside> -->
+	</div>
 
-        <form id="jq-primarySearchForm" action="http://api.jquery.com" method="get" autocomplete="off">
-          <div>
-            <input type="hidden" value="1" name="ns0"/>
-            <label for="jq-primarySearch">Search <span class="jq-jquery">jQuery</span></label>
-            <input type="text" value="" accesskey="f" title="Search jQuery" name="s" id="jq-primarySearch" class=""/>
-            <button type="submit" name="go" id="jq-searchGoButton"><span>Go</span></button>
-          </div>
-        </form>
+	<nav id="main" class="constrain clearfix">
+		<div class="menu-top-container">
+	<ul id="menu-top" class="menu">
+<li class="menu-item"><a href="http://plugins.jquery.com/">Plugins</a></li>
+<li class="menu-item"><a href="http://jquery.com/download/">Download</a></li>
+<li class="menu-item current"><a href="http://api.jquery.com/">API Documentation</a></li>
+<li class="menu-item"><a href="http://jquery.com/browser-support/">Browser Support</a></li>
+	</ul>
+</div>
 
-<!--
-        <h1 id="blog-title"><span><a href="http://api.jquery.com/" title="jQuery API" rel="home">jQuery API</a></span></h1>
-        <div id="blog-description">jQuery API Reference</div>
--->
-        <h1>jQuery API</h1>
+		<form method="get" class="searchform" action="http://api.jquery.com/">
+	<button type="submit" class="icon-search"><span>go</span></button>
+	<label>
+		<span>Search jQuery API Documentation</span>
+		<input type="text" name="s" value=""
+			placeholder="Search jQuery API Documentation">
+	</label>
+</form>
+	</nav>
 
-
-      </div><!-- /#header -->
-
-      <div id="jq-content" class="jq-clearfix">
-
-  <div id="access">
-    <div class="skip-link"><a href="#content" title="Skip to content">Skip to content</a></div>
-    <div id="menu"><ul><li class="page_item page-item-1295"><a href="base-uri:/api/">api</a></li><li class="page_item page-item-1772"><a href="base-uri:/jsonp/">jsonp</a></li><li class="page_item page-item-3413"><a href="base-uri:/Types/">Types</a></li><li class="page_item page-item-3608"><a href="base-uri:/extending-ajax/">Extending Ajax: Prefilters, Converters, and Transports</a></li></ul></div>
-  </div>
-<!-- #access -->
-
-	<div id="jq-primaryContent" class="jq-box round">
-	</div><!-- #jq-primaryContent -->
-
-  <div id="jq-interiorNavigation" >
-
-    <h2 class="jq-clearfix roundTop section-title">Browse the jQuery API</h2>
-    <div class="roundBottom jq-box">
-    <ul class="xoxo">
-
-      <li id="categories">
-        <ul>
-        <li><a href="base-uri:/">All</a></li>
-	<li class="cat-item cat-item-13"><a href="base-uri:/category/ajax/" title="View all posts filed under Ajax">Ajax</a>
+	<div id="content-wrapper" class="clearfix">
+<div class="content-right">
+	<div id="content">
+	  <div style="width: 100%; text-align: center;"><img src="../images/waiting-big.gif" style="border: none;" /></div>
+	</div>
+	<div id="sidebar" class="widget-area" role="complementary">
+					<aside id="categories" class="widget">
+			<ul>
+					<li class="cat-item cat-item-1"><a href="http://api.jquery.com/category/ajax/" title="The jQuery library has a full suite of AJAX capabilities. The functions and methods therein allow us to load data from the server without a browser page refresh.">Ajax</a>
 <ul class='children'>
-	<li class="cat-item cat-item-39"><a href="base-uri:/category/ajax/global-ajax-event-handlers/" title="View all posts filed under Global Ajax Event Handlers">Global Ajax Event Handlers</a>
+	<li class="cat-item cat-item-2"><a href="http://api.jquery.com/category/ajax/global-ajax-event-handlers/" title="These methods register handlers to be called when certain events, such as initialization or completion, take place for any AJAX request on the page. The global events are fired on each AJAX request if the global property in jQuery.ajaxSetup() is true, which it is by default. Note: Global events are never fired for cross-domain script or JSONP requests, regardless of the value of global.">Global Ajax Event Handlers</a>
 </li>
-	<li class="cat-item cat-item-40"><a href="base-uri:/category/ajax/helper-functions/" title="View all posts filed under Helper Functions">Helper Functions</a>
+	<li class="cat-item cat-item-3"><a href="http://api.jquery.com/category/ajax/helper-functions/" title="These functions assist with common idioms encountered when performing AJAX tasks.">Helper Functions</a>
 </li>
-	<li class="cat-item cat-item-37"><a href="base-uri:/category/ajax/low-level-interface/" title="View all posts filed under Low-Level Interface">Low-Level Interface</a>
+	<li class="cat-item cat-item-4"><a href="http://api.jquery.com/category/ajax/low-level-interface/" title="These methods can be used to make arbitrary AJAX requests.">Low-Level Interface</a>
 </li>
-	<li class="cat-item cat-item-38"><a href="base-uri:/category/ajax/shorthand-methods/" title="View all posts filed under Shorthand Methods">Shorthand Methods</a>
+	<li class="cat-item cat-item-5"><a href="http://api.jquery.com/category/ajax/shorthand-methods/" title="These methods perform the more common types of AJAX requests in less code.">Shorthand Methods</a>
 </li>
 </ul>
 </li>
-	<li class="cat-item cat-item-7"><a href="base-uri:/category/attributes/" title="View all posts filed under Attributes">Attributes</a>
+	<li class="cat-item cat-item-6"><a href="http://api.jquery.com/category/attributes/" title="These methods get and set DOM attributes of elements.">Attributes</a>
 </li>
-	<li class="cat-item cat-item-99"><a href="base-uri:/category/callbacks-object/" title="View all posts filed under Callbacks Object">Callbacks Object</a>
+	<li class="cat-item cat-item-7"><a href="http://api.jquery.com/category/callbacks-object/" title="The jQuery.Callbacks() function, introduced in version 1.7, returns a multi-purpose object that provides a powerful way to manage callback lists. It supports adding, removing, firing, and disabling callbacks.">Callbacks Object</a>
 </li>
-	<li class="cat-item cat-item-5"><a href="base-uri:/category/core/" title="View all posts filed under Core">Core</a>
+	<li class="cat-item cat-item-8"><a href="http://api.jquery.com/category/core/" title="View all posts filed under Core">Core</a>
 </li>
-	<li class="cat-item cat-item-10"><a href="base-uri:/category/css/" title="View all posts filed under CSS">CSS</a>
+	<li class="cat-item cat-item-9"><a href="http://api.jquery.com/category/css/" title="These methods get and set CSS-related properties of elements.">CSS</a>
 </li>
-	<li class="cat-item cat-item-51"><a href="base-uri:/category/data/" title="View all posts filed under Data">Data</a>
+	<li class="cat-item cat-item-10"><a href="http://api.jquery.com/category/data/" title="These methods allow us to associate arbitrary data with specific DOM elements.">Data</a>
 </li>
-	<li class="cat-item cat-item-93"><a href="base-uri:/category/deferred-object/" title="View all posts filed under Deferred Object">Deferred Object</a>
+	<li class="cat-item cat-item-11"><a href="http://api.jquery.com/category/deferred-object/" title="The Deferred object, introduced in jQuery 1.5, is a chainable utility object created by calling the jQuery.Deferred() method. It can register multiple callbacks into callback queues, invoke callback queues, and relay the success or failure state of any synchronous or asynchronous function.
+    The Deferred object is chainable, similar to the way a jQuery object is chainable, but it has its own methods. After creating a Deferred object, you can use any of the methods below by either chaining directly from the object creation or saving the object in a variable and invoking one or more methods on that variable.">Deferred Object</a>
 </li>
-	<li class="cat-item cat-item-97"><a href="base-uri:/category/deprecated/" title="View all posts filed under Deprecated">Deprecated</a>
+	<li class="cat-item cat-item-12"><a href="http://api.jquery.com/category/dimensions/" title="These methods are used to get and set the CSS dimensions for the various properties.">Dimensions</a>
 </li>
-	<li class="cat-item cat-item-50"><a href="base-uri:/category/dimensions/" title="View all posts filed under Dimensions">Dimensions</a>
-</li>
-	<li class="cat-item cat-item-12"><a href="base-uri:/category/effects/" title="View all posts filed under Effects">Effects</a>
+	<li class="cat-item cat-item-13"><a href="http://api.jquery.com/category/effects/" title="The jQuery library provides several techniques for adding animation to a web page. These include simple, standard animations that are frequently used, and the ability to craft sophisticated custom effects.">Effects</a>
 <ul class='children'>
-	<li class="cat-item cat-item-52"><a href="base-uri:/category/effects/basics/" title="View all posts filed under Basics">Basics</a>
+	<li class="cat-item cat-item-14"><a href="http://api.jquery.com/category/effects/basics/" title="View all posts filed under Basics">Basics</a>
 </li>
-	<li class="cat-item cat-item-55"><a href="base-uri:/category/effects/custom-effects/" title="View all posts filed under Custom">Custom</a>
+	<li class="cat-item cat-item-15"><a href="http://api.jquery.com/category/effects/custom-effects/" title="These methods allow you to create effects that are not provided &quot;out of the box&quot; by jQuery.">Custom</a>
 </li>
-	<li class="cat-item cat-item-54"><a href="base-uri:/category/effects/fading/" title="View all posts filed under Fading">Fading</a>
+	<li class="cat-item cat-item-16"><a href="http://api.jquery.com/category/effects/fading/" title="These methods adjust the opacity of elements.">Fading</a>
 </li>
-	<li class="cat-item cat-item-53"><a href="base-uri:/category/effects/sliding/" title="View all posts filed under Sliding">Sliding</a>
+	<li class="cat-item cat-item-17"><a href="http://api.jquery.com/category/effects/sliding/" title="View all posts filed under Sliding">Sliding</a>
 </li>
 </ul>
 </li>
-	<li class="cat-item cat-item-11"><a href="base-uri:/category/events/" title="View all posts filed under Events">Events</a>
+	<li class="cat-item cat-item-18"><a href="http://api.jquery.com/category/events/" title="These methods are used to register behaviors to take effect when the user interacts with the browser, and to further manipulate those registered behaviors.">Events</a>
 <ul class='children'>
-	<li class="cat-item cat-item-36"><a href="base-uri:/category/events/browser-events/" title="View all posts filed under Browser Events">Browser Events</a>
-</li>
-	<li class="cat-item cat-item-32"><a href="base-uri:/category/events/document-loading/" title="View all posts filed under Document Loading">Document Loading</a>
-</li>
-	<li class="cat-item cat-item-31"><a href="base-uri:/category/events/event-handler-attachment/" title="View all posts filed under Event Handler Attachment">Event Handler Attachment</a>
-</li>
-	<li class="cat-item cat-item-66"><a href="base-uri:/category/events/event-object/" title="View all posts filed under Event Object">Event Object</a>
-</li>
-	<li class="cat-item cat-item-34"><a href="base-uri:/category/events/form-events/" title="View all posts filed under Form Events">Form Events</a>
-</li>
-	<li class="cat-item cat-item-35"><a href="base-uri:/category/events/keyboard-events/" title="View all posts filed under Keyboard Events">Keyboard Events</a>
-</li>
-	<li class="cat-item cat-item-33"><a href="base-uri:/category/events/mouse-events/" title="View all posts filed under Mouse Events">Mouse Events</a>
-</li>
-</ul>
-</li>
-	<li class="cat-item cat-item-56"><a href="base-uri:/category/forms/" title="View all posts filed under Forms">Forms</a>
-</li>
-	<li class="cat-item cat-item-67"><a href="base-uri:/category/internals/" title="View all posts filed under Internals">Internals</a>
-</li>
-	<li class="cat-item cat-item-9"><a href="base-uri:/category/manipulation/" title="View all posts filed under Manipulation">Manipulation</a>
-<ul class='children'>
-	<li class="cat-item cat-item-25"><a href="base-uri:/category/manipulation/class-attribute/" title="View all posts filed under Class Attribute">Class Attribute</a>
-</li>
-	<li class="cat-item cat-item-29"><a href="base-uri:/category/manipulation/copying/" title="View all posts filed under Copying">Copying</a>
-</li>
-	<li class="cat-item cat-item-28"><a href="base-uri:/category/manipulation/dom-insertion-around/" title="View all posts filed under DOM Insertion, Around">DOM Insertion, Around</a>
-</li>
-	<li class="cat-item cat-item-27"><a href="base-uri:/category/manipulation/dom-insertion-inside/" title="View all posts filed under DOM Insertion, Inside">DOM Insertion, Inside</a>
-</li>
-	<li class="cat-item cat-item-48"><a href="base-uri:/category/manipulation/dom-insertion-outside/" title="View all posts filed under DOM Insertion, Outside">DOM Insertion, Outside</a>
-</li>
-	<li class="cat-item cat-item-30"><a href="base-uri:/category/manipulation/dom-removal/" title="View all posts filed under DOM Removal">DOM Removal</a>
-</li>
-	<li class="cat-item cat-item-26"><a href="base-uri:/category/manipulation/dom-replacement/" title="View all posts filed under DOM Replacement">DOM Replacement</a>
-</li>
-	<li class="cat-item cat-item-23"><a href="base-uri:/category/manipulation/general-attributes/" title="View all posts filed under General Attributes">General Attributes</a>
-</li>
-	<li class="cat-item cat-item-24"><a href="base-uri:/category/manipulation/style-properties/" title="View all posts filed under Style Properties">Style Properties</a>
-</li>
-</ul>
-</li>
-	<li class="cat-item cat-item-41"><a href="base-uri:/category/miscellaneous/" title="View all posts filed under Miscellaneous">Miscellaneous</a>
-<ul class='children'>
-	<li class="cat-item cat-item-44"><a href="base-uri:/category/miscellaneous/collection-manipulation/" title="View all posts filed under Collection Manipulation">Collection Manipulation</a>
-</li>
-	<li class="cat-item cat-item-45"><a href="base-uri:/category/miscellaneous/data-storage/" title="View all posts filed under Data Storage">Data Storage</a>
-</li>
-	<li class="cat-item cat-item-43"><a href="base-uri:/category/miscellaneous/dom-element-methods/" title="View all posts filed under DOM Element Methods">DOM Element Methods</a>
-</li>
-	<li class="cat-item cat-item-42"><a href="base-uri:/category/miscellaneous/setup-methods/" title="View all posts filed under Setup Methods">Setup Methods</a>
-</li>
-</ul>
-</li>
-	<li class="cat-item cat-item-49"><a href="base-uri:/category/offset/" title="View all posts filed under Offset">Offset</a>
-</li>
-	<li class="cat-item cat-item-85"><a href="base-uri:/category/plugins/" title="View all posts filed under Plugins">Plugins</a>
-<ul class='children'>
-	<li class="cat-item cat-item-87"><a href="base-uri:/category/plugins/data-link/" title="View all posts filed under Data Link">Data Link</a>
-</li>
-	<li class="cat-item cat-item-83"><a href="base-uri:/category/plugins/templates/" title="View all posts filed under Templates">Templates</a>
-</li>
-</ul>
-</li>
-	<li class="cat-item cat-item-68"><a href="base-uri:/category/properties/" title="View all posts filed under Properties">Properties</a>
-<ul class='children'>
-	<li class="cat-item cat-item-59"><a href="base-uri:/category/properties/jquery-object-instance-properties/" title="View all posts filed under Properties of jQuery Object Instances">Properties of jQuery Object Instances</a>
-</li>
-	<li class="cat-item cat-item-58"><a href="base-uri:/category/properties/global-jquery-object-properties/" title="View all posts filed under Properties of the Global jQuery Object">Properties of the Global jQuery Object</a>
-</li>
-</ul>
-</li>
-	<li class="cat-item cat-item-6"><a href="base-uri:/category/selectors/" title="View all posts filed under Selectors">Selectors</a>
-<ul class='children'>
-	<li class="cat-item cat-item-17"><a href="base-uri:/category/selectors/attribute-selectors/" title="View all posts filed under Attribute">Attribute</a>
-</li>
-	<li class="cat-item cat-item-16"><a href="base-uri:/category/selectors/basic-css-selectors/" title="View all posts filed under Basic">Basic</a>
-</li>
-	<li class="cat-item cat-item-61"><a href="base-uri:/category/selectors/basic-filter-selectors/" title="View all posts filed under Basic Filter">Basic Filter</a>
-</li>
-	<li class="cat-item cat-item-65"><a href="base-uri:/category/selectors/child-filter-selectors/" title="View all posts filed under Child Filter">Child Filter</a>
-</li>
-	<li class="cat-item cat-item-62"><a href="base-uri:/category/selectors/content-filter-selector/" title="View all posts filed under Content Filter">Content Filter</a>
-</li>
-	<li class="cat-item cat-item-18"><a href="base-uri:/category/selectors/form-selectors/" title="View all posts filed under Form">Form</a>
-</li>
-	<li class="cat-item cat-item-60"><a href="base-uri:/category/selectors/hierarchy-selectors/" title="View all posts filed under Hierarchy">Hierarchy</a>
-</li>
-	<li class="cat-item cat-item-96"><a href="base-uri:/category/selectors/jquery-selector-extensions/" title="View all posts filed under jQuery Extensions">jQuery Extensions</a>
-</li>
-	<li class="cat-item cat-item-63"><a href="base-uri:/category/selectors/visibility-filter-selectors/" title="View all posts filed under Visibility Filter">Visibility Filter</a>
-</li>
-</ul>
-</li>
-	<li class="cat-item cat-item-8"><a href="base-uri:/category/traversing/" title="View all posts filed under Traversing">Traversing</a>
-<ul class='children'>
-	<li class="cat-item cat-item-20"><a href="base-uri:/category/traversing/filtering/" title="View all posts filed under Filtering">Filtering</a>
-</li>
-	<li class="cat-item cat-item-22"><a href="base-uri:/category/traversing/miscellaneous-traversal/" title="View all posts filed under Miscellaneous Traversing">Miscellaneous Traversing</a>
-</li>
-	<li class="cat-item cat-item-21"><a href="base-uri:/category/traversing/tree-traversal/" title="View all posts filed under Tree Traversal">Tree Traversal</a>
-</li>
-</ul>
-</li>
-	<li class="cat-item cat-item-14"><a href="base-uri:/category/utilities/" title="View all posts filed under Utilities">Utilities</a>
-</li>
-	<li class="cat-item cat-item-69"><a href="base-uri:/category/version/" title="View all posts filed under Version">Version</a>
-<ul class='children'>
-	<li class="cat-item cat-item-70"><a href="base-uri:/category/version/1.0/" title="View all posts filed under Version 1.0">Version 1.0</a>
-</li>
-	<li class="cat-item cat-item-71"><a href="base-uri:/category/version/1.0.4/" title="View all posts filed under Version 1.0.4">Version 1.0.4</a>
-</li>
-	<li class="cat-item cat-item-72"><a href="base-uri:/category/version/1.1/" title="View all posts filed under Version 1.1">Version 1.1</a>
-</li>
-	<li class="cat-item cat-item-73"><a href="base-uri:/category/version/1.1.2/" title="View all posts filed under Version 1.1.2">Version 1.1.2</a>
-</li>
-	<li class="cat-item cat-item-74"><a href="base-uri:/category/version/1.1.3/" title="View all posts filed under Version 1.1.3">Version 1.1.3</a>
-</li>
-	<li class="cat-item cat-item-75"><a href="base-uri:/category/version/1.1.4/" title="View all posts filed under Version 1.1.4">Version 1.1.4</a>
-</li>
-	<li class="cat-item cat-item-76"><a href="base-uri:/category/version/1.2/" title="View all posts filed under Version 1.2">Version 1.2</a>
-</li>
-	<li class="cat-item cat-item-77"><a href="base-uri:/category/version/1.2.3/" title="View all posts filed under Version 1.2.3">Version 1.2.3</a>
-</li>
-	<li class="cat-item cat-item-78"><a href="base-uri:/category/version/1.2.6/" title="View all posts filed under Version 1.2.6">Version 1.2.6</a>
-</li>
-	<li class="cat-item cat-item-79"><a href="base-uri:/category/version/1.3/" title="View all posts filed under Version 1.3">Version 1.3</a>
-</li>
-	<li class="cat-item cat-item-80"><a href="base-uri:/category/version/1.4/" title="View all posts filed under Version 1.4">Version 1.4</a>
-</li>
-	<li class="cat-item cat-item-81"><a href="base-uri:/category/version/1.4.1/" title="View all posts filed under Version 1.4.1">Version 1.4.1</a>
-</li>
-	<li class="cat-item cat-item-82"><a href="base-uri:/category/version/1.4.2/" title="View all posts filed under Version 1.4.2">Version 1.4.2</a>
-</li>
-	<li class="cat-item cat-item-90"><a href="base-uri:/category/version/1.4.3/" title="View all posts filed under Version 1.4.3">Version 1.4.3</a>
-</li>
-	<li class="cat-item cat-item-91"><a href="base-uri:/category/version/1.4.4/" title="View all posts filed under Version 1.4.4">Version 1.4.4</a>
-</li>
-	<li class="cat-item cat-item-92"><a href="base-uri:/category/version/1.5/" title="View all posts filed under Version 1.5">Version 1.5</a>
-</li>
-	<li class="cat-item cat-item-94"><a href="base-uri:/category/version/1.5.1/" title="View all posts filed under Version 1.5.1">Version 1.5.1</a>
-</li>
-	<li class="cat-item cat-item-95"><a href="base-uri:/category/version/1.6/" title="View all posts filed under Version 1.6">Version 1.6</a>
-</li>
-	<li class="cat-item cat-item-98"><a href="base-uri:/category/version/1.7/" title="View all posts filed under Version 1.7">Version 1.7</a>
-</li>
-</ul>
-</li>
-        </ul>
-      </li>
+	<li class="cat-item cat-item-19"><a href="http://api.jquery.com/category/events/browser-events/" title="View all posts filed under Browser Events">Browser Events</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://api.jquery.com/category/events/document-loading/" title="View all posts filed under Document Loading">Document Loading</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://api.jquery.com/category/events/event-handler-attachment/" title="View all posts filed under Event Handler Attachment">Event Handler Attachment</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://api.jquery.com/category/events/event-object/" title="jQuery&#039;s event system normalizes the event object according to W3C standards. The event object is guaranteed to be passed to the event handler. Most properties from the original event are copied over and normalized to the new event object.
+        
+          jQuery.Event Constructor
+          The jQuery.Event constructor is exposed and can be used when calling trigger. The new operator is optional.
+          Check trigger&#039;s documentation to see how to combine it with your own event object.
+          Example:
+          
+            //Create a new jQuery.Event object without the &quot;new&quot; operator.
+  var e = jQuery.Event(&quot;click&quot;);
 
-  </ul>
-  </div>
-  </div><!-- #jq-interiorNavigation -->
-  </div><!-- /#secondaryNavigation -->
+  // trigger an artificial click event
+  jQuery(&quot;body&quot;).trigger( e );
 
-  <div id="jq-footer" class="jq-clearfix">
-    <div id="jq-credits">
-<p id="jq-copyright">&copy; 2012 <a href="http://jquery.org/">The jQuery Foundation</a></p>
-<p id="jq-hosting">Sponsored by <a href="http://mediatemple.net" class="jq-mediaTemple">Media Temple</a> and <a href="http://jquery.org/sponsors">others</a>.</p>
-    </div>
+          
+          As of jQuery 1.6, you can also pass an object to jQuery.Event() and its properties will be set on the newly created Event object.
+          Example:
+          
+              // Create a new jQuery.Event object with specified event properties.
+  var e = jQuery.Event(&quot;keydown&quot;, { keyCode: 64 });
 
-    <div id="jq-footerNavigation">
-      <ul>
-        <li class="jq-download jq-first"><a href="http://docs.jquery.com/Downloading_jQuery">Download</a></li>
-        <li class="jq-documentation"><a href="http://docs.jquery.com">Documentation</a></li>
-        <li class="jq-tutorials"><a href="http://docs.jquery.com/Tutorials">Tutorials</a></li>
-        <li class="jq-bugTracker"><a href="http://bugs.jquery.com/">Bug Tracker</a></li>
-        <li class="jq-discussion jq-last"><a href="http://docs.jquery.com/Discussion">Discussion</a></li>
-      </ul>
-    </div><!-- /#jq-footerNavigation -->
-  </div><!-- /#jq-footer -->
-</div><!-- /#siteContain -->
-<script>
-   // Manage sidebar category display
-   // TODO replace jquery with xbl
-  jQuery("#categories > ul > li.cat-item").each(function(){
-    var item;
-    if ( jQuery(this).has("ul").length ) {
-      item = jQuery("<span class='plus'>+</span>").click(function(e){
-        jQuery(this)
-          .text( jQuery(this).text() === "+" ? "-" : "+" )
-          .parent().next().toggle();
-        return false;
-      });
-      
-      if (/current-cat/.test(this.className)) {
-        item.text('-');
-      } else {
-        jQuery(this).find(".children").hide();  
-      }
-      
-    } else {
-      item = jQuery("<span class='plus'>&nbsp;</span>");
-    }
+  // trigger an artificial keydown event with keyCode 64
+  jQuery(&quot;body&quot;).trigger( e );
 
-    jQuery(this).children("a").prepend( item );
-  });
- 
-</script>
+          
+          Event Properties
+          jQuery normalizes the following properties for cross-browser consistency:
+          
+            
+              target
+            
+            
+              relatedTarget
+            
+            
+              pageX
+            
+            
+              pageY
+            
+            
+              which
+            
+            
+              metaKey
+            
+          
+          The following properties are also copied to the event object, though some of their values may be undefined depending on the event:
+          altKey, bubbles, button, cancelable, charCode, clientX, clientY, ctrlKey, currentTarget, data, detail, eventPhase, metaKey, offsetX, offsetY, originalTarget, pageX, pageY, prevValue, relatedTarget, screenX, screenY, shiftKey, target, view, which
+          OtherProperties
+          Certain events may have properties specific to them. Those can be accessed as properties of the event.originalEvent object. To make special properties available in all event objects, they can be added to the jQuery.event.props array. This is not recommended, since it adds overhead to every event delivered by jQuery.
+          Example:
+          
+            
+  // add the dataTransfer property for use with the native `drop` event
+  // to capture information about files dropped into the browser window
+  jQuery.event.props.push(&quot;dataTransfer&quot;);
+
+          
+        ">Event Object</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://api.jquery.com/category/events/form-events/" title="View all posts filed under Form Events">Form Events</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="http://api.jquery.com/category/events/keyboard-events/" title="View all posts filed under Keyboard Events">Keyboard Events</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://api.jquery.com/category/events/mouse-events/" title="View all posts filed under Mouse Events">Mouse Events</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-26"><a href="http://api.jquery.com/category/forms/" title="These methods and event handlers handle forms and their various elements.">Forms</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://api.jquery.com/category/internals/" title="Although this category is referred to as &#039;internal&#039;, any methods documented within the API site should be considered public and may be freely used.">Internals</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://api.jquery.com/category/manipulation/" title="All of the methods in this section manipulate the DOM in some manner. A few of them simply change one of the attributes of an element (also listed in the Attributes category), while others set an element&#039;s style properties (also listed in the CSS category). Still others modify entire elements (or groups of elements) themselves&#x2014;inserting, copying, removing, and so on. All of these methods are referred to as &quot;setters,&quot; as they change the values of properties.
+			A few of these methods&#x2014;such as .attr(), .html(), and .val()&#x2014;also act as &quot;getters,&quot; retrieving information from DOM elements for later use.">Manipulation</a>
+<ul class='children'>
+	<li class="cat-item cat-item-29"><a href="http://api.jquery.com/category/manipulation/class-attribute/" title="These methods inspect and manipulate the CSS classes assigned to elements.">Class Attribute</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://api.jquery.com/category/manipulation/copying/" title="This method allows us to make copies of elements.">Copying</a>
+</li>
+	<li class="cat-item cat-item-32"><a href="http://api.jquery.com/category/manipulation/dom-insertion-around/" title="These methods allow us to insert new content surrounding existing content.">DOM Insertion, Around</a>
+</li>
+	<li class="cat-item cat-item-33"><a href="http://api.jquery.com/category/manipulation/dom-insertion-inside/" title="These methods allow us to insert new content inside an existing element.">DOM Insertion, Inside</a>
+</li>
+	<li class="cat-item cat-item-34"><a href="http://api.jquery.com/category/manipulation/dom-insertion-outside/" title="These methods allow us to insert new content outside an existing element.">DOM Insertion, Outside</a>
+</li>
+	<li class="cat-item cat-item-35"><a href="http://api.jquery.com/category/manipulation/dom-removal/" title="These methods allow us to delete elements from the DOM.">DOM Removal</a>
+</li>
+	<li class="cat-item cat-item-36"><a href="http://api.jquery.com/category/manipulation/dom-replacement/" title="These methods are used to remove content from the DOM and replace it with new content.">DOM Replacement</a>
+</li>
+	<li class="cat-item cat-item-37"><a href="http://api.jquery.com/category/manipulation/general-attributes/" title="These methods get and set DOM attributes of elements">General Attributes</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="http://api.jquery.com/category/manipulation/style-properties/" title="These methods get and set CSS-related properties of elements.">Style Properties</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-39"><a href="http://api.jquery.com/category/miscellaneous/" title="View all posts filed under Miscellaneous">Miscellaneous</a>
+<ul class='children'>
+	<li class="cat-item cat-item-40"><a href="http://api.jquery.com/category/miscellaneous/collection-manipulation/" title="View all posts filed under Collection Manipulation">Collection Manipulation</a>
+</li>
+	<li class="cat-item cat-item-41"><a href="http://api.jquery.com/category/miscellaneous/data-storage/" title="These methods allow us to associate arbitrary data with specific DOM elements.">Data Storage</a>
+</li>
+	<li class="cat-item cat-item-42"><a href="http://api.jquery.com/category/miscellaneous/dom-element-methods/" title="View all posts filed under DOM Element Methods">DOM Element Methods</a>
+</li>
+	<li class="cat-item cat-item-43"><a href="http://api.jquery.com/category/miscellaneous/setup-methods/" title="View all posts filed under Setup Methods">Setup Methods</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-44"><a href="http://api.jquery.com/category/offset/" title="View all posts filed under Offset">Offset</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="http://api.jquery.com/category/properties/" title="View all posts filed under Properties">Properties</a>
+<ul class='children'>
+	<li class="cat-item cat-item-46"><a href="http://api.jquery.com/category/properties/jquery-object-instance-properties/" title="Each jQuery object created with the jQuery() function contains a number of properties alongside its methods. These properties allow us to inspect various attributes of the object.">Properties of jQuery Object Instances</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="http://api.jquery.com/category/properties/global-jquery-object-properties/" title="These properties are associated with the global jQuery object.">Properties of the Global jQuery Object</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-48"><a href="http://api.jquery.com/category/selectors/" title="Borrowing from CSS 1&#x2013;3, and then adding its own, jQuery offers a powerful set of tools for matching a set of elements in a document.
+      To use any of the meta-characters ( such as  !&quot;#$%&amp;&#039;()*+,./:;&lt;=&gt;?@[\]^`{|}~ ) as a literal part of a name, it must be escaped with with two backslashes: \\. For example, an element with id=&quot;foo.bar&quot;, can use the selector $(&quot;#foo\\.bar&quot;). The W3C CSS specification contains the complete set of rules regarding valid CSS selectors. Also useful is the blog entry by Mathias Bynens on CSS character escape sequences for identifiers.">Selectors</a>
+<ul class='children'>
+	<li class="cat-item cat-item-49"><a href="http://api.jquery.com/category/selectors/attribute-selectors/" title="The CSS specification allows elements to be identified by their attributes. While not supported by some older browsers for the purpose of styling documents, jQuery allows you to employ them regardless of the browser being used.
+        When using any of the following attribute selectors, you should account for attributes that have multiple, space-separated values. Since these selectors see attribute values as a single string, this selector, for example, $(&quot;a[rel=&#039;nofollow&#039;]&quot;), will select &lt;a href=&quot;example.html&quot; rel=&quot;nofollow&quot;&gt;Some text&lt;/a&gt; but not &lt;a href=&quot;example.html&quot; rel=&quot;nofollow foe&quot;&gt;Some text&lt;/a&gt;.
+        Attribute values in selector expressions must follow the rules for W3C CSS selectors; in general, that means anything other than a valid identifier should be surrounded by quotation marks.
+        
+          double quotes inside single quotes: $(&#039;a[rel=&quot;nofollow self&quot;]&#039;)
+          single quotes inside double quotes: $(&quot;a[rel=&#039;nofollow self&#039;]&quot;)
+          escaped single quotes inside single quotes: $(&#039;a[rel=\&#039;nofollow self\&#039;]&#039;)
+          escaped double quotes inside double quotes: $(&quot;a[rel=\&quot;nofollow self\&quot;]&quot;)
+        
+        The variation you choose is generally a matter of style or convenience.
+
+        Note: In jQuery 1.3 [@attr] style selectors were removed (they were previously deprecated in jQuery 1.2). Simply remove the &quot;@&quot; symbol from your selectors in order to make them work again.">Attribute</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="http://api.jquery.com/category/selectors/basic-css-selectors/" title="The following selectors are based on the Cascading Style Sheet 1 specification, as outlined by the W3C. For more information about the specifications, visit http://www.w3.org/Style/CSS/#specs.">Basic</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="http://api.jquery.com/category/selectors/basic-filter-selectors/" title="View all posts filed under Basic Filter">Basic Filter</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="http://api.jquery.com/category/selectors/child-filter-selectors/" title="View all posts filed under Child Filter">Child Filter</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="http://api.jquery.com/category/selectors/content-filter-selector/" title="View all posts filed under Content Filter">Content Filter</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="http://api.jquery.com/category/selectors/form-selectors/" title="View all posts filed under Form">Form</a>
+</li>
+	<li class="cat-item cat-item-55"><a href="http://api.jquery.com/category/selectors/hierarchy-selectors/" title="View all posts filed under Hierarchy">Hierarchy</a>
+</li>
+	<li class="cat-item cat-item-56"><a href="http://api.jquery.com/category/selectors/jquery-selector-extensions/" title="jQuery has extended the CSS3 selectors with the following selectors.  Because these selectors are jQuery extension and not part of the CSS specification, queries using them cannot take advantage of the performance boost provided by the native DOM querySelectorAll() method. To achieve the best performance when using these selectors, first select some elements using a pure CSS selector, then use .filter().">jQuery Extensions</a>
+</li>
+	<li class="cat-item cat-item-57"><a href="http://api.jquery.com/category/selectors/visibility-filter-selectors/" title="View all posts filed under Visibility Filter">Visibility Filter</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-58"><a href="http://api.jquery.com/category/traversing/" title="View all posts filed under Traversing">Traversing</a>
+<ul class='children'>
+	<li class="cat-item cat-item-59"><a href="http://api.jquery.com/category/traversing/filtering/" title="View all posts filed under Filtering">Filtering</a>
+</li>
+	<li class="cat-item cat-item-60"><a href="http://api.jquery.com/category/traversing/miscellaneous-traversal/" title="View all posts filed under Miscellaneous Traversing">Miscellaneous Traversing</a>
+</li>
+	<li class="cat-item cat-item-61"><a href="http://api.jquery.com/category/traversing/tree-traversal/" title="View all posts filed under Tree Traversal">Tree Traversal</a>
+</li>
+</ul>
+</li>
+	<li class="cat-item cat-item-63"><a href="http://api.jquery.com/category/utilities/" title="View all posts filed under Utilities">Utilities</a>
+</li>
+	<li class="cat-item cat-item-64"><a href="http://api.jquery.com/category/version/" title="View all posts filed under Version">Version</a>
+<ul class='children'>
+	<li class="cat-item cat-item-65"><a href="http://api.jquery.com/category/version/1.0/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+				jQuery 1.0 Release Notes.">Version 1.0</a>
+</li>
+	<li class="cat-item cat-item-66"><a href="http://api.jquery.com/category/version/1.0.4/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+				Release Notes: 1.0.1, 1.0.2, 1.0.3, 1.0.4.">Version 1.0.4</a>
+</li>
+	<li class="cat-item cat-item-67"><a href="http://api.jquery.com/category/version/1.1/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+				jQuery 1.1 Release Notes.">Version 1.1</a>
+</li>
+	<li class="cat-item cat-item-68"><a href="http://api.jquery.com/category/version/1.1.2/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+				jQuery 1.1.2 Release Notes.">Version 1.1.2</a>
+</li>
+	<li class="cat-item cat-item-69"><a href="http://api.jquery.com/category/version/1.1.3/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+				jQuery 1.1.3 Release Notes">Version 1.1.3</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="http://api.jquery.com/category/version/1.1.4/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+				jQuery 1.1.4 Release Notes.">Version 1.1.4</a>
+</li>
+	<li class="cat-item cat-item-71"><a href="http://api.jquery.com/category/version/1.2/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+				jQuery 1.2 Release Notes">Version 1.2</a>
+</li>
+	<li class="cat-item cat-item-72"><a href="http://api.jquery.com/category/version/1.2.3/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+				Release Notes: 1.2.1, 1.2.2, 1.2.3.">Version 1.2.3</a>
+</li>
+	<li class="cat-item cat-item-73"><a href="http://api.jquery.com/category/version/1.2.6/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+				jQuery 1.2.6 Release Notes.">Version 1.2.6</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="http://api.jquery.com/category/version/1.3/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+				Release Notes: 1.3, 1.3.1, 1.3.2">Version 1.3</a>
+</li>
+	<li class="cat-item cat-item-75"><a href="http://api.jquery.com/category/version/1.4/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+				jQuery 1.4 Release Notes.">Version 1.4</a>
+</li>
+	<li class="cat-item cat-item-76"><a href="http://api.jquery.com/category/version/1.4.1/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+				jQuery 1.4.1 Release Notes.">Version 1.4.1</a>
+</li>
+	<li class="cat-item cat-item-77"><a href="http://api.jquery.com/category/version/1.4.2/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+				jQuery 1.4.2 Release Notes.">Version 1.4.2</a>
+</li>
+	<li class="cat-item cat-item-78"><a href="http://api.jquery.com/category/version/1.4.3/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+				jQuery 1.4.3 Release Notes.">Version 1.4.3</a>
+</li>
+	<li class="cat-item cat-item-79"><a href="http://api.jquery.com/category/version/1.4.4/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery. jQuery 1.4.4 Release Notes.">Version 1.4.4</a>
+</li>
+	<li class="cat-item cat-item-80"><a href="http://api.jquery.com/category/version/1.5/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.
+        jQuery 1.5 also includes a large rewrite of the Ajax module, which has a number of extensibility improvements. You can find out more about those improvements in the Extending Ajax documentation.
+        Additionally jQuery 1.5 includes a new Deferred callback management system you can learn more about in in the Deferred Object documentation.">Version 1.5</a>
+</li>
+	<li class="cat-item cat-item-81"><a href="http://api.jquery.com/category/version/1.5.1/" title="Aspects of the API that were changed in the corresponding version of jQuery. API changes in jQuery 1.5.1 dealt primarily with jQuery.ajax settings and jQuery.support properties.">Version 1.5.1</a>
+</li>
+	<li class="cat-item cat-item-82"><a href="http://api.jquery.com/category/version/1.6/" title="All the aspects of the API that were added, or had a new signature added, in the corresponding version of jQuery.">Version 1.6</a>
+</li>
+	<li class="cat-item cat-item-83"><a href="http://api.jquery.com/category/version/1.7/" title="Aspects of the API that were changed in the corresponding version of jQuery. API changes in jQuery 1.7.0 dealt primarily with the new
+				Event APIs: .on() and .off()
+				Better Support for HTML5 in IE6/7/8
+				jQuery.Callbacks()
+				Toggling Animations Work Intuitively
+				
+        For more information, see the Release Notes/Changelog at http://blog.jquery.com/2011/11/03/jquery-1-7-released/
+        ">Version 1.7</a>
+</li>
+	<li class="cat-item cat-item-84"><a href="http://api.jquery.com/category/version/1.8/" title="Aspects of the API that were changed in the corresponding version of jQuery. API changes in jQuery 1.8.0 dealt primarily with animations and the removal of some methods such as deferred.isResolved(), deferred.isRejected(), $.curCSS(), $.attrFn(), and $(element).closest(Array) returning Array.
+        
+        For more information, see the Release Notes/Changelog at http://blog.jquery.com/2012/08/09/jquery-1-8-released//
+        ">Version 1.8</a>
+</li>
+</ul>
+</li>
+			</ul>
+		</aside>
+	</div>
+</div>
+	</div>
+</div>
+
+<footer class="clearfix simple">
+	<div class="constrain">
+		<div class="row">
+			<div class="five columns">
+				<h3><span>Quick Access</span></h3>
+				<div class="cdn">
+					<strong>CDN</strong>
+					<input value="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+				</div>
+				<div class="download">
+					<strong>Download jQuery 1.8.3:</strong>
+					<span>
+						<a href="http://code.jquery.com/jquery-1.8.3.min.js">Minified <em>(33KB)</em></a>
+						<a href="http://code.jquery.com/jquery-1.8.3.js">Unminified <em>(267KB)</em></a>
+					</span>
+				</div>
+				<ul class="footer-icon-links">
+					<li><a class="icon-github" href="http://github.com/jquery/jquery">GitHub <small>jQuery <br>Source</small></a></li>
+					<li><a class="icon-group" href="http://forum.jquery.com">Forum <small>Community <br>Support</small></a></li>
+					<li><a class="icon-warning-sign" href="http://bugs.jquery.com">Bugs <small>Issue <br>Tracker</small></a></li>
+				</ul>
+			</div>
+
+			<div class="four columns">
+				<h3><span>Presentations</span></h3>
+				<ul class="presentations">
+					<li>
+						<a href="http://addyosmani.com/blog/building-spas-jquerys-best-friends/">
+							<span><img src="http://api.jquery.com/jquery-wp-content/themes/jquery/content/presentations/building-spas-jquerys-best-friends.jpg" alt="Building Single Page Applications With jQuery's Best Friends by Addy Osmani" width="142" height="92" /></span>
+							<strong>Building Single Page Applications With jQuery's Best Friends</strong><br />
+							<cite>Addy Osmani</cite>
+						</a>
+					</li>
+					<li>
+						<a href="http://addyosmani.com/jqprovenperformance/">
+							<span><img src="http://api.jquery.com/jquery-wp-content/themes/jquery/content/presentations/addyosmani-2.jpg" alt="jQuery Performance Tips &amp; Tricks by Addy Osmani" width="142" height="92" /></span>
+							<strong>jQuery Performance<br />Tips &amp; Tricks</strong><br />
+							<cite>Addy Osmani</cite>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="three columns">
+				<h3><span>Books</span></h3>
+				<ul class="books">
+					<li>
+						<a href="http://link.packtpub.com/S3Fr9Q">
+							<span class="bottom"><img src="http://api.jquery.com/jquery-wp-content/themes/jquery/content/books/learning-jquery-3rd-ed.jpg" alt="Learning jQuery 3rd Edition by Karl Swedberg and Jonathan Chaffer" width="92" height="114" /></span>
+							<strong>Learning jQuery Third Edition</strong><br />
+							<cite>Karl Swedberg and Jonathan Chaffer</cite>
+						</a>
+					</li>
+					<li>
+						<a href="http://www.manning.com/affiliate/idevaffiliate.php?id=648_176">
+							<span><img src="http://api.jquery.com/jquery-wp-content/themes/jquery/content/books/jquery-in-action.jpg" alt="jQuery in Action by Bear Bibeault and Yehuda Katz" width="92" height="114" /></span>
+							<strong>jQuery in Action</strong><br />
+							<cite>Bear Bibeault and Yehuda Katz</cite>
+						</a>
+					</li>
+					<li>
+						<a href="http://jqueryenlightenment.com/">
+							<span><img src="http://api.jquery.com/jquery-wp-content/themes/jquery/content/books/jquery-enlightenment.jpg" alt="jQuery Enlightenment by Cody Lindley" width="92" height="114" /></span>
+							<strong>jQuery Enlightenment</strong><br />
+							<cite>Cody Lindley</cite>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div id="legal">
+			<ul class="footer-site-links">
+				<!-- <li><a class="icon-pencil" href="http://learn.jquery.com/">Learning Center</a></li> -->
+				<li><a class="icon-group" href="http://forum.jquery.com/">Forum</a></li>
+				<li><a class="icon-wrench" href="http://api.jquery.com/">API</a></li>
+				<li><a class="icon-twitter" href="http://twitter.com/jquery">Twitter</a></li>
+				<li><a class="icon-comments" href="http://irc.jquery.com/">IRC</a></li>
+			</ul>
+			<p class="copyright">
+				Copyright 2013 <a href="http://jquery.org/team/">The jQuery Foundation</a>.<br>
+				<span class="sponsor-line"><a href="http://mediatemple.net" rel="noindex,nofollow" class="mt-link">Web hosting by Media Temple</a> | <a href="http://jquery.org/sponsors/">View sponsors</a></span>
+			</p>
+		</div>
+	</div>
+</footer>
+
 </body>
 </html>
