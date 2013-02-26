@@ -47,7 +47,7 @@ function delay(callback, timeout) {
 queue([
 	function(oncomplete, onerror) { loadScript(decorBase + 'HTMLDecor/HTMLDecor.js', oncomplete, oncomplete); }, // FIXME onerror handling
 	init,
-	function(oncomplete, onerror) { loadScript(decorBase + location.hostname + '/' + 'config.js', oncomplete, oncomplete); },
+	function(oncomplete, onerror) { loadScript(decorBase + 'sites/' + location.hostname + '/' + 'config.js', oncomplete, oncomplete); },
 	start
 ]);
 
@@ -73,7 +73,7 @@ function getView(path) {
 function preprocess(doc, path) {
 	var view = getView(path);
 	view.preprocess(doc, path);
-	setDecor(doc, decorBase + location.hostname + '/' + view.decor);
+	setDecor(doc, decorBase + 'sites/' + location.hostname + '/' + view.decor);
 	return doc;
 }
 

@@ -12,4 +12,4 @@ to receive the meeko-panner treatment.
 The only complication in enhancing this site is showing and hiding auxiliary
 panels depending on what section of the site the current page belongs to. 
 
-[meeko-panner](../) is configured for the [whole site](http://adactio.com/)
+meeko-panner is configured for the [whole site](http://adactio.com/)
