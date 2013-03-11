@@ -51,22 +51,17 @@ var DOM = Meeko.DOM, $id = DOM.$id;
 Meeko.panner.config({
 	duration: 250,
 	nodeInserted: {
-		before: function(node) { 
+		before: function(msg) { 
+			var node = msg.node;
 			var target = $id(node.id);
 			node.className = target.className;
-			node.setAttribute("hidden", "hidden");
+			hide(msg);
 		},
-		after: function(node) {
-			node.removeAttribute("hidden");
-		}
+		after: show
 	},
 	nodeRemoved: {
-		before: function(node) { 
-			node.setAttribute("hidden", "hidden");
-		},
-		after: function(node) {
-			node.removeAttribute("hidden");
-		}
+		before: hide,
+		after: show
 	},
 	pageIn: {
 		before: function() {
@@ -85,6 +80,9 @@ Meeko.panner.config({
 		}
 	}
 });
+
+function hide(msg) { msg.node.setAttribute("hidden", "hidden"); }
+function show(msg) { msg.node.removeAttribute("hidden"); }
 
 })();
 	</script>

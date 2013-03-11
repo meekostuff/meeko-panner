@@ -20,8 +20,12 @@
 .contextNav a:active { color: #A88834; }
 </style>
 <script>
+(function() {
+
 Meeko.panner.config({
 	duration: 250,
+    nodeRemoved: { before: show, after: hide },
+    nodeInserted: { before: show, after: hide},
     pageIn: function() {
       var topNav = document.getElementById("hierarchy");
       var links = topNav.querySelectorAll("a[href]");
@@ -34,6 +38,11 @@ Meeko.panner.config({
       });
     }
 });
+
+function hide(msg) { msg.node.setAttribute("hidden", "hidden"); }
+function show(msg) { msg.node.removeAttribute("hidden"); }
+
+})();
 </script>
 <style type="text/css">
 #header, #content { 

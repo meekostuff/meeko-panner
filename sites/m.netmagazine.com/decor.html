@@ -445,10 +445,14 @@ div.article article > img { float: left; margin-right: 1em; }
 }
 </style>
       <script>
+(function() {
+
 var DOM = Meeko.DOM, $$ = DOM.$$;
 
 Meeko.panner.config({
 	duration: 250,
+	nodeRemoved: { before: hide, after: show },
+	nodeInserted: { before: hide, after: show }, 
 	pageIn: {
 	  before: function() {
 		 var menu = 'menu-' + (location.pathname.split('/')[1] || 'home');
@@ -459,6 +463,11 @@ Meeko.panner.config({
 	  }
 	}
 });
+
+function hide(msg) { msg.node.setAttribute("hidden", "hidden"); }
+function show(msg) { msg.node.removeAttribute("hidden"); }
+
+})();
       </script>
       <style type="text/css">
 #content { 

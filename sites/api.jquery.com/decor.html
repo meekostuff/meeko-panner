@@ -28,9 +28,13 @@
 <meta name="generator" content="WordPress 3.5" />
 
 <script type="text/javascript">
+(function() {
+
 var $id = Meeko.DOM.$id;
 Meeko.panner.config({
-	duration: 300,
+	duration: 250,
+        nodeRemoved: { before: hide, after: show },
+        nodeInserted: { before: hide, after: show },
 	pageIn: {
 	  before: function(msg) {
 		var doc = msg.node;
@@ -39,6 +43,11 @@ Meeko.panner.config({
 	  }
 	}
 });
+
+function hide(msg) { msg.node.setAttribute("hidden", "hidden"); }
+function show(msg) { msg.node.removeAttribute("hidden"); }
+
+})();
 </script>
 <style>
 #content { 

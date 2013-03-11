@@ -110,10 +110,15 @@ function beforePageIn() {
 
 Meeko.panner.config({
 	duration: 250,
+	nodeRemoved: { before: hide, after: show },
+	nodeInserted: { before: hide, after: show },
 	pageIn: {
 		before: beforePageIn
 	}
 });
+
+function hide(msg) { msg.node.setAttribute("hidden", "hidden"); }
+function show(msg) { msg.node.removeAttribute("hidden"); }
 
 })();
 

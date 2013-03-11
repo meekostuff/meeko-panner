@@ -16,9 +16,18 @@
 body { padding-top: 161px; }	
 </style>
 <script>
+(function() {
+
 Meeko.panner.config({
-	duration: 200
+	duration: 250,
+	nodeRemoved: { before: hide, after: show },
+	nodeInserted: { before: hide, after: show }
 });
+
+function hide(msg) { msg.node.setAttribute("hidden", "hidden"); }
+function show(msg) { msg.node.removeAttribute("hidden"); }
+
+})();
 </script>
 <style>
 #main, #top { 
