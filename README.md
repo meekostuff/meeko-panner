@@ -2,8 +2,8 @@
 support for `pushState`-assisted-navigation (panning)
 and, optionally, a richer UI. 
 
-The intention is to demonstrate the simplicity and flexibility of
-a [content first](http://adactio.com/journal/4523/) approach for web-sites.
+The intention is to demonstrate the simplicity, efficiency and flexibility of
+an API-first, HTML-payload approach for web-sites.
 
 **meeko-panner** extracts only the essential content of each page and 
 uses [HTMLDecor](http://github.com/meekostuff/HTMLDecor) to 
@@ -26,11 +26,12 @@ You need a browser that implements `history.pushState()`. <script type="text/jav
 <b>NOTE:</b> HTMLDecor doesn't require `pushState` if integrated into a site,
 but to use it in a bookmarklet would require the bookmarklet to be run on every page. 
 
-The following browsers have been tested:
+Recent versions of the following browsers have been tested:
 
-- Chrome 23
-- Safari 5.1 / Webkit nightlies
-- Firefox 17
+- Chrome
+- Safari
+- Firefox
+- Opera
 
 IE10 supports `pushState` but has not been tested.
 

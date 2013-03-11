@@ -108,7 +108,7 @@ function beforePageIn() {
 	});
 }
 
-Meeko.decor.configurePaging({
+Meeko.panner.config({
 	duration: 250,
 	pageIn: {
 		before: beforePageIn
@@ -199,13 +199,13 @@ opacity: 0;
 
 <script>
 var skin = localStorage['skinselection'] || 'default';
-Meeko.panner.setActiveStylesheet(skin);
+Meeko.decor.setActiveStylesheet(skin);
 var skinSel = $id("skin");
 skinSel.value = skin;
 skinSel.onchange = function(e) {
 	skin = skinSel.value;
 	localStorage['skinselection'] = skin;
-	Meeko.panner.setActiveStylesheet(skin);
+	Meeko.decor.setActiveStylesheet(skin);
 }
 </script>
 

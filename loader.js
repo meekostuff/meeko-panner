@@ -1,5 +1,16 @@
+// FIXME a lot of this code is copied from HTMLDecor/boot.js. Can we just source that instead??
 
 (function() {
+
+var defaults = { // NOTE defaults also define the type of the associated config option
+//	"htmldecor_script": '{bootscriptdir}HTMLDecor.js', FIXME
+	"log_level": "warn",
+	"hidden_timeout": 5000, // TODO for some reason this needs to be longer to avaid FOUC
+	"polling_interval": 50, // TODO
+//	"html5_block_elements": 'article aside figcaption figure footer header hgroup main nav section', NOT NEEDED
+//	"html5_inline_elements": 'abbr mark', NOT NEEDED
+//	"config_script": '' FIXME
+}
 
 if (!history.pushState) {
 	alert('meeko-panner cannot run: \n\nThis browser doesn\'t support `history.pushState()`');
@@ -7,83 +18,206 @@ if (!history.pushState) {
 }
 
 var decorBase = window.decorBase || 'https://d3g4qkktqnw71.cloudfront.net/meeko-panner/';
+var sitesBase = decorBase + 'sites/';
 
 var Meeko = window.Meeko || (window.Meeko = {});
-Meeko.config = {
-	"decor-autostart": false
+
+/*
+ ### JS utilities
+ */
+var some = function(a, fn, context) { // some() is forEach() if fn() always returns falsish
+	for (var n=a.length, i=0; i<n; i++) {
+		if (fn.call(context, a[i], i, a)) return true; 
+	}
+	return false;
 }
 
-/* some functions for scheduling / loading scripts */
+var words = function(text) { return text.split(/\s+/); }
+
 function urlPath(url) {
 	var a = document.createElement("a");
 	a.href = url;
 	return (a.pathname + a.search);
 }
 
-function loadScript(url, onload, onerror) {
-	var script = document.createElement('script');
-	script.src = url;
-	script.onload = onload;
-	script.onerror = onerror;
-	document.body.appendChild(script);
+/*
+ ### logger defn and init
+ */
+var logger = Meeko.logger || (Meeko.logger = new function() {
+
+var levels = this.levels = words("none error warn info debug");
+
+some(levels, function(name, num) {
+
+levels[name] = num;
+this[name] = function() { this._log({ level: num, message: arguments }); }
+
+}, this);
+
+this._log = function(data) { 
+	if (data.level > this.LOG_LEVEL) return;
+	data.timeStamp = +(new Date);
+        data.message = [].join.call(data.message, " ");
+        if (this.write) this.write(data);
 }
 
-function queue(fnList, callback) {
-	var list = [].concat(fnList);
-	var queueback = function() {
-		var fn = list.shift();
-		if (fn) fn(queueback);
-		else if (callback) callback();
-	}
-	queueback();
+this.startTime = +(new Date), padding = "      ";
+
+this.write = (window.console) && function(data) { 
+	var offset = padding + (data.timeStamp - this.startTime), 
+		first = offset.length-padding.length-1,
+		offset = offset.substring(first);
+	console.log(offset+"ms " + levels[data.level]+": " + data.message); 
 }
+
+this.LOG_LEVEL = levels[defaults['log_level']]; // DEFAULT. Options are read later
+
+}); // end logger defn
+
+/*
+ ### async functions
+ */
 
 function delay(callback, timeout) {
-	window.setTimeout(callback, timeout);
+	return window.setTimeout(callback, timeout);
 }
 
-/* now do start-up */
+var queue = (function() {
 
-queue([
-	function(oncomplete, onerror) { loadScript(decorBase + 'HTMLDecor/HTMLDecor.js', oncomplete, oncomplete); }, // FIXME onerror handling
-	init,
-	function(oncomplete, onerror) { loadScript(decorBase + 'sites/' + location.hostname + '/' + 'config.js', oncomplete, oncomplete); },
-	start
-]);
+var head = document.head; // TODO is there always a <head>?
+var marker = head.firstChild;
 
-function init(callback) {
+function prepareScript(url, onload, onerror) {
+	var script = document.createElement('script');
+	script.onerror = onerror;
+	var loaded = false;
+	if (script.readyState) script.onreadystatechange = function() {
+		if (loaded) return;
+		if (!script.parentNode) return; // onreadystatechange will always fire after insertion, but can fire before which messes up the queue
+		if (script.readyState != "loaded" && script.readyState != "complete") return;
+		loaded = true;
+		onload();
+	}
+	else script.onload = onload;
+	script.src = url;
+	
+	if (script.async == true) {
+		script.async = false;
+		marker.parentNode.insertBefore(script, marker);
+	}
+	return script;
+}
 
-var decor = Meeko.decor, stuff = Meeko.stuff, DOM = Meeko.DOM, 
-	extend = stuff.extend, each = stuff.each, forEach = stuff.forEach, words = stuff.words, 
-	Callback = Meeko.Callback, async = Callback.async;
+function enableScript(script) {
+	if (script.parentNode) return;
+	marker.parentNode.insertBefore(script, marker);
+}
+
+function disableScript(script) {
+	if (!script.parentNode) return;
+	script.parentNode.removeChild(script);
+}
+
+function queue(fnList, oncomplete, onerror) {
+	var list = [];
+	some(fnList, function(fn) {
+		switch(typeof fn) {
+		case "string":
+			list.push(prepareScript(fn, queueback, errorback));
+			break;
+		case "function":
+			list.push(fn);
+			break;
+		default: // TODO
+			break;
+		}
+	});
+	queueback();
+
+	function errorback(err) {
+		logger.error(err);
+		var fn;
+		while (fn = list.shift()) {
+			if (typeof fn == 'function') continue;
+			// NOTE the only other option is a prepared script
+			disableScript(fn);
+		}
+		if (onerror) onerror(err);
+	}
+
+	function queueback() {
+		var fn;
+		while (fn = list.shift()) {
+			if (typeof fn == "function") {
+				try { fn(); continue; }
+				catch(err) { errorback(err); return; }
+			}
+			else { // NOTE the only other option is a prepared script
+				enableScript(fn);
+				return;
+			}
+		}
+		if (oncomplete) oncomplete();
+		return;
+	}
+}
+
+return queue;
+
+})();
+
+/*
+ ### Viewport hide / unhide
+ */
+var Viewport = (function() {
+
+var head = document.head;
+var fragment = document.createDocumentFragment();
+var style = document.createElement("style");
+fragment.appendChild(style); // NOTE on IE this realizes style.styleSheet 
+
+// NOTE hide the page until the decor is ready
+if (style.styleSheet) style.styleSheet.cssText = "body { visibility: hidden; }";
+else style.textContent = "body { visibility: hidden; }";
+
+function hide() {
+	head.insertBefore(style, head.firstChild);
+}
+
+function unhide() {
+	var pollingInterval = defaults['polling_interval'];
+	if (style.parentNode != head) return;
+	head.removeChild(style);
+	// NOTE on IE sometimes content stays hidden although 
+	// the stylesheet has been removed.
+	// The following forces the content to be revealed
+	document.body.style.visibility = "hidden";
+	delay(function() { document.body.style.visibility = ""; }, pollingInterval);
+}
+
+return {
+	hide: hide,
+	unhide: unhide
+}
+
+})();
+
+/* now the patching to make HTMLDecor behave as we need */
+
+function preconfig() { // this is called **before** the site-specific config.js
+
+var _ = Meeko.stuff, extend = _.extend, each = _.each, forEach = _.forEach, words = _.words,
+	decor = Meeko.decor, panner = Meeko.panner,
+	async = Meeko.async, DOM = Meeko.DOM;
 	
 var	$id = DOM.$id;
 var $ = DOM.$ = function(selector, context) { if (!context) context = document; return context.querySelector(selector); }
 var $$ = DOM.$$ = function(selector, context) { if (!context) context = document; return [].slice.call(context.querySelectorAll(selector), 0); }
 
-var panner = Meeko.panner = {}
-var options = Meeko.panner.options = {}
-var pageCache = {};
-
-
-function getView(path) {
-	return options.views[options.detectView(path)];
-}
-
-function preprocess(doc, path) {
-	var view = getView(path);
-	view.preprocess(doc, path);
-	setDecor(doc, decorBase + 'sites/' + location.hostname + '/' + view.decor);
-	return doc;
-}
-
-function setDecor(doc, url) {
-	var link = doc.createElement("link");
-	link.rel = "meeko-decor";
-	link.type = "text/html";
-	link.href =  url;
-	doc.head.appendChild(link);	
-}
+async.pollingInterval = defaults["polling_interval"];
+decor.config({
+	decorReady: Viewport.unhide,
+});
 
 function cloneDocument(doc) {
 	var clone = document.implementation.createHTMLDocument("");
@@ -109,15 +243,32 @@ function setActiveStylesheet(title) { // see http://www.alistapart.com/articles/
 }
 
 
-extend(panner, {
+extend(DOM, {
 
-getView: getView,
-preprocess: preprocess,
-setDecor: setDecor,
-cloneDocument: cloneDocument,
-setActiveStylesheet: setActiveStylesheet,
+cloneDocument: cloneDocument
 
 });
+
+extend(decor, {
+
+setActiveStylesheet: setActiveStylesheet
+
+});
+
+
+} // end preconfig
+
+
+function postconfig() {
+
+var _ = Meeko.stuff, extend = _.extend, each = _.each, forEach = _.forEach, words = _.words,
+	decor = Meeko.decor, panner = Meeko.panner,
+	async = Meeko.async, DOM = Meeko.DOM;
+	
+var	$id = DOM.$id;
+var $ = DOM.$ = function(selector, context) { if (!context) context = document; return context.querySelector(selector); }
+var $$ = DOM.$$ = function(selector, context) { if (!context) context = document; return [].slice.call(context.querySelectorAll(selector), 0); }
+
 
 /*
  Over-ride decor loader to rebase URIs:
@@ -125,13 +276,12 @@ setActiveStylesheet: setActiveStylesheet,
  is rewritten with `path` being relative to the current `document.URL`.
  Usually `path` should be an absolute path, i.e. starts with `/`.
  */
-	
-decor.load = async(function(url, cb) {
-	DOM.loadHTML(url, function(doc) {
-		rebase(doc);
-		cb.complete(doc);
-	});
-});
+
+var decor_normalize = decor.options.normalize;
+decor.options.normalize = function(doc, settings) { // FIXME what about URI params!?
+	if (decor_normalize) decor_normalize(doc, settings);
+	rebase(doc);
+}
 
 function rebase(doc) {
 	
@@ -165,39 +315,38 @@ forEach(words("link@href a@href script@src img@src iframe@src video@src audio@sr
  Over-ride url loader to allow javascript caching of pages
 */
 
-decor.options.load = async(function(url, cb) {
+/*
+var pageCache = {};
+
+panner.options.httpGet = async(function(url, data, settings, cb) {
   var pathname = urlPath(url);
   var doc = pageCache[pathname];
   if (doc) return cloneDocument(doc);
-  DOM.loadHTML(url, function(doc) {
+  panner.options._httpGet(url, data, settings, function(doc) {
 	preprocess(doc, pathname);
 	pageCache[pathname] = cloneDocument(doc);
 	cb.complete(doc);
   });
 });
+*/
 
-
-var oldURL = '';
-
-// Override default HTMLDecor page nav to implement newURL, oldURL
-// FIXME pageIn handlers should already receive these
-decor.onSiteLink = function(url) {
-	var oldURL = document.URL;
-	if (url == oldURL) return false;
-	var oldView = options.detectView(urlPath(oldURL));
-	var view = options.detectView(urlPath(url));
-	if (!view) {
+var lookup = decor.options.lookup;
+decor.options.lookup = function(url) {
+	var decorURL = lookup(url);
+/* FIXME
+	if (!decorURL) {
 		alert("The page you are navigating to does not have a corresponding decor in the panner configuration for this site.");
 		return true;
 	}
-	if (view != oldView) {
+	if (decorURL != decor.current.url) {
 		alert("The page you are navigating to has a different decor to that of the current page.\nYou will need to reactivate meeko-panner after the page has loaded.");
 		return true;
 	}
-	decor.navigate(url);
-	return false;
+*/
+	
+	return sitesBase + location.hostname + '/' + decorURL;
 }
- 
+
 /*
  Override form submission
  */
@@ -219,12 +368,12 @@ function onSubmit(e) {
 	}
 }
 
-callback();
-} // end init()
+} // end postconfig()
 
 
-function start(callback) {
-	var options = Meeko.panner.options;
+function start() {
+/* FIXME
+	var options = Meeko.decor.options;
 	if (!options.views) {
 		alert("A valid panner configuration for this site could not be loaded.");
 		return false;
@@ -233,13 +382,35 @@ function start(callback) {
 		alert("There is no decor for this page in the panner configuration for this site.");
 		return false;
 	}
+*/
 	document.body.style.visibility = "hidden";
-	Meeko.panner.preprocess(document, urlPath(document.URL));
 	Meeko.decor.start();
 	delay(function() {
 		document.body.style.visibility = "";
-		callback();
-	}, 0);
+	});
 }
+
+/*
+ ## Startup
+*/
+
+var log_index = logger.levels[defaults["log_level"]];
+if (log_index != null) logger.LOG_LEVEL = log_index;
+
+var timeout = defaults["hidden_timeout"];
+if (timeout > 0) {
+	Viewport.hide();
+	delay(Viewport.unhide, timeout);
+}
+
+
+queue([
+	decorBase + 'HTMLDecor/HTMLDecor.js',
+	preconfig,
+	sitesBase + location.hostname + '/' + 'config.js',
+	postconfig,
+	start
+]);
+
 
 })();

@@ -29,11 +29,12 @@
 
 <script type="text/javascript">
 var $id = Meeko.DOM.$id;
-Meeko.decor.configurePaging({
+Meeko.panner.config({
 	duration: 300,
 	pageIn: {
-	  before: function(doc) {
-		if (!doc) return;
+	  before: function(msg) {
+		var doc = msg.node;
+		if (doc == document) return;
 		document.body.className = doc.body.className;
 	  }
 	}
