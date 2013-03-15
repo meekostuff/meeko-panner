@@ -24,8 +24,8 @@
 
 Meeko.panner.config({
 	duration: 250,
-    nodeRemoved: { before: show, after: hide },
-    nodeInserted: { before: show, after: hide},
+    nodeRemoved: { before: hide, after: show },
+    nodeInserted: { before: hide, after: show },
     pageIn: function() {
       var topNav = document.getElementById("hierarchy");
       var links = topNav.querySelectorAll("a[href]");
