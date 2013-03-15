@@ -2,205 +2,16 @@
 
 (function() {
 
-var defaults = { // NOTE defaults also define the type of the associated config option
-//	"htmldecor_script": '{bootscriptdir}HTMLDecor.js', FIXME
-	"log_level": "warn",
-	"hidden_timeout": 5000, // TODO for some reason this needs to be longer to avaid FOUC
-	"polling_interval": 50, // TODO
-//	"html5_block_elements": 'article aside figcaption figure footer header hgroup main nav section', NOT NEEDED
-//	"html5_inline_elements": 'abbr mark', NOT NEEDED
-//	"config_script": '' FIXME
-}
+var Meeko = window.Meeko || (window.Meeko = {});
 
 if (!history.pushState) {
 	alert('meeko-panner cannot run: \n\nThis browser doesn\'t support `history.pushState()`');
 	return;
 }
 
-var decorBase = window.decorBase || 'https://d3g4qkktqnw71.cloudfront.net/meeko-panner/';
+var decorBase = window.decorBase;
+if (!decorBase) throw 'window.decorBase is not set';
 var sitesBase = decorBase + 'sites/';
-
-var Meeko = window.Meeko || (window.Meeko = {});
-
-/*
- ### JS utilities
- */
-var some = function(a, fn, context) { // some() is forEach() if fn() always returns falsish
-	for (var n=a.length, i=0; i<n; i++) {
-		if (fn.call(context, a[i], i, a)) return true; 
-	}
-	return false;
-}
-
-var words = function(text) { return text.split(/\s+/); }
-
-function urlPath(url) {
-	var a = document.createElement("a");
-	a.href = url;
-	return (a.pathname + a.search);
-}
-
-/*
- ### logger defn and init
- */
-var logger = Meeko.logger = new function() {
-
-var levels = this.levels = words("none error warn info debug");
-
-some(levels, function(name, num) {
-
-levels[name] = num;
-this[name] = function() { this._log({ level: num, message: arguments }); }
-
-}, this);
-
-this._log = function(data) { 
-	if (data.level > this.LOG_LEVEL) return;
-	data.timeStamp = +(new Date);
-        data.message = [].join.call(data.message, " ");
-        if (this.write) this.write(data);
-}
-
-this.startTime = +(new Date), padding = "      ";
-
-this.write = (window.console) && function(data) { 
-	var offset = padding + (data.timeStamp - this.startTime), 
-		first = offset.length-padding.length-1,
-		offset = offset.substring(first);
-	console.log(offset+"ms " + levels[data.level]+": " + data.message); 
-}
-
-this.LOG_LEVEL = levels[defaults['log_level']]; // DEFAULT. Options are read later
-
-} // end logger defn
-
-/*
- ### async functions
- */
-
-function delay(callback, timeout) {
-	return window.setTimeout(callback, timeout);
-}
-
-var queue = (function() {
-
-var head = document.head; // TODO is there always a <head>?
-var marker = head.firstChild;
-
-function prepareScript(url, onload, onerror) {
-	var script = document.createElement('script');
-	script.onerror = onerror;
-	var loaded = false;
-	if (script.readyState) script.onreadystatechange = function() {
-		if (loaded) return;
-		if (!script.parentNode) return; // onreadystatechange will always fire after insertion, but can fire before which messes up the queue
-		if (script.readyState != "loaded" && script.readyState != "complete") return;
-		loaded = true;
-		onload();
-	}
-	else script.onload = onload;
-	script.src = url;
-	
-	if (script.async == true) {
-		script.async = false;
-		marker.parentNode.insertBefore(script, marker);
-	}
-	return script;
-}
-
-function enableScript(script) {
-	if (script.parentNode) return;
-	marker.parentNode.insertBefore(script, marker);
-}
-
-function disableScript(script) {
-	if (!script.parentNode) return;
-	script.parentNode.removeChild(script);
-}
-
-function queue(fnList, oncomplete, onerror) {
-	var list = [];
-	some(fnList, function(fn) {
-		switch(typeof fn) {
-		case "string":
-			list.push(prepareScript(fn, queueback, errorback));
-			break;
-		case "function":
-			list.push(fn);
-			break;
-		default: // TODO
-			break;
-		}
-	});
-	queueback();
-
-	function errorback(err) {
-		logger.error(err);
-		var fn;
-		while (fn = list.shift()) {
-			if (typeof fn == 'function') continue;
-			// NOTE the only other option is a prepared script
-			disableScript(fn);
-		}
-		if (onerror) onerror(err);
-	}
-
-	function queueback() {
-		var fn;
-		while (fn = list.shift()) {
-			if (typeof fn == "function") {
-				try { fn(); continue; }
-				catch(err) { errorback(err); return; }
-			}
-			else { // NOTE the only other option is a prepared script
-				enableScript(fn);
-				return;
-			}
-		}
-		if (oncomplete) oncomplete();
-		return;
-	}
-}
-
-return queue;
-
-})();
-
-/*
- ### Viewport hide / unhide
- */
-var Viewport = (function() {
-
-var head = document.head;
-var fragment = document.createDocumentFragment();
-var style = document.createElement("style");
-fragment.appendChild(style); // NOTE on IE this realizes style.styleSheet 
-
-// NOTE hide the page until the decor is ready
-if (style.styleSheet) style.styleSheet.cssText = "body { visibility: hidden; }";
-else style.textContent = "body { visibility: hidden; }";
-
-function hide() {
-	head.insertBefore(style, head.firstChild);
-}
-
-function unhide() {
-	var pollingInterval = defaults['polling_interval'];
-	if (style.parentNode != head) return;
-	head.removeChild(style);
-	// NOTE on IE sometimes content stays hidden although 
-	// the stylesheet has been removed.
-	// The following forces the content to be revealed
-	document.body.style.visibility = "hidden";
-	delay(function() { document.body.style.visibility = ""; }, pollingInterval);
-}
-
-return {
-	hide: hide,
-	unhide: unhide
-}
-
-})();
 
 /* now the patching to make HTMLDecor behave as we need */
 
@@ -213,11 +24,6 @@ var _ = Meeko.stuff, extend = _.extend, each = _.each, forEach = _.forEach, word
 var	$id = DOM.$id;
 var $ = DOM.$ = function(selector, context) { if (!context) context = document; return context.querySelector(selector); }
 var $$ = DOM.$$ = function(selector, context) { if (!context) context = document; return [].slice.call(context.querySelectorAll(selector), 0); }
-
-Meeko.Async.pollingInterval = defaults["polling_interval"];
-decor.config({
-	decorReady: Viewport.unhide,
-});
 
 function cloneDocument(doc) {
 	var clone = document.implementation.createHTMLDocument("");
@@ -369,8 +175,8 @@ function onSubmit(e) {
 } // end postconfig()
 
 
-function start() {
 /* FIXME
+function start() {
 	var options = Meeko.decor.options;
 	if (!options.views) {
 		alert("A valid panner configuration for this site could not be loaded.");
@@ -380,35 +186,30 @@ function start() {
 		alert("There is no decor for this page in the panner configuration for this site.");
 		return false;
 	}
-*/
-	document.body.style.visibility = "hidden";
-	Meeko.decor.start();
-	delay(function() {
-		document.body.style.visibility = "";
-	});
 }
+*/
 
 /*
  ## Startup
 */
 
-var log_index = logger.levels[defaults["log_level"]];
-if (log_index != null) logger.LOG_LEVEL = log_index;
-
-var timeout = defaults["hidden_timeout"];
-if (timeout > 0) {
-	Viewport.hide();
-	delay(Viewport.unhide, timeout);
+Meeko.options = {
+	"htmldecor_script": '{bootscriptdir}HTMLDecor.js',
+	"log_level": "warn",
+	"hidden_timeout": 5000, // TODO for some reason this needs to be longer to avaid FOUC
+	"polling_interval": 50, // TODO
+//	"html5_block_elements": 'article aside figcaption figure footer header hgroup main nav section', NOT NEEDED
+//	"html5_inline_elements": 'abbr mark', NOT NEEDED
+	"config_script": [
+		preconfig,
+		sitesBase + location.hostname + '/' + 'config.js',
+		postconfig
+	]
 }
 
-
-queue([
-	decorBase + 'HTMLDecor/HTMLDecor.js',
-	preconfig,
-	sitesBase + location.hostname + '/' + 'config.js',
-	postconfig,
-	start
-]);
-
+var bootScript = document.createElement('script');
+bootScript.src = decorBase + 'HTMLDecor/boot.js';
+Meeko.bootScript = bootScript;
+document.body.appendChild(bootScript); // TODO will this always be the last script?
 
 })();
