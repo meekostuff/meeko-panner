@@ -43,7 +43,7 @@ function urlPath(url) {
 /*
  ### logger defn and init
  */
-var logger = Meeko.logger || (Meeko.logger = new function() {
+var logger = Meeko.logger = new function() {
 
 var levels = this.levels = words("none error warn info debug");
 
@@ -72,7 +72,7 @@ this.write = (window.console) && function(data) {
 
 this.LOG_LEVEL = levels[defaults['log_level']]; // DEFAULT. Options are read later
 
-}); // end logger defn
+} // end logger defn
 
 /*
  ### async functions
@@ -208,13 +208,13 @@ function preconfig() { // this is called **before** the site-specific config.js
 
 var _ = Meeko.stuff, extend = _.extend, each = _.each, forEach = _.forEach, words = _.words,
 	decor = Meeko.decor, panner = Meeko.panner,
-	async = Meeko.async, DOM = Meeko.DOM;
+	DOM = Meeko.DOM;
 	
 var	$id = DOM.$id;
 var $ = DOM.$ = function(selector, context) { if (!context) context = document; return context.querySelector(selector); }
 var $$ = DOM.$$ = function(selector, context) { if (!context) context = document; return [].slice.call(context.querySelectorAll(selector), 0); }
 
-async.pollingInterval = defaults["polling_interval"];
+Meeko.Async.pollingInterval = defaults["polling_interval"];
 decor.config({
 	decorReady: Viewport.unhide,
 });
@@ -263,7 +263,7 @@ function postconfig() {
 
 var _ = Meeko.stuff, extend = _.extend, each = _.each, forEach = _.forEach, words = _.words,
 	decor = Meeko.decor, panner = Meeko.panner,
-	async = Meeko.async, DOM = Meeko.DOM;
+	DOM = Meeko.DOM, URL = DOM.URL;
 	
 var	$id = DOM.$id;
 var $ = DOM.$ = function(selector, context) { if (!context) context = document; return context.querySelector(selector); }
@@ -279,36 +279,34 @@ var $$ = DOM.$$ = function(selector, context) { if (!context) context = document
 
 var decor_normalize = decor.options.normalize;
 decor.options.normalize = function(doc, settings) { // FIXME what about URI params!?
-	if (decor_normalize) decor_normalize(doc, settings);
 	rebase(doc);
+	if (decor_normalize) decor_normalize(doc, settings);
 }
 
 function rebase(doc) {
 	
 	function normalize(tag, attrName) {
 		forEach($$(tag, doc), function(el) {
-			var relURI = el.getAttribute(attrName);
-			if (relURI == null) return;
-			var uri = rebaseURI(relURI);
-			if (uri != relURI) el[attrName] = uri;
+			var relURL = el.getAttribute(attrName);
+			if (relURL == null) return;
+			var url = rebaseURL(relURL);
+			if (url != relURL) el[attrName] = url;
 		});
 	}
-	each(uriAttrs, normalize);
+	each(urlAttrs, normalize);
 
 }
 
-function rebaseURI(uri) {
-	var pathname = uri.replace(/^base-uri:/, '');
-	if (pathname == uri) return uri;
-	var link = document.createElement("a");
-	link.href = pathname;
-	return link.pathname;
+function rebaseURL(url) {
+	var relURL = url.replace(/^base-ur[il]:/, '');
+	if (relURL == url) return url;
+	return URL(document.URL).resolve(relURL);
 }
 
-var uriAttrs = {};
+var urlAttrs = {};
 forEach(words("link@href a@href script@src img@src iframe@src video@src audio@src source@src form@action input@formaction button@formaction"), function(text) {
 	var m = text.split("@"), tag = m[0], attrName = m[1];
-	uriAttrs[tag] = attrName;
+	urlAttrs[tag] = attrName;
 });
 
 /*
@@ -318,7 +316,7 @@ forEach(words("link@href a@href script@src img@src iframe@src video@src audio@sr
 /*
 var pageCache = {};
 
-panner.options.httpGet = async(function(url, data, settings, cb) {
+panner.options.request = function(method, url, data, details, cb) {
   var pathname = urlPath(url);
   var doc = pageCache[pathname];
   if (doc) return cloneDocument(doc);
@@ -327,7 +325,7 @@ panner.options.httpGet = async(function(url, data, settings, cb) {
 	pageCache[pathname] = cloneDocument(doc);
 	cb.complete(doc);
   });
-});
+}
 */
 
 var lookup = decor.options.lookup;
