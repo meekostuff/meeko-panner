@@ -1,4 +1,3 @@
-// FIXME a lot of this code is copied from HTMLDecor/boot.js. Can we just source that instead??
 
 (function() {
 
@@ -48,6 +47,11 @@ function setActiveStylesheet(title) { // see http://www.alistapart.com/articles/
 	});
 }
 
+function domReady(fn) {
+	setTimeout(fn);
+}
+
+DOM.ready = domReady;
 
 extend(DOM, {
 
@@ -152,42 +156,29 @@ decor.options.lookup = function(url) {
 }
 
 /*
- Override form submission
+ Override forms
+ TODO currently only handles POST
+ FIXME assumes success
  */
 document.addEventListener("submit", onSubmit, false);
 function onSubmit(e) {
-	e.preventDefault();
 	var form = e.target;
+	var method = _.lc(form.method);
+	if (method != 'post') return;
+	e.preventDefault();
 	var data = [];
 	forEach(form.elements, function(el) {
 		data.push(el.name + '=' + encodeURIComponent(el.value));
 	});
 	var msg = data.join('&');
-	if (form.method == 'get') decor.navigate(form.action + '?' + msg);
-	else {
-		var rq = new XMLHttpRequest;
-		rq.open(form.method, form.action, true);
-		rq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		rq.send(msg);
-	}
+	var rq = new XMLHttpRequest;
+	rq.open(form.method, form.action, true);
+	rq.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	rq.send(msg);
 }
 
 } // end postconfig()
 
-
-/* FIXME
-function start() {
-	var options = Meeko.decor.options;
-	if (!options.views) {
-		alert("A valid panner configuration for this site could not be loaded.");
-		return false;
-	}
-	if (!options.detectView || !options.detectView(urlPath(document.URL))) {
-		alert("There is no decor for this page in the panner configuration for this site.");
-		return false;
-	}
-}
-*/
 
 /*
  ## Startup
@@ -198,8 +189,6 @@ Meeko.options = {
 	"log_level": "warn",
 	"hidden_timeout": 5000, // TODO for some reason this needs to be longer to avaid FOUC
 	"polling_interval": 50, // TODO
-//	"html5_block_elements": 'article aside figcaption figure footer header hgroup main nav section', NOT NEEDED
-//	"html5_inline_elements": 'abbr mark', NOT NEEDED
 	"config_script": [
 		preconfig,
 		sitesBase + location.hostname + '/' + 'config.js',
