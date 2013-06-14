@@ -19,31 +19,9 @@
 .contextNav a:link, .contextNav a:visited, .contextNav a:active { color: white; text-decoration: none; }
 .contextNav a:active { color: #A88834; }
 </style>
-<script>
-(function() {
+<script src="../../XBL/Binding.js"></script>
+<script src="../../XBL/UI.js"></script>
 
-Meeko.panner.config({
-	duration: 250,
-    nodeRemoved: { before: hide, after: show },
-    nodeInserted: { before: hide, after: show },
-    pageIn: function() {
-      var topNav = document.getElementById("hierarchy");
-      var links = topNav.querySelectorAll("a[href]");
-      var tree = Meeko.UI.tree.getBindingFor(topNav);
-      tree.selectItem();
-      [].every.call(links, function(link) {
-        if (link.href != document.URL) return true;
-        tree.selectItem(link.parentNode);
-        return false;
-      });
-    }
-});
-
-function hide(msg) { msg.node.setAttribute("hidden", "hidden"); }
-function show(msg) { msg.node.removeAttribute("hidden"); }
-
-})();
-</script>
 <style type="text/css">
 #header, #content { 
 -webkit-transition: opacity 0.25s linear;
@@ -117,8 +95,6 @@ opacity: 0;
 <div id="footer" class="footer"></div>
 
 </div>
-<script src="../../XBL/Binding.js"></script>
-<script src="../../XBL/UI.js"></script>
 <script>
 (function() {
   var DOM = Meeko.DOM;
@@ -142,7 +118,8 @@ opacity: 0;
   var packagesPanel = panel.create({
     load: function() {
       var element = this.boundElement;
-      DOM.loadHTML("http://docs.oracle.com/javase/7/docs/api/overview-summary.html", function(doc) { // TODO get this URL from the DOM
+      DOM.loadHTML("http://docs.oracle.com/javase/7/docs/api/overview-summary.html")
+	  .done(function(doc) { // TODO get this URL from the DOM
         var items = DOM.$$("table.overviewSummary tbody + tbody > tr", doc).map(function(row) {
           var link = DOM.$('a', row), title = DOM.$('div.block', row);
           return '<li><a title="' + (title ? title.textContent : '') + '" h'+'ref="' + link.href + '">' + link.textContent + '</a></li>\n';
@@ -155,7 +132,8 @@ opacity: 0;
   var classesPanel = panel.create({
     load: function() {
       var element = this.boundElement;
-      DOM.loadHTML("http://docs.oracle.com/javase/7/docs/api/allclasses-noframe.html", function(doc) {
+      DOM.loadHTML("http://docs.oracle.com/javase/7/docs/api/allclasses-noframe.html")
+	  .done(function(doc) {
         element.innerHTML = DOM.$(".indexContainer ul", doc).outerHTML;
       });
     }
@@ -202,5 +180,30 @@ opacity: 0;
 })();
 </script>
   
+<script>
+(function() {
+Meeko.panner.config({
+	duration: 250,
+    nodeRemoved: { before: hide, after: show },
+    nodeInserted: { before: hide, after: show },
+    pageIn: function() {
+      var topNav = document.getElementById("hierarchy");
+      var links = topNav.querySelectorAll("a[href]");
+      var tree = Meeko.UI.tree.getBindingFor(topNav);
+      tree.selectItem();
+      [].every.call(links, function(link) {
+        if (link.href != document.URL) return true;
+        tree.selectItem(link.parentNode);
+        return false;
+      });
+    }
+});
+
+function hide(msg) { msg.node.setAttribute("hidden", "hidden"); }
+function show(msg) { msg.node.removeAttribute("hidden"); }
+
+})();
+</script>
+
 </body>
 </html>
