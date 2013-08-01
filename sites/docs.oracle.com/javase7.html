@@ -19,8 +19,8 @@
 .contextNav a:link, .contextNav a:visited, .contextNav a:active { color: white; text-decoration: none; }
 .contextNav a:active { color: #A88834; }
 </style>
-<script src="../../XBL/Binding.js"></script>
-<script src="../../XBL/UI.js"></script>
+<script src="../../DOMSprockets/Sprocket.js"></script>
+<script src="../../DOMSprockets/UI.js"></script>
 
 <style type="text/css">
 #header, #content { 
@@ -101,12 +101,12 @@ opacity: 0;
       $id = DOM.$id, $$ = DOM.$$,
       _ = Meeko.stuff, extend = _.extend;
 
-  var xbl = Meeko.xbl;
+  var sprockets = Meeko.sprockets;
   var UI = Meeko.UI;
   
-  var panel = UI.panel.create({ // panel is an abstract class. Sub-classes must define the load() method
+  var Panel = UI.Panel.evolve({ // panel is an abstract class. Sub-classes must define the load() method
     setHidden: function(state) {
-      UI.panel.prototype.setHidden.apply(this, arguments);
+      UI.Panel.prototype.setHidden.apply(this, arguments);
       if (!!state) return; 
       if (this.loaded) return;
       // if panel is to be shown and content not already loaded ...
@@ -115,7 +115,7 @@ opacity: 0;
     }
   });
   
-  var packagesPanel = panel.create({
+  var packagesPanel = Panel.evolve({
     load: function() {
       var element = this.boundElement;
       DOM.loadHTML("http://docs.oracle.com/javase/7/docs/api/overview-summary.html")
@@ -129,7 +129,7 @@ opacity: 0;
     }
   });
   
-  var classesPanel = panel.create({
+  var classesPanel = Panel.evolve({
     load: function() {
       var element = this.boundElement;
       DOM.loadHTML("http://docs.oracle.com/javase/7/docs/api/allclasses-noframe.html")
@@ -139,22 +139,11 @@ opacity: 0;
     }
   });
   
-  var navtree = UI.navtree.create({
-    xblEnteredDocument: function() {
-      this.selectItem(this.getListElement().children[0]);
-    }
-  },
-  [
-  {
-    type: "change",
-    action: function(event) {
-      var viewer = this.getView();
-      var target = UI.navtreeitem.getBindingFor(this.getSelectedItem()).getView();
-      UI.switchBox.getBindingFor(viewer).setView(target);
-    }
-  }
-  ]);
-  var navtreeitem = UI.navtreeitem.create({
+  sprockets.register("#packages", packagesPanel); // #quickLinks #indexContainer > div#packages
+  sprockets.register("#classes", classesPanel); // #quickLinks #indexContainer > div#classes
+  sprockets.register("#indexContainer", UI.SwitchBox); // #quickLinks #indexContainer
+
+  var NavTreeItem = UI.NavTreeItem.evolve({
     setSelected: function(state) {
         this.boundElement.className = !!state ? "navBarCell1Rev" : null;
     },
@@ -162,36 +151,62 @@ opacity: 0;
         return this.boundElement.className == "navBarCell1Rev";
     }
   });
-  Object.defineProperties(navtreeitem.prototype, { // FIXME should be part of binding.create()
-    selected: { get: navtreeitem.prototype.getSelected, set: navtreeitem.prototype.setSelected }  
-  });
 
-  xbl.CSS.addBinding("#packages", packagesPanel); // #quickLinks #indexContainer > div#packages
-  xbl.CSS.addBinding("#classes", classesPanel); // #quickLinks #indexContainer > div#classes
-  xbl.CSS.addBinding("#indexContainer", UI.switchBox); // #quickLinks #indexContainer
-  xbl.CSS.addBinding("#quickLinks .navList li a", UI.navlink);
-  xbl.CSS.addBinding("#quickLinks .navList li", navtreeitem);
-  xbl.CSS.addBinding("#quickLinks .navList", UI.list);
-  xbl.CSS.addBinding("#quickLinks .topNav", navtree)
+  sprockets.register("#quickLinks .navList li", NavTreeItem);
+  sprockets.register("#quickLinks .navList", UI.List);
+  sprockets.register("#quickLinks .topNav", UI.NavTree, {
+  handlers: [
+	{
+		type: 'click',
+		delegator: 'a',
+		preventDefault: true
+	},
+	{
+		type: "click",
+		delegator: 'li',
+		action: function(event, item) {
+			this.selectItem(item);
+		}
+	},
+	{
+		type: "change",
+		action: function(event) {
+			var viewer = this.getView();
+			var target = UI.NavTreeItem(this.getSelectedItem()).getView();
+			UI.SwitchBox(viewer).setView(target);
+		}
+	}
+  ],
+  callbacks: {
+	enteredDocument: function() {
+		this.selectItem(this.getListElement().children[0]);
+	}
+  }
+  });
   
-  xbl.CSS.addBinding("#hierarchy .navList li", navtreeitem);
-  xbl.CSS.addBinding("#hierarchy .navList", UI.list);
-  xbl.CSS.addBinding("#hierarchy", UI.tree);
+  sprockets.register("#hierarchy .navList li", NavTreeItem);
+  sprockets.register("#hierarchy .navList", UI.List);
+  sprockets.register("#hierarchy", UI.Tree);
+  
+  sprockets.domReady(); // WARN this line must be after all content in decor
+
 })();
 </script>
   
 <script>
 (function() {
+var _ = Meeko.stuff;
+var DOM = Meeko.DOM, $ = DOM.$, $$ = DOM.$$;
 Meeko.panner.config({
 	duration: 250,
     nodeRemoved: { before: hide, after: show },
     nodeInserted: { before: hide, after: show },
-    pageIn: function() {
-      var topNav = document.getElementById("hierarchy");
-      var links = topNav.querySelectorAll("a[href]");
-      var tree = Meeko.UI.tree.getBindingFor(topNav);
+    pageIn: function() { // TODO this shoud be part of the binding, or at least after decorIn.
+      var topNav = $("#hierarchy");
+      var tree = Meeko.UI.Tree(topNav);
       tree.selectItem();
-      [].every.call(links, function(link) {
+      var links = $$("a[href]", topNav);
+      _.every(links, function(link) {
         if (link.href != document.URL) return true;
         tree.selectItem(link.parentNode);
         return false;
