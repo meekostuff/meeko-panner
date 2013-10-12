@@ -19,9 +19,9 @@ if integrated into a site rather than being implemented as a JS bookmarklet.
 Requirements
 ------------
 
-You need a browser with javascript support enabled. <script type="text/javascript">document.write("Your browser DOES")</script><noscript>Your browser DOES NOT</noscript>  
+You need a browser with javascript support enabled.
 
-You need a browser that implements `history.pushState()`. <script type="text/javascript">document.write("Your browser ", !!history.pushState ? "DOES" : "DOES NOT")</script><br />
+You need a browser that implements `history.pushState()`. 
 
 <b>NOTE:</b> HTMLDecor doesn't require `pushState` if integrated into a site,
 but to use it in a bookmarklet would require the bookmarklet to be run on every page. 
@@ -32,22 +32,16 @@ Recent versions of the following browsers have been tested:
 - Safari
 - Firefox
 - Opera
-
-IE10 supports `pushState` but has not been tested.
+- Internet Explorer (IE10)
 
 
 Installation
 ------------
 
-*Be sure to read the **Notes and Warnings** section*
+The easiest way to add the bookmarklet to your browser is to use the installation on the development server,
+see <http://devel.meekostuff.net/meeko-panner/2.0-devel/>
 
-1. Drag the
-<a title="meeko-panner" href="javascript:var decorBase = (location.protocol == 'https:') ? 'https://d3g4qkktqnw71.cloudfront.net/meeko-panner/' : 'http://dist.meekostuff.net/meeko-panner/'; var script=document.createElement('script'); script.src=decorBase + 'loader.js'; document.getElementsByTagName('head')[0].appendChild(script); void(0);">
-meeko-panner</a> bookmarklet to your bookmark bar.
-
-2. Go to a [supported site](sites/). 
-
-3. Click on the meeko-panner bookmarklet you just installed. 
+Installation is typically just a drag-and-drop from the page to the browser's bookmark bar. 
 
 
 Notes and Warnings
@@ -63,12 +57,6 @@ So this may not work at all for you even with the browsers I have tested.
 - Having said that, if something fails you can usually just refresh the page (and run meeko-panner again).
 
 - The speed of **meeko-panner** is limited primarily by the site it is running on. 
-
-
-TODO
-----
-
-- separate XBL into its own project
 
 
 Contact

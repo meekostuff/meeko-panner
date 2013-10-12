@@ -17,14 +17,13 @@ Another scenario is that a mobile site is enhanced with the appearance of the st
 I consider it obvious that this approach would have better performance and flexibility
 if integrated into a site rather than being implemented as a JS bookmarklet. </p>
 
+<p>More details can be found at the <a href="https://github.com/shogun70/meeko-panner">project site</a>.</p>
+
 <h2>Requirements</h2>
 
 <p>You need a browser with javascript support enabled. <script type="text/javascript">document.write("Your browser DOES")</script><noscript>Your browser DOES NOT</noscript>  </p>
 
 <p>You need a browser that implements <code>history.pushState()</code>. <script type="text/javascript">document.write("Your browser ", !!history.pushState ? "DOES" : "DOES NOT")</script><br /></p>
-
-<p><b>NOTE:</b> HTMLDecor doesn't require <code>pushState</code> if integrated into a site,
-but to use it in a bookmarklet would require the bookmarklet to be run on every page. </p>
 
 <p>Recent versions of the following browsers have been tested:</p>
 
@@ -33,19 +32,44 @@ but to use it in a bookmarklet would require the bookmarklet to be run on every 
 <li>Safari</li>
 <li>Firefox</li>
 <li>Opera</li>
+<li>Internet Explorer (IE10)</li>
 </ul>
-
-<p>IE10 supports <code>pushState</code> but has not been tested.</p>
 
 <h2>Installation</h2>
 
 <p><em>Be sure to read the <strong>Notes and Warnings</strong> section</em></p>
 
 <ol>
-<li><p>Drag the
-<a href="javascript:var decorBase = (location.protocol == 'https:') ? 'https://d3g4qkktqnw71.cloudfront.net/meeko-panner/' : 'http://dist.meekostuff.net/meeko-panner/'; var script=document.createElement('script'); script.src=decorBase + 'loader.js'; document.getElementsByTagName('head')[0].appendChild(script); void(0);" title="meeko-panner">
-meeko-panner</a> bookmarklet to your bookmark bar.</p></li>
-<li><p>Go to a <a href="sites/">supported site</a>. </p></li>
+<li><p>Drag the <a href="javascript:alert('There was a problem on the installation page. Perhaps Javascript isn't enabled');" id="meeko-panner" title="meeko-panner">meeko-panner</a> bookmarklet to the browser's bookmark bar.</p>
+
+<div id="fallback">
+The URL of the bookmarklet uses the `javascript:` protocol and contais the following code in one line and with `{baseURI}` replaced by the URL of this installation directory. 
+
+
+<pre><code id="source" type="text/javascript">
+    (function() {
+        var script = document.createElement('script');
+        script.src = '{baseURI}' + 'boot.js';
+        var Meeko = window.Meeko || (window.Meeko = {});
+        Meeko.bootScript = script;
+        document.body.appendChild(script);
+        return;
+    })();
+</code></pre>
+</div>
+
+<script type="text/javascript">
+    function $id(id) { return document.getElementById(id); }
+    var baseURI = document.URL.replace(/\/[^\/]*$/, '/');
+    var source = $id('source');
+    var sourceText = source.textContent || source.innerText;
+    var url = 'javascript:' + sourceText.replace(/\n\s*/g,' ').replace('{baseURI}', baseURI);
+    var bookmarklet = $id('meeko-panner');
+    bookmarklet.href = url;
+    var fallback = $id('fallback');
+    fallback.style.display = 'none';
+</script></li>
+<li><p>Go to a <a href="sites/">compatible site</a>. </p></li>
 <li><p>Click on the meeko-panner bookmarklet you just installed. </p></li>
 </ol>
 
@@ -54,16 +78,7 @@ meeko-panner</a> bookmarklet to your bookmark bar.</p></li>
 <ul>
 <li><p>This is a minimally tested and unsupported project. Use at your own risk.</p></li>
 <li><p>Features may not work or break without warning. </p></li>
-<li><p>Some sites send different markup to different users, depending on device, region, etc.
-So this may not work at all for you even with the browsers I have tested. </p></li>
 <li><p>Having said that, if something fails you can usually just refresh the page (and run meeko-panner again).</p></li>
-<li><p>The speed of <strong>meeko-panner</strong> is limited primarily by the site it is running on. </p></li>
-</ul>
-
-<h2>TODO</h2>
-
-<ul>
-<li>separate XBL into its own project</li>
 </ul>
 
 <h2>Contact</h2>
