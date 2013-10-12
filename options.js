@@ -4,13 +4,12 @@
 var Meeko = window.Meeko || (window.Meeko = {});
 
 if (!history.pushState) {
-	alert('meeko-panner cannot run: \n\nThis browser doesn\'t support `history.pushState()`');
-	return;
+	var msg = 'meeko-panner cannot run: \n\nThis browser doesn\'t support `history.pushState()`';
+	alert(msg);
+	throw msg;
 }
 
-var decorBase = window.decorBase;
-if (!decorBase) throw 'window.decorBase is not set';
-var sitesBase = decorBase + 'sites/';
+// NOTE configDir = '{bootscriptdir}sites/{hostname}/config/';
 
 /* now the patching to make HTMLDecor behave as we need */
 
@@ -51,7 +50,7 @@ function domReady(fn) {
 	setTimeout(fn);
 }
 
-DOM.ready = domReady;
+if (document.readyState === 'complete') DOM.ready = domReady;
 
 extend(DOM, {
 
@@ -75,10 +74,9 @@ var _ = Meeko.stuff, extend = _.extend, each = _.each, forEach = _.forEach, word
 	decor = Meeko.decor, panner = Meeko.panner,
 	DOM = Meeko.DOM, URL = DOM.URL;
 	
-var	$id = DOM.$id;
-var $ = DOM.$ = function(selector, context) { if (!context) context = document; return context.querySelector(selector); }
-var $$ = DOM.$$ = function(selector, context) { if (!context) context = document; return [].slice.call(context.querySelectorAll(selector), 0); }
+var	$id = DOM.$id, $ = DOM.$, $$ = DOM.$$;
 
+var configDir = Meeko.bootScript.src.replace(/\/[^\/]*$/, '/') + 'sites/' + location.hostname + '/';
 
 /*
  Over-ride decor loader to rebase URIs:
@@ -138,9 +136,10 @@ panner.options.request = function(method, url, data, details, cb) {
 }
 */
 
-var lookup = decor.options.lookup;
+var decor_lookup = decor.options.lookup;
 decor.options.lookup = function(url) {
-	var decorURL = lookup(url);
+	var decorURL = decor_lookup(url);
+
 /* FIXME
 	if (!decorURL) {
 		alert("The page you are navigating to does not have a corresponding decor in the panner configuration for this site.");
@@ -152,7 +151,13 @@ decor.options.lookup = function(url) {
 	}
 */
 	
-	return sitesBase + location.hostname + '/' + decorURL;
+	return configDir + decorURL;
+}
+
+var decor_detect = decor.options.detect;
+decor.options.detect = function(doc) { // NOTE only called on landing page
+	var decorURL = decor_detect(doc);
+	return configDir + decorURL;
 }
 
 /*
@@ -185,20 +190,15 @@ function onSubmit(e) {
 */
 
 Meeko.options = {
-	"htmldecor_script": '{bootscriptdir}HTMLDecor.js',
+	"htmldecor_script": '{bootscriptdir}HTMLDecor/HTMLDecor.js',
 	"log_level": "warn",
 	"hidden_timeout": 5000, // TODO for some reason this needs to be longer to avaid FOUC
 	"polling_interval": 50, // TODO
 	"config_script": [
 		preconfig,
-		sitesBase + location.hostname + '/' + 'config.js',
+		'{bootscriptdir}sites/' + location.hostname + '/' + 'config.js',
 		postconfig
 	]
 }
-
-var bootScript = document.createElement('script');
-bootScript.src = decorBase + 'HTMLDecor/boot.js';
-Meeko.bootScript = bootScript;
-document.body.appendChild(bootScript); // TODO will this always be the last script?
 
 })();
