@@ -102,7 +102,7 @@ opacity: 0;
       _ = Meeko.stuff, extend = _.extend;
 
   var sprockets = Meeko.sprockets;
-  var UI = Meeko.UI;
+  var UI = sprockets.UI;
   
   var Panel = UI.Panel.evolve({ // panel is an abstract class. Sub-classes must define the load() method
     setHidden: function(state) {
@@ -197,13 +197,15 @@ opacity: 0;
 (function() {
 var _ = Meeko.stuff;
 var DOM = Meeko.DOM, $ = DOM.$, $$ = DOM.$$;
+var sprockets = Meeko.sprockets, UI = sprockets.UI;
+
 Meeko.panner.config({
 	duration: 250,
     nodeRemoved: { before: hide, after: show },
     nodeInserted: { before: hide, after: show },
     pageIn: function() { // TODO this shoud be part of the binding, or at least after decorIn.
       var topNav = $("#hierarchy");
-      var tree = Meeko.UI.Tree(topNav);
+      var tree = UI.Tree(topNav);
       tree.selectItem();
       var links = $$("a[href]", topNav);
       _.every(links, function(link) {
