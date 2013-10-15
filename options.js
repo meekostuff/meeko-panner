@@ -9,9 +9,18 @@ if (!history.pushState) {
 	throw msg;
 }
 
-// NOTE configDir = '{bootscriptdir}sites/{hostname}/config/';
+// NOTE Meeko.bootParams.configdir = '{bootscriptdir}sites/{hostname}/';
 
 /* now the patching to make HTMLDecor behave as we need */
+
+Meeko.bootConfig = function() {
+	var bootScript = Meeko.bootScript, bootParams = Meeko.bootParams;
+	var generator = bootScript.getAttribute('data-generator');
+	bootParams['configdir'] = 
+		bootScript.getAttribute('data-configdir') ||
+		generator && bootParams['bootscriptdir'] + 'generators/' + generator + '/' ||
+		bootParams['bootscriptdir'] + 'sites/' + location.hostname + '/';	
+}
 
 function preconfig() { // this is called **before** the site-specific config.js
 
@@ -76,8 +85,6 @@ var _ = Meeko.stuff, extend = _.extend, each = _.each, forEach = _.forEach, word
 	
 var	$id = DOM.$id, $ = DOM.$, $$ = DOM.$$;
 
-var configDir = Meeko.bootScript.src.replace(/\/[^\/]*$/, '/') + 'sites/' + location.hostname + '/';
-
 /*
  Over-ride decor loader to rebase URIs:
 	base-uri:{path}
@@ -85,30 +92,23 @@ var configDir = Meeko.bootScript.src.replace(/\/[^\/]*$/, '/') + 'sites/' + loca
  Usually `path` should be an absolute path, i.e. starts with `/`.
  */
 
-var decor_normalize = decor.options.normalize;
-decor.options.normalize = function(doc, settings) { // FIXME what about URI params!?
-	rebase(doc);
-	if (decor_normalize) decor_normalize(doc, settings);
-}
-
-function rebase(doc) {
-	
+decor.rebase = function rebase(doc, baseURL) {
+	if (!baseURL) baseURL = document.URL;
 	function normalize(tag, attrName) {
 		forEach($$(tag, doc), function(el) {
 			var relURL = el.getAttribute(attrName);
 			if (relURL == null) return;
-			var url = rebaseURL(relURL);
+			var url = rebaseURL(relURL, baseURL);
 			if (url != relURL) el[attrName] = url;
 		});
 	}
 	each(urlAttrs, normalize);
-
 }
 
-function rebaseURL(url) {
+function rebaseURL(url, baseURL) {
 	var relURL = url.replace(/^base-ur[il]:/, '');
 	if (relURL == url) return url;
-	return URL(document.URL).resolve(relURL);
+	return URL(baseURL).resolve(relURL);
 }
 
 var urlAttrs = {};
@@ -138,6 +138,7 @@ panner.options.request = function(method, url, data, details, cb) {
 
 var decor_lookup = decor.options.lookup;
 decor.options.lookup = function(url) {
+	if (!decor_lookup) return;
 	var decorURL = decor_lookup(url);
 
 /* FIXME
@@ -151,13 +152,16 @@ decor.options.lookup = function(url) {
 	}
 */
 	
-	return configDir + decorURL;
+	if (!decorURL) return;
+	return Meeko.bootParams['configdir'] + decorURL;
 }
 
 var decor_detect = decor.options.detect;
 decor.options.detect = function(doc) { // NOTE only called on landing page
+	if (!decor_detect) return;
 	var decorURL = decor_detect(doc);
-	return configDir + decorURL;
+	if (!decorURL) return;
+	return Meeko.bootParams['configdir'] + decorURL;
 }
 
 /*
@@ -196,7 +200,7 @@ Meeko.options = {
 	"polling_interval": 50, // TODO
 	"config_script": [
 		preconfig,
-		'{bootscriptdir}sites/' + location.hostname + '/' + 'config.js',
+		'{configdir}config.js',
 		postconfig
 	]
 }
