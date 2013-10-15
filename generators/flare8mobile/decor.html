@@ -1,0 +1,559 @@
+﻿<!DOCTYPE html>
+<html class="left-layout">
+    <head>
+        <meta charset="UTF-8" />
+        <title></title>
+
+        <!-- Stylesheets for primary content -->
+        <link href="http://webhelp.madcapsoftware.com/flare9/Content/Resources/Stylesheets/styles.css" rel="stylesheet" />
+        <link href="http://webhelp.madcapsoftware.com/flare9/Content/Resources/TableStyles/Simple.css" rel="stylesheet" />
+        <link href="http://webhelp.madcapsoftware.com/flare9/Content/Resources/TableStyles/SimpleDarkBackground.css" rel="stylesheet" />
+        <link href="http://webhelp.madcapsoftware.com/flare9/Content/Resources/TableStyles/Columns1.css" rel="stylesheet" />
+        <link href="http://webhelp.madcapsoftware.com/flare9/Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="http://webhelp.madcapsoftware.com/flare9/Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+
+        <!-- Stylesheets for layout and navigation --> 
+        <link rel="Stylesheet" href="http://webhelp.madcapsoftware.com/flare9/Skins/Default/Stylesheets/Styles.css" />
+        <link rel="Stylesheet" href="http://webhelp.madcapsoftware.com/flare9/Skins/Default/Stylesheets/TextEffects.css" />
+
+<!--
+        <script type="text/javascript" src="http://webhelp.madcapsoftware.com/flare9/Resources/Scripts/jquery.min.js">
+        </script>
+        <script type="text/javascript" src="http://webhelp.madcapsoftware.com/flare9/Resources/Scripts/plugins.min.js">
+        </script>
+        <script type="text/javascript" src="http://webhelp.madcapsoftware.com/flare9/Resources/Scripts/require.min.js">
+        </script>
+        <script type="text/javascript" src="http://webhelp.madcapsoftware.com/flare9/Resources/Scripts/require.config.js">
+        </script>
+        <script type="text/javascript" src="http://webhelp.madcapsoftware.com/flare9/Resources/Scripts/MadCapAll.js">
+        </script>
+-->
+
+<style>
+span.childCount { display: none; }
+</style>
+<script src="../../DOMSprockets/Sprocket.js"></script>
+<script src="../../DOMSprockets/UI.js"></script>
+
+<style type="text/css">
+#topic { 
+-webkit-transition: opacity 0.25s linear;
+-moz-transition: opacity 0.25s linear;
+-ms-transition: opacity 0.25s linear;
+-o-transition: opacity 0.25s linear;
+transition: opacity 0.25s linear;
+}
+#topic[hidden] {
+display: block;
+visibility: visible;
+opacity: 0;
+}
+</style>
+
+        
+    </head>
+    <body>
+        <div id="header">
+            <a href="http://www.madcapsoftware.com/">
+                <!-- <h1 class="logo"></h1> -->
+                <div class="logo"></div>
+            </a>
+            <div class="search-bar needs-pie">
+                <input id="search-field" class="needs-pie" type="text" placeholder="Search" />
+                <div class="search-filter-wrapper">
+                    <div class="search-filter"><span>All Files</span>
+                        <div class="search-filter-content">
+                            <ul>
+                                <li>All Files</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="search-submit-wrapper" dir="ltr">
+                    <div class="search-submit" title="Search">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="body">
+            <div id="navigation">
+                <div class="tabs">
+                    <a href="#tabs-panels"></a>
+                    <ul class="tabs-nav clearfix image-then-text tab-icon">
+                        <li id="TocTab" class="needs-pie tabs-nav-active">
+                            <div>
+                                <a href="#toc">
+                                <span class="tabs-nav-icon active" title="Contents"></span><span class="tabs-nav-text">Contents</span>
+                                </a>
+                            </div>
+                        </li>
+                        <li id="IndexTab" class="needs-pie">
+                            <div>
+                                <a href="#index">
+                                <span class="tabs-nav-icon active" title="Index"></span><span class="tabs-nav-text">Index</span>
+                                </a>
+                            </div>
+                        </li>
+                        <li id="GlossaryTab" class="needs-pie">
+                            <div>
+                                <a href="#glossary">
+                                <span class="tabs-nav-icon active" title="Glossary"></span><span class="tabs-nav-text">Glossary</span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="tabs-panels" id="tabs-panels">
+                        <div class="tabs-panel tabs-panel-active" id="toc">
+                            <div class="tabs-panel-content needs-pie">
+                                <a href="base-url:Resources/Toc_0.htm"></a>
+                                <div style="width: 100%; text-align: center;"><img src="../../decor/waiting-small.gif" /></div>
+                                <!--
+                            <ul class="tree">
+                                <li class="tree-node tree-node-inner tree-node-expanded">
+                                    <div>
+                                        <span>Book A</span>
+                                    </div>
+                                    <ul class="tree inner">
+                                        <li class="tree-node tree-node-inner tree-node-expanded">
+                                            <div>
+                                                <span class="label">Book A-A</span>
+                                            </div>
+                                            <ul class="tree inner">
+                                                <li class="tree-node tree-node-leaf">
+                                                    <div>
+                                                        <span><a href="#TopicA.htm">Topic A-A</a></span>
+                                                    </div>
+                                                </li>
+                                                <li class="tree-node tree-node-leaf">
+                                                    <div>
+                                                        <span class="new-indicator"></span>
+                                                        <span><a href="#TopicB.htm">Topic A-B</a></span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="tree-node tree-node-inner">
+                                            <div>
+                                                <span class="tree-node-leaf">Topic B</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="tree-node tree-node-inner tree-node-collapsed">
+                                    <div>
+                                        <span>Book B</span>
+                                    </div>
+                                    <ul class="tree inner">
+                                        <li class="tree-node tree-node-leaf">
+                                            <div>
+                                                <span>Topic B-A</span>
+                                            </div>
+                                        </li>
+                                        <li class="tree-node tree-node-leaf">
+                                            <div>
+                                                <span>Topic B-B</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            -->
+                            </div>
+                        </div>
+                        <div class="tabs-panel" id="index">
+                            <input type="text" id="search-index" class="tabs-panel-search" placeholder="Search" />
+                            <div class="tabs-panel-content searchable needs-pie popup-container" data-see-prefix="See" data-see-also-prefix="See Also">
+                                <a href="base-url:Resources/Index.htm"></a>
+                                <div style="width: 100%; text-align: center;"><img src="../../decor/waiting-small.gif" /></div>
+                                <div class="index-wrapper">
+                                    <!--
+                                <ul>
+                                    <li class="tree-node tree-node-leaf tree-node-expanded">
+                                        <div>
+                                            <span><a href="">Topic A</a></span>
+                                        </div>
+                                    </li>
+                                    <li class="tree-node tree-node-leaf tree-node-expanded">
+                                        <div>
+                                            <span><a href="">Topic B</a></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                                -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tabs-panel" id="glossary">
+                            <input type="text" id="search-glossary" class="tabs-panel-search" placeholder="Search" />
+                            <div class="tabs-panel-content searchable needs-pie popup-container">
+                                <a href="base-url:Resources/Glossary.htm"></a>
+                                <div style="width: 100%; text-align: center;"><img src="../../decor/waiting-small.gif" /></div>
+                                <!--
+                            <ul>
+                                <li class="tree-node tree-node-leaf tree-node-expanded">
+                                    <div>
+                                        <span><a href="">Topic A</a></span>
+                                    </div>
+                                </li>
+                                <li class="tree-node tree-node-leaf tree-node-expanded">
+                                    <div>
+                                        <span><a href="">Topic B</a></span>
+                                    </div>
+                                </li>
+                            </ul>
+                            -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="navigationResizeBar">
+                <div id="show-hide-navigation" class="needs-pie" dir="ltr">
+                </div>
+            </div>
+            <div id="contentBody" class="needs-pie">
+                <div class="buttons">
+                    <div class="button-group-container-left">
+                        <div class="button-group">
+                            <button class="button needs-pie print-button" title="Print">
+                            </button>
+                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                            </button>
+                            <button class="button needs-pie remove-highlight-button" title="Remove Highlights">
+                            </button>
+                        </div>
+                        <div class="button-group">
+                            <div class="star-buttons loading feedback-topic-required">
+                                <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                </div>
+                                <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                </div>
+                                <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                </div>
+                                <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                </div>
+                                <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-group">
+                            <button class="button feedback-required login-button" data-state1-class="login-button" data-state2-class="edit-user-profile-button" data-state2-title="Edit user profile" title="Login" data-state1-title="Login">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="button-group-container-right">
+                        <div class="button-group">
+                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                            </button>
+                            <div class="button current-topic-index-button disabled"><span class="sequence-index"></span> of <span class="sequence-total"></span></div>
+                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="contentBodyInner">
+                    <!-- frameBorder="0" is for IE 8 and below -->
+                    <!-- <iframe id="topic" class="content" name="topic" frameBorder="0"></iframe> -->
+                    <div id="topic" class="content">
+                        <div style="width: 100%; text-align: center; padding-top: 2em; "><img src="../../decor/waiting-big.gif" style="border: none;" />
+                    </div>
+                    
+                    <!--
+                    <iframe id="pulse" class="content" name="pulse" frameBorder="0"></iframe>
+                    -->
+                    
+                    <div id="searchPane">
+                        <h1 id="results-heading">Your search for <span class="query"></span> returned <span class="total-results"></span> result(s).</h1>
+                        <!--
+                    <ul id="resultList">
+                        <li>
+                            <h3 class="title"><a href="#TopicA.htm">Topic A</a></h3>
+                            <span class="ratingStarsContainer">
+                                <div class="ratingStar ratingStarFilled">&#160;</div>
+                                <div class="ratingStar ratingStarFilled">&#160;</div>
+                                <div class="ratingStar ratingStarFilled">&#160;</div>
+                                <div class="ratingStar ratingStarFilled">&#160;</div>
+                                <div class="ratingStar ratingStarEmpty">&#160;</div>
+                                17 reviews
+                            </span>
+                            <div class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a dictum dolor. Suspendisse potenti. Donec commodo, mi et pulvinar lobortis, velit magna sodales lectus, sit amet interdum magna urna eget leo. Pellentesque risus eros, vehicula non tempus at, bibendum in neque. In mollis malesuada facilisis.</div>
+                            <div class="url"><cite>TopicA.htm</cite></div>
+                        </li>
+                        <li>
+                            <h3 class="title"><a href="#TopicB.htm">Topic B</a></h3>
+                            <span class="ratingStarsContainer">
+                                <div class="ratingStar ratingStarFilled">&#160;</div>
+                                <div class="ratingStar ratingStarFilled">&#160;</div>
+                                <div class="ratingStar ratingStarFilled">&#160;</div>
+                                <div class="ratingStar ratingStarEmpty">&#160;</div>
+                                <div class="ratingStar ratingStarEmpty">&#160;</div>
+                                5 reviews
+                            </span>
+                            <div class="description">Duis nec massa est, id hendrerit neque. Sed ornare adipiscing turpis eu luctus. Phasellus eu viverra lectus. Nunc purus risus, scelerisque non porttitor vitae, fringilla luctus augue.</div>
+                            <div class="url"><cite>TopicB.htm</cite></div>
+                        </li>
+                        <li>
+                            <h3 class="title"><a href="#TopicA.htm">Topic A</a></h3>
+                            <div class="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a dictum dolor. Suspendisse potenti. Donec commodo, mi et pulvinar lobortis, velit magna sodales lectus, sit amet interdum magna urna eget leo. Pellentesque risus eros, vehicula non tempus at, bibendum in neque. In mollis malesuada facilisis.</div>
+                            <div class="url"><cite>TopicA.htm</cite></div>
+                        </li>
+                    </ul>
+                    -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="login-dialog needs-pie">
+        <div class="login-dialog-header needs-pie">Create Profile</div>
+        <div class="login-dialog-content needs-pie"><div class="profile-item-wrapper clearfix">
+    <div class="label-wrapper">
+        <label>Username *</label>
+    </div>
+    <div class="input-wrapper">
+        <input class="needs-pie" type="text" data-required="True" name="Username" />
+    </div>
+</div><div class="profile-item-wrapper clearfix">
+    <div class="label-wrapper">
+        <label>Email Address *</label>
+    </div>
+    <div class="input-wrapper">
+        <input class="needs-pie" type="text" data-required="True" name="EmailAddress" />
+    </div>
+</div>
+            <div class="profile-item-wrapper email-notifications-wrapper needs-pie">
+                <div class="label-wrapper">Email Notifications</div>
+                <div class="email-notifications-group needs-pie">I want to receive an email when...<div>
+                        <label><input type="checkbox" name="CommentReplyNotification" />a reply is left to one of my comments</label>
+                    </div>
+                    <div>
+                        <label><input type="checkbox" name="CommentSameTopicNotification" />a comment is left on a topic that I commented on</label>
+                    </div>
+                    <div>
+                        <label><input type="checkbox" name="CommentSameHelpSystemNotification" />a comment is left on any topic in the Help system</label>
+                    </div>
+                </div>
+            </div>
+            <div class="login-dialog-buttons">
+                <button class="submit-button needs-pie" type="submit">Submit</button>
+                <button class="cancel-button needs-pie">Cancel</button>
+            </div>
+            <div class="status-message-box">
+                <span class="message verification-email-sent-message">An email has been sent to verify your new profile.</span>
+                <span class="message required-fields-missing-message">Please fill out all required fields before submitting your information.</span>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+(function() {
+  var DOM = Meeko.DOM, $id = DOM.$id, $$ = DOM.$$, $ = DOM.$,
+      _ = Meeko.stuff, extend = _.extend;
+
+  var sprockets = Meeko.sprockets;
+  var UI = sprockets.UI;
+  
+  var TreeItem = UI.TreeItem.evolve({
+    setSelected: function(state) {
+        this.toggleClass('tree-node-selected', state);
+    },
+    getSelected: function() {
+        return this.hasClass('tree-node-selected');
+    },
+    setExpanded: function(state) {
+        if (state) {
+            this.removeClass('tree-node-collapsed');
+            this.addClass('tree-node-expanded');
+        }
+        else {
+            this.removeClass('tree-node-expanded');
+            this.addClass('tree-node-collapsed');
+        }
+    },
+    getExpanded: function() {
+        return this.hasClass('tree-node-expanded');
+    }
+  });
+  var AjaxTreeItem = TreeItem.evolve({
+    setExpanded: function(state) {
+        TreeItem.prototype.setExpanded.apply(this, arguments);
+        if (!state) return;
+        if (this.$('ul')) return;
+      var panel = this;
+	  var url = this.$('a').href;
+      DOM.loadHTML(url)
+	  .done(function(doc) {
+        panel.boundElement.insertAdjacentHTML('beforeend', transformTOC(DOM.$('#stackLayout ul', doc)).outerHTML);
+        panel.$('ul').className += " inner";
+      });
+        
+    }
+  });
+  var List = UI.List;
+  var Tree = UI.Tree;
+
+  sprockets.register('#toc .tabs-panel-content li', AjaxTreeItem);
+  sprockets.register('#toc .tabs-panel-content ul', List);
+  sprockets.register('#toc .tabs-panel-content', Tree, {
+    handlers: [
+    {
+        type: "click",
+        delegator: 'li',
+        action: function(event, delegator) {
+            var treeitem = UI.TreeItem(delegator);
+            if (treeitem.hasClass('tree-node-leaf')) {
+                treeitem.setSelected(true);
+            }
+            else {
+                var expanded = treeitem.getExpanded();
+                treeitem.setExpanded(!expanded);
+                event.preventDefault();
+            }
+        }
+    }
+    ]
+  });
+  
+  
+  var Panel = UI.Panel.evolve({ // panel is an abstract class. Sub-classes must define the load() method
+    setHidden: function(state) {
+      this.toggleClass('tabs-panel-active', !state);
+      if (!!state) return; 
+      if (this.hasClass('ready')) return;
+      // if panel is to be shown and content not already loaded ...
+      this.load();
+      this.addClass('ready'); // assume that the load succeeds
+    },
+    getHidden: function() {
+        return !this.hasClass('tabs-panel-active');
+    }
+  });
+  
+  function transformTOC(ul) {
+    ul.className = 'tree';
+    $$('li', ul).forEach(function(li) {
+       li.className = 'tree-node';
+       if ($('span.childCount', li)) li.className += ' tree-node-collapsed';
+       else li.className += ' tree-node-leaf';
+    });
+    return ul;
+  }
+  
+  var contentsPanel = Panel.evolve({
+    load: function() {
+      var panel = this;
+	  var url = this.$('a').href;
+      DOM.loadHTML(url)
+	  .done(function(doc) {
+        panel.$('.tabs-panel-content').innerHTML = transformTOC(DOM.$('#stackLayout ul', doc)).outerHTML;
+      });
+    }
+  });
+  
+  var indexPanel = Panel.evolve({
+    load: function() {
+      var panel = this;
+	  var url = this.$('a').href;
+      DOM.loadHTML(url)
+	  .done(function(doc) {
+        panel.$('.tabs-panel-content').innerHTML = transformTOC(DOM.$('#stackLayout ul', doc)).outerHTML; // FIXME transformIndex
+      });
+    }
+  });
+  
+  var glossaryPanel = Panel.evolve({
+    load: function() {
+      var panel = this;
+	  var url = this.$('a').href;
+      DOM.loadHTML(url)
+	  .done(function(doc) {
+        panel.$('.tabs-panel-content').innerHTML = transformTOC(DOM.$('#stackLayout ul', doc)).outerHTML; // FIXME transformGlossary
+      });
+    }
+  });
+  
+  sprockets.register("#toc", contentsPanel);
+  sprockets.register("#index", indexPanel);
+  sprockets.register("#glossary", glossaryPanel);
+  sprockets.register("#tabs-panels", UI.SwitchBox);
+
+  var Tab = UI.NavTreeItem.evolve({
+    getView: function() {
+        var ref = this.$('a');
+		if (!ref.getAttribute("href")) return;
+		var href = ref.href;
+		var base = document.URL.replace(/#.*$/, '')  + "#";
+		if (href.indexOf(base) != 0) return;
+		var id = href.replace(base, "");
+		return $id(id);
+    },
+    setSelected: function(state) {
+        this.toggleClass('tabs-nav-active', state);
+    },
+    getSelected: function() {
+        return this.hasClass('tabs-nav-active');
+    }
+  });
+  var TabList = UI.List;
+  var TabStrip = UI.NavTree;
+
+  sprockets.register("#navigation .tabs ul.tabs-nav li", Tab);
+  sprockets.register("#navigation .tabs ul.tabs-nav", TabList);
+  sprockets.register("#navigation .tabs", TabStrip, {
+  handlers: [
+	{
+		type: 'click',
+		delegator: 'a',
+		preventDefault: true
+	},
+	{
+		type: "click",
+		delegator: 'li',
+		action: function(event, item) {
+			this.selectItem(item);
+		}
+	},
+	{
+		type: "change",
+		action: function(event) {
+			var viewer = this.getView();
+			var target = UI.NavTreeItem(this.getSelectedItem()).getView();
+			UI.SwitchBox(viewer).setView(target);
+		}
+	}
+  ],
+  callbacks: {
+	enteredDocument: function() {
+		this.selectItem(this.getListElement().children[0]);
+	}
+  }
+  });
+  
+  sprockets.domReady(); // WARN this line must be after all content in decor
+
+})();
+</script>
+  
+<script>
+(function() {
+var _ = Meeko.stuff;
+var DOM = Meeko.DOM, $ = DOM.$, $$ = DOM.$$;
+Meeko.panner.config({
+	duration: 250,
+    nodeRemoved: { before: hide, after: show },
+    nodeInserted: { before: hide, after: show },
+    pageIn: function() { // TODO this shoud be part of the binding, or at least after decorIn.
+    }
+});
+
+function hide(msg) { msg.node.setAttribute("hidden", "hidden"); }
+function show(msg) { msg.node.removeAttribute("hidden"); }
+
+})();
+</script>
+
+
+    </body>
+</html>

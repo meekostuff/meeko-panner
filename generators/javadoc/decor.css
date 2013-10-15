@@ -1,0 +1,13 @@
+html { overflow-x: hidden; }
+#content .block, #content dd, #content th.colLast, #content td.colLast { max-width: 80ex; }
+#quickLinks { position: fixed; width: 20%; height: 100%; border-right: 2px ridge #777777; }
+#indexContainer { height: 100%; overflow-x: hidden; overflow-y: auto; padding-left: 10px; margin: 0; }
+#main { width: 80%; margin-left: 20%; margin-right: 0; padding-right: 0; }
+#header .title h1 { display: inline-block; vertical-align: bottom; margin-right: 0.5em; }
+.contextNav { display: inline-block; margin-left: 0.5em; }
+.contextNav li { display: inline; margin: 0 0.2em; padding: 0 0.5em; background: url(resources/background.gif) repeat-x; border: 1px solid #4C6B87; }
+.contextNav .navBarCell1Rev { background: url(resources/tab.gif) repeat-x; border: 1px solid #C9AA44; }
+.contextNav a:link, .contextNav a:visited, .contextNav a:active { color: white; text-decoration: none; }
+.contextNav a:active { color: #A88834; }
+
+
