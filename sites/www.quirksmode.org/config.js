@@ -9,7 +9,11 @@ Meeko.decor.config({
 		var path = oURL.pathname;
 		if (path.match("/blog/")) return "decor.html";
 		return null;
+	},
+	normalize: function(doc) {
+		Meeko.decor.rebase(doc);
 	}
+
 });
 
 Meeko.panner.config({

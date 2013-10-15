@@ -7,7 +7,11 @@ Meeko.decor.config({
 	lookup: function(url) {
 		var oURL = URL(url);
 		return 'decor.html';
+	},
+	normalize: function(doc) {
+		Meeko.decor.rebase(doc);
 	}
+
 });
 
 Meeko.panner.config({

@@ -8,7 +8,11 @@ Meeko.decor.config({
 		var oURL = URL(url);
 		if (oURL.pathname.match("/javase/7/docs/api/")) return "javase7.html";
 		return null;
+	},
+	normalize: function(doc) {
+		Meeko.decor.rebase(doc);
 	}
+
 });
 
 Meeko.panner.config({

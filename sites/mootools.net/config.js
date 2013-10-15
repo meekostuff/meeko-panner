@@ -10,7 +10,11 @@ Meeko.decor.config({
 		var path = oURL.pathname;
 		if (path.indexOf("/docs/") == 0) return "docs.html";
 		return null;
+	},
+	normalize: function(doc) {
+		Meeko.decor.rebase(doc);
 	}
+
 });
 
 Meeko.panner.config({

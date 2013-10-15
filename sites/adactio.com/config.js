@@ -7,6 +7,9 @@ Meeko.decor.config({
 	lookup: function(url) {
 		oURL = URL(url);
 		return 'decor.html';
+	},
+	normalize: function(doc) {
+		Meeko.decor.rebase(doc);
 	}
 });
 
