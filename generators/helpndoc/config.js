@@ -22,7 +22,7 @@ Meeko.decor.config({
 		var topicContent = $('#topic_content');
 	
 		if (!(topicHeader && topicContent)) {
-			alert("This doesn't look like a supported Help And Manual site. Sorry");
+			alert("This doesn't look like a supported HelpNDoc site. Sorry");
 			return;
 		}
 	
