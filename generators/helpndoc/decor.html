@@ -1,0 +1,405 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">   
+  <meta name="robots" content="noindex,follow" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<!-- header.html -->
+<style type="text/css">
+	html, body {
+		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+		font-size: 14px;
+	}
+	
+	a {
+		text-decoration: none;
+	}
+	
+	a:hover {
+		text-decoration: underline;
+	}
+	
+	#header-table {
+		padding-top: 10px;
+	}
+	
+	.primary-menu, .secondary-menu {
+		text-align: right;
+	}
+	
+	.primary-menu a {
+		color: #777;
+		font-size: 19px;
+		padding: 0 10px;
+	}
+	
+	.secondary-menu a {
+		color: #999;
+		font-size: 14px;
+		padding: 0 10px;
+		text-transform: uppercase;
+	}
+	
+	.selected {
+		font-weight: bold;
+	}
+	
+</style>
+
+<!-- toc and topic styles -->
+<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+<link type="text/css" rel="stylesheet" media="all" href="css/silver-theme/jquery-ui-1.8.12.custom.css" />
+<link type="text/css" rel="stylesheet" media="all" href="css/dynatree/chm/ui.dynatree.css" />
+<link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
+<link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
+<link type="text/css" rel="stylesheet" media="all" href="css/toc.css" />	
+
+<style type="text/css">
+	#tabs .ui-widget-header
+	{
+		background-color: #EFEFEF;
+	}
+</style>
+
+<!-- override toc styles -->
+<style>
+#tabs .ui-tabs-nav { position: static; }
+#tabs .ui-tabs-panel { position: static; }
+</style>
+
+<!-- layout -->
+<style>
+#mk_header { width: 100%; border-bottom: 2px ridge black; }
+#mk_browser { display: table-row; width: 100%; }
+#mk_browser > div { display: table-cell; vertical-align: top; }
+#mk_navigation { width: 300px; }
+#mk_separator { width: 1px; background-color: black; }
+#mk_main { }
+#mk_toc, #mk_topic { width: 100%; height: 100%; overflow: hidden; }
+#mk_topic { overflow-y: auto; }
+/* need to manually set height for mk_navigation, mk_separator, mk_main */
+</style>
+
+<!-- paging animation -->
+<style type="text/css">
+#mk_topic { 
+-webkit-transition: opacity 0.25s linear;
+-moz-transition: opacity 0.25s linear;
+-ms-transition: opacity 0.25s linear;
+-o-transition: opacity 0.25s linear;
+transition: opacity 0.25s linear;
+}
+#mk_topic[hidden] {
+display: block;
+visibility: visible;
+opacity: 0;
+}
+</style>
+
+
+<script src="../../DOMSprockets/Sprocket.js"></script>
+<script src="../../DOMSprockets/UI.js"></script>
+
+<!-- toc.html -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/jquery.dynatree.min.js"></script>
+<script type="text/javascript" src="js/hndjsse.js"></script>
+<script type="text/javascript">
+
+	window.bSearchDataLoaded = false;
+	var sHelpIdToActivate = '';
+
+	function navInit()
+	{
+		var sAnchorName = '';
+		try { sAnchorName = top.location.href.substring(top.location.href.lastIndexOf("#") + 1, top.location.href.length); }
+		catch(err) { sAnchorName = ''; }
+		var nSelectedTab = 0;
+		if (sAnchorName == '_index') nSelectedTab = 1
+		else if (sAnchorName == '_search') nSelectedTab = 2;			
+		$("#tabs").tabs({
+			selected: nSelectedTab,
+			select: function(event, ui) { HideKwPopup(); }
+		});
+		
+		// Toc
+		if ($("#tab-toc").length) {
+			$("#tab-toc").dynatree({
+				clickFolderMode: 1,
+				debugLevel: 0,
+				imagePath: 'css/dynatree/chm/',
+				onActivate: function(node){
+					//if ($("#tab-keywords").length && $("#tab-keywords").dynatree && $("#tab-keywords").dynatree("getTree") && $("#tab-keywords").dynatree("getTree").activateKey)
+					//	$("#tab-keywords").dynatree("getTree").activateKey(null);
+					if(node.data.href && node.data.href != '#'){
+						//window.open(node.data.href, node.data.target);
+						Meeko.panner.assign(node.data.href); 
+					}
+				}
+			});
+			// Expand all nodes if required
+			// Select the active help id
+			if (sHelpIdToActivate != '') $("#tab-toc").dynatree("getTree").activateKey(sHelpIdToActivate);
+		}
+		
+		// Keywords
+		
+		if ($("#tab-keywords").length) {
+			$("#tab-keywords").dynatree({
+				clickFolderMode: 1,
+				debugLevel: 0,
+				imagePath: 'css/dynatree/chm/',
+				onClick: function(node, event){
+					HideKwPopup();
+					if (node.data && node.data.click)
+					{
+						var aRefList = null;
+						eval('aRefList=' + node.data.click);
+						if (ShowKwPopup(node.li, aRefList))
+						{
+							//if ($("#tab-toc") && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").activateKey)
+							//	$("#tab-toc").dynatree("getTree").activateKey(null);
+							if(node.data.href && node.data.href != '#'){
+								//window.open(node.data.href, node.data.target);
+								Meeko.panner.assign(node.data.href);
+							}
+						}
+					}
+				}
+			});
+			// Expand all nodes if required
+			}
+		
+		// Load search data
+		(function() {
+			var se = document.createElement('script'); se.type = 'text/javascript'; se.async = true;
+			se.src = 'js/hndsd.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(se, s);
+		})();
+	}
+	
+	$('body').click(function() {
+		HideKwPopup();
+	});
+	
+	function SelectTocItem(sHelpId)
+	{
+		if ($("#tab-toc").length && $("#tab-toc").dynatree && $("#tab-toc").dynatree("getTree") && $("#tab-toc").dynatree("getTree").getNodeByKey) {
+			$("#tab-toc").dynatree("getTree").getNodeByKey(sHelpId).activateSilently();
+		}
+		else {
+			sHelpIdToActivate = sHelpId;
+		}
+	}
+	
+	function HideKwPopup()
+	{
+		if($("#popupMenu")) $("#popupMenu").remove();
+	}
+	
+	function ShowKwPopup(oSender, aLinks)
+	{
+		HideKwPopup();
+		if (!aLinks || !aLinks.length || aLinks.length == 0) return false
+		else if (aLinks.length == 1) return true
+		else
+		{
+			var oParentDiv = document.createElement("DIV");
+			oParentDiv.id = "popupMenu";
+			var oLink = null;
+			// Close button
+			oLink = document.createElement("SPAN");
+			oLink.className = "close-button";
+			oLink.innerHTML = "X";
+			oLink.href = "#";
+			oLink.onclick = HideKwPopup;
+			oParentDiv.appendChild(oLink);
+			// Items
+			for (var nCnt=0; nCnt<aLinks.length; nCnt++)
+			{
+				oLink = document.createElement("A");
+				oLink.innerHTML = aLinks[nCnt][0];
+				oLink.href = aLinks[nCnt][1];
+				//oLink.target = "FrameMain";
+				oLink.onclick = HideKwPopup;
+				oParentDiv.appendChild(oLink);
+			}
+			document.body.appendChild(oParentDiv);
+			var pos = $(oSender).offset(); 
+			var height = $(oSender).height();
+			$(oParentDiv).css({
+				"left": (pos.left+20) + "px",
+				"top": (pos.top + height + 5) + "px"
+			});
+			$(oParentDiv).show();
+			return false;
+		}
+	}
+	
+	function PerformSearch()
+	{
+		if (!window.bSearchDataLoaded) {
+			$("#search_results").html("Search engine data hasn't been fully loaded yet or an error occurred while loading it. This usually happens when documentation is browsed locally.");
+			return;
+		}
+		sValue = $("#search_value").val();
+		$("#search_results").html('Searching...');
+		var oSearchEngine = new HndJsSe;
+		oSearchEngine.ParseInput(sValue);			
+		oSearchEngine.PerformSearch();
+		if (!oSearchEngine.aResults || !oSearchEngine.aResults.length)
+		{
+			$("#search_results").html('No results found.');
+		}
+		else
+		{
+			$("#search_results").html('<div id="search_results_content"></div>');
+			var oUl = $("#search_results_content").append("<ul id='lr'></ul>").find("ul");
+			for (var nCnt = 0; nCnt < oSearchEngine.aResults.length; nCnt++)
+			{
+				if (oSearchEngine.aResults[nCnt][0] < aTl.length)
+				{
+					oUl.append("<li><a href='" + aTl[oSearchEngine.aResults[nCnt][0]][0] + "?search=" + escape(sValue) + "' target='FrameMain'>" + unescape(aTl[oSearchEngine.aResults[nCnt][0]][1]) + "</a></li>");
+				}
+			}
+			// Tree
+			$("#search_results_content").dynatree({
+				clickFolderMode: 1,
+				debugLevel: 0,
+				imagePath: 'css/dynatree/chm/',
+				onActivate: function(node){
+					if ($("#search_results_content") && $("#search_results_content").dynatree && $("#search_results_content").dynatree("getTree") && $("#search_results_content").dynatree("getTree").activateKey)
+						$("#search_results_content").dynatree("getTree").activateKey(null);
+					if(node.data.href && node.data.href != '#'){
+						window.open(node.data.href, node.data.target);
+					}
+				}
+			});
+		}
+	}
+</script>
+
+</head>
+<body>
+ 
+<div id="mk_header">
+<!-- header.html -->
+<table id="header-table" width="960" border="0" align="center" cellpadding="5" cellspacing="0">
+	<tr>
+		<td rowspan="2">
+			<a href="http://www.helpndoc.com" target="_top">
+				<img src="img/helpndoc-logo.png" alt="HelpNDoc help authoring tool"/>
+			</a>
+		</td>
+		<td class="secondary-menu">
+			<a href="http://www.helpndoc.com/news-and-articles" target="_top">News &amp; Articles</a>
+			<a href="http://www.helpndoc.com/online-help" target="_top" class="selected">Online Help</a>
+			<a href="http://www.helpndoc.com/contact" target="_top">Contact Us</a>
+		</td>
+	</tr>
+	<tr>
+		<td class="primary-menu">
+			<a href="http://www.helpndoc.com" target="_top">Home</a>
+			<a href="http://www.helpndoc.com/feature-tour" target="_top">Feature Tour</a>
+			<a href="http://www.helpndoc.com/download" target="_top">Download</a>
+			<a href="http://www.helpndoc.com/store" target="_top">Store</a>
+		</td>
+	</tr>
+</table>
+</div>
+
+<div id="mk_browser">
+
+<div id="mk_navigation">
+  <div id="mk_toc">
+	<a href="base-url:toc.html"></a>
+	<div style="width: 100%; text-align: center; margin-top: 5em;"><img src="../../decor/waiting-small.gif" style="border: none;"/></div>
+  </div>  
+</div>
+
+<div id="mk_separator"></div>
+
+<div id="mk_main">
+  <div id="mk_topic">
+    <div style="width: 100%; text-align: center; margin-top: 5em;"><img src="../../decor/waiting-big.gif" style="border: none;" /></div>	
+  </div>
+</div>
+
+</div>
+
+<script>
+(function() {
+  var DOM = Meeko.DOM;
+      $id = DOM.$id, $$ = DOM.$$,
+      _ = Meeko.stuff, extend = _.extend;
+
+  var sprockets = Meeko.sprockets;
+  var UI = sprockets.UI;
+
+  var Panel = UI.Panel.evolve({ // panel is an abstract class. Sub-classes must define the load() method
+    setHidden: function(state) {
+      UI.Panel.prototype.setHidden.apply(this, arguments);
+      if (!!state) return; 
+      if (this.loaded) return;
+      // if panel is to be shown and content not already loaded ...
+      this.load();
+      this.loaded = true; // assume that the load succeeds
+    }
+  });
+  
+  var navPanel = Panel.evolve({
+    load: function() {
+      var element = this.boundElement;
+	  var url = this.$('a').href;
+      DOM.loadHTML(url)
+	  .done(function(doc) {
+		$$('a', doc).forEach(function(el) { el.removeAttribute('target'); });
+        element.innerHTML = $id('tabs', doc).outerHTML;
+  		navInit();
+      });
+    }
+  });
+
+  sprockets.register("#mk_toc", navPanel, {
+	callbacks: {
+	  enteredDocument: function() { this.setHidden(false); }
+	}
+  });
+
+  
+  sprockets.domReady(); // WARN this line must be after all content in decor
+
+})();
+</script>
+  
+
+<script>
+(function() {
+var _ = Meeko.stuff;
+var DOM = Meeko.DOM, $ = DOM.$, $$ = DOM.$$, $id = DOM.$id;
+Meeko.panner.config({
+	duration: 250,
+    nodeRemoved: { before: hide, after: show },
+    nodeInserted: { before: hide, after: show },
+    pageIn: function() { // TODO this shoud be part of the binding, or at least after decorIn.
+	  var height = document.body.clientHeight - $id('mk_header').clientHeight;
+	  $id('mk_navigation').style.height = height + 'px';
+	  $id('mk_separator').style.height = height + 'px';
+	  $id('mk_main').style.height = height + 'px';
+	  
+	  var width = document.body.clientWidth - $id('mk_navigation').clientWidth - $id('mk_separator').clientWidth;
+	  $id('mk_main').style.width = width + 'px';
+    }
+});
+
+function hide(msg) { msg.node.setAttribute("hidden", "hidden"); }
+function show(msg) { msg.node.removeAttribute("hidden"); }
+
+})();
+</script>
+
+</body>
+</html>
