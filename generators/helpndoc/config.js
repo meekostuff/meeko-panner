@@ -18,14 +18,16 @@ Meeko.decor.config({
 	detect: function(doc) {
 		if (baseURL) return; // shouldn't be needed. lookup() will be valid
 	
-		var topicHeader = $('#topic_header');
-		var topicContent = $('#topic_content');
-	
-		if (!(topicHeader && topicContent)) {
-			alert("This doesn't look like a supported HelpNDoc site. Sorry");
-			return;
+		if (document.readyState == "complete") { // if invoked as JS bookmarklet
+			var topicHeader = $('#topic_header');
+			var topicContent = $('#topic_content');
+
+			if (!(topicHeader && topicContent)) {
+				alert("This doesn't look like a supported HelpNDoc site. Sorry");
+				return;
+			}
 		}
-	
+		
 		baseURL = URL(document.URL).base;
 	
 		return decorURL;
