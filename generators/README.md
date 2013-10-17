@@ -17,4 +17,5 @@ into the same window with AJAX.
 - [Javadoc](javadoc/)
 - [MadCap Flare Mobile WebHelp](flare8mobile/)
 - [Help & Manual](helpandmanual/)
+- [HelpNDoc](helpndoc/)
 
