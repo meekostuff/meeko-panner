@@ -63,9 +63,9 @@
 </style>
 
 <!-- override toc styles -->
-<style>
-#tabs .ui-tabs-nav { position: static; }
-#tabs .ui-tabs-panel { position: static; }
+<style> /* #mk_toc is needed to win the specificity */
+#mk_toc #tabs .ui-tabs-nav { position: static; }
+#mk_toc #tabs .ui-tabs-panel { position: static; }
 </style>
 
 <!-- layout -->
@@ -100,6 +100,9 @@ opacity: 0;
 
 
 <script src="../../DOMSprockets/Sprocket.js"></script>
+<!--[if lte IE 8]>
+<script src="../../DOMSprockets/Legacy.js"></script>
+<![endif]-->
 <script src="../../DOMSprockets/UI.js"></script>
 
 <!-- toc.html -->
@@ -335,7 +338,7 @@ opacity: 0;
 (function() {
   var DOM = Meeko.DOM;
       $id = DOM.$id, $$ = DOM.$$,
-      _ = Meeko.stuff, extend = _.extend;
+      _ = Meeko.stuff, extend = _.extend, forEach = _.forEach;
 
   var sprockets = Meeko.sprockets;
   var UI = sprockets.UI;
@@ -357,7 +360,7 @@ opacity: 0;
 	  var url = this.$('a').href;
       DOM.loadHTML(url)
 	  .done(function(doc) {
-		$$('a', doc).forEach(function(el) { el.removeAttribute('target'); });
+		forEach($$('a', doc), function(el) { el.removeAttribute('target'); });
         element.innerHTML = $id('tabs', doc).outerHTML;
   		navInit();
       });
