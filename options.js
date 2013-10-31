@@ -3,8 +3,10 @@
 
 var Meeko = window.Meeko || (window.Meeko = {});
 
-if (!history.pushState) {
-	var msg = 'meeko-panner cannot run: \n\nThis browser doesn\'t support `history.pushState()`';
+var isBookmarklet = !!document.body;
+
+if (isBookmarklet && !history.pushState) {
+	var msg = 'meeko-panner bookmarklet cannot run: \n\nThis browser doesn\'t support `history.pushState()`';
 	alert(msg);
 	throw msg;
 }
@@ -64,7 +66,7 @@ function domReady(fn) {
 	setTimeout(fn);
 }
 
-if (document.readyState === 'complete') DOM.ready = domReady;
+if (isBookmarklet) DOM.ready = domReady; // the default DOM.ready relies on being initialized before DOMContentLoaded
 
 extend(DOM, {
 
@@ -174,7 +176,7 @@ decor.options.detect = function(doc) { // NOTE only called on landing page
  TODO currently only handles POST
  FIXME assumes success
  */
-DOM.addEvent("submit", onSubmit);
+DOM.addEvent(document, "submit", onSubmit);
 function onSubmit(e) {
 	var form = e.target;
 	var method = _.lc(form.method);
