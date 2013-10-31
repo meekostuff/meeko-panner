@@ -29,8 +29,13 @@ var _ = Meeko.stuff, extend = _.extend, each = _.each, forEach = _.forEach, word
 	DOM = Meeko.DOM;
 	
 var	$id = DOM.$id;
-var $ = DOM.$ = function(selector, context) { if (!context) context = document; return context.querySelector(selector); }
-var $$ = DOM.$$ = function(selector, context) { if (!context) context = document; return [].slice.call(context.querySelectorAll(selector), 0); }
+var $ = DOM.$ = function(selector, context) { if (!context) context = document; return context.querySelector(selector); } // FIXME IE < 8
+var $$ = DOM.$$ = function(selector, context) { // FIXME IE < 8
+	if (!context) context = document;
+	var nodeList = [];
+	forEach(context.querySelectorAll(selector), function(node) { nodeList.push(node); });
+	return nodeList;
+}
 
 function cloneDocument(doc) {
 	var clone = document.implementation.createHTMLDocument("");
@@ -169,7 +174,7 @@ decor.options.detect = function(doc) { // NOTE only called on landing page
  TODO currently only handles POST
  FIXME assumes success
  */
-document.addEventListener("submit", onSubmit, false);
+DOM.addEvent("submit", onSubmit);
 function onSubmit(e) {
 	var form = e.target;
 	var method = _.lc(form.method);
