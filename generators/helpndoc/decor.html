@@ -365,6 +365,7 @@ opacity: 0;
 		forEach($$('a', doc), function(el) { el.removeAttribute('target'); });
         element.innerHTML = $id('tabs', doc).outerHTML;
   		navInit();
+		SelectTocItem(document.URL.match(/\/([^\/\.]+)\.html?$/)[1]); // FIXME robustness
       });
     }
   });
