@@ -1,5 +1,6 @@
 (function() {
 
+var _ = Meeko.stuff, forEach = _.forEach;
 var DOM = Meeko.DOM, $ = DOM.$, $$ = DOM.$$, $id = DOM.$id;
 var URL = DOM.URL;
 
@@ -41,8 +42,8 @@ Meeko.panner.config({
 	normalize: function(doc, details) {
 		var oURL = URL(details.url);
 		var path = oURL.pathname;
-		$$("script", doc).forEach(function(el) { el.parentNode.removeChild(el); })
-		$$("link", doc).forEach(function(el) { if (/stylesheet/i.test(el.rel)) el.parentNode.removeChild(el); })
+		forEach($$("script", doc), function(el) { el.parentNode.removeChild(el); })
+		forEach($$("link", doc), function(el) { if (/stylesheet/i.test(el.rel)) el.parentNode.removeChild(el); })
 
 		var html = $('html', doc); html.className = "left-layout";
 		

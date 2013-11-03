@@ -33,6 +33,9 @@
 span.childCount { display: none; }
 </style>
 <script src="../../DOMSprockets/Sprocket.js"></script>
+<!--[if lte IE 8]>
+<script src="../../DOMSprockets/Sprocket.js"></script>
+<![endif]-->
 <script src="../../DOMSprockets/UI.js"></script>
 
 <style type="text/css">
@@ -350,7 +353,7 @@ opacity: 0;
 <script>
 (function() {
   var DOM = Meeko.DOM, $id = DOM.$id, $$ = DOM.$$, $ = DOM.$,
-      _ = Meeko.stuff, extend = _.extend;
+      _ = Meeko.stuff, extend = _.extend, forEach = _.forEach;
 
   var sprockets = Meeko.sprockets;
   var UI = sprockets.UI;
@@ -433,7 +436,7 @@ opacity: 0;
   
   function transformTOC(ul) {
     ul.className = 'tree';
-    $$('li', ul).forEach(function(li) {
+    forEach($$('li', ul), function(li) {
        li.className = 'tree-node';
        if ($('span.childCount', li)) li.className += ' tree-node-collapsed';
        else li.className += ' tree-node-leaf';
