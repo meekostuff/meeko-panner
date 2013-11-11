@@ -21,7 +21,7 @@ Meeko.decor.config({
 	
 		var homeButton = $('div#header > div#navigationContainer a.button');
 	
-		if (!(homeButton && /Home/.test(homeButton.textContent))) {
+		if (!(homeButton && /Home/.test(homeButton.textContent || homeButton.innerText))) {
 			alert("This doesn't look like a supported Flare Mobile WebHelp site. Sorry");
 			return;
 		}
