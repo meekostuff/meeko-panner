@@ -20,8 +20,8 @@ Meeko.decor.config({
 		if (baseURL) return; // shouldn't be needed. lookup() will be valid
 	
 		if (document.readyState == "complete") { // if invoked as JS bookmarklet
-			var topicHeader = $('#topic_header');
-			var topicContent = $('#topic_content');
+			var topicHeader = $('#topic_header', doc);
+			var topicContent = $('#topic_content', doc);
 
 			if (!(topicHeader && topicContent)) {
 				alert("This doesn't look like a supported HelpNDoc site. Sorry");

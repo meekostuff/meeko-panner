@@ -21,15 +21,15 @@ var decor_detect = function(doc) {
 		return;
 	}
 
-	var overviewLI = $('div.topNav > ul.navList[title=Navigation] > li');
-	var noframesLI = $('div.subNav > ul.navList + ul.navList > li + li');
+	var overviewLI = $('div.topNav > ul.navList[title=Navigation] > li', doc);
+	var noframesLI = $('div.subNav > ul.navList + ul.navList > li + li', doc);
 
 	if (!(overviewLI && /Overview/.test(overviewLI.textContent) && noframesLI && /No\s*Frames/.test(noframesLI.textContent))) {
 		alert("This doesn't look like a supported javadoc site. Sorry");
 		return;
 	}
 
-	var overviewHyperlink = overviewLI.querySelector('a[href]') || noframesLI.querySelector('a[href]');
+	var overviewHyperlink = $('a[href]', overviewLI) || $('a[href]', noframesLI);
 	var overviewURL = URL(overviewHyperlink.href);
 	javadocBase = overviewURL.base; // NOTE `basedir` needed for decor rebase()
 

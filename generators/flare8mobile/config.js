@@ -19,7 +19,7 @@ Meeko.decor.config({
 	detect: function(doc) {
 		if (flareBase) return; // shouldn't be needed. lookup() will be valid
 	
-		var homeButton = $('div#header > div#navigationContainer a.button');
+		var homeButton = $('div#header > div#navigationContainer a.button', doc);
 	
 		if (!(homeButton && /Home/.test(homeButton.textContent || homeButton.innerText))) {
 			alert("This doesn't look like a supported Flare Mobile WebHelp site. Sorry");

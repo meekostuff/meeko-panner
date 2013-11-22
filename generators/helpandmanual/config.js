@@ -18,7 +18,7 @@ Meeko.decor.config({
 	detect: function(doc) {
 		if (baseURL) return; // shouldn't be needed. lookup() will be valid
 	
-		var homeButton = $('span#sync-toc > a');
+		var homeButton = $('span#sync-toc > a', doc);
 	
 		if (!homeButton) {
 			alert("This doesn't look like a supported Help And Manual site. Sorry");
