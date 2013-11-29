@@ -30,7 +30,9 @@
 -->
 
 <style>
-span.childCount { display: none; }
+#toc span.childCount { display: none; }
+#toc li { margin: 0 auto; }
+#toc a:link { font-weight: normal; }
 </style>
 <script src="../../DOMSprockets/Sprocket.js"></script>
 <!--[if lte IE 8]>
@@ -353,7 +355,8 @@ opacity: 0;
 <script>
 (function() {
   var DOM = Meeko.DOM, $id = DOM.$id, $$ = DOM.$$, $ = DOM.$,
-      _ = Meeko.stuff, extend = _.extend, forEach = _.forEach;
+      _ = Meeko.stuff, extend = _.extend, forEach = _.forEach, some = function(a, fn) { return !_.every(a, function(item) { return !fn(item); }); }, // TODO HTMLDecor should provide some()
+      Future = Meeko.Future, decor = Meeko.decor, panner = Meeko.panner;
 
   var sprockets = Meeko.sprockets;
   var UI = sprockets.UI;
@@ -379,27 +382,75 @@ opacity: 0;
         return this.hasClass('tree-node-expanded');
     }
   });
+  var List = UI.List;
+  var Tree = UI.Tree.evolve({
+    selectItem: function(node) {
+        var previous = this.__selectedItem;
+        if (previous) UI.TreeItem(previous).setSelected(false);
+        UI.TreeItem(node).setSelected(true);
+        this.__selectedItem = node;
+    },
+    getSelectedItem: function() {
+        return this.__selectedItem;
+    }
+  });
+
   var AjaxTreeItem = TreeItem.evolve({
+    getName: function() {
+        var nameContainer = this.$('a span');
+        return nameContainer.textContent || nameContainer.innerText; // FIXME is this white-space resilient?
+    },
     setExpanded: function(state) {
+        if (this.hasClass('tree-node-leaf')) return Future.resolve(); // FIXME perhaps should throw??
         TreeItem.prototype.setExpanded.apply(this, arguments);
-        if (!state) return;
-        if (this.$('ul')) return;
+        if (!state) return Future.resolve();
+        if (this.$('ul')) return Future.resolve();
       var panel = this;
 	  var url = this.$('a').href;
-      DOM.loadHTML(url)
-	  .done(function(doc) {
+      return DOM.loadHTML(url)
+	  .then(function(doc) {
         panel.boundElement.insertAdjacentHTML('beforeend', transformTOC(DOM.$('#stackLayout ul', doc)).outerHTML);
         panel.$('ul').className += " inner";
       });
-        
     }
   });
-  var List = UI.List;
-  var Tree = UI.Tree;
 
+  var AjaxTree = Tree.evolve({
+    showTocItem: function(path, select) {
+        var tree = this;
+        return expand(tree, path)
+        .then(function(treeitem) {
+            var element = treeitem.boundElement;
+            if (select) tree.selectItem(element);
+            element.scrollIntoView(false);
+        });
+    }
+  });
+
+  function expand(treeitem, path) {
+    var myPath = path.slice(0);
+    function _expand(_treeitem) {
+        return Future.resolve()
+        .then(function() {
+            var name = myPath.shift();
+            if (!name) return _treeitem;
+
+            var list = UI.List(_treeitem.getListElement());
+            var subitem;
+            var found = some(list.getItems(), function(node) {
+                subitem = AjaxTreeItem(node);
+                return (subitem.getName() === name);
+            });
+            if (found) return subitem.setExpanded(true).then(function() { return _expand(subitem); });
+            else throw 'Could not find entry for ' + name;
+        });
+    }
+    return _expand(treeitem);
+  }
+  
   sprockets.register('#toc .tabs-panel-content li', AjaxTreeItem);
   sprockets.register('#toc .tabs-panel-content ul', List);
-  sprockets.register('#toc .tabs-panel-content', Tree, {
+  sprockets.register('#toc .tabs-panel-content', AjaxTree, {
     handlers: [
     {
         type: "click",
@@ -407,12 +458,14 @@ opacity: 0;
         action: function(event, delegator) {
             var treeitem = UI.TreeItem(delegator);
             if (treeitem.hasClass('tree-node-leaf')) {
-                treeitem.setSelected(true);
+                event.preventDefault();
+                this.selectItem(delegator);
+                panner.assign(treeitem.$('a').href);
             }
             else {
+                event.preventDefault();
                 var expanded = treeitem.getExpanded();
                 treeitem.setExpanded(!expanded);
-                event.preventDefault();
             }
         }
     }
@@ -444,13 +497,28 @@ opacity: 0;
     return ul;
   }
   
+  function getTOCPath() {
+    var path = [];
+    var breadcrumbsBox = $('#topic > div.MCBreadcrumbsBox_0');
+    var breadcrumbs = $$('span.MCBreadcrumbsSelf, span.MCBreadcrumbs', breadcrumbsBox);
+    forEach(breadcrumbs, function(node) {
+        var name = node.textContent || node.innerText;
+        path.push(name);
+    });
+    return path;
+  }
+
   var contentsPanel = Panel.evolve({
     load: function() {
       var panel = this;
 	  var url = this.$('a').href;
       DOM.loadHTML(url)
 	  .done(function(doc) {
-        panel.$('.tabs-panel-content').innerHTML = transformTOC(DOM.$('#stackLayout ul', doc)).outerHTML;
+        var treeEl = panel.$('.tabs-panel-content');
+        treeEl.innerHTML = transformTOC(DOM.$('#stackLayout ul', doc)).outerHTML;
+        var path = getTOCPath();
+        var tree = AjaxTree(treeEl);
+        tree.showTocItem(path, true);
       });
     }
   });
