@@ -455,15 +455,16 @@ opacity: 0;
     {
         type: "click",
         delegator: 'li',
+        preventDefault: true,
         action: function(event, delegator) {
             var treeitem = UI.TreeItem(delegator);
             if (treeitem.hasClass('tree-node-leaf')) {
-                event.preventDefault();
+                // event.preventDefault(); // FIXME throws on IE <= 8. Should be fixed in legacy.js??
                 this.selectItem(delegator);
                 panner.assign(treeitem.$('a').href);
             }
             else {
-                event.preventDefault();
+                // event.preventDefault();
                 var expanded = treeitem.getExpanded();
                 treeitem.setExpanded(!expanded);
             }
@@ -513,7 +514,7 @@ opacity: 0;
       var panel = this;
 	  var url = this.$('a').href;
       DOM.loadHTML(url)
-	  .done(function(doc) {
+	  .then(function(doc) {
         var treeEl = panel.$('.tabs-panel-content');
         treeEl.innerHTML = transformTOC(DOM.$('#stackLayout ul', doc)).outerHTML;
         var path = getTOCPath();
@@ -528,7 +529,7 @@ opacity: 0;
       var panel = this;
 	  var url = this.$('a').href;
       DOM.loadHTML(url)
-	  .done(function(doc) {
+	  .then(function(doc) {
         panel.$('.tabs-panel-content').innerHTML = transformTOC(DOM.$('#stackLayout ul', doc)).outerHTML; // FIXME transformIndex
       });
     }
@@ -539,7 +540,7 @@ opacity: 0;
       var panel = this;
 	  var url = this.$('a').href;
       DOM.loadHTML(url)
-	  .done(function(doc) {
+	  .then(function(doc) {
         panel.$('.tabs-panel-content').innerHTML = transformTOC(DOM.$('#stackLayout ul', doc)).outerHTML; // FIXME transformGlossary
       });
     }

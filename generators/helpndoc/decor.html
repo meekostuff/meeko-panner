@@ -361,7 +361,7 @@ opacity: 0;
       var element = this.boundElement;
 	  var url = this.$('a').href;
       DOM.loadHTML(url)
-	  .done(function(doc) {
+	  .then(function(doc) {
 		forEach($$('a', doc), function(el) { el.removeAttribute('target'); });
         element.innerHTML = $id('tabs', doc).outerHTML;
   		navInit();

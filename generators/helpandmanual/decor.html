@@ -164,7 +164,7 @@ opacity: 0;
       var element = this.boundElement;
 	  var url = this.$('a').href;
       DOM.loadHTML(url)
-	  .done(function(doc) {
+	  .then(function(doc) {
         var items = DOM.$$("li", doc).forEach(function(li) {
           li.removeAttribute('onclick');
         });

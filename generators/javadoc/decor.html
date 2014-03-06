@@ -112,7 +112,7 @@ opacity: 0;
       var element = this.boundElement;
 	  var url = this.$('a').href;
       DOM.loadHTML(url)
-	  .done(function(doc) { // TODO get this URL from the DOM
+	  .then(function(doc) { // TODO get this URL from the DOM
         var items = DOM.$$("table.overviewSummary tbody + tbody > tr", doc).map(function(row) {
           var link = DOM.$('a', row), title = DOM.$('div.block', row);
           return '<li><a title="' + (title ? title.textContent : '') + '" h'+'ref="' + link.href + '">' + link.textContent + '</a></li>\n';
@@ -127,7 +127,7 @@ opacity: 0;
       var element = this.boundElement;
 	  var url = this.$('a').href;
       DOM.loadHTML(url)
-	  .done(function(doc) {
+	  .then(function(doc) {
         element.innerHTML = DOM.$(".indexContainer ul", doc).outerHTML;
       });
     }
