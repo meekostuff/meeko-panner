@@ -356,7 +356,7 @@ opacity: 0;
 (function() {
   var DOM = Meeko.DOM, $id = DOM.$id, $$ = DOM.$$, $ = DOM.$,
       _ = Meeko.stuff, extend = _.extend, forEach = _.forEach, some = function(a, fn) { return !_.every(a, function(item) { return !fn(item); }); }, // TODO HTMLDecor should provide some()
-      Future = Meeko.Future, decor = Meeko.decor, panner = Meeko.panner;
+      Promise = Meeko.Promise, decor = Meeko.decor, panner = Meeko.panner;
 
   var sprockets = Meeko.sprockets;
   var UI = sprockets.UI;
@@ -401,10 +401,10 @@ opacity: 0;
         return nameContainer.textContent || nameContainer.innerText; // FIXME is this white-space resilient?
     },
     setExpanded: function(state) {
-        if (this.hasClass('tree-node-leaf')) return Future.resolve(); // FIXME perhaps should throw??
+        if (this.hasClass('tree-node-leaf')) return Promise.resolve(); // FIXME perhaps should throw??
         TreeItem.prototype.setExpanded.apply(this, arguments);
-        if (!state) return Future.resolve();
-        if (this.$('ul')) return Future.resolve();
+        if (!state) return Promise.resolve();
+        if (this.$('ul')) return Promise.resolve();
       var panel = this;
 	  var url = this.$('a').href;
       return DOM.loadHTML(url)
@@ -430,7 +430,7 @@ opacity: 0;
   function expand(treeitem, path) {
     var myPath = path.slice(0);
     function _expand(_treeitem) {
-        return Future.resolve()
+        return Promise.resolve()
         .then(function() {
             var name = myPath.shift();
             if (!name) return _treeitem;
