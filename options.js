@@ -202,6 +202,7 @@ function onSubmit(e) {
 
 Meeko.options = {
 	"htmldecor_script": '{bootscriptdir}HTMLDecor/HTMLDecor.js',
+	"capturing": !isBookmarklet, // NOTE will break on IE <= 7
 	"log_level": "warn",
 	"hidden_timeout": 5000, // TODO for some reason this needs to be longer to avaid FOUC
 	"polling_interval": 50, // TODO
