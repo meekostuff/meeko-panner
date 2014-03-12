@@ -25,8 +25,9 @@ Meeko.decor.config({
 			return;
 		}
 	
-		var homeURL = URL(homeButton.href);
-		baseURL = homeURL.base;
+		var docURL = URL(document.URL);
+		var homeHref = docURL.resolve(homeButton.getAttribute('href'));
+		baseURL = URL(homeHref).base;
 	
 		return decorURL;
 	},

@@ -30,8 +30,11 @@ var decor_detect = function(doc) {
 	}
 
 	var overviewHyperlink = $('a[href]', overviewLI) || $('a[href]', noframesLI);
-	var overviewURL = URL(overviewHyperlink.href);
-	javadocBase = overviewURL.base; // NOTE `basedir` needed for decor rebase()
+
+	var docURL = URL(document.URL);
+	var overviewHref = docURL.resolve(overviewHyperlink.getAttribute('href'));
+
+	javadocBase = URL(overviewHref).base; // NOTE `basedir` needed for decor rebase()
 
 	return decorURL;
 }
