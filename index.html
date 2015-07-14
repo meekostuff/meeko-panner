@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8" /><link href="./decor/decor.html" rel="meeko-decor" /><script src="./HTMLDecor/boot.js"></script></head><body>
+<!DOCTYPE html><html><head><meta charset="UTF-8" /><script data-configdir="{bootscriptdir}decor/" src="./boot.js"></script><link href="./decor/frameset.html" rel="frameset" /></head><body>
 
 <div id="__main__" role="main"><p><strong>meeko-panner</strong> is a javascript bookmarklet that can enhance a site with 
 support for <code>pushState</code>-assisted-navigation (panning)
@@ -8,7 +8,7 @@ and, optionally, a richer UI. </p>
 an API-first, HTML-payload approach for web-sites.</p>
 
 <p><strong>meeko-panner</strong> extracts only the essential content of each page and 
-uses <a href="http://github.com/meekostuff/HTMLDecor">HTMLDecor</a> to 
+uses <a href="http://github.com/meekostuff/HyperFrameset">HyperFrameset</a> to 
 decorate it with shared site decor -
 banner, navigation, auxilliary content, styles and layout.
 In general this is used to emulate the original appearance and behavior of the site,
@@ -32,7 +32,7 @@ if integrated into a site rather than being implemented as a JS bookmarklet. </p
 <li>Safari</li>
 <li>Firefox</li>
 <li>Opera</li>
-<li>Internet Explorer (IE10)</li>
+<li>Internet Explorer (IE10+)</li>
 </ul>
 
 <h2>Installation</h2>
@@ -69,7 +69,8 @@ The URL of the bookmarklet uses the `javascript:` protocol and contais the follo
     var fallback = $id('fallback');
     fallback.style.display = 'none';
 </script></li>
-<li><p>Go to a <a href="sites/">compatible site</a>. </p></li>
+<li><p>Go to a site which uses a <a href="generators/">compatible generator</a> 
+or to a <a href="sites/">supported site</a>. </p></li>
 <li><p>Click on the meeko-panner bookmarklet you just installed. </p></li>
 </ol>
 

@@ -6,7 +6,7 @@ The intention is to demonstrate the simplicity, efficiency and flexibility of
 an API-first, HTML-payload approach for web-sites.
 
 **meeko-panner** extracts only the essential content of each page and 
-uses [HTMLDecor](http://github.com/meekostuff/HTMLDecor) to 
+uses [HyperFrameset](http://github.com/meekostuff/HyperFrameset) to 
 decorate it with shared site decor -
 banner, navigation, auxilliary content, styles and layout.
 In general this is used to emulate the original appearance and behavior of the site,
@@ -31,7 +31,7 @@ Recent versions of the following browsers have been tested:
 - Safari
 - Firefox
 - Opera
-- Internet Explorer (IE10)
+- Internet Explorer (IE10+)
 
 
 Installation
@@ -67,7 +67,8 @@ Installation
 		fallback.style.display = 'none';
 	</script>
 
-2. Go to a [compatible site](sites/). 
+2. Go to a site which uses a [compatible generator](generators/) 
+or to a [supported site](sites/). 
 
 3. Click on the meeko-panner bookmarklet you just installed. 
 

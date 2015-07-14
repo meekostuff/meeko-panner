@@ -6,7 +6,7 @@ The intention is to demonstrate the simplicity, efficiency and flexibility of
 an API-first, HTML-payload approach for web-sites.
 
 **meeko-panner** extracts only the essential content of each page and 
-uses [HTMLDecor](http://github.com/meekostuff/HTMLDecor) to 
+uses [HyperFrameset](http://github.com/meekostuff/HyperFrameset) to 
 decorate it with shared site decor -
 banner, navigation, auxilliary content, styles and layout.
 In general this is used to emulate the original appearance and behavior of the site,
@@ -23,23 +23,20 @@ You need a browser with javascript support enabled.
 
 You need a browser that implements `history.pushState()`. 
 
-<b>NOTE:</b> HTMLDecor doesn't require `pushState` if integrated into a site,
-but to use it in a bookmarklet would require the bookmarklet to be run on every page. 
-
 Recent versions of the following browsers have been tested:
 
 - Chrome
 - Safari
 - Firefox
 - Opera
-- Internet Explorer (IE10)
+- Internet Explorer (IE10+)
 
 
 Installation
 ------------
 
 The easiest way to add the bookmarklet to your browser is to use the installation on the development server,
-see <http://devel.meekostuff.net/meeko-panner/2.0-devel/>
+see <http://devel.meekostuff.net/meeko-panner/3.0-devel/>
 
 Installation is typically just a drag-and-drop from the page to the browser's bookmark bar. 
 
