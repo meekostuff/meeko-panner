@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html lang="en" custom-hf="HyperFrameset">
+<head>
+  <meta http-equiv="content-type" content="text/html">
+  <meta charset="utf-8">
+
+  <title>Java Platform SE</title>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
+
+<script src="../../DOMSprockets/ARIA.js"></script>
+
+<style type="text/css">
+#content .block, #content dd, #content th.colLast, #content td.colLast { max-width: 80ex; }
+caption span { height: auto !important; }
+
+#quickLinks { border-right: 2px ridge #777777; }
+#packageListFrame { border: 2px inset; }
+#packageFrame { border: 2px inset; }
+
+#header .title h1 { display: inline-block; vertical-align: bottom; margin-right: 0.5em; }
+.contextNav { display: inline-block; margin-left: 0.5em; }
+.contextNav li { display: inline; margin: 0 0.2em; padding: 0 0.5em; background: #4C6B87; }
+.contextNav .navBarCell1Rev { background: #bb7a2a; }
+.contextNav a:link, .contextNav a:visited, .contextNav a:active { color: white; text-decoration: none; }
+.contextNav a:active { color: #A88834; }
+
+</style>
+
+<script for="hf-frameset">
+({
+
+lookup: function(url, details) {
+  return 'classFrame'; 
+},
+
+enteredState: function(msg) {
+  var _ = Meeko.stuff, DOM = Meeko.DOM;
+  _.forEach(DOM.findAll('#hierarchy ul.navList a'), function(link) {
+    var listitem = link.parentNode;
+    var currentURL = document.URL.split('#')[0];
+    if (link.href === currentURL) listitem.className = "navBarCell1Rev";
+    else listitem.className = '';
+  });
+}
+
+})  
+</script>
+</head>
+<body>
+  
+<hf-frame src="scope:overview-summary.html">
+  <hf-body>
+    <hf-transform type="hazard" format="css">
+      
+<hf-layer>
+<hf-hlayout width="100%">
+    <hf-vlayout width="20%">
+      <hf-panel height="30%" id="packageListFrame">
+        <hf-body>
+    <hf-frame src="scope:./overview-frame.html" name="packageListFrame">
+      <script>
+      ({
+      
+      lookup: function(url, details) {
+        var target = details.element.target;
+        return target === 'classFrame' ? undefined : target;
+      }
+      
+      })  
+      </script>
+  
+      <hf-body>
+        <hf-transform type="main">
+          
+        </hf-transform>
+      </hf-body>
+      <hf-body condition="loading">
+        <div style="width: 100%; text-align: center;"><img src="../../decor/waiting-small.gif" /></div>
+      </hf-body>
+    </hf-frame>
+        </hf-body>
+      </hf-panel>
+      <hf-panel height="70%" id="packageFrame">
+        <hf-body>
+    <hf-frame src="scope:./allclasses-frame.html" name="packageFrame">
+      <hf-body>
+        <hf-transform type="main">
+          
+        </hf-transform>
+      </hf-body>
+      <hf-body condition="loading">
+        <div style="width: 100%; text-align: center;"><img src="../../decor/waiting-small.gif" /></div>
+      </hf-body>
+    </hf-frame>
+    
+        </hf-body>
+      </hf-panel>
+      
+    </hf-vlayout>
+
+  <hf-panel width="80%" id="main">
+    <hf-body>
+
+<!-- ========= START OF TOP NAVBAR ======= -->
+<div id="hierarchy" class="topNav">
+<ul class="navList" title="Navigation">
+<li><a href="scope:./overview-summary.html">Overview</a></li>
+<li><a href="scope:deprecated-list.html">Deprecated</a></li>
+<li><a href="scope:help-doc.html">Help</a></li>
+</ul>
+<!-- FIXME The full tree is 1.28MB and dynamically loading / processing is really slow. Indexes are also large
+<li><a href="scope:overview-tree.html">Tree</a></li>
+<li><a href="scope:index-files/index-1.html">Index</a></li> 
+-->
+<div class="aboutLanguage" haz:if=".aboutLanguage" expr:_html=".aboutLanguage {_html}">{title}</div>
+<div class="aboutLanguage" haz:unless=".aboutLanguage"><strong><em expr:_text="title {_text} | value.replace(/^[^\(]*\(\s*/, '').replace(/\s*\)\s*$/, '')">{alt title}</em></strong></div>
+</div>
+<!--
+<div class="subNav">
+<ul class="navList">
+<li>Prev</li>
+<li>Next</li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="scope:allclasses-noframe.html">All Classes</a></li>
+</ul>
+</div>
+-->
+<!-- ========= END OF TOP NAVBAR ========= -->
+<div class="header">
+</div>
+
+<div id="content">
+<hf-frame src="scope:./overview-summary.html" name="classFrame">
+  <hf-body>
+    <hf-transform type="script">
+      <script>
+      ({
+      
+      transform: function(doc, details) {
+        
+        var _ = Meeko.stuff, DOM = Meeko.DOM, URL = Meeko.URL;
+        
+        var oURL = URL(details.url);
+		var path = oURL.pathname;
+		var dirs = oURL.href.replace(details.scope, '').replace(/#.*$/, '').split('/');
+		var basename = dirs.pop().replace('.html', '');
+		var pkg, className;
+		if (dirs.length <= 0) {
+			pageType = basename; // overview-summary, overview-tree, deprecated-list
+		}
+		else {
+			var pageType = dirs[dirs.length-1];
+			switch (pageType) {
+			case "index-files":
+				break;
+			case "class-use":
+				dirs.pop();
+				pkg = dirs;
+				pageType = "class-use";
+				className = basename;
+				break;
+			default:
+				if (/^package-/.test(basename)) pageType = basename; // package-summary, package-use, package-tree
+				else {
+					pageType = 'class';
+					className = basename;
+				}
+				pkg = dirs;
+				break;
+			}
+		}
+
+		var supportedPageSubtypes = DOM.find('ul.navList[title=Navigation]', doc).textContent.split(/\s+/);
+		var supportsUse = supportedPageSubtypes.indexOf('Use') >= 0;
+		var supportsTree = supportedPageSubtypes.indexOf('Tree') >= 0;
+
+		var header = doc.createElement("div");
+		header.id = "header";
+		_.forEach(DOM.findAll(".header", doc), function(el) { header.appendChild(el); });
+		
+		var title = DOM.find(".title", header);
+		if (title) {
+			if (pageType == 'class' && /^Interface/.test(title.title)) pageType = 'interface';
+			if (pageType == 'class-use' && /^Uses of Interface/.test(title.title)) pageType = 'interface-use';
+		}
+		if (title) {
+			var title1 = doc.createElement("div");
+			title1.className = "title";
+			var innerHTML;
+			switch (pageType) { // TODO a lot of repetition here
+			default:
+				innerHTML = '<h1>' + title.innerHTML + '</h1>';
+				break;
+			case "package-summary":
+				innerHTML =
+					'<h1>Package <a href="package-summary.html">' + pkg.join('.') + '</a></h1>' +
+					'<ul class="contextNav">' +
+					(supportsUse ? '<li><a href="package-use.html">Use</a></li>' : '') +
+					(supportsTree ? '<li><a href="package-tree.html">Tree</a></li>' : '') +
+					'</ul>';
+				break;
+			case "package-use":
+				innerHTML =
+					'<h1>Package <a href="package-summary.html">' + pkg.join('.') + '</a></h1>' +
+					'<ul class="contextNav">' +
+					'<li class="navBarCell1Rev"><a href="package-use.html">Use</a></li>' +
+					(supportsTree ? '<li><a href="package-tree.html">Tree</a></li>' : '') +
+					'</ul>';
+				break;
+			case "package-tree":
+				innerHTML =
+					'<h1>Package <a href="package-summary.html">' + pkg.join('.') + '</a></h1>' +
+					'<ul class="contextNav">' +
+					(supportsUse ? '<li><a href="package-use.html">Use</a></li>' : '') +
+					'<li class="navBarCell1Rev"><a href="package-tree.html">Tree</a></li>' +
+					'</ul>';
+				break;
+			case "class":
+				innerHTML =
+					'<h1>Class <a href="' + className + '.html">' + className + '</a></h1>' +
+					'<ul class="contextNav">' +
+					(supportsUse ? '<li><a href="class-use/' + className + '.html">Use</a></li>' : '') +
+					'</ul>';
+				break;
+			case "class-use":
+				innerHTML =
+					'<h1>Class <a href="../' + className + '.html">' + className + '</a></h1>' +
+					'<ul class="contextNav">' +
+					'<li class="navBarCell1Rev"><a href="' + className + '.html">Use</a></li>' +
+					'</ul>';
+				break;
+			case "interface":
+				innerHTML =
+					'<h1>Interface <a href="' + className + '.html">' + className + '</a></h1>' +
+					(supportsUse ? '<ul class="contextNav"><li><a href="class-use/' + className + '.html">Use</a></li></ul>' : '');
+				break;
+			case "interface-use":
+				innerHTML =
+					'<h1>Interface <a href="../' + className + '.html">' + className + '</a></h1>' +
+					'<ul class="contextNav"><li class="navBarCell1Rev"><a href="' + className + '.html">Use</a></li></ul>';
+				break;
+			}
+			title1.innerHTML = innerHTML;
+			title.parentNode.replaceChild(title1, title);
+		}
+
+		if (/class|interface/.test(pageType)) { // replace current subTitle - a bare pkg name - with a hyperlink to the pkg page
+			var subTitle = DOM.find(".subTitle", header);
+			if (subTitle) subTitle.parentNode.removeChild(subTitle);
+
+			var subTitle1 = doc.createElement("h2");
+			subTitle1.className = "subTitle";
+			subTitle1.innerHTML = 'Package <a href="' + (/-use/.test(pageType) ? '../' : '') + 'package-summary.html">' + pkg.join('.') + '</a>';
+			title1.parentNode.insertBefore(subTitle1, title1);
+		}
+
+		// remove method filtering tabs
+		var t0 = DOM.findId('t0', doc);
+		if (t0) t0.parentNode.innerHTML = t0.innerHTML;
+		
+		var content = doc.createElement('div');
+		content.id = "content";
+        _.forEach(DOM.findAll(".contentContainer, .classUseContainer", doc), function(el) { content.appendChild(el); });
+
+		var footer = doc.createElement("div");
+		footer.id = "footer";
+		_.forEach(DOM.findAll(".footer", doc), function(el) { footer.appendChild(el); });
+
+        var frag = doc.createDocumentFragment();
+		frag.appendChild(header);
+		frag.appendChild(content);
+		frag.appendChild(footer);
+		_.forEach(DOM.findAll("a[name]", frag), function(el) { if (!el.id) el.id = el.name; });
+        
+        return frag;
+        
+      }
+      
+      })  
+      </script>
+    </hf-transform>
+  </hf-body>
+  <hf-body condition="loading">
+    <div style="width: 100%; text-align: center;"><img src="../../decor/waiting-big.gif" style="border: none;" /></div>
+  </hf-body>
+</hf-frame>
+</div>
+
+<div id="footer">
+</div>
+
+
+    </hf-body>
+  </hf-panel>
+</hf-hlayout>
+</hf-layer>
+
+    </hf-transform>
+  </hf-body>
+</hf-frame>
+
+
+</body>
+</html>

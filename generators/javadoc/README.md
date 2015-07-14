@@ -4,6 +4,10 @@ Javadoc 7
 Javadoc generates API references from source-code. 
 Documentation sets are based on `<framesets>`.
 
+[@westonruter](http://twitter.com/westonruter) [tweeted](https://twitter.com/westonruter/status/197650657501659137)
+the idea of making frameset style sites bookmarkable with HTML5 `pushState`,
+which was (one of) the seeds for meeko-panner.  
+
 <a id="sites"></a>
 Compatible Sites 
 ----------------
