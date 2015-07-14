@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+
+<html lang="en" custom-hf="HyperFrameset">
+<head>
+
+<meta http-equiv="content-type" content="text/html" />
+<meta charset="utf-8" />
+<title>{title}</title>
+
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/docs.css" />
+<style type="text/css">
+h1.settitle { text-align: left; margin: 0;}
+h1.settitle span { color: #A50606; }
+h1.settitle code { color: #334683; }
+a.summary-letter {text-decoration: none}
+blockquote.smallquotation {font-size: smaller}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.indentedblock {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+div.smalldisplay {margin-left: 3.2em}
+div.smallexample {margin-left: 3.2em}
+div.smallindentedblock {margin-left: 3.2em; font-size: smaller}
+div.smalllisp {margin-left: 3.2em}
+kbd {font-style:oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+pre.smalldisplay {font-family: inherit; font-size: smaller}
+pre.smallexample {font-size: smaller}
+pre.smallformat {font-family: inherit; font-size: smaller}
+pre.smalllisp {font-size: smaller}
+span.nocodebreak {white-space:nowrap}
+span.nolinebreak {white-space:nowrap}
+span.roman {font-family:serif; font-weight:normal}
+span.sansserif {font-family:sans-serif; font-weight:normal}
+ul.no-bullet {list-style: none}
+body { background-color: #FFFFFF; color: #000000; overflow-y: auto;}
+a:link { color: #0000FF; }
+a:visited { color: #800080; }
+
+.generator { vertical-align: middle; margin-top: 6px;}
+.generator span { color: #A50606; }
+.generator code { color: #334683; }
+.generator code sub { font-size: 1em; }
+</style>
+
+<style type="text/css">
+.main-header-grid > .grid-left { overflow: hidden; }
+.main-body-grid .side-navigation { position: absolute; width: 100%; top: 70px; bottom: 0px; padding-bottom: 0px; overflow: auto; border-right: 1px solid #eee; }
+
+ui-tablist { display: block; margin: auto; padding-left: 0.5em; }
+ui-tablist ul, ui-tablist li { list-style: none; margin-left: 0; padding-left: 0; }
+ui-tablist li { display: inline; padding: 0; }
+ui-tablist li a:link, ui-tablist li a:visited { color: #ffffff; text-decoration: none; } /* reset */
+ui-tablist li a { background-color: #334683; color: #ffffff; line-height: 1.5em; padding: 0.25em 0.75em; }
+ui-tablist li[aria-selected=true] a { background-color: #A50606; }
+
+ui-tree ul, ui-tree li { list-style: none; margin-left: 0; padding-left: 0; }
+ui-tree ul { margin-left: 1em; }
+ui-tree li > span { margin-right: 0; white-space: nowrap; }
+ui-tree li > span > a { margin-right: 0; padding-left: 0.5em; padding-right: 0.5em; white-space: nowrap; }
+ui-tree a:link { color: #334683; text-decoration: none; }
+ui-tree a:visited { color: #334683; text-decoration: none; }
+
+/*
+ui-tree li[aria-selected=true] > span > a { background-color: #334683; color: #FFFFFF; }
+*/
+ui-tree li > span::before { font-family: monospace; font-size: 8pt; content: ""; display: inline-block; height: 100%; width: 1.5em; color: #000000; background-color: #FFFFFF; }
+ui-tree li[aria-expanded=true] > span::before { content: "▼"; }
+ui-tree li[aria-expanded=false] > span::before { content: "▶"; }
+ui-tree li { -moz-user-select: none; }
+ui-tree li > * { -moz-user-select: text; }
+</style>
+
+<script src="../../DOMSprockets/ARIA.js"></script>
+<script>
+(function() {
+
+var _ = Meeko.stuff, DOM = Meeko.DOM;
+var sprockets = Meeko.sprockets, UI = sprockets.UI;
+var framer = Meeko.framer;
+
+framer.controllers.create('finder');
+
+sprockets.registerComposite('ui-tablist', {
+prototype: UI.Tree.prototype,
+enteredDocument: function() {
+	var element = this.element;
+	element.ariaSet('activedescendant', element.ariaFind('treeitem'));
+},
+rules: [
+	[ 'li', UI.TreeItem ],
+	[ 'ul', UI.Group ]
+],
+handlers: [
+{
+	type: "click",
+	action: function(event) {
+		if (event.defaultPrevented) return;
+		var treeitem = event.target.ariaClosest('treeitem');
+		if (!treeitem) return;
+		this.ariaSet('activedescendant', treeitem);
+		event.preventDefault();
+	}
+},
+{
+	type: "change",
+	action: function(event) {
+		var name = this.attr('name');
+		var value = this.ariaGet('activedescendant').$.attr('value');
+		framer.controllers.set(name, value);
+	}
+}
+]
+});
+
+
+/* The following was the tab-list defn before HyperFrameset had controllers
+
+var Tab = sprockets.evolve(UI.TreeItem, {
+
+controls: {
+	get: function() {
+		var element = this.element;
+		var link = DOM.find('a[target], a[href], link', element);
+		if (!link) return;
+		var document = element.ownerDocument;
+		var target = link.target;
+		if (target) return document.getElementsByName(target)[0];
+		var href = link.href;
+		if (!href) return;
+		if (link.protocol === 'frameset:') { // FIXME protocol shouldn't be hard-wired
+			var selector = href.replace('frameset:', '');
+			return DOM.find(selector);
+		}
+		var base = document.URL.replace(/#.*$/, '')+ '#';
+		if (href.indexOf(base) !== 0) return;
+		var id = href.replace(base, '');
+		return DOM.findId(id);
+	}
+}
+
+});
+
+var TabList = sprockets.evolve(UI.Tree, {
+
+controls: sprockets.getPropertyDescriptor(Tab, 'controls')
+
+});
+
+sprockets.registerComposite('ui-tablist', {
+prototype: TabList.prototype,
+enteredDocument: function() {
+	var element = this.element;
+	element.ariaSet('activedescendant', element.ariaFind('treeitem'));
+},
+rules: [
+	[ 'li', Tab ],
+	[ 'ul', UI.Group ]
+],
+handlers: [
+{
+	type: "click",
+	action: function(event) {
+		if (event.defaultPrevented) return;
+		var treeitem = event.target.ariaClosest('treeitem');
+		if (!treeitem) return;
+		this.ariaSet('activedescendant', treeitem);
+		event.preventDefault();
+	}
+},
+{
+	type: "change",
+	action: function(event) {
+		var element = this.element;
+		var viewer = element.ariaGet('controls');
+		var target = element.ariaGet('activedescendant').ariaGet('controls');
+		viewer.ariaSet('activedescendant', target);
+	}
+}
+]
+});
+
+*/
+
+
+var TreeItem = sprockets.evolve(UI.TreeItem, {
+
+selected: {
+	can: function() { return true; }
+}
+
+});
+
+var Expand = sprockets.evolve(UI.RoleType, {
+
+role: 'expand',
+
+controls: {
+	type: 'node',
+	get: function() { return this.element.ariaClosest('treeitem'); }
+}
+
+});
+
+sprockets.registerComponent('ui-tree', UI.Tree, {
+
+sprockets: [
+	{ matches: 'li', sprocket: TreeItem },
+	{ matches: 'li > span:first-child', sprocket: Expand },
+	{ matches: 'ul', sprocket: UI.Group, enteredComponent: groupEnteredComponent }
+],
+
+handlers: [
+	{
+	type: "click",
+	button: 1,
+	action: function(event) {
+		var expand = event.target.ariaClosest('expand');
+		var treeitem = expand ? expand.ariaGet('controls') : event.target.ariaClosest('treeitem');
+		if (!treeitem) return;
+		this.ariaSet('activedescendant', treeitem);
+		if (treeitem.ariaCan('expanded')) treeitem.ariaToggle('expanded');
+	}
+	}
+]
+
+});
+
+function groupEnteredComponent(group) {
+	var treeitem = group.ariaClosest('treeitem');
+	if (!treeitem) return;
+	if (treeitem.ariaCan('expanded')) treeitem.ariaToggle('expanded', false);
+}
+
+
+
+})();
+</script>
+
+<script for="hf-frameset">
+({
+
+lookup: function(url, details) {
+	return 'contentFrame'; 
+}
+
+})
+</script>
+</head>
+<body>
+
+  <div id="wrapper">
+
+<hf-frame src="scope:./index.html" name="tocFrame" height="100%">
+	<hf-body condition="loaded">
+		<hf-transform type="hazard" format="css">
+				
+    <header scroll-y-offset-element class="header header-fixed">
+      <section class="navbar navbar-inverse docs-navbar-primary">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 header-branding">
+              <div class="brand navbar-brand">
+    <h3 class="generator"><a href="http://www.gnu.org/software/texinfo/"><code>T<sub>E</sub>Xinfo</code></a> + <a href="https://github.com/meekostuff/HyperFrameset"><span>HyperFrameset</span></a></h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="sup-header">
+        <div class="container main-grid main-header-grid">
+	<h1 class="settitle"><span expr:_html="body > h1 {_html}">{{title}}</span></h1>
+        </div>
+      </section>
+    </header>
+
+
+    <section role="main" class="container main-body">
+      <div class="main-grid main-body-grid">
+        <div class="grid-left">
+
+<ui-tablist name="finder">
+	<a href="frameset:#quickLinksPanel"></a>
+	<ul>
+	<li value="toc"><a href="frameset:#tocPanel">Contents</a></li>
+	<li value="index"><a href="frameset:#indexPanel">Index</a></li>
+	<li value="api"><a href="frameset:#apiPanel">API</a></li>
+	</ul>
+</ui-tablist>
+
+          <div class="side-navigation">
+
+<hf-deck id="quickLinksPanel" name="finder">
+
+	<hf-panel id="tocPanel" value="toc">
+		<hf-body>
+
+<ui-tree>
+	<hf-frame src="scope:./index.html" main=".contents" name="tocFrame">
+		<hf-body condition="loaded">
+			<hf-transform type="hazard" format="css">
+	
+	<div class="contents">
+		<ul id="haz_tocFrame_group" haz:each="> ul">
+		<li haz:each="> li">
+			<span>
+				<a expr:href="> a {href}" expr:_html="> a {_html} | (function(value) { var textNode = value.firstChild; textNode.nodeValue = textNode.nodeValue.replace(/^[.0-9]+\s+/, ''); return value; })(value)">{{Section-Link}}</a>
+			</span>
+			<ul haz:template="haz_tocFrame_group" haz:each="> ul"></ul>
+		</li>
+		</ul>
+	</div>
+	
+			</hf-transform>
+		</hf-body>
+	</hf-frame>
+</ui-tree>
+
+		</hf-body>
+	</hf-panel>
+
+	<hf-panel id="indexPanel" value="index">
+		<hf-body>
+
+<hf-frame src="scope:./Concept-Index.html" name="indexFrame">
+	<hf-body condition="loaded">
+		<hf-transform type="script">
+<script>
+({
+
+transform: function(frag, details) {
+
+var _ = Meeko.stuff, DOM = Meeko.DOM, URL = Meeko.URL;
+
+_.forEach(DOM.findAll("a[name]", frag), function(el) { if (!el.id) el.id = el.name; });
+
+return frag;
+
+}
+
+})	
+</script>
+		</hf-transform>
+		<hf-transform type="hazard" format="css">
+
+<!-- <div expr:_html="h2.unnumbered + table tr td { _html }"></div> -->
+<nav haz:each="table.index-cp" class="contents">
+	<div haz:each="tr">
+	<hr haz:if="td:first-child > hr" />
+	<h4 class="nav-index-group-heading" haz:if="th:first-child" expr:_html="th:first-child > a">{{Concept-Group}}</h4>
+	<div haz:if="td:first-child + td > a">
+		<a expr:href="td:first-child + td > a {href}" mexpr:title="Section: {{ td:first-child + td + td + td > a { _text } }}" expr:_html="td:first-child + td > a {_html}">{{Concept-Link}}</a>
+	</div>
+	</div>
+</nav>
+
+		</hf-transform>
+	</hf-body>
+	<hf-body condition="loaded">
+		<hf-transform type="hazard" format="css">
+
+<div class="contents" expr:_html="table.index-cp">
+</div>
+
+		</hf-transform>
+	</hf-body>
+</hf-frame>
+
+		</hf-body>
+	</hf-panel>
+
+	<hf-panel id="apiPanel" value="api">
+		<hf-body>
+
+<hf-frame src="scope:./Name-Index.html" name="apiFrame">
+	<hf-body condition="loaded">
+		<hf-transform type="script">
+<script>
+({
+
+transform: function(frag, details) {
+
+var _ = Meeko.stuff, DOM = Meeko.DOM, URL = Meeko.URL;
+
+_.forEach(DOM.findAll("a[name]", frag), function(el) { if (!el.id) el.id = el.name; });
+
+return frag;
+
+}
+
+})	
+</script>
+		</hf-transform>
+		<hf-transform type="hazard" format="css">
+
+<!-- <div expr:_html="h2.unnumbered + table tr td { _html }"></div> -->
+<nav haz:each="table.index-fn" class="contents">
+	<div haz:each="tr">
+	<hr haz:if="td:first-child > hr" />
+	<h4 class="nav-index-group-heading" haz:if="th:first-child" expr:_html="th:first-child > a">{{Function-Group}}</h4>
+	<div haz:if="td:first-child + td > a">
+		<a expr:href="td:first-child + td > a {href}" mexpr:title="Section: {{ td:first-child + td + td + td > a { _text } }}" expr:_html="td:first-child + td > a {_html}">{{Function-Link}}</a>
+	</div>
+	</div>
+</nav>
+
+		</hf-transform>
+	</hf-body>
+	<hf-body condition="loaded">
+		<hf-transform type="hazard" format="css">
+
+<div class="contents" expr:_html="table.index-fn">
+</div>
+
+		</hf-transform>
+	</hf-body>
+</hf-frame>
+
+		</hf-body>
+	</hf-panel>
+
+</hf-deck>
+
+          </div>
+        </div>
+        <div class="grid-right">
+
+	<hf-frame src="scope:./Overview.html" name="contentFrame">
+		<hf-body>
+			<hf-transform type="script">
+<script>
+({
+
+transform: function(doc, details) {
+
+var _ = Meeko.stuff, DOM = Meeko.DOM, URL = Meeko.URL;
+
+var frag = doc.createDocumentFragment();
+var header;
+var main;
+_.some(_.toArray(doc.body.childNodes), function(node) {
+	doc.body.removeChild(node);
+	if (!header) {
+		if (!DOM.matches(node, 'div.header')) return false;
+		header = doc.createElement('header');
+		var child;
+		while (child = node.firstChild) header.appendChild(child);
+		return false;
+	}
+	if (!main) {
+		if (!DOM.matches(node, 'hr')) return false;
+		main = doc.createElement('main');
+		return false;
+	}
+	if (DOM.matches('hr')) return true;
+	main.appendChild(node);
+	return false;
+});
+
+var scope = Meeko.framer.scope;
+
+_.forEach(DOM.findAll('a[href]', header), function(el) {
+	if (el.href.indexOf(scope) !== 0) el.parentNode.removeChild(el);
+});
+
+frag.appendChild(header);
+frag.appendChild(main);
+
+_.forEach(DOM.findAll("a[name]", frag), function(el) { if (!el.id) el.id = el.name; });
+
+return frag;
+
+}
+
+})	
+</script>
+			</hf-transform>
+			<hf-transform type="hazard" format="css"><!-- WARN this transform depends on DOM pre-processing to create <header> and <main> -->
+<nav class="tutorial-nav">
+	<a haz:if="header a[rel=prev]" class="btn btn-primary" expr:href="header a[rel=prev] {@href}" expr:title="header a[rel=prev] {_text}"><i class="glyphicon glyphicon -step-backward">◄</i> Previous</a>
+	<a haz:if="header a[rel=up]" class="btn btn-primary" expr:href="header a[rel=up] {@href}" expr:title="header a[rel=up] {_text}"><i class="glyphicon glyphicon -step-up">▲</i> Up</a>
+	<a haz:if="header a[rel=next]" class="btn btn-primary" expr:href="header a[rel=next] {@href}" expr:title="header a[rel=next] { _text }">Next <i class="glyphicon glyphicon -step-forward">►</i></a>
+</nav>
+<main expr:_html="main {_html}">{{Section-Contents}}
+</main>
+			</hf-transform>
+		</hf-body>
+	</hf-frame>
+
+        </div>
+      </div>
+    </section>
+
+<footer id="footer" class="footer">
+      <div class="container">
+        <p class="pull-right"><a back-to-top>Back to top</a></p>
+
+        <p>
+          Best viewed in browsers 
+          ( <a id="version">v1+</a> )
+        </p>
+        <p>
+          Code <em>probably</em> licensed under the
+          <a href="http://www.gnu.org/licenses/gpl.html">GNU Public License</a>.
+          Documentation <em>probably</em> licensed under
+          <a href="http://www.gnu.org/licenses/fdl.html">GNU Free Documentation License</a>.
+        </p>
+      </div>
+</footer>
+
+		</hf-transform>
+	</hf-body>
+</hf-frame>
+
+  </div>
+  
+</body>
+</html>
