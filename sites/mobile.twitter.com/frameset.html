@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html" />
+  <meta charset="utf-8" />
+
+  <title>meeko-twitter</title>
+  <link rel="stylesheet" type="text/css" href="https://ma.twimg.com/twitter-mobile/06f05324a986af1f80d694590ed913cf60e6fbcc/assets/as.css" />
+  <link rel="stylesheet" type="text/css" href="frameset.css" />
+
+<script for="hf-frameset">
+(function() {
+
+var _ = Meeko.stuff, URL = Meeko.URL, DOM = Meeko.DOM;
+
+var screens = {
+	home: {
+		tab: "home",
+		panels: [ "mini_profile", "who_to_follow", "trends_panel" ]
+	},
+	connect: {
+		tab: "connect",
+		panels: [ "connect_nav", "who_to_follow" ]
+	},
+	discover: {
+		tab: "discover",
+		panels: [ "discover_nav", "trends_panel" ]
+	},
+	me: {
+		tab: "me",
+		panels: [ "profile_panel", "user_nav" ]
+	},
+	user: {
+		tab: "",
+		panels: [ "user_profile_panel", "user_nav" ]		
+	},
+	permalink: {
+		tab: "",
+		panels: [ ]
+	},
+	settings: {
+		tab: "",
+		panels: [ "mini_profile", "settings_nav" ]
+	},
+	search: {
+		tab: "",
+		panels: [ "search_nav", "who_to_follow" ]
+	},
+	unknown: {
+		tab: "",
+		panels: [ ]
+	}
+}
+
+tabs = {
+	home: {},
+	connect: {},
+	discover: {},
+	me: {}
+}
+
+main_panels = {
+	tweets: {
+	},
+	permalink: {
+	},
+	people: {
+	},
+	categories: {
+	}
+}
+	
+panels = { // not including always visible panels
+	user_profile_panel: {
+	},
+	profile_panel: {
+	},
+	mini_profile: {
+	},
+	user_nav: {
+	},
+	connect_nav: {
+	},
+	discover_nav: {
+	},
+	search_nav: {
+	},
+	settings_nav: {
+	},
+	trends_panel: {
+	},
+	who_to_follow: {
+	}
+}
+
+function decodeURL(url) {
+	var pathname = URL(url).pathname;
+	var rdirs = pathname.substr(1).split('/'), rdir;
+	if (!rdirs[rdirs.length-1]) rdirs.pop();
+	var spec = { screen: "", main: "tweets" }
+	if (rdirs.length == 0) {
+		spec.screen = "home";
+	}
+	else switch (rdir = rdirs[0]) {
+	case "account":
+		spec.screen = "me";
+		spec.option = "tweets";
+		break;
+	case "settings":
+		spec.screen = "settings";
+		spec.main = "";
+		break;
+	case "search":
+		spec.screen = "search";
+		break;
+	case "mentions":
+		spec.screen = "connect";
+		spec.option = "mentions";
+		break;
+	case "messages":
+		spec.screen = "connect";
+		spec.option = "messages";
+		break;
+	case "i":
+		switch(rdir = rdirs[1]) {
+		case "discover":
+			spec.screen = "discover";
+			break;
+		case "connect":
+			spec.screen = "connect";
+			spec.option = "interactions";
+			break;
+		default:
+			spec.screen = "unknown";
+			break;
+		}
+		break;
+	case "activity":
+		spec.screen = "discover";
+		spec.option = "activity";
+		break;
+	case "trends":
+		spec.screen = "discover";
+		spec.option = "trends";
+		break;
+	case "who_to_follow":
+		spec.screen = "discover";
+		spec.main = "people";
+		spec.option = "who_to_follow";
+		if (rdirs[1] == "interests") {
+			if (rdirs[2]) spec.detail = rdirs[2];
+			else spec.main = "categories";
+			break;
+		}
+		break;
+	case "compose":
+		if (rdirs[1] == "tweet") spec.tweet_type = "new";
+		else spec.tweet_type = "unknown";
+		break;
+	case "statuses":
+		spec.action = rdir[2]; // retweet or favorite
+		spec.option = rdir[1];
+		break;
+	default: // assume this is a user account
+		spec.user_id = rdir;
+		if (rdirs.length == 1) {
+			spec.screen = "user";
+			spec.option = "tweets";
+		}
+		else switch (rdir = rdirs[1]) {
+		case "reply":
+			spec.tweet_type = 'reply';
+			spec.option = rdirs[2];
+			break;
+		case "status":
+			spec.screen = "permalink";
+			break;
+		case "following":
+		case "followers":
+		case "favorites":
+			spec.screen = "user";
+			spec.option = rdir;
+			spec.main = 'people';
+			break;
+		default:
+			spec.screen = "unknown";
+		}		
+	}
+	return spec;
+}
+
+var beforeEnteredState = function(newURL, oldURL) {
+	// TODO
+	// trigger loading of content applicable to next url
+	// initiate polling for changes to main content
+	var spec = decodeURL(newURL);
+	
+	var screen = screens[spec.screen];
+	document.body.className = spec.screen + " decorated";
+	
+	// highlight the appropriate tab
+	_.forOwn(tabs, function(conf, id) {
+		var tab = DOM.findId(id + "-tab")
+		if (screen.tab == id) tab.className = "active";
+		else tab.className = null;
+	});
+	
+	_.forOwn(main_panels, function(conf, id) {
+		var panel = DOM.findId(id);
+		if (!panel) return;
+		if (id !== spec.main) {
+			panel.hidden = true;
+			return;
+		}
+		panel.hidden = false;
+	});
+
+	_.forOwn(panels, function(conf, id) {
+		var panel = DOM.findId(id);
+		if (!panel) return;
+		if (screen.panels.indexOf(id) < 0) {
+			panel.hidden = true;
+			return;
+		}
+		panel.hidden = false;
+	});
+	
+	if (spec.screen === 'user') {
+		var userUrl = Meeko.framer.scope + spec.user_id;
+		var changeset = {
+			target: 'hf_profile',
+			url: userUrl
+		}
+		Meeko.framer.load(userUrl, changeset);
+	}
+}
+
+
+return {
+
+lookup: function(url, details) {
+	var spec = decodeURL(url);
+
+	return 'hf_' + spec.main;
+},
+
+enteredState: {
+	before: function(msg) {
+		beforeEnteredState(msg.url, document.URL);
+	}
+}
+
+}
+
+})()
+</script>
+
+</head>
+
+<body class="decorated">
+
+  <div class="topbar">
+    
+    <div id="global-nav">
+      <ul class="nav" id="global-actions">
+        <li id="home-tab">
+          <a href="scope:/">
+            <img class="normal" src="https://ma.twimg.com/twitter-mobile/0a7a045aa4dda0b701d3d8d13937fe7b82adb75d/images/sprites/nav_home.gif?1351812805" /> 
+            <img class="focus" src="https://si0.twimg.com/twitter-mobile/0a7a045aa4dda0b701d3d8d13937fe7b82adb75d/images/sprites/nav_home_selected.gif?1351812805" />
+            Home
+          </a>
+        </li>
+
+        <li id="connect-tab">
+          <a href="scope:/i/connect">
+            <img class="normal" src="https://si0.twimg.com/twitter-mobile/0a7a045aa4dda0b701d3d8d13937fe7b82adb75d/images/sprites/nav_connect.gif?1351812805" />
+            <img class="focus" src="https://si0.twimg.com/twitter-mobile/0a7a045aa4dda0b701d3d8d13937fe7b82adb75d/images/sprites/nav_connect_selected.gif?1351812805" />
+            Connect
+          </a>
+        </li>
+
+        <li id="discover-tab">
+          <a href="scope:/i/discover">
+            <img class="normal" src="https://si0.twimg.com/twitter-mobile/0a7a045aa4dda0b701d3d8d13937fe7b82adb75d/images/sprites/nav_discover.gif?1351812805" />
+            <img class="focus" src="https://si0.twimg.com/twitter-mobile/0a7a045aa4dda0b701d3d8d13937fe7b82adb75d/images/sprites/nav_discover_selected.gif?1351812805" />
+            Discover
+          </a>
+        </li>
+
+        <li id="me-tab">
+          <a href="scope:/account">
+            <img class="normal" src="https://si0.twimg.com/twitter-mobile/0a7a045aa4dda0b701d3d8d13937fe7b82adb75d/images/sprites/nav_me.gif?1351812805" />
+            <img class="focus" src="https://si0.twimg.com/twitter-mobile/0a7a045aa4dda0b701d3d8d13937fe7b82adb75d/images/sprites/nav_me_selected.gif?1351812805" />
+            Me
+          </a>
+        </li>
+
+      </ul>
+
+      <div id="global-cmds" class="cmd">
+        <div id="topbar-tweet-btn">
+          <a href="scope:/compose/tweet" title="Tweet">
+            <img alt="Tweet" src="https://si0.twimg.com/twitter-mobile/0a7a045aa4dda0b701d3d8d13937fe7b82adb75d/images/sprites/nav_tweet.gif?1351812805" />
+          </a>
+        </div>
+
+        <form class="form-search has-saved-searches" action="scope:/search" id="global-nav-search">
+          <input class="search-input" id="search-query" placeholder="Search" name="q" autocomplete="off" spellcheck="false" type="text" />
+        </form>
+      </div>
+    </div><!-- /#global-nav -->
+    
+  </div><!-- /#topbar -->
+
+  <div id="page-outer">
+
+    <div class="content-top">
+      <div id="user_profile_panel" class="module component profile">
+<hf-frame src="scope:./twitter" main=".profile" id="hf_profile" name="hf_profile">
+    <hf-body>
+	<hf-transform type="main">
+        <table class="profile-details">
+  <tr>
+      <td class="avatar">
+        <img alt="Twitter" src="https://pbs.twimg.com/profile_images/571076061169868800/2dDdk-Uh_normal.png" />
+      </td>
+      <td class="user-info">
+        <div class="fullname">{{full-name}}
+          <a class="badge" href="https://support.twitter.com/groups/31-twitter-basics/topics/111-features/articles/119135-about-verified-accounts">
+            <img src="https://ma.twimg.com/twitter-mobile/7e40f513d8129ea9b358c87091e84d7fabcc61a7/images/sprites/verified.gif" alt="Verified Account">
+          </a>
+        </div>
+        <div class="username">
+          <span>@</span>
+          <span class="screen-name">{{user-name}}</span>
+        </div>
+        <div class="location">{{location}}</div>
+      </td>
+  </tr>
+  <tr>
+    <td class="details" colspan="2">
+      <div class="bio">
+        <div class="dir-ltr" dir="ltr">{{description}}
+        </div>
+      </div>
+      <div class="url">
+        <div class="dir-ltr">
+          <a href="http://blog.twitter.com" class="twitter-timeline-link activeLink dir-ltr tco-link"
+              dir="ltr" rel="nofollow" target="_blank">{{url}}</a>
+        </div>
+      </div>
+    </td>
+  </tr>
+</table>
+
+        <table class="profile-stats">
+  <tr>
+    <td class="stat">
+      <div class="statnum">{{lots}}</div>
+      <div class="statlabel"> Tweets </div>
+    </td>
+    <td class="stat">
+        <a href="/twitter/following">
+          <div class="statnum">{{some}}</div>
+          <div class="statlabel"> Following </div>
+        </a>
+    </td>
+    <td class="stat stat-last">
+        <a href="/twitter/followers">
+          <div class="statnum">{{many}}</div>
+          <div class="statlabel"> Followers </div>
+        </a>
+    </td>
+  </tr>
+</table>
+
+        <div class="profile-actions">
+        <form action="/twitter/follow" method="post">
+            <span class="m2-auth-token">
+    <input name="authenticity_token" type="hidden" value="e4a802ee1b54187c6c89"/>
+  </span>
+          
+          <span class="w-button-common w-button">
+            <input name="commit" type="submit" value="Follow">
+          </span>
+        </form>
+      <form action="/twitter/actions" method="get">
+        
+        <span class="w-button-common w-button">
+          <input name="commit" type="submit" value="•••">
+        </span>
+      </form>
+</div>
+
+	</hf-transform>
+    </hf-body>
+</hf-frame>
+      </div>
+
+	<div id="profile_panel" class="module component profile">
+<hf-frame def="hf_profile" main=".profile" src="scope:./account"></hf-frame>
+	</div>
+    </div><!-- /#profile_card -->
+
+    <div class="dashboard">
+
+      <div id="mini_profile" class="component profile">
+<hf-frame src="scope:./account" main=".profile">
+    <hf-body condition="loaded">
+	<hf-transform type="main">
+
+        <table class="profile-details">
+  <tr>
+      <td class="avatar">
+        <img alt="Twitter" src="https://pbs.twimg.com/profile_images/571076061169868800/2dDdk-Uh_normal.png" />
+      </td>
+      <td class="user-info">
+        <div class="fullname">{{full-name}}
+          <a class="badge" href="https://support.twitter.com/groups/31-twitter-basics/topics/111-features/articles/119135-about-verified-accounts">
+            <img src="https://ma.twimg.com/twitter-mobile/7e40f513d8129ea9b358c87091e84d7fabcc61a7/images/sprites/verified.gif" alt="Verified Account">
+          </a>
+        </div>
+        <div class="username">
+          <span>@</span>
+          <span class="screen-name">{{user-name}}</span>
+        </div>
+        <div class="location">{{location}}</div>
+      </td>
+  </tr>
+  <tr>
+    <td class="details" colspan="2">
+      <div class="bio">
+        <div class="dir-ltr" dir="ltr">{{description}}
+        </div>
+      </div>
+      <div class="url">
+        <div class="dir-ltr">
+          <a href="http://blog.twitter.com" class="twitter-timeline-link activeLink dir-ltr tco-link"
+              dir="ltr" rel="nofollow" target="_blank">{{url}}</a>
+        </div>
+      </div>
+    </td>
+  </tr>
+</table>
+
+        <table class="profile-stats">
+  <tr>
+    <td class="stat">
+      <div class="statnum">{{lots}}</div>
+      <div class="statlabel"> Tweets </div>
+    </td>
+    <td class="stat">
+        <a href="/twitter/following">
+          <div class="statnum">{{some}}</div>
+          <div class="statlabel"> Following </div>
+        </a>
+    </td>
+    <td class="stat stat-last">
+        <a href="/twitter/followers">
+          <div class="statnum">{{many}}</div>
+          <div class="statlabel"> Followers </div>
+        </a>
+    </td>
+  </tr>
+</table>
+
+        <div class="profile-actions">
+        <form action="/twitter/follow" method="post">
+            <span class="m2-auth-token">
+    <input name="authenticity_token" type="hidden" value="e4a802ee1b54187c6c89"/>
+  </span>
+          
+          <span class="w-button-common w-button">
+            <input name="commit" type="submit" value="Follow">
+          </span>
+        </form>
+      <form action="/twitter/actions" method="get">
+        
+        <span class="w-button-common w-button">
+          <input name="commit" type="submit" value="•••">
+        </span>
+      </form>
+</div>
+
+	</hf-transform>
+    </hf-body>
+</hf-frame>
+      </div><!-- /#mini_profile -->
+
+      <div id="connect_nav" class="component">
+        <div class="module side_nav">
+          <ul class="topics-list">
+            <li><a href="scope:/i/connect">Interactions</a></li>
+            <li><a href="scope:/mentions">Mentions</a></li>
+            <li><a href="scope:/messages">Messages</a></li>
+          </ul>
+        </div>
+      </div><!-- /#connect_nav -->
+      
+      <div id="discover_nav" class="component">
+        <div class="module side_nav">
+          <ul class="topics-list">
+            <li><a href="scope:/i/discover">Tweets</a></li>
+            <li><a href="scope:/activity">Activity</a></li>
+            <li><a href="scope:/who_to_follow">Who to follow</a></li>
+            <li><a href="scope:/who_to_follow/interests">Popular accounts</a></li>
+          </ul>
+        </div>
+      </div><!-- /#search_nav -->
+      
+       <div id="search_nav" class="component">
+        <div class="module side_nav">
+          <ul class="topics-list">
+            <li><a href="scope:/search?q={search}">Tweets</a></li>
+            <li><a href="scope:/search/users?q={search}">People</a></li>
+          </ul>
+        </div>
+      </div><!-- /#search_nav -->
+      
+      <div id="trends_panel" class="component">
+        <div class="module side_nav">
+<hf-frame src="scope:./trends">
+	<hf-body condition="loaded">
+		<hf-transform type="hazard" format="css">
+          <h3>Trends</h3>
+			<div expr:_html="ul.topics-list">{{topic-list}}</div>
+		</hf-transform>
+	</hf-body>
+</hf-frame>
+        </div>
+      </div><!-- /#trends -->
+
+      <div id="site-footer" class="component">
+        <ul>
+          <li class="copyright">&copy; 2012 Twitter</li>
+          <li><a href="https://twitter.com/about">About</a></li>
+          <li><a href="https://support.twitter.com/">Help</a></li>
+          <li><a href="https://twitter.com/tos">Terms</a></li>
+          <li><a href="https://twitter.com/privacy">Privacy</a></li>
+          <li><a href="http://blog.twitter.com/">Blog</a></li>
+          <li><a href="http://status.twitter.com/">Status</a></li>
+          <li><a href="https://twitter.com/download">Apps</a></li>
+          <li><a href="https://twitter.com/about/resources">Resources</a></li>
+          <li><a href="https://twitter.com/jobs">Jobs</a></li>
+          <li><a href="https://business.twitter.com/en/advertise/start">Advertisers</a></li>
+          <li><a href="https://business.twitter.com/index_en.html">Businesses</a></li>
+          <li><a href="http://media.twitter.com/">Media</a></li>
+          <li><a href="https://dev.twitter.com/">Developers</a></li>
+        </ul>
+      </div><!-- /#site-footer -->
+      
+    </div><!-- /#dashboard -->
+
+    <div id="main_content">
+
+    <div class="content-main component" id="tweets">
+<hf-frame src="scope:./home" name="hf_tweets"><!-- Timeline -->
+	<hf-body condition="loaded">
+		<hf-transform type="hazard" format="css">
+	<main expr:_html=".timeline">{{timeline}}
+	</main>
+		</hf-transform>
+	</hf-body>
+</hf-frame>
+    </div>
+
+    <div class="content-main component" id="permalink">
+<hf-frame src="scope:./home" name="hf_permalink"><!-- Permalink Timeline -->
+	<hf-body condition="loaded">
+		<hf-transform type="hazard" format="css">
+	<main expr:_html="#main_content {_html}">{{permalink-timeline}}
+	</main>
+		</hf-transform>
+	</hf-body>
+</hf-frame>
+    </div>
+
+     <div class="content-main component" id="people">
+<hf-frame src="scope:./who_to_follow" name="hf_people">
+	<hf-body condition="loaded">
+		<hf-transform type="hazard" format="css">
+	<main expr:_html=".user-list">{{people}}
+	</main>
+		</hf-transform>
+	</hf-body>
+</hf-frame>
+    </div>
+
+     <div class="content-main component" id="categories">
+<hf-frame src="scope:./who_to_follow/interests" name="hf_categories">
+	<hf-body condition="loaded">
+		<hf-transform type="hazard" format="css">
+	<main expr:_html=".categories-list">{{categories}}
+	</main>
+		</hf-transform>
+	</hf-body>
+</hf-frame>
+    </div>
+
+    </div><!-- /#main_content -->
+
+  </div>
+
+<div id="tweetsheet" class="tweetsheet" hidden>
+<div class="backdrop"></div>
+<div class="tweetbox-container component">
+  <form action="scope:/" class="tweetform" method="post">
+    <input name="authenticity_token" type="hidden" />
+    
+    <table class="tweettable">
+      <tr>
+        <td><h1>What's happening?</h1></td>
+        <td class="tweet-close">
+          <a href="#">x</a>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div class="tweet_box">
+            <textarea class="tweetbox" name="tweet[text]"></textarea>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td><input name="tweet[in_reply_to_status_id]" type="hidden"></td>
+        <td class="tweet-btn-container">
+          <output class="counter">140</output>
+          <span class="w-button-common w-button-default"><input name="commit" type="submit" value="Tweet" /></span>
+        </td>
+      </tr>
+    </table>
+  </form>
+</div><!-- End Tweet box container -->
+</div>
+
+</body>
+</html>
