@@ -1,0 +1,366 @@
+#main {
+	margin: 55px 15px;
+	min-width: 300px;
+	position: relative;
+}
+
+#content {
+	position: relative;
+}
+
+/* the 3d flip animations/transitions */
+.item {
+	/* give some perspective so not so flat */
+	background-color: transparent; /* Have something! Need to capture clicks. */
+	cursor: pointer;
+	perspective: 1000;
+	z-index: 1;
+}
+
+.card {
+	transform-style: preserve-3d;
+	transition: 0.3s linear;
+}
+
+.card:hover {
+	/* make the timing different so the cards don't look in sync */
+	transition: 0.5s linear;
+}
+
+.front, .back {
+	backface-visibility: hidden;
+	position: absolute;
+}
+
+.item.ad .front {
+	backface-visibility: visible;
+}
+
+.item:hover {
+	z-index: 10 !important;
+}
+
+.item .front {
+	z-index: 10;
+}
+
+.item:hover .front {
+	z-index: 0;
+}
+
+.item:hover .back {
+	z-index: 10;
+}
+
+/* At the hover state we want to rotate the card 180 degrees */
+.item:hover .card {
+	transform: rotateY(180deg);
+}
+.item:hover .card.flipLeft {
+	transform: rotateY(-180deg);
+}
+.item:hover .card.flipUp {
+	transform: rotateX(180deg);
+}
+.item:hover .card.flipDown {
+	transform: rotateX(-180deg);
+}
+.item .card .back {
+	transform: rotateY(180deg);
+}
+.card.flipLeft .back {
+	transform: rotateY(-180deg);
+}
+.card.flipUp .back {
+	transform: rotateX(180deg);
+}
+.card.flipDown .back {
+	transform: rotateX(-180deg);
+}
+
+.item.ad:hover .card {
+	transform: rotateY(360deg); /* Don't want ad mirrored */
+}
+
+/* the individual tile styles */
+
+.items .item {
+/*
+	box-sizing: border-box;
+	position: absolute;
+*/
+	display: inline-block;
+	margin: 0.5em;
+	/* Could use "all 1.2s ease-out" but only FireFox seems to animate size smoothly.
+	   It looks better to snap height/width, and then animate position and opacity. */
+	transition: left 1.2s ease-out, top 1.2s ease-out, opacity 1.2s ease-out;
+}
+
+.items .item.new,
+.items .item.filtered {
+	opacity: 0;
+	/*visibility: hidden !important; Beware: Safari doesn't like animating visibility. */
+}
+
+.items .item .card {
+	border: solid 1px #ccc;
+	box-sizing: border-box;
+	height: 100%;
+	width: 100%;
+}
+
+.items .item .card .front,
+.items .item .card .back {
+	background-color: #ddd;
+	background-size: cover;
+	box-sizing: border-box;
+	height: 100%;
+	overflow: hidden;
+	width: 100%;
+}
+
+.items .item:hover .card {
+	cursor: pointer;
+}
+
+.items .item .card .back {
+	background: #333;
+	color: white;
+	height: 100%;
+	width: 100%;
+}
+
+.items .item .card .back .reblog-badge {
+	position: relative;
+	top: 3px;
+}
+
+.items .item .card .front .overlay {
+	display: table;
+	height: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+	width: 100%;
+}
+
+.items .item .card .front .title {
+	display: table-cell;
+	font-size: 14px;
+	padding: 4px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.items .item .front .title {
+	color: #666;
+	font-size: 14px;
+}
+
+.items .item .summary {
+	background-color: white;
+	border-radius: 4px;
+	color: black;
+	display: none; /* Disable summaries. */
+	font-size: 12px;
+	left: -10px;
+	margin-top: 0;
+	max-height: 200px;
+	opacity: 0;
+	overflow: visible;
+	padding: 10px;
+	position: absolute;
+	text-overflow: ellipsis;
+	top: 90%;
+	visibility: hidden;
+	width: 150px;
+}
+
+.items .item:hover .summary {
+	cursor: pointer;
+	margin-top: 7px; /* bounce */
+	opacity: 0.9;
+	transition: all 0.5s ease-in-out;
+	transition-delay: 1.4s;
+	visibility: visible;
+	z-index: 99;
+}
+
+.items .item .summary .teaser {
+	border-color: transparent transparent white transparent;
+	border-style: solid;
+	border-width: 7px;
+	height: 0;
+	left: 25px;
+	position: absolute;
+	top: -12px;
+	width: 0;
+	z-index: 1;
+}
+
+.overlay .title,
+.overlay .date {
+	box-sizing: border-box;
+	display: block;
+	margin: 5px 5px 0 5px;
+	max-width: 95%;
+	overflow: hidden;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.overlay .title {
+	color: white;
+	font-size: 14px;
+	height: 34px;
+	margin-top: 10px;
+	max-height: 34px;
+	vertical-align: bottom;
+	white-space: normal;
+}
+
+.overlay .date {
+	color: #999;
+	font-size: 14px;
+	margin-top: 2px;
+}
+
+.overlay .comments-count {
+	display: block;
+	margin: 12px auto 0 auto;
+}
+
+.overlay .comments-count.hidden {
+	display: block;
+	visibility: hidden; /* so that still position rest correctly */
+}
+
+
+/* when a tile is grouped (small) don't show much on the back */
+.item.grouped .front .overlay .title {
+	font-size: 70% !important;
+}
+
+.item.grouped .back .overlay .title,
+.item.grouped .back .overlay .comments-count {
+	display: none;
+}
+
+/* hide the title and comment count, show the date */
+.item.grouped .back .overlay .date {
+	padding-top: 5px;
+	white-space: normal;
+}
+
+#labels {
+	left: 13px;
+}
+
+.grouped #content {
+	margin-left: 175px;
+}
+
+#labels .group-label,
+#labels .group-label a,
+#labels .group-label span {
+	padding: 10px 20px 0 0;
+}
+
+
+
+
+.item.grouped .front .overlay .title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+#labels {
+	overflow: visible;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	transition: all 0.5s ease-in-out;
+	/*visibility: hidden; Beware: Safari hates: breaks all transitions. */
+	width: 162px;
+}
+
+.grouped #labels {
+	opacity: 1;
+	visibility: visible;
+}
+
+#labels .group-label,
+#labels .group-label a,
+#labels .group-label span {
+	box-sizing: border-box;
+	color: #333;
+	font-size: 14px;
+	overflow: hidden;
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+}
+
+
+
+/* the links for categories */
+
+#controls {
+	font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	left: 1px;
+	overflow: visible;
+	position: absolute;
+	top: -45px;
+	z-index: 100;
+}
+
+#controls:focus,
+#controls:active {
+	outline: none;
+}
+
+#controls ul#groups {
+	display: inline-block;
+	float: left;
+	opacity: 0.8;
+}
+
+#controls ul#groups li {
+	background-color: #f5f5f5;
+	background-image:         linear-gradient(top, #f5f5f5, #f1f1f1);
+	border: 1px solid #ccc;
+	color: rgba(0, 0, 0, 0.75);
+	cursor: pointer;
+	display: inline-block;
+	float: left;
+	font-size: 13px;
+	font-weight: bold;
+	height: 27px;
+	line-height: 27px;
+	margin-left: -1px;
+	padding: 0 15px;
+	text-align: center;
+	width: 50px;
+	transition: background-color 0.4s ease-in;
+}
+
+#controls ul#groups li.selected {
+	background-color: #eee;
+	background-image:         linear-gradient(top, #eee, #e0e0e0);
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+	color: #000;
+}
+
+#controls ul#groups li:hover:not(.selected) {
+	background-color: #f8f8f8;
+	background-image:         linear-gradient(top, #f8f8f8, #f1f1f1);
+	box-shadow: rgba(0, 0, 0, 0.16) 0 1px 1px 0;
+	color: #000;
+}
+
+.space {
+	height: 25px;
+	margin: 0 0 -25px 0;
+}

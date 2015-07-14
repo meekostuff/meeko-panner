@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html expr:dir='data:blog.languageDirection'
+	xmlns='http://www.w3.org/1999/xhtml'
+	xmlns:b='http://www.google.com/2005/gml/b'
+	xmlns:data='http://www.google.com/2005/gml/data'
+	xmlns:expr='http://www.google.com/2005/gml/expr'>
+  <head>
+
+    <title><data:blog.pageTitle/></title>
+	<meta name="page-type" content="index" />
+
+  </head>
+  <body>
+
+<b:section class='body' id='index'>
+  <b:widget id='Blog1' locked='false' title='Blog Posts' type='Blog'>
+
+    <b:includable id='search_main'>
+
+	<div class="hfeed items">
+	  <b:loop values='data:posts' var='post'>
+
+      <article class="hentry item" itemprop="blogPost" itemscope="" itemtype="http://schema.org/BlogPosting">
+		<meta itemprop="postId" expr:content="data:post.id" />
+		<h3><a rel="bookmark" itemprop="url" expr:href="data:post.url"><span class="entry-title" itemprop="name"><data:post.title/></span></a></h3>
+		<div>
+			<b:if cond="data:post.timestampLabel"><data:post.timestampLabel/><b:else/>Published: </b:if>
+			 <time class="published" itemprop="datePublished" expr:datetime="data:post.timestampISO8601"><data:post.timestamp /></time>
+		</div>
+		<b:if cond="data:post.thumbnailUrl"><img class="entry-photo" itemprop="thumbnailUrl" expr:src="data:post.thumbnailUrl" /></b:if>
+
+		<b:if cond="data:post.hasJumpLink">
+		<div class="entry-summary" itemprop="description"><data:post.body/></div>
+		<a expr:href="data:post.url"><data:post.jumpText/></a>
+		<b:else/>
+		<div class="entry-summary" itemprop="description"><data:post.snippet/></div>
+		<a expr:href="data:post.url">Link</a>
+		</b:if>
+
+		<div><span itemprop="commentCount"><data:post.numComments/></span> comments</div>
+	  </article>
+
+      </b:loop>
+    </div>
+
+    </b:includable>
+  </b:widget>
+</b:section>
+
+  </body>
+</html>

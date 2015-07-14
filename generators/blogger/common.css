@@ -1,0 +1,2534 @@
+/* <style id="subscribecss" class="singleton-element"> */
+#subscribe {
+  text-align: left;
+  margin: 10px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.subscribe-by-email,
+.subscribe-rss-feed {
+  min-width: 250px;
+  padding: 4px 16px 16px 16px;
+}
+
+.subscribe-by-email {
+  border-bottom: 1px solid #ddd;
+}
+
+.subscribe-by-email-title,
+.subscribe-rss-feed-title {
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.subscribe-by-email-address {
+  border: 1px solid #ddd;
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.3);;
+  font-size: 12px;
+  height: 27px;
+  line-height: 27px;
+  min-width: 192px;
+  padding: 0 0 0 6px;
+}
+
+.subscribe-by-email-submit {
+  display: inline-block;
+  min-width: 54px;
+  border: 1px solid #dcdcdc;
+  text-align: center;
+  color: #444;
+  font-size: 11px;
+  font-weight: bold;
+  height: 27px;
+  padding: 0 8px;
+  line-height: 27px;
+  border-radius: 2px;
+  transition: right 0.218s;;
+  background-color: #f5f5f5;
+  background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
+  box-sizing: content-box;;
+}
+.subscribe-by-email-submit:hover {
+  border: 1px solid #c6c6c6;
+  color: #222;
+  transition: all 0.0s;
+  background-color: #f8f8f8;
+  background-image: linear-gradient(top,#f8f8f8,#f1f1f1);
+  box-shadow: 0px 1px 1px rgba(0,0,0,0.1);;
+}
+.subscribe-by-email-submit:active {
+  background-color: #f6f6f6;
+  background-image: linear-gradient(top,#f6f6f6,#f1f1f1);
+  box-shadow: inset 0px 1px 2px rgba(0,0,0,0.1);;
+}
+.subscribe-by-email-submit:visited {
+  color: #666;
+}
+
+.subscribe-rss-feed-view-rss {
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  padding-left: 28px;
+}
+
+.subscribe-rss-feed-add-to {
+  /* http://www.google.com/images/icons/product/reader-16.png */
+  background-image: url(add-feed.png);
+  background-repeat: no-repeat;
+  background-position: 4px center;
+  padding-left: 25px;
+}
+
+a.feed-reader-link {
+  margin: .5em 0;
+}
+
+/* </style> */
+/* <style id="Imagecss" class="singleton-element"> */
+.image-gadget-content {
+  padding: 0 12px;
+  text-align: center;
+}
+/* </style> */
+/* <style id="Textcss" class="singleton-element"> */
+.text-widget-content {
+  background: #fff;
+  border: 0;
+  color: #000;
+  height: 100px;
+  max-height: 600px;
+  max-width: 400px;
+  overflow: auto;
+  padding: 10px 18px;
+  width: 200px;
+}
+/* </style> */
+/* <style id="labelcss" class="singleton-element"> */
+.gadget-label {
+  padding: 12px;
+  min-width: 320px;
+}
+
+.gadget-label-item {
+  line-height: 14px;
+  padding: 8px;
+}
+
+.gadget-label-cloud .gadget-label-item {
+  display: inline-block;
+}
+
+.gadget-label-cloud .gadget-label-size-1 {
+  font-size: 80%;
+}
+.gadget-label-cloud .gadget-label-size-2 {
+  font-size: 90%;
+}
+.gadget-label-cloud .gadget-label-size-3 {
+  font-size: 100%;
+}
+.gadget-label-cloud .gadget-label-size-4 {
+  font-size: 120%;
+}
+.gadget-label-cloud .gadget-label-size-5 {
+  font-size: 160%;
+}
+
+.gadget-label-count {
+  display: none;
+  color: #666;
+  font-size: 12px;
+}
+.gadget-label-show-freq-numbers .gadget-label-count {
+  display: inline;
+}
+.gadget-label-count:before {
+  content: " (";
+}
+.gadget-label-count:after {
+  content: ")";
+}
+/* </style> */
+/* <style id="blogarchivecss" class="singleton-element"> */
+.blogarchive-tree {
+  padding: 12px;
+  transition: width 0.15s, height 0.15s;
+}
+
+.blogarchive-title {
+  padding: 8px;
+  vertical-align: middle;
+  line-height: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.blogarchive-title:after {
+  content: "";
+  display: inline-block;
+  border-width: 5px;
+  border-color: transparent transparent transparent #666;
+  border-style: solid;
+  width: 0;
+  height: 0;
+  position: relative;
+  left: 4px;
+  visibility: hidden;
+}
+
+.blogarchive-title:hover:after {
+  border-color: transparent transparent transparent #ccc;
+}
+
+.blogarchive-expanded > .blogarchive-title:after {
+  border-color: transparent transparent transparent #666;
+}
+
+.blogarchive-title:hover:after,
+.blogarchive-expanded > .blogarchive-title:after {
+  visibility: visible;
+}
+
+.blogarchive-expanded > .blogarchive-title a {
+  color: #666;
+  font-weight: bold;
+}
+
+.blogarchive-flat .blogarchive-title:after {
+  display: none;
+}
+
+.blogarchive-loading {
+  background-image: url(waiting.gif);
+  background-repeat: no-repeat;
+  background-position: left center;
+  height: 28px;
+}
+
+.blogarchive-loading:after {
+  content: "loading";
+  color: #666;
+  display: inline-block;
+  line-height: 28px;
+  margin-left: 28px;
+  min-width: 192px;
+}
+
+.blogarchive-dates {
+  min-width: 128px;
+}
+
+.blogarchive-tree > .blogarchive-dates {
+  position: relative;
+}
+
+.blogarchive-date > .blogarchive-dates {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 90%;
+  transition: left 0.15s ease-out;
+}
+
+.blogarchive-date.blogarchive-expanded > .blogarchive-dates {
+  display: block;
+  left: 100%;
+}
+
+.blogarchive-expanded > .blogarchive-dates {
+  display: inline-block;
+}
+
+.blogarchive-post-count {
+  color: #666;
+  font-size: 12px;
+}
+.blogarchive-post-count:before {
+  content: " (";
+}
+.blogarchive-post-count:after {
+  content: ")";
+}
+.blogarchive-post {
+  padding: 8px 0 0 16px;
+  text-indent: -8px;
+  min-width: 200px;
+}
+
+@media only screen and (max-width : 546px) {
+  .blogarchive-tree {
+    height: auto !important;
+    width: auto !important;
+  }
+
+  .blogarchive-date > .blogarchive-dates {
+    position: static;
+    margin-left: 12px;
+  }
+
+  .blogarchive-post {
+    padding: 4px 0 4px 16px;
+  }
+}
+/* </style> */
+/* <style id="linklistcss" class="singleton-element"> */
+.gadget-linklist {
+  padding: 12px;
+  min-width: 120px;
+  max-width: 320px;
+}
+
+.gadget-linklist-item {
+  line-height: 14px;
+  padding: 8px;
+}
+/* </style> */
+/* <style id="css"> */
+/* Begin: reset styles */
+
+body,div,ul,ol,li,input,textarea,p,abbr {
+  margin:0;
+  outline: none;
+  padding:0;
+}
+ol,ul {
+  list-style:none;
+}
+h1,h2,h3,h4,h5,h6 {
+  font-size: 100%;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+img {
+  border: none;
+}
+
+/* End: reset */
+
+#chromefix {
+}
+
+body {
+  background-color: rgba(238, 238, 238, 1);
+  
+  background-image: url(#EEEEEE none repeat scroll top left);
+  background-position: left top;
+  background-repeat: no-repeat;
+  
+  
+}
+
+body, input, textarea {
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+a,
+a:focus {
+  color: rgba(0, 158, 184, 1);
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  outline: none;
+  text-decoration: none;
+  transition: color .3s;
+}
+
+a:visited {
+  color: rgba(0, 158, 184, 1);
+}
+
+a:hover {
+  color: rgba(0, 158, 184, 1);
+  text-decoration: underline;
+}
+
+abbr.published {
+  outline: none;
+  text-decoration: none;
+  border: none;
+}
+
+.title {
+  color: rgba(51, 51, 51, 1);
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+.title a {
+  color: rgba(51, 51, 51, 1);
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Way to prevent any css animations during dom manip. */
+.instant, .instant * {
+  transition: none !important;
+  animation-iteration-count: 0 !important;
+}
+
+.adsense {
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Admin restricted links - obviously verified on server, but for easy templates. */
+
+.blog-admin,
+.item-control {
+  display: none;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .blog-admin,
+  .item-control {
+    margin-left: 14px;
+  }
+}
+
+#injected-iframe {
+  z-index: 9999 !important;
+}
+
+
+
+.kd-button {
+  background-color: #f5f5f5;
+  background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
+  border: 1px solid #DCDCDC;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 2px;
+  box-sizing: content-box;
+  color: #222;
+  cursor:default;
+  display: inline-block;
+  font-size: 11px;
+  font-weight: bold;
+  height: 27px;
+  line-height: 27px;
+  min-width: 54px;
+  padding: 0 8px;
+  text-align: center;
+  transition: all 0.218s;
+  user-select: none;
+}
+.kd-button:hover {
+  background-color: #f8f8f8;
+  background-image: linear-gradient(top,#f8f8f8,#f1f1f1);
+  border: 1px solid #C6C6C6;
+  box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
+  color: #222;
+  transition: all 0.0s;
+}
+.kd-button:active {
+  background-color: #f6f6f6;
+  background-image: linear-gradient(top,#f6f6f6,#f1f1f1);
+  border: 1px solid #C6C6C6;
+  box-shadow: inset 0px 1px 2px rgba(0,0,0,0.1);
+  color: #333;
+}
+
+.kd-button:focus, .kd-button.right:focus, .kd-button.left:focus{
+  border: 1px solid #4d90fe;
+  outline: none;
+  z-index: 4 !important;
+}
+
+.kd-button.left {
+  border-radius: 2px 0 0 2px;
+  border-right-color: transparent;
+  margin-right: 0;
+}
+.kd-button.left:hover {
+  border-right: 1px solid #c6c6c6;
+}
+.kd-button.right {
+  border-radius: 0 2px 2px 0;
+  margin-left:-5px;
+}
+
+.kd-button.right:hover {
+  border-left: 1px solid #c6c6c6;
+}
+.kd-button img {
+  display: inline-block;
+  margin: -3px 0 0;
+  *margin:4px 0 0; /*IE7*/
+  opacity: 0.55;
+  vertical-align: middle;
+}
+
+.kd-button.selected img {
+  opacity: 0.9;
+}
+.kd-button:hover img {
+  opacity: 0.72;
+}
+.kd-button:active img {
+  opacity: 1.0;
+}
+/*disabled buttons*/
+.kd-button.disabled,
+.kd-button.disabled:hover,
+.kd-button.disabled:active {
+  background: #FFF;
+  border: 1px solid #f3f3f3;
+  border: 1px solid rgba(0,0,0,0.05);
+  color: #b8b8b8;
+  cursor: default;
+  pointer-events: none;
+}
+.kd-button.disabled:active{
+  box-shadow: inset 0px 1px 2px rgba(0,0,0,0.1);
+}
+.kd-button.disabled img {
+  opacity: 0.5;
+}
+.kd-button.small {
+  min-width: 36px;
+  padding: 0;
+  width: 36px;
+}
+
+
+
+.ribbon {
+  color: #eee;
+  cursor: default;
+  display: inline-block;
+  text-align: center;
+  width: 35px;
+}
+a.ribbon {
+  color: #eee;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.ribbon .ribbon-piece {
+  background-color: rgba(102, 102, 102, 1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.5s ease-in;
+}
+
+/* On hover color change. */
+a.ribbon:hover .ribbon-piece {
+  background-color: rgba(173, 58, 43, 1);
+  color: #eee;
+}
+
+.ribbon .top {
+  border-bottom: solid 1px rgba(255, 255, 255, 0.6);
+  border-radius: 1px 1px 0px 0px;
+  font-size: 11px;
+  padding: 4px 0;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.ribbon .bottom {
+  font-size: 17px;
+  padding: 5px 0;
+}
+
+.ribbon .tail {
+  height: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ribbon .tail .left,
+.ribbon .tail .right {
+  height: 10px;
+  position: absolute;
+  top: -10px;
+  width: 50px;
+}
+
+.ribbon .tail .left{
+  left: -9px;
+  transform: rotate(-25deg);
+}
+
+.ribbon .tail .right{
+  right: -9px;
+  transform: rotate(25deg);
+}
+
+/* Do this with a transform? */
+.ribbon.small {
+  width: 25px;
+}
+.ribbon.small .top {
+  font-size: 9px;
+  padding: 2px 0;
+}
+.ribbon.small .bottom {
+  font-size: 12px;
+  padding: 3px 0;
+}
+.ribbon.small .tail {
+  height: 6px;
+}
+.ribbon.small .tail .left,
+.ribbon.small .tail .right {
+  height: 6px;
+  top: -7px;
+  width: 40px;
+}
+.ribbon.small .tail .left {
+  left: -6px;
+}
+.ribbon.small .tail .right {
+  right: -6px;
+}
+
+
+
+
+.bubble {
+  background-color: rgba(102, 102, 102, 1);
+  background-position: center center;
+  border-radius: 3px;
+  border: solid 1px rgba(102, 102, 102, 1);
+  color: white;
+  cursor: default;
+  display: inline-block;
+  font-size: 12px;
+  padding: 2px 0;
+  position: relative;
+  text-align: center;
+  transition-property: background-color, border-color;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in;
+  width: 26px;
+}
+
+.bubble.light {
+  background-color: rgba(217, 217, 217, 1);
+  border-color: rgba(217, 217, 217, 1);
+}
+
+.bubble.empty {
+  color: rgba(102, 102, 102, 1);
+  border: solid 1px rgba(153, 153, 153, 1);
+  box-shadow: none;
+  background-color: white;
+}
+
+.bubble .bubble-tail,
+.bubble.empty .bubble-tail:after {
+  border-color: rgba(102, 102, 102, 1) transparent transparent transparent;
+  border-style:solid;
+  border-width: 5px;
+  bottom: -10px;
+  content: '';
+  height: 0;
+  left: 50%;
+  margin-left: -5px;
+  position: absolute;
+  transition: border-color 0.5s ease-in;
+  width: 0;
+}
+
+.bubble.light .bubble-tail {
+  border-color: rgba(217, 217, 217, 1) transparent transparent transparent;
+}
+
+.bubble.empty .bubble-tail {
+  border-color: rgba(153, 153, 153, 1) transparent transparent transparent;
+}
+
+.bubble.empty .bubble-tail:after {
+  left: 0;
+  top: -6px;
+  border-color: white transparent transparent transparent;
+}
+
+/* On hover color change.
+.bubble:hover {
+  background-color: #d14836;
+  border-color: #d14836;
+}
+
+.bubble.empty:hover {
+  /*background-color: white;
+  border-color: #d14836;
+  color: #d14836;
+}
+
+.bubble:hover .bubble-tail {
+  border-color: #d14836 transparent transparent transparent !important;
+}
+*/
+
+
+
+
+body.loading #loading {
+  opacity: 0.75;
+  margin-bottom: 0;
+}
+
+#loading {
+  background-color: #000;
+  border-radius: 6px 6px 0px 0px;
+  border: solid 1px #666;
+  border-bottom: none;
+  bottom: 0;
+  box-shadow: 0 0 4px #333;
+  color: white;
+  font-size: 18px;
+  left: 50%;
+  margin-bottom: -50px;
+  margin-left: -60px;
+  opacity: 0;
+  padding: 5px 0px;
+  position: fixed;
+  text-align: center;
+  transition: opacity 0.5s, margin-bottom 0.5s;
+  transition-delay: 279ms;
+  width: 120px;
+  z-index: 999;
+}
+
+#loading span {
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-image: url(waiting-dark.gif);
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  padding-right: 30px;
+}
+
+#loading span:after {
+  content: '...';
+}
+
+.blogger-gear {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url(loading-gear.gif);
+  display: inline-block;
+  height: 95px;
+  width: 95px;
+}
+
+
+
+#message {
+  position: fixed;
+  text-align: center;
+  top: 40%;
+  width: 100%;
+}
+#message span {
+  background-color: white;
+  border-radius: 6px;
+  color: #333;
+  box-shadow: 0 0 4px #666;
+  display: inline-block;
+  font-family: arial;
+  font-size: 16px;
+  padding: 15px;
+  white-space: no-wrap;
+}
+
+
+
+.quick-search {
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  width: 450px;
+  z-index: 10001;
+}
+
+.quick-search li {
+  cursor: pointer;
+}
+
+.quick-search .result {
+  border: solid 1px transparent;
+  clear: both;
+  font-size: 13px;
+  height: 48px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 7px;
+  position: relative;
+}
+
+.quick-search .title {
+  display: inline-block;
+  font-size: 15px;
+  left: 60px;
+  overflow: hidden;
+  position: absolute;
+  right: 130px;
+  text-overflow: ellipsis;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  top: 5px;
+  white-space: nowrap;
+}
+
+.quick-search .date {
+  color: #dd4b39;
+  font-size: 15px;
+  margin-left: 5px;
+  position: absolute;
+  right: 5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  top: 5px;
+}
+
+.quick-search .snippet {
+  color: #888;
+  left: 60px;
+  line-height: 1.25;
+  max-height: 35px;
+  overflow: hidden;
+  position: absolute;
+  right: 5px;
+  text-align: justify;
+  top: 24px;
+}
+
+.quick-search .thumbnail {
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  left: 5px;
+  margin-right: 7px;
+  position: absolute;
+  top: 5px;
+}
+
+.quick-search .result:hover,
+.quick-search .result.active {
+  background-color: #f9edbe;
+  border: solid 1px #f0c36d;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.quick-search .result:hover .snippet,
+.quick-search .result.active .snippet {
+  color: #333;
+}
+
+.quick-search .result .term {
+  background-color: #f9edbe;
+  color: black;
+}
+
+.quick-search .result:hover .term,
+.quick-search .result:active .term {
+  background-color: transparent;
+}
+
+.quick-search .server {
+  border: solid 1px transparent;
+  margin: -1px;
+  padding: 10px;
+  text-align: center;
+}
+
+.quick-search li + .server {
+  border-top: solid 1px #ddd;
+}
+
+.quick-search .server:hover,
+.quick-search .server.active {
+  background-color: #eaeaea;
+  border: solid 1px #ccc;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.quick-search .message {
+  color: #4d90fe;
+  display: block;
+  font-size: 16px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.quick-search .search_query {
+  color: black;
+}
+
+.quick-search .count {
+  color: #222;
+  display: block;
+  font-size: 14px;
+}
+
+#search.searching {
+  background-image: url(waiting.gif);
+  background-position: center right;
+  background-repeat: no-repeat;
+  transition: none;
+}
+
+
+
+@media print {
+  /* Printing on white is cleaner. */
+  .article {
+    background-color: white !important;
+    margin: 0 !important;
+  }
+  .article img {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .ribbon.date .ribbon-piece {
+    display: none;
+  }
+  .ribbon.date {
+    display: inline-block;
+    height: 100%;
+    margin: 0 !important;
+    padding: 0;
+    position: static !important;
+    top: 0;
+    white-space: nowrap;
+    width: auto;
+  }
+  .ribbon.date:after{
+    content: attr(title);
+    color: rgba(51, 51, 51, 1);
+    font-size: 20px;
+  }
+
+  /* Include the links to all anchors */
+  .article-content a:after {
+    content: " [" attr(href) "] ";
+    font-size: 90%;
+  }
+
+  /* Fix printing for the viewitem --------------------------------- */
+
+  /* Hide lots of things. */
+  .overview-open > *,
+  .overview-backdrop,
+  .overview-header,
+  .share-controls,
+  .adsense-aside,
+  .adsense-aside {
+    display: none !important;
+  }
+
+   /* Show the main content. */
+  .overview-open > #overview {
+    display: block !important;
+  }
+
+   /* Reset colors, padding, and positions. */
+  body.overview-open,
+  .overview-panel,
+  .overview-wrap,
+  .overview-inner,
+  .overview-content {
+    background-color: white !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    position: static !important;
+  }
+   /* Ensure content positioned - but keep padding. */
+  .overview-panel .overview-content {
+    position: static !important;
+  }
+
+  /* Fix printing for the viewitem --------------------------------- */
+
+  /* Hide lots of things. */
+  .viewitem-open > *,
+  .viewitem-background,
+  .viewitem-header,
+  .share-controls {
+    display: none !important;
+  }
+
+   /* Show the main content. */
+  .viewitem-open > .viewitem-panel {
+    display: block !important;
+  }
+
+   /* Reset colors, padding, and positions. */
+  body.viewitem-open,
+  .viewitem-panel,
+  .viewitem-wrap,
+  .viewitem-inner,
+  .viewitem-content {
+    background-color: white !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    position: static !important;
+  }
+
+   /* Ensure content positioned - but keep padding. */
+  .viewitem-panel .viewitem-content {
+    position: static !important;
+  }
+
+  /* View specific (eg Sidebar and Mosaic) fixes should go elsewhere */
+}
+
+
+
+#attribution-container {
+  padding: 8px;
+}
+
+
+
+
+#header-container {
+  height: 105px;
+}
+
+#header {
+  
+  left: 0;
+  position: fixed;
+  top: 0;
+  
+  width: 100%;
+  z-index: 1000;
+}
+
+#header .header-bar {
+  background-attachment: scroll; /* Chrome, really? */
+  background-color: rgba(243, 243, 243, 1);
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+  height: 65px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1001;
+}
+
+#header .header-bar .title {
+  display: block;
+  height: 65px;
+  line-height: 65px;
+  margin-left: 20px;
+  margin-right: 235px;
+  overflow: hidden;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#header .header-bar .title h1,
+#header .header-bar .title h3 {
+  display: inline;
+  height: 65px;
+  
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.3);
+  
+  white-space: nowrap;
+}
+
+#header .header-bar .title h1 {
+  color: rgba(85, 85, 85, 1);
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 28px;
+}
+
+#header .header-bar .title h3 {
+  color: rgba(85, 85, 85, 1);
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  margin-left: 5px;
+}
+
+#header input#search {
+  background-color: #fafafa;
+  border-radius: 3px;
+  border: none;
+  box-shadow: inset 1px 1px 2px #bbb;
+  font-size: 15px;
+  height: 30px;
+  margin: 0;
+  padding: 0px 7px;
+  right: 10px;
+  text-align: left;
+  text-transform: lowercase;
+  top: 18px;
+  transition: background-color 0.3s ease-in-out;;
+  width: 200px;
+  position: absolute;
+}
+
+#header input#search:focus {
+  background-color: white;
+}
+
+#header .header-drawer {
+  /* the drawer scrolls with the page initially, then gets fixed (.sticky) */
+  background-color: rgba(51, 51, 51, 1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);;
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  height: 35px;
+  margin-top: 31px; /* use margin to match back to un-scrolled */
+  position: absolute;
+  top: 34px; /* top here must match top when sticky */
+  width: 100%;
+  z-index: 1000;
+}
+
+
+#header .header-drawer.sticky {
+  margin-top: 0px;
+  top: 34px; /* now stuck, just peeking out from the top */
+  transition: top 0.2s linear;
+  transition-delay: 0.3s; /* don't surprise on quick hover */
+}
+
+#header:hover .header-drawer,
+#header .header-drawer.open {
+  margin-top: 0px;
+  top: 65px; /* animate back down to full unscrolled height */
+}
+
+
+/* Views and Pages */
+
+#header #views {
+  float: left;
+  position: relative;
+  z-index: 999;
+}
+
+#header .menu .menu-item,
+#header .menu .menu-heading {
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: rgba(255, 255, 255, 1);
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 100;
+  line-height: 30px;
+  height: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-shadow: -1px -1px rgba(0, 0, 0, 0.1); /* subtle inset */
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  user-select: none;;
+  width: 100%;
+}
+
+#header a.menu-item {
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+#views .menu-item {
+  text-transform: capitalize;
+}
+
+#header .menu .menu-heading {
+  box-sizing: border-box;
+  height: 35px;
+  line-height: 35px;
+  margin-right: 15px;
+  position: relative;
+  width: auto;
+}
+
+#header .indicator {
+  /* instead of using a .heading::after actually put this in as elements
+     which will allow us to animate it rotating! */
+  border-color: rgba(255, 255, 255, 1) transparent transparent transparent;
+  border-style: solid;
+  border-width: 5px;
+  height: 0px;
+  margin: 0;
+  margin-top: -1px;
+  overflow: visible;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transition: all .3s linear;
+  transform-origin: center 2px;
+}
+
+#header .menu:hover .indicator {
+  transform: rotate(180deg);
+}
+
+#header .menu ul {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  max-height: 0px;
+  overflow: hidden;
+  padding: 0;
+  transition: all 0.3s linear;
+  visibility: hidden;
+  width: 100%;
+
+}
+
+#header .menu:hover ul {
+  max-height: 500px;
+  opacity: 1;
+  transition: all 0.6s linear; /* show slower than hide */
+  visibility: visible;
+}
+
+#header .menu li {
+  display: list-item;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+#header .menu li a {
+  opacity: 0.99; /* Chrome12+ has different subpixel anti-aliasing rules, this looks worse, but prevents flicker. */
+}
+
+#header .menu .menu-background {
+  background-color: rgba(51, 51, 51, 1);
+  height: 100%;
+  left: 0;
+  opacity: 0.75;
+  position: absolute;
+  top: 0;
+  transition: opacity 0.3s ease-in;
+  width: 100%;
+  z-index: -1; /* Negative isn't great... but otherwise the a needs to be positioned. */
+}
+
+#header .menu li:hover .menu-background {
+  opacity: 0.95;
+}
+
+#header .menu li {
+  box-sizing: border-box;
+}
+
+#header .tabs li {
+  display: inline;
+  height: 35px;
+  line-height: 35px;
+  margin-left: 10px;
+}
+
+#header .tags li .menu-background {
+  display: none;
+}
+
+#header .tabs li .menu-item {
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 286ms ease-in;
+}
+
+#header .tabs li .menu-item:hover,
+#header .menu li .menu-item:hover,
+#header .tabs li .menu-item.current {
+  color: rgba(255, 255, 255, 1) !important;
+}
+
+#header .tabs .menu-heading {
+  display: none;
+}
+
+#header #pages {
+  float: left;
+  margin-left: 0px;
+  position: relative;
+}
+
+#header #pages:before {
+  border-left: solid 1px rgba(255, 255, 255, 1);
+  content: '';
+  height: 20px;
+  left: 0px;
+  opacity: 0.5;
+  position: absolute;
+  top: 8px;
+  z-index: 1000;
+}
+
+#header #pages.tabs ul {
+  margin-left: 0px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#header .admin-controls {
+  height: 35px;
+  position: absolute;
+  right: 10px;
+  top: 0px;
+}
+
+#header .admin-controls .dashboard {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url(dashboard.png);
+  /*background-size: 18px 18px;*/
+  display: block;
+  height: 35px;
+  opacity: 0.8;
+  position: absolute;
+  right: 0px;
+  top: 0;
+  width: 18px;
+}
+
+#header .admin-controls .new-post {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url(new-post.png);
+  /*background-size: 18px 18px;*/
+  display: block;
+  height: 35px;
+  opacity: 0.8;
+  position: absolute;
+  right: 24px;
+  top: 0;
+  width: 18px;
+}
+
+#header .admin-controls .dashboard:hover,
+#header .admin-controls .new-post:hover {
+  opacity: 1;
+}
+
+#header #follow-author {
+  height: 65px;
+  right: 0px;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 300px;
+}
+
+
+
+
+
+
+body.overview-open,
+body.lightbox-open {
+  overflow: hidden;
+}
+
+/* overview background. */
+#overview .overview-backdrop,
+#lightbox .lightbox-backdrop {
+  background-color: black;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  transition: all 1004ms ease-in;
+  z-index: 9990;
+}
+
+#overview.open .overview-backdrop,
+#lightbox.open .lightbox-backdrop {
+  opacity: 0.7;
+}
+
+#overview.closing .overview-backdrop,
+#lightbox.closing .lightbox-backdrop {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.overview-panel,
+.lightbox-panel {
+  bottom: 0;
+  box-sizing: border-box;
+  left: 20px;
+  pointer-events: none;
+  position: fixed;
+  right: 20px;
+  top: 50px;
+  transition: all 1009ms ease-in-out;
+  z-index: 9999; /* Way up in the air. */
+}
+
+.lightbox-title {
+  bottom: 0;
+  display: table-cell;
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  height: 100%;
+  left: 60px;
+  line-height: 50px;
+  overflow: hidden;
+  position: absolute;
+  right: 60px;
+  text-align: center;
+  text-overflow: ellipsis;
+  top: 0;
+  white-space: nowrap;
+}
+
+.lightbox-contentwrap {
+  font-size: 14px;
+  margin: 0 auto;
+  max-width: 750px;
+}
+
+#overview.closing .overview-panel,
+#lightbox.closing .lightbox-panel {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+/* Bounding box of our overview item. */
+.overview-panel .overview-wrap,
+.lightbox-panel .lightbox-wrap {
+  background-color: transparent;
+  border-radius: 6px 6px 0px 0px;
+  
+  
+
+
+
+
+
+/* If border-image is declared below -webkit-border-image */
+/* Webkit doesn't render correctly.                       */
+
+  border-image: url(lightbox.png) 12 / 12px repeat;
+
+
+  box-sizing: content-box;
+  background-clip: padding-box;
+  top: -12px;
+  
+  height: 100%;
+  left: 0;
+  margin: 0 auto;
+  max-width: 1000px;
+  overflow: hidden;
+  padding: 0px 1px; /* The controls the inset of the overview-inner. */
+  pointer-events: auto;
+  position: relative;
+  transition: left 0.5s linear;
+  z-index: 9999;
+}
+
+.overview-panel.left .overview-wrap {
+  left: -110%;
+}
+
+.overview-panel.right .overview-wrap {
+  left: 110%;
+}
+
+/* This is the box that things can be draw in. */
+.overview-panel .overview-inner,
+.lightbox-panel .lightbox-inner {
+  background-color: #fafafa;
+  border-radius: 6px 6px 0px 0px;
+  bottom: 0px;
+  box-sizing: border-box;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.overview-panel .article {
+  /* Defend against Chrome 12+ antialiasing bug. */
+  background-color: #fafafa;
+}
+
+/* Header section for the overview-inner. */
+.overview-panel .overview-header,
+.lightbox-panel .lightbox-header {
+  border-radius: 6px 6px 0px 0px;
+  box-shadow: 0px 3px 3px rgba(200, 200, 200, .4);
+  box-sizing: border-box;
+  height: 50px;
+  padding: 10px;
+  position: absolute;
+  top: 0px;
+  transition: box-shadow 0.2s linear;
+  z-index: 5;
+  width: 100%;
+}
+
+.overview-header .share-controls {
+  float: left;
+  margin-left: 10px;
+  margin-top: 4px;
+}
+
+.overview-header .overview-controls-left {
+  float: left;
+}
+
+.overview-header .overview-controls-right,
+.lightbox-header .lightbox-controls-right {
+  float: right;
+}
+
+/* overview container where we put the real stuff. */
+.overview-panel .overview-content,
+.lightbox-panel .lightbox-content {
+  bottom: 0px;
+  box-sizing: border-box;
+  overflow-y: scroll; /* Always show: comments may cause it to bounce. */
+  padding: 10px;
+  position: absolute;
+  top: 50px;
+  transition: all 1s linear;
+  width: 100%;
+  z-index: 1;
+}
+
+.overview-panel.start .overview-header,
+.lightbox-panel.start .lightbox-header {
+  box-shadow: none;
+  min-width: 200px; /* Stop any buttons wrapping. */
+}
+
+/* Custom webkit scrollbars */
+
+.overview-panel .overview-content::-webkit-scrollbar,
+.lightbox-panel .lightbox-content::-webkit-scrollbar {
+  background: transparent;
+  height: 10px;
+  width: 10px;
+}
+
+/* the start/end of bar  */
+.overview-panel .overview-content::-webkit-scrollbar-button:start:decrement,
+.overview-panel .overview-content::-webkit-scrollbar-button:end:increment,
+.lightbox-panel .lightbox-content::-webkit-scrollbar-button:start:decrement,
+.lightbox-panel .lightbox-content::-webkit-scrollbar-button:end:increment {
+  display: block;
+  height: 10px;
+  width: 10px;
+}
+
+/* the track background */
+.overview-panel.overview-content::-webkit-scrollbar-track-piece,
+.lightbox-panel.lightbox-content::-webkit-scrollbar-track-piece {
+  background-color: #eee;
+}
+
+/* the scrollbar itself */
+.overview-panel .overview-content::-webkit-scrollbar-thumb,
+.lightbox-panel .lightbox-content::-webkit-scrollbar-thumb {
+  background-color: #666;
+  height: 50px;
+  width: 50px;
+}
+
+.overview-panel.start .overview-content:not(:hover)::-webkit-scrollbar-thumb,
+.lightbox-panel.start .lightbox-content:not(:hover)::-webkit-scrollbar-thumb {
+  background-color: #eee;
+}
+
+.overview-panel .overview-content::-webkit-scrollbar-thumb:hover,
+.lightbox-panel .lightbox-content::-webkit-scrollbar-thumb:hover {
+  background-color: #333;
+  height: 50px;
+  width: 50px;
+}
+
+
+
+
+body.viewitem-open {
+  overflow: hidden;
+}
+
+/* Ensure header drawer is visible. */
+body.viewitem-open #header .header-drawer {
+  margin-top: 0px;
+  position: fixed;
+  top: 65px; /* animate back down to full unscrolled height */
+}
+
+/* While open, don't highlight the view menu. */
+body.viewitem-open #header #views .menu-heading {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+body.viewitem-open #header #views .menu-heading .indicator {
+  border-color: rgba(255, 255, 255, 0.6) transparent transparent transparent !important;
+}
+
+.viewitem-panel {
+  bottom: 0;
+  border-top: solid 1px rgba(51, 51, 51, 1);
+  box-sizing: border-box;
+  left: 0;
+  margin-top: 0;
+  position: fixed;
+  right: 0;
+  top: 100px;
+  transition: margin-top 1s ease-in-out, bottom 1s ease-in-out;
+  z-index: 999; /* Way up in the air. */
+}
+
+.viewitem-panel.new,
+.viewitem-panel.closing {
+  margin-top: -100%;
+  bottom: 100%;
+}
+
+/* Bounding box of our overview item. */
+.viewitem-panel .viewitem-wrap {
+  background-color: white;
+  box-sizing: border-box;
+  height: 100%;
+  left: 0;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 9999;
+}
+
+/* Header section for the overview-inner. */
+.viewitem-panel .viewitem-header {
+  box-sizing: border-box;
+  height: 50px;
+  padding: 10px;
+  position: absolute;
+  top: 0px;
+  z-index: 5;
+  width: 100%;
+}
+
+/* This is the box that things can be draw in. */
+.viewitem-panel .viewitem-inner {
+  bottom: 0px;
+  box-sizing: border-box;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 30px 0px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+/* This allows us to be cute with continuous backgrounds */
+.viewitem-panel .viewitem-background {
+  background-color: rgba(238, 238, 238, 1);
+  
+  background-image: url(#EEEEEE none repeat scroll top left);
+  background-repeat: no-repeat;
+  
+  
+  background-attachment: scroll; /* Chrome, really? */
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  top: -100px; /* This should be the height of the header. */
+  width: 100%;
+}
+
+/* overview container where we put the real stuff. */
+.viewitem-panel .viewitem-content {
+  background-color: white;
+  background-clip: padding-box;
+  /* TODO(kiyono): re-enable box-shadow when the performance of box-shadow */
+  /* gets better.                                                          */
+  
+  
+
+
+
+
+
+/* If border-image is declared below -webkit-border-image */
+/* Webkit doesn't render correctly.                       */
+
+  border-image: url(view-item.png) 2 / 2px repeat;
+
+
+  border-width: 2px;
+  
+  padding: 20px 70px;
+  left: 8px; /* Align it with classic in center - why is ther an offset? */
+  max-width: 750px;
+  margin: 0px auto;
+  position: relative;
+}
+
+.viewitem-panel .article {
+  background-color: white; /* Chrome12+ anti-aliasing bug. */
+}
+
+.viewitem-panel button.close {
+  margin-right: 10px;
+}
+
+.viewitem-panel .blogger-gear {
+  position: absolute;
+  left: 50%;
+  margin-left: -47px;
+  margin-top: -47px;
+  top: 50%;
+}
+
+
+
+
+/* Styles here should be minimized to limit amount of explicit casing. */
+
+.article {
+  font-size: 14px;
+  margin: 0 auto;
+  max-width: 750px;
+  position: relative;
+  word-wrap: break-word;
+}
+
+/* Post Header */
+
+.article .article-header {
+  display: table;
+  text-align: center;
+  width: 100%;
+}
+
+.article .article-header .title {
+  font-size: 20px;
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  width: 100%;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  padding-right: 40px; /* Compensate for ribbon, to stay centered. */
+}
+
+.article .title .edit {
+  background-image: url(edit.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  cursor: pointer;
+  display: inline-block;
+  height: 21px;
+  opacity: 0.8;
+  position: relative;
+  top: 3px;
+  width: 21px;
+}
+
+.article .title .edit:hover {
+  opacity: 1;
+}
+
+.article .article-header .date {
+  float: left;
+  left: 0px;
+  margin: 0px 5px 5px 0px;
+  position: relative;
+  top: 5px;
+}
+
+/* Post Content */
+
+.article .article-content {
+  clear: both;
+  color: rgba(51, 51, 51, 1);
+  line-height: 1.4;
+  margin-top: 10px;
+  margin: 10px auto 5px auto;
+  text-align: justify;
+}
+
+/* This shouldn't really be added at all... it is from feeds. */
+.article .article-content .blogger-post-footer {
+  display: none;
+}
+
+/* Restore a lot of the styles we reset globally. */
+.article-content ol {
+  list-style-type: decimal;
+  margin: 0.5em 0;
+  padding-left: 2em;
+}
+.article-content ul {
+  list-style-type: disc;
+  margin: 0.5em 0;
+  padding-left: 2em;
+}
+
+.article-content p {
+  margin: 1em 0;
+}
+
+/* Defaults from: http://www.w3.org/TR/CSS2/sample.html */
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+  font-weight: bolder;
+}
+.article-content h1 {
+  font-size: 2em;
+  margin: .67em 0;
+}
+.article-content h2 {
+  font-size: 1.5em;
+  margin: .75em 0;
+}
+.article-content h3 {
+  font-size: 1.17em;
+  margin: .83em 0;
+}
+.article-content h4 {
+  margin: 1.12em 0;
+}
+.article-content h5 {
+  font-size: .83em;
+  margin: 1.5em 0;
+}
+.article-content h6 {
+  font-size: .75em;
+  margin: 1.67em 0;
+}
+
+.article .article-content a {
+  display: inline;
+}
+
+.article .article-content img {
+  box-sizing: border-box;
+  display: inline-block;
+  height: auto;
+  margin: 10px auto; /* Attempt to horizontally center. */
+  /* For Sally-Anne. Keep images to the width of the post. */
+  /* It's needed to avoid IE because of b/5420328 */
+  
+  max-width: 100%;
+  
+}
+
+.article .article-content img:not(.deferred) {
+  padding: 8px;
+  /* TODO(kiyono): re-enable box-shadow when the performance of box-shadow */
+  /* gets better.                                                          */
+  
+  
+
+
+
+
+
+/* If border-image is declared below -webkit-border-image */
+/* Webkit doesn't render correctly.                       */
+
+  border-image: url(not-deferred.png) 9 / 9px stretch;
+
+
+  border-width: 9px;
+  
+}
+
+/* Center all images/videos in posts. */
+.article .article-content iframe,
+.article .article-content embed {
+  display: block;
+  margin: 10px auto; /* Attempt to horizontally center. */
+  /* It's needed to avoid IE because of b/5420328 */
+  
+  max-width: 100%;
+  
+}
+
+/* Post Footer */
+
+.article .article-footer {
+  clear: both;
+  text-align: center;
+}
+
+.article .article-footer .publish-info,
+.article .article-footer .geolocation-info,
+.article .article-footer .labels {
+  color: rgba(128, 128, 128, 1);
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  padding: 5px 0;
+}
+
+.article .article-footer .publish-info .author a,
+.article .article-footer .publish-info .time {
+  color: rgba(51, 51, 51, 1);
+}
+
+.article .article-footer .label:not(:last-child):after {
+  content: ',';
+}
+
+.article .article-footer .share-controls {
+  display: inline-block;
+  margin: 10px 5px;
+  text-align: center;
+}
+
+/* AdSense */
+
+.article.has-ads {
+  padding-right: 200px;
+  min-height: 650px; /* To accomodate skyscraper */
+}
+
+.article .adsense-aside {
+  padding: 15px 5px 0 15px;
+  position: absolute;
+  right: 5px;
+  text-align: center;
+  top: 5px;
+}
+
+.article .adsense-footer .adsense {
+  margin-top: 10px;
+  padding: 10px 0;
+}
+
+
+
+
+.comments {
+  clear: both;
+  margin-top: 10px;
+}
+
+.comments .comments-header,
+.comments .comments-footer {
+  text-align: center;
+}
+
+.comments .comments-header .comments-count {
+  top: -2px;
+}
+
+.comments .comments-header h3 {
+  display: inline-block;
+  padding: 5px;
+}
+
+@media only screen and (max-device-width: 1024px) {
+  .comments .comments-header h3 {
+    color: #222;
+    font-family: arial,sans-serif;
+    text-decoration: underline;
+  }
+}
+.comments .toggle-switch:hover h3 {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Added by blogger for ghosted/removed comments .*/
+.comments .deleted-comment {
+  font-style: italic;
+  opacity: 0.5;
+}
+
+/* While loading, hide the comment count, and then show an indicator. */
+.comments.loading .comments-header .comments-count .bubble-content {
+  visibility: hidden;
+}
+
+.comments.loading .comments-header .comments-count {
+  background-image: url(refreshing.gif);
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition: none;
+}
+
+.blogger-comments .comments-content {
+  background-color: whitesmoke;
+  font-size: 13px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  transition: all 0.5s ease-in;
+}
+
+@media only screen and (max-device-width: 1024px) {
+  .blogger-comments .comments-content {
+    background-color: #f1f1f1;
+    border: 1px solid #bbb;
+  border-radius: 0;
+  }
+}
+.blogger-comments .comments-content .comment-actions {
+  color: #999;
+}
+.comments .comment .comment-actions a {
+  padding-top: 5px;
+  padding-right: 5px;
+}
+.comments .comment .comment-actions a:hover {
+  text-decoration: underline;
+}
+.blogger-comments .comments-content .secondary-link {
+  color: #69c;
+}
+.blogger-comments .comments-content .comment-thread {
+  list-style-type: none;
+  padding: 0;
+  text-align: left;
+}
+.blogger-comments .comments-content .inline-thread {
+  padding: 0.5em;
+}
+.blogger-comments .comments-content .comment-thread {
+  margin: 8px;
+}
+.blogger-comments .comments-content .comment-thread:empty {
+  display: none;
+}
+.blogger-comments .comments-content .comment-replies {
+  background-color: #ebebeb;
+  margin-top: 1em;
+  margin-left: 36px;
+  border-radius: 10px;
+}
+.blogger-comments .comments-content .comment {
+  border-bottom: 1px solid #e3e3e3;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+}
+.blogger-comments .comments-content .comment:first-child {
+  padding-top: 16px;
+}
+.blogger-comments .comments-content .comment:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+.blogger-comments .comments-content .comment-body {
+  position: relative;
+}
+.blogger-comments .comments-content .user {
+  font-style: normal;
+  font-weight: bold;
+}
+.blogger-comments .comments-content .datetime {
+  margin-left: 6px;
+}
+.blogger-comments .comments-content .comment-header,
+.blogger-comments .comments-content .comment-content {
+  margin: 0 0 8px;
+}
+.blogger-comments .comments-content .comment-content {
+  text-align: justify;
+}
+.blogger-comments .comments-content .owner-actions {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.blogger-comments .comments-replybox {
+  border: none;
+  height: 250px;
+  width: 100%;
+}
+
+.blogger-comments .comment-replybox-single {
+  margin-top: 5px;
+  margin-left: 48px;
+}
+.blogger-comments .comment-replybox-thread {
+  margin-top: 5px;
+}
+
+.blogger-comments .comments-content .user,
+.blogger-comments .comments-content .user a {
+  color: rgba(51, 51, 51, 1);
+}
+
+.blogger-comments .icon.blog-author {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-image: url(author.png);
+  margin: 0 0 -4px 6px;
+}
+
+.blogger-comments .comments-content .loadmore a {
+  background: #fafafa;
+  border-top: 1px solid #e3e3e3;
+  display: block;
+  padding: 10px 16px;
+  text-align: center;
+}
+
+.blogger-comments .thread-toggle {
+  cursor: pointer;
+  display: inline-block;
+  color: rgba(0, 158, 184, 1);
+}
+
+.blogger-comments .continue {
+  cursor: pointer;
+}
+
+.blogger-comments .continue a {
+  color: #888;
+  display: block;
+  padding: 0.5em;
+  background: white;
+  border: 1px solid #CCC;
+  box-shadow: inset 1px 1px 3px #888;
+}
+
+.blogger-comments .comments-content .loadmore:hover a {
+  background: #f1f1f1;
+  border-top: 1px solid #fff;
+}
+
+.blogger-comments .comments-content .loadmore {
+  cursor: pointer;
+  max-height: 3em;
+}
+
+.blogger-comments .comments-content .loadmore.loaded {
+  max-height: 0px;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.5s ease-in;
+}
+
+@media only screen and (max-device-width: 1024px) {
+  .blogger-comments .comments-content .loadmore a,
+  .blogger-comments .comments-content .loadmore:focus a {
+    background: none;
+    border-top: 1px solid #ccc;
+  }
+}
+.blogger-comments .thread-chrome.thread-collapsed {
+  display: none;
+}
+
+.blogger-comments .thread-toggle {
+  display: inline-block;
+}
+
+.blogger-comments .thread-toggle .thread-arrow {
+  display: inline-block;
+  height: 6px;
+  width: 7px;
+  overflow: visible;
+  margin: 0.3em;
+  padding-right: 4px;
+}
+
+.blogger-comments .thread-expanded .thread-arrow {
+  background: url("expanded.png") no-repeat scroll 0 0 transparent;
+}
+
+.blogger-comments .thread-collapsed .thread-arrow {
+  background: url("collapsed.png") no-repeat scroll 0 0 transparent;
+}
+
+.blogger-comments .avatar-image-container {
+  float: left;
+  width: 36px;
+  max-height: 36px;
+  overflow: hidden;
+}
+
+.blogger-comments .avatar-image-container img {
+  width: 36px;
+}
+
+.blogger-comments .comment-block {
+  margin-left: 48px;
+  position: relative;
+}
+
+/* Responsive styles. */
+@media screen and (max-device-width: 480px) {
+  .blogger-comments .comments-content .comment-replies {
+    margin-left: 0;
+  }
+}
+
+
+
+.share-controls {
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.share-controls span,
+.share-controls iframe {
+  height: 20px !important;
+}
+
+.share-controls .share-plusone,
+.share-controls .share-twitter,
+.share-controls .share-facebook {
+  /* PlusOne tries to reset a lot of settings, don't let it. */
+  background-repeat: no-repeat !important;
+  background-position: left center !important;
+  display: inline-block;
+  margin: 0;
+}
+
+/* To avoid the 'jitter' of buttons loading, set a background image
+   of the button in its place. Once loaded, the button covers. */
+.share-controls .share-plusone {
+  background-image: url(plusone.png) !important;
+  height: 20px;
+  /* Don't touch anything other than min-width, causes havoc with +1 */
+  min-width: 90px;
+  transition: min-width 0.3s;
+}
+.share-controls .share-plusone.defer {
+  min-width: 34px;
+}
+.share-controls .share-plusone.delay {
+  min-width: 90px;
+}
+
+.share-controls .share-twitter {
+  background-image: url(tweet.png) !important;
+  height: 20px;
+  width: 110px;
+  transition: width 0.3s;
+}
+.share-controls .share-twitter.defer {
+  width: 57px;
+}
+.share-controls .share-twitter.delay {
+  width: 110px;
+}
+
+.share-controls .share-facebook {
+  background-image: url(like.png) !important;;
+  height: 20px;
+  width: 90px;
+  transition: width 0.3s;
+}
+.share-controls .share-facebook.defer {
+  width: 51px;
+}
+.share-controls .share-facebook.delay {
+  width: 90px;
+}
+
+
+
+
+
+#gadget-dock {
+  background-color: #333;
+  width: 50px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);;
+  border-radius: 2px 0 0 2px;;
+  
+  transition: right 0.15s ease-in-out;;
+  
+  position: fixed;
+  right: -40px;
+  top: 124px;
+  z-index: 3000;
+}
+
+
+#gadget-dock:hover,
+
+#gadget-dock.gadget-notifying,
+#gadget-dock.gadget-opening {
+  right: 0;
+}
+
+/* expand the hover area */
+#gadget-dock:after {
+  content: '';
+  display: block;
+  width: 90px;
+  height: 110%;
+  position: absolute;
+  top: -5%;
+  left: -40px;
+  z-index: -100;
+}
+
+#gadget-dock.gadget-opening:after {
+  display: none;
+}
+
+.gadget-item {
+  position: relative;
+  z-index: 1;
+}
+
+.gadget-selected {
+  z-index: 0;
+}
+
+.gadget-item:empty {
+  display: none;
+}
+
+.gadget-menu {
+  cursor: pointer;
+  background-color: #333;
+  border-top: 1px solid #585858;
+  text-align: center;
+  z-index: 0;
+}
+
+.gadget-icons {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+}
+
+.gadget-menu .gadget-title {
+  display: none;
+}
+
+.gadget-selected .gadget-menu {
+  background-color: white;
+  border-color: #ccc;
+}
+
+.gadget-item:first-child .gadget-menu {
+  border-top: 1px solid transparent;
+  border-radius: 2px 0 0 0;
+}
+
+.gadget-selected.gadget-item:first-child .gadget-menu {
+  border-color: #ccc;
+  border-radius: 0;
+}
+
+.gadget-item:last-child .gadget-menu {
+  border-radius: 0 0 0 2px;
+}
+
+.gadget-selected.gadget-item:last-child .gadget-menu {
+  border-radius: 0;
+}
+
+.gadget-icon, .gadget-icon-selected {
+  display: inline-block;
+  max-width: 30px;
+  max-height: 30px;
+  vertical-align: middle;
+}
+
+.gadget-icon-selected {
+  display: none;
+}
+
+.gadget-selected .gadget-icon {
+  display: none;
+}
+
+.gadget-selected .gadget-icon-selected {
+  display: inline-block;
+}
+
+
+
+
+.gadget-container {
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);;
+  line-height: 1.4em;
+  text-align: left;
+  visibility: hidden;
+  z-index: -1;
+  margin-left: 100%;
+  word-wrap: break-word;
+  max-width: 700px;
+}
+
+
+.gadget-container {
+  
+  transition: right 0.15s ease-in-out, opacity 0.15s ease-in-out;;
+  
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: -100px;
+}
+
+
+.gadget-container:hover,
+.gadget-item:hover .gadget-container,
+
+.gadget-selected .gadget-container {
+  visibility: visible;
+  right: 49px;
+  opacity: 1;
+}
+
+.gadget-selected .gadget-container {
+  border: 1px solid #ccc;
+  border-radius: 2px 0 0 2px;;
+  cursor: auto;
+  z-index: -100;
+}
+
+.gadget-selected.gadget-dock-overflow-bottom .gadget-container {
+  position: fixed;
+  bottom: 27px;
+  top: auto;
+}
+
+.gadget-selected.gadget-dock-overflow-client-area .gadget-container {
+  position: fixed;
+  top: 0;
+  bottom: 24px;
+}
+
+
+
+
+/* HACK: Because IE8 ignores max-width when "overflow-y: scroll" is set */
+/* the scroll-bar is shown by the child element of .gadget-container.   */
+.gadget {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  /* IE scroll-bar */
+  scrollbar-arrow-color: white;
+  scrollbar-track-color: white;
+  scrollbar-face-color: #999;
+  scrollbar-highlight-color: #999;
+  scrollbar-shadow-color: #999;
+  scrollbar-3dlight-color: white;
+  scrollbar-darkshadow-color: white;
+}
+.gadget-selected.gadget-dock-overflow-client-area .gadget {
+  overflow-y: scroll;
+}
+
+.gadget::-webkit-scrollbar {
+  width: 14px;
+}
+
+.gadget::-webkit-scrollbar:hover {
+  background-color: #f3f3f3;
+}
+
+.gadget::-webkit-scrollbar-thumb {
+  border-width: 0 0 0 4px;
+  border-color: #999;
+  border-style: solid;
+}
+
+.gadget::-webkit-scrollbar-thumb:hover {
+  border-width: 0 0 0 12px;
+}
+
+.gadget::-webkit-scrollbar-button {
+  width: 14px;
+  height: 16px;
+}
+
+.gadget::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+
+.gadget-content {
+  display: none;
+  overflow: hidden;
+  position: relative;
+}
+
+.gadget-selected .gadget-content {
+  display: block;
+}
+
+.gadget-container .gadget-title {
+  display: block;
+  background-color: #333;
+  color: white;
+  display: block;
+  font-size: 14px;
+  padding: 1px 16px 0 16px;
+  height: 50px;
+  line-height: 50px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
+}
+
+.gadget-container .gadget-title:hover {
+  text-decoration: underline;
+}
+
+.gadget-selected .gadget-container .gadget-title {
+  background-color: transparent;
+  color: black;
+  font-size: 16px;
+  height: 40px;
+}
+
+.gadget-selected .gadget-container .gadget-title:hover {
+  text-decoration: none;
+}
+
+.gadget-content {
+  background-color: white;
+}
+
+.gadget-resize-detector {
+  background-color: transparent;
+  border-style: none;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  width: 0;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+
+
+
+
+
+body {
+  overflow-y: scroll; /* inevitable... skip the jitter */
+  overflow-x: hidden;
+}
+
+/* </style> */
+/* <style id="patchcss"> */
+
+#overview.closed {
+  display: none;
+}
+
+/* </style> */

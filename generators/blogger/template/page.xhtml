@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html expr:dir='data:blog.languageDirection'
+	xmlns='http://www.w3.org/1999/xhtml'
+	xmlns:b='http://www.google.com/2005/gml/b'
+	xmlns:data='http://www.google.com/2005/gml/data'
+	xmlns:expr='http://www.google.com/2005/gml/expr'>
+  <head>
+
+    <title><data:blog.pageTitle/></title>
+	<meta name="page-type" content="static_page" />
+
+  </head>
+  <body>
+
+<b:section class='body' id='page'>
+  <b:widget id='Blog1' locked='false' title='Blog Posts' type='Blog'>
+	<b:includable id='page_main'>
+
+  <b:loop values='data:posts' var='post'>
+
+	  <div class="hentry" itemprop="blogPost" itemscope="" itemtype="http://schema.org/BlogPosting">
+		<h1 class="entry-title" itemprop="name"><data:post.title/></h1>
+		<div class="entry-content" itemprop="articleBody"><data:post.body/></div>
+	  </div>
+
+      </b:loop>
+
+	</b:includable>
+  </b:widget>
+</b:section>
+		
+  </body>
+</html>

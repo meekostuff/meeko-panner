@@ -1,0 +1,198 @@
+/* Center align posts. Border between them. */
+ol.items {
+  text-align: center;
+  
+  
+  padding: 18px 10px 20px 10px;
+  
+}
+li.item {
+  background-color: white;
+  background-clip: padding-box;
+  /* TODO(kiyono): re-enable box-shadow when the performance of box-shadow */
+  /* gets better.                                                          */
+  
+  
+  -moz-border-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAANUlEQVQIW2NkYGBgQ8JAJsMvEGYEEjxQzA0SBYKvQPwFJCEExIJAfBcqoQyk3+OVwGkUVssBP4wMT0ZBZV0AAAAASUVORK5CYII=) 2 / 2px repeat;
+
+
+-ms-border-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAANUlEQVQIW2NkYGBgQ8JAJsMvEGYEEjxQzA0SBYKvQPwFJCEExIJAfBcqoQyk3+OVwGkUVssBP4wMT0ZBZV0AAAAASUVORK5CYII=) 2 / 2px repeat;
+
+
+-o-border-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAANUlEQVQIW2NkYGBgQ8JAJsMvEGYEEjxQzA0SBYKvQPwFJCEExIJAfBcqoQyk3+OVwGkUVssBP4wMT0ZBZV0AAAAASUVORK5CYII=) 2 / 2px repeat;
+
+/* If border-image is declared below -webkit-border-image */
+/* Webkit doesn't render correctly.                       */
+
+border-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAANUlEQVQIW2NkYGBgQ8JAJsMvEGYEEjxQzA0SBYKvQPwFJCEExIJAfBcqoQyk3+OVwGkUVssBP4wMT0ZBZV0AAAAASUVORK5CYII=) 2 / 2px repeat;
+
+
+-webkit-border-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAANUlEQVQIW2NkYGBgQ8JAJsMvEGYEEjxQzA0SBYKvQPwFJCEExIJAfBcqoQyk3+OVwGkUVssBP4wMT0ZBZV0AAAAASUVORK5CYII=) 2 / 2px repeat;
+  border-width: 2px;
+  
+  padding: 20px 70px;
+  max-width: 750px;
+  margin: 0px auto;
+  position: relative;
+}
+li.item + li.item {
+  margin-top: 30px;
+}
+li.ad {
+  padding: 20px 70px;
+  max-height: 200px;
+  margin: 0px auto;
+  position: relative;
+}
+.article {
+  position: static;
+}
+
+/* Ribbon to hang off the left. */
+.article .article-header .date.ribbon {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+
+/* Unloaded images to have loading indicator. */
+img.deferred {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-image: url(data:image/gif;base64,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);
+  border: solid 1px #ccc;
+}
+
+@media only screen and (max-width : 600px) {
+  #header-container {
+    height: 81px;
+  }
+  #header .header-bar,
+  #header .header-bar .title h1,
+  #header .header-bar .title h3 {
+    height: 48px;
+  }
+  #header .header-bar .title {
+    height: 48px;
+    line-height: 48px;
+    margin-right: 50px;
+  }
+  #header .header-bar .title h1 {
+    font-size: 20px;
+  }
+  #header .header-bar .title h3 {
+    font-size: 16px;
+  }
+  /* Show magnifier icon instead of showing placeholder. */
+  #header input#search {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAAuElEQVQ4y72UQQ2GMAyFJwEJk1AJSEBCJUwCTiaB086/BCQgAQlQki55aSD/mhEO77Dt7UvXtQ2llPCWwlewKBpF1AO7Lv9EB2gXsRdGevECbKJFtAI0eWA1omz2GYCxBRYhojtz/hcdLkY1Lw/mSc/nFhipeX0wJw8sQPLtzw1wRq0wTHTWpyXzw646S6bGDgDVNLCnA6JCZ1V9GtYc9/Ymm2i5t9EtkHqnBkP+hjdGECHo03nm1gl0/D1dbs3/WAAAAABJRU5ErkJggg==);
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: transparent;
+    top: 9px;
+    -moz-transition: width 0.17s ease-in-out;
+-ms-transition: width 0.17s ease-in-out;
+-o-transition: width 0.17s ease-in-out;
+-webkit-transition: width 0.17s ease-in-out;
+transition: width 0.17s ease-in-out;;
+    width: 22px;
+  }
+  #header input#search:focus {
+    background-image: none;
+    color: black;
+    width: 200px;
+  }
+  #header input#search::-webkit-input-placeholder {
+    color: transparent;
+  }
+  #header input#search:focus::-webkit-input-placeholder {
+    color: #b5b5b5;
+  }
+  #header .header-drawer,
+  #header .menu .menu-heading,
+  #header .tabs li,
+  #header .admin-controls,
+  #header .admin-controls .dashboard,
+  #header .admin-controls .new-post {
+    height: 28px;
+    line-height: 28px;
+  }
+  #header .header-drawer,
+  #header .header-drawer.sticky {
+    top: 17px;
+  }
+  
+  #header:hover .header-drawer,
+  #header .header-drawer.open {
+    top: 48px;
+  }
+  
+  #header .menu .menu-heading {
+    height: 28px;
+    line-height: 28px;
+  }
+
+  #header #pages::before {
+  
+    height: 14px;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #gadget-dock {
+    width: 40px;
+    right: 0;
+    top: 100px;
+  }
+  #gadget-dock:after {
+    display: none;
+  }
+  .gadget-icons {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+  .gadget-container {
+    max-width: 280px;
+  }
+  
+  .gadget-container:hover,
+  .gadget-item:hover .gadget-container,
+  
+  .gadget-selected .gadget-container {
+    right: 39px;
+  }
+  .gadget-title {
+    height: 40px;
+    line-height: 40px;
+  }
+  .gadget-selected .gadget-title {
+    line-height: 50px;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  li.item {
+    padding: 20px 10px 20px 10px;
+  }
+  li.ad {
+    padding: 20px 0;
+  }
+  .article .article-header {
+    height: 64px;
+  }
+  .article .article-header .title {
+    padding-right: 0px;
+    padding-left: 50px;
+  }
+}
+
+
+
+.article-content iframe {
+  max-width: 100%;
+}
+
+.article-content a[imageanchor] {
+  margin: 0 !important;
+}

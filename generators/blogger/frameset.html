@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html class="v2" dir="ltr" xmlns:hf="HyperFrameset">
+<head>
+
+<meta content="IE=edge" http-equiv="X-UA-Compatible" />
+<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+
+<title>{{blog.pageTitle}}</title>
+
+<link rel="openid.server" href="http://www.blogger.com/openid-server.g" />
+<meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport" />
+<link type="text/css" rel="stylesheet" href="//www.blogger.com/static/v1/widgets/1535467126-widget_css_2_bundle.css" />
+<link rel="stylesheet" href="//www.google.com/uds/api/search/1.0/ee93f9aae9c9e9dba5eea831d506e69a/default+en.css" type="text/css" />
+
+<link rel="stylesheet" href="common.css" />
+<!--
+<link rel="stylesheet" href="flipcard.css" title="flipcard" />
+<link rel="stylesheet" href="magazine.css" title="magazine" />
+<link rel="stylesheet" href="timeslide.css" title="timeslide" />
+<link rel="stylesheet" href="sidebar.css" title="sidebar.css" />
+-->
+
+<!-- Yo Dawg... -->
+<script src="../../DOMSprockets/ARIA.js"></script>
+
+<script src="./dateFormat.js"></script>
+
+<script>
+(function() {
+
+var _ = Meeko.stuff;
+var DOM = Meeko.DOM;
+
+Meeko.framer.controllers.create('main-deck');
+
+})();
+</script>
+
+<script for="hf:frameset">
+(function() {
+
+var URL = Meeko.URL;
+var DOM = Meeko.DOM;
+
+function getPageType(url) {
+	var nextURL = URL(url);
+	var pathname = nextURL.pathname;
+	var pageType = 'search';
+	if (pathname === '/' || pathname === '/index.html') pageType = 'home';
+	else if (/^\/p\//.test(pathname)) pageType = 'page';
+	else if (/^\/\d{4}\/\d{2}\/.+/.test(pathname)) pageType = 'item';
+	
+	return pageType;
+}
+
+function getTargetName(pageType) {
+	var target = ({
+		home: 'index',
+		search: 'index',
+		page: 'content',
+		item: 'content'
+	})[pageType];
+
+	return target;	
+}
+
+
+return ({
+
+	lookup: function(url) { 
+		var pageType = getPageType(url);
+		var target = getTargetName(pageType);
+	
+		return 'mk_' + target;
+	},
+	
+	enteredState: {
+	before: function(msg) {
+		var pageType = getPageType(msg.url);
+		var target = getTargetName(pageType);
+		Meeko.framer.controllers.set('main-deck', target + '-panel');
+		return;
+	}
+	}
+
+})
+
+})()
+</script>
+
+</head>
+<body>
+
+<hf:frame src="scope:/" type="html">
+  <hf:body>
+	<hf:transform type="hazard" format="css">
+
+<hf:layer>
+	<hf:vlayout height="105px">
+		<hf:panel>
+			<hf:body>
+
+<div id="header-container">
+  <div id="header" class="header">
+
+    <div class="header-bar">
+      
+<span class="title">
+  <a href="scope:/"><h1 expr:_text="#header h1 {_text}">{{blog.title}}</h1></a>
+  <h3 expr:_text="#header h2 {_text}">{{blog.description}}</h3>
+</span>
+      
+    </div>
+
+    <div class="header-drawer sticky open">
+
+<div id="views" class="menu">
+<span class="menu-heading">Flipcard<span class="indicator"></span></span>
+<hf-panel name="views">
+	<hf-body>
+<hf-select1 name="view">
+<ul class="menu-background">
+  
+  <li value="classic" class="menu-item">Classic</li>
+
+  <li value="flipcard" class="menu-item">Flipcard</li>
+  
+  <li value="grid" class="menu-item">Grid</li>
+  
+</ul>
+</hf-select1>
+	</hf-body>
+</hf-panel>
+</div>
+
+	<div id="pages" class="tabs">
+		<ul>          
+			<li haz:each=".widget.PageList li">
+				<span class="menu-background"></span>
+				<a class="menu-item" expr:href="a {@href}" expr:_html="a {_html}">Home</a>
+			</li>
+		</ul>
+	</div>
+
+    </div><!-- .header-drawer -->
+  </div><!-- .header -->
+</div><!-- .header-container -->
+
+			</hf:body>
+		</hf:panel>
+	</hf:vlayout>
+</hf:layer>
+
+<hf:deck id="main-deck" name="main-deck" style="margin-top: 105px;">
+	<hf:panel id="content-panel" value="content-panel">
+		<hf:body>
+
+<hf:frame name="mk_content" src="" main="main">
+	<hf:body>
+		<hf:transform type="hazard" format="microdata">
+
+<div id="main-content">
+
+		<div class="overview-content" tabindex="0">
+		  <div class="article hentry" haz:each="blogPost">
+            <meta expr:content="blogId" />
+            <meta expr:content="postId" />
+            <div class="article-header">
+              <a class="ribbon date " expr:title="datePublished" expr:href="url">
+                <div class="top ribbon-piece" expr:_text="datePublished | dateFormat(value, 'ddd')">{Mon}</div>
+                <div class="bottom ribbon-piece" expr:_text="datePublished | dateFormat(value, 'd')">{1}</div>
+                <div class="tail">
+                  <div class="left ribbon-piece"></div>
+                  <div class="right ribbon-piece"></div>
+                </div>
+              </a>
+              <h1 class="title entry-title">
+                <a expr:href="url" rel="bookmark"expr:_text="name">{name}</a>
+              </h1>
+            </div>
+            <div class="article-content entry-content" expr:_html="articleBody">{articleBody}</div>
+            <div class="article-footer">
+              <div class="publish-info">
+                Posted <time class="time published" expr:datetime="datePublished" expr:_text="datePublished | dateFormat('dS mmmm YYYY')">{1st January 1970}</time>
+                by <a class="url fn" expr:href="author.url" rel="author" expr:_text="author">{author}</a>
+              </div>
+            </div>
+          </div>
+		</div>
+
+</div>
+
+		</hf:transform>
+	</hf:body>
+</hf:frame>
+
+		</hf:body>
+	</hf:panel>
+
+	<hf:panel id="index-panel" value="index-panel">
+		<hf:body>
+
+
+<div>
+<style>
+
+/* the links for categories */
+
+#controls {
+	font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	left: 1px;
+	overflow: visible;
+	position: absolute;
+	top: -45px;
+	z-index: 100;
+}
+
+#controls:focus,
+#controls:active {
+	outline: none;
+}
+
+#controls ul#groups {
+	display: inline-block;
+	float: left;
+	opacity: 0.8;
+}
+
+#controls ul#groups li {
+	background-color: #f5f5f5;
+	background-image:         linear-gradient(top, #f5f5f5, #f1f1f1);
+	border: 1px solid #ccc;
+	color: rgba(0, 0, 0, 0.75);
+	cursor: pointer;
+	display: inline-block;
+	float: left;
+	font-size: 13px;
+	font-weight: bold;
+	height: 27px;
+	line-height: 27px;
+	margin-left: -1px;
+	padding: 0 15px;
+	text-align: center;
+	width: 50px;
+	transition: background-color 0.4s ease-in;
+}
+
+#controls ul#groups li.selected {
+	background-color: #eee;
+	background-image:         linear-gradient(top, #eee, #e0e0e0);
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+	color: #000;
+}
+
+#controls ul#groups li:hover:not(.selected) {
+	background-color: #f8f8f8;
+	background-image:         linear-gradient(top, #f8f8f8, #f1f1f1);
+	box-shadow: rgba(0, 0, 0, 0.16) 0 1px 1px 0;
+	color: #000;
+}
+
+#groups1 {
+	height: 50px;
+	overflow-y: visible;
+}
+
+#groups1 > .group { 
+	display: inline-block; 
+	margin: 0 0.5em;
+	width: 125px;
+	height: 50px;
+	/* overflow-x: hidden; */
+	overflow-y: visible;
+}
+
+#groups1 > .group img { vertical-align: middle; }
+#groups1 > .group > .extra { position: relative; height: 0; width: 0; }
+#groups1 > .group > .extra > .body { position: absolute; z-index: 10; display: none; }
+#groups1 > .group:hover > .extra > .body { display: block; }
+</style>
+  <div id="controls1">
+    <div id="groups1">
+    <div class="group selected" title="Latest">
+		<h2><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAT0lEQVR42mNgoBdIS0v7jw9D1exMTU1NoKaB/4k2lAQDwYZSxUCiDSHGQKIsoIuBeHzTMDhcSHMvo3t1BHgZn54h7mW6lIFkFw5UM5AaAACyqLNEs75CTgAAAABJRU5ErkJggg==" /> Posts</h2>
+		<div class="extra">
+			<div class="body">
+			<a href="scope:/search">All</a>
+			</div>
+		</div>
+	</div>
+    <div class="group" title="Archive">
+		<h2><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAYCAYAAADzoH0MAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAE1JREFUeNpiNDY23s9AAWBioBCwYBM8c+YMVsUmJibEGYBNMS5DaeMFfDYSZQA2v9I3FrB5AZeriI4FmnrBccCT8mhmGs1MwyAzAQQYAKEWG9zm9QFEAAAAAElFTkSuQmCC" /> Archive</h2>
+		<div class="extra">
+			<div class="body" expr:_html="#BlogArchive1 nav"></div>
+		</div>
+	</div>
+    <div class="group" title="Labels">
+		<h2><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAUxJREFUeNpiNDY23s9AAMycOfM7UF05kHkZmzwTMkdSUhKrIcXFxZy3bt3qBjIN8RrS09PDsHnzZjCNDr58+cKQlpbGDjSoHcg1w2oIyAUODg5gARCNzUVIBrUCuVYYhjx//pzhwIEDYAEQDeJjA1CDWIAGNQK59jBxRuSABbkAlwHIgIeHh2HWrFn/1NTU2oDcvSgBS4wBSC5iArqoCsj1YGIgEyAZVMoEchqlBjEB/cZAiUHg2AEGznpKDAImxOeM////B4VLKtBvEUCngZ1ILKivr3/u6+ubBzJAGZQ9gC5aQoqLgAY8BhkAZL4BuQQkxgXE34A4BuiiZEIuAhrwEGhAEZD5DpzYoIaA2UAM4kQADUrHZRDUgAIg8wO2XAwzbQXQa5OweQ1owB10AyA6gS7BgX1u3ry5397eHow3bdo0EyjGi00tQIABANPgyAH1q1eaAAAAAElFTkSuQmCC" /> Labels</h2>
+		<div class="extra">
+			<div class="body" expr:_html="#Label1 nav"></div>
+		</div>
+	</div>
+	<div class="group" title="Search">
+		<h2><img width="17" height="17" title="" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAREAYAAABr/Zu5AAAACXZwQWcAAAARAAAAEQCOgU8nAAAED0lEQVRIx7XUf0xVZRzH8ScQf4wCJzPRGdwJjEwnKCqEP/ipwhWuhAiXi/fHuZhbS4E0FdJbTgSpJbFF2JZmZf5IpDQWgitMAYUUSp1TkQEtYaM0VndgIvJ03qDubmbUVt/XH2fnbM/3fJ7zPM8R4n5NPgwhUr6FEBEp8LoXVYbNHi/MR50t9il0+yzOR+/axLu4WKu7jncvzDiG2e1OpkFZEzQQw9eYFjy8/WzeF4jqNxShocpcgf56pRBSWm1Qr3lQr9GQ0uIBuT6lHu2tid8hoyRUi1HdCwPwN0HWTIIQwRsQVbniS7S/p1yGlKYc3JtuWILmxSlxOJib6oePrMvT0bDedB63A61OUIPlobcjcRo2lgy9zdn1sUFCA+Dlk/oGzi5QzkFtVAj7z3HZ2F46cyq8c8c6wbluaPQTNr/XMe6VSF+Yy5Oq0dqotEHK1Gz8Uhr+DSJCE7PxF0ESOpFdZvFEv7vJgIENulzk/uhbDBdTSBMeHe+8CELcfBpChD+LhBvGpehuVj6GlMmf4NN1Q6NGtHjshkMjvQa1e5QeqDPYi6u1AXp4VcwqxPB7zdcPD+5GRsRnYX+6cgZSpo1B25Hwc5iyPaweDg1im/BroHUVpFzehX3F9+f7/bhrEP+4DHoIEbMfmdmmSKhLnY/frcsyEPyToRcOAxdfwx8a6xaon7Adu7oenCLxLytyAoSYsxMv7UjLgBrEDHuedhXmden78MgeuXxE6YMa5A5OnZxqh1tNUDuGD+CSCSHkYAmhK0PBPSUa6ukLxs2dulbMmJlYCocGixqxZ6vlNahruQH2r+cvQsK6tN8wfJClmRDi+bXweyd5JK6EKzWQUu+D00u8TsPdNmkTHBpEl2JBh/F9dDYrZZBy5au4FBY1HfMb7x/XfSJv0MOy7ocQPpHQrIh9EUd0li5Iaf4cUmpvY1P6wSqof/IcOATxdoNTdVwBNm80pqLvgFVAypQduPHWMg2KzDEuSNitbUNMWdQHyHFNvoSmu6YeyLHKYah7wwYpdWZUVPn4Q3M+ZBYcgniVQwj3W3iyK8YVb9aZo9GbbtVASmUi5CFLPPqOWcpxJ9S8DQNHlStQX9wB2aOkQtqVIqjP/SFl3GRUHPdeDY13YB0cAs0+ASGmVWN0TcIWGAKSnsPJjWkv41a3QYP+8Xo7Bt42boI9Sz8aFyq1OmybYwpDxQFlJdSJ7IK6VJ2Q3dp4fBX8TDp8Lz928+mvQwiPhXC7GnICQR/6T0TqCJ9aWAxzTyFsZ+gaeK58cGoSx8MrxHQBx9OVs1ADXYQayIaBAu1RnCkR/3WFbIUQ5hYIkbQX3j/E56NytTEZaiA7pDRmos9T/N81ZRSEGBcEv8KoQ2i4aJyLftfoMBQH/glyvt0/Ol868QAAAABJRU5ErkJggg==" /> Search</h2>
+		<div class="extra">
+			<div class="body">
+		<form expr:action="#HTML1 form {@action}" expr:_html="#HTML1 form input"></form>
+			</div>
+		</div>
+	</div>
+    </div>
+  </div>
+
+
+<style>
+#labels {
+	left: 13px;
+}
+
+#labels .group-label,
+#labels .group-label a,
+#labels .group-label span {
+	padding: 10px 20px 0 0;
+}
+
+#labels {
+	overflow: visible;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	transition: all 0.5s ease-in-out;
+	/*visibility: hidden; Beware: Safari hates: breaks all transitions. */
+	width: 162px;
+}
+
+.grouped #labels {
+	opacity: 1;
+	visibility: visible;
+}
+
+#labels .group-label,
+#labels .group-label a,
+#labels .group-label span {
+	box-sizing: border-box;
+	color: #333;
+	font-size: 14px;
+	overflow: hidden;
+	text-align: left;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	width: 100%;
+}
+
+</style>
+  <div id="labels" class="group-labels"></div>
+  
+	<div id="index">
+
+<hf:frame src="scope:/search" main="main" name="mk_index">
+	<style>/* TODO style scoped */
+/* the 3d flip animations/transitions */
+.item {
+	/* give some perspective so not so flat */
+	background-color: transparent; /* Have something! Need to capture clicks. */
+	cursor: pointer;
+	perspective: 1000;
+	z-index: 1;
+}
+
+.card {
+	transform-style: preserve-3d;
+	transition: 0.3s linear;
+}
+
+.card:hover {
+	/* make the timing different so the cards don't look in sync */
+	transition: 0.5s linear;
+}
+
+.front, .back {
+	backface-visibility: hidden;
+	position: absolute;
+}
+
+.item.ad .front {
+	backface-visibility: visible;
+}
+
+.item:hover {
+	z-index: 10 !important;
+}
+
+.item .front {
+	z-index: 10;
+}
+
+.item:hover .front {
+	z-index: 0;
+}
+
+.item:hover .back {
+	z-index: 10;
+}
+
+/* At the hover state we want to rotate the card 180 degrees */
+.item:hover .card {
+	transform: rotateY(180deg);
+}
+.item:hover .card.flipLeft {
+	transform: rotateY(-180deg);
+}
+.item:hover .card.flipUp {
+	transform: rotateX(180deg);
+}
+.item:hover .card.flipDown {
+	transform: rotateX(-180deg);
+}
+.item .card .back {
+	transform: rotateY(180deg);
+}
+.card.flipLeft .back {
+	transform: rotateY(-180deg);
+}
+.card.flipUp .back {
+	transform: rotateX(180deg);
+}
+.card.flipDown .back {
+	transform: rotateX(-180deg);
+}
+
+.item.ad:hover .card {
+	transform: rotateY(360deg); /* Don't want ad mirrored */
+}
+
+/* the individual tile styles */
+
+.items .item {
+/*
+	box-sizing: border-box;
+	position: absolute;
+*/
+	display: inline-block;
+	margin: 0.5em;
+	/* Could use "all 1.2s ease-out" but only FireFox seems to animate size smoothly.
+	   It looks better to snap height/width, and then animate position and opacity. */
+	transition: left 1.2s ease-out, top 1.2s ease-out, opacity 1.2s ease-out;
+}
+
+.items .item.new,
+.items .item.filtered {
+	opacity: 0;
+	/*visibility: hidden !important; Beware: Safari doesn't like animating visibility. */
+}
+
+.items .item .card {
+	border: solid 1px #ccc;
+	box-sizing: border-box;
+	height: 100%;
+	width: 100%;
+}
+
+.items .item .card .front,
+.items .item .card .back {
+	background-color: #ddd;
+	background-size: cover;
+	box-sizing: border-box;
+	height: 100%;
+	overflow: hidden;
+	width: 100%;
+}
+
+.items .item:hover .card {
+	cursor: pointer;
+}
+
+.items .item .card .back {
+	background: #333;
+	color: white;
+	height: 100%;
+	width: 100%;
+}
+
+.items .item .card .back .reblog-badge {
+	position: relative;
+	top: 3px;
+}
+
+.items .item .card .front .overlay {
+	display: table;
+	height: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+	width: 100%;
+}
+
+.items .item .card .front .title {
+	display: table-cell;
+	font-size: 14px;
+	padding: 4px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.items .item .front .title {
+	color: #666;
+	font-size: 14px;
+}
+
+.items .item .summary {
+	background-color: white;
+	border-radius: 4px;
+	color: black;
+	display: none; /* Disable summaries. */
+	font-size: 12px;
+	left: -10px;
+	margin-top: 0;
+	max-height: 200px;
+	opacity: 0;
+	overflow: visible;
+	padding: 10px;
+	position: absolute;
+	text-overflow: ellipsis;
+	top: 90%;
+	visibility: hidden;
+	width: 150px;
+}
+
+.items .item:hover .summary {
+	cursor: pointer;
+	margin-top: 7px; /* bounce */
+	opacity: 0.9;
+	transition: all 0.5s ease-in-out;
+	transition-delay: 1.4s;
+	visibility: visible;
+	z-index: 99;
+}
+
+.items .item .summary .teaser {
+	border-color: transparent transparent white transparent;
+	border-style: solid;
+	border-width: 7px;
+	height: 0;
+	left: 25px;
+	position: absolute;
+	top: -12px;
+	width: 0;
+	z-index: 1;
+}
+
+.overlay .title,
+.overlay .date {
+	box-sizing: border-box;
+	display: block;
+	margin: 5px 5px 0 5px;
+	max-width: 95%;
+	overflow: hidden;
+	text-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.overlay .title {
+	color: white;
+	font-size: 14px;
+	height: 34px;
+	margin-top: 10px;
+	max-height: 34px;
+	vertical-align: bottom;
+	white-space: normal;
+}
+
+.overlay .date {
+	color: #999;
+	font-size: 14px;
+	margin-top: 2px;
+}
+
+.overlay .comments-count {
+	display: block;
+	margin: 12px auto 0 auto;
+}
+
+.overlay .comments-count.hidden {
+	display: block;
+	visibility: hidden; /* so that still position rest correctly */
+}
+
+
+/* when a tile is grouped (small) don't show much on the back */
+.item.grouped .front .overlay .title {
+	font-size: 70% !important;
+}
+
+.item.grouped .back .overlay .title,
+.item.grouped .back .overlay .comments-count {
+	display: none;
+}
+
+/* hide the title and comment count, show the date */
+.item.grouped .back .overlay .date {
+	padding-top: 5px;
+	white-space: normal;
+}
+
+
+.item.grouped .front .overlay .title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.space {
+	height: 25px;
+	margin: 0 0 -25px 0;
+}
+
+	</style>
+	<hf:body>
+		<hf:transform type="hazard" format="microdata">
+
+  <div id="content">
+	<div class="items hfeed">
+
+    <div style="width: 125px; height: 125px;" class="item hentry" link="link[rel=bookmark]" haz:each="blogPost">
+      <meta name="uid" expr:content="postId" />
+      <link rel="bookmark" expr:href="url" />
+      <div class="card" >
+        <div class="front">
+          <div class="overlay">
+            <img haz:if="thumbnailUrl" class="entry-photo" expr:src="thumbnailUrl | value.replace('/s72-c/post-image-01.png', '/s125-c/')" />
+            <div class="title entry-title" expr:_text="name"></div>
+          </div>
+        </div>
+        <div class="back">
+          <div class="overlay">
+            <div class="title entry-title" expr:_text="name"></div>
+            <time class="date published" expr:datetime="datePublished" expr:title="datePublished | dateFormat(value, 'dS mmmm yyyy')" expr:_text="datePublished | dateFormat(value, 'mmm dS')">{published}</time>
+            <span class="bubble comments-count" mexpr:title="{{commentCount}} comments">
+              <span class="bubble-content plus-comment-count">
+                <span expr:_text="commentCount">{??}</span>
+                <!--
+                <span style="text-indent: 0px; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% transparent; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: text-top; display: inline-block; width: 14px; height: 15px;">
+                </span>
+                -->
+              </span>
+              <span class="bubble-tail"></span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="space"></div>
+    </div>
+
+  </div>
+  </div><!-- #content -->
+
+		</hf:transform>
+	</hf:body>
+</hf:frame>
+
+		</hf:body>
+	</hf:panel>
+</hf:deck>
+
+	</hf:transform>
+  </hf:body> 
+</hf:frame>
+
+</body>
+</html>
+

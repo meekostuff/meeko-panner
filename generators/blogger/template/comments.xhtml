@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html expr:dir='data:blog.languageDirection'>
+  <head>
+	<b:if cond='data:blog.view != "debug"'>
+	<script src="http://localhost/dist/meeko-panner/3.0.x/boot.js" data-generator="blogger"></script>
+	</b:if>
+    <title><data:blog.pageTitle/></title>
+	<b:if cond='data:blog.url == data:blog.homepageUrl'>
+	<meta name="page-type" content="home" />
+	<b:else/>
+	<meta name="page-type" expr:content="data:blog.pageType" />	
+	</b:if>
+    <b:skin/>
+  </head>
+  <body>
+
+	<b:if cond='data:blog.view == "debug"'>
+    <p>blog.pageType: <data:blog.pageType/></p>
+    <p>blog.url: <data:blog.url/></p>
+    <p>blog.canonicalUrl: <data:blog.canonicalUrl/></p>
+    <p>blog.homepageUrl: <data:blog.homepageUrl/></p>
+    <p>blog.canonicalHomepageUrl: <data:blog.canonicalHomepageUrl/></p>
+    <p>blog.searchLabel: <data:blog.searchLabel/></p>
+    <p>blog.searchQuery: <data:blog.searchQuery/></p>
+	</b:if>
+
+		<b:if cond='data:blog.pageType == "item"'>
+    <b:section class='body' id='post'>
+      <b:widget id='Blog7' locked='false' title='Blog Posts' type='Blog'>
+        <b:includable id='main'>
+	<b:if cond='data:blog.view == "debug"'>
+		<b:include name='debug'/>
+	</b:if>
+	<nav>
+      <a expr:href='data:blog.homepageUrl'>
+        <data:blog.title/>
+      </a>
+		<b:loop values='data:posts' var='post'>
+      <b:if cond='data:blog.url != data:blog.homepageUrl'>
+		&gt;
+        <a expr:href='data:post.url'>
+          <data:post.title/>
+        </a>
+      </b:if>
+          </b:loop>
+    </nav>
+    <main id="mk_main" role="main">
+		<b:loop values='data:posts' var='post'>
+		<div class="hentry" itemscope="" itemtype="http://schema.org/BlogPosting">
+      <h1 class="entry-title" itemprop="name"><data:post.title/></h1>
+      <div class="entry-content" itemprop="articleBody"><data:post.body/></div>
+		</div>
+		</b:loop>
+	</main>
+
+      </b:includable>
+	
+	<b:includable id='debug'>
+		<p>blog.postImageUrl: <data:blog.postImageUrl/></p>
+		<p>blog.postImageThumbnailUrl: <data:blog.postImageThumbnailUrl/></p>
+		<b:loop values='data:posts' var='post'>
+          <p>post.firstImageUrl: <data:post.firstImageUrl/></p>
+          <p>post.thumbnailUrl: <data:post.thumbnailUrl/></p>
+          <p>post.embedCommentForm: <data:post.embedCommentForm/></p>
+          <p>post.numComments: <data:post.numComments/></p>
+          <p>post.allowComments: <data:post.allowComments/></p>
+          <p>post.allowNewComments: <data:post.allowNewComments/></p>
+          <p>post.allowIframeComments: <data:post.allowIframeComments/></p>
+          <p>post.addCommentUrl: <data:post.addCommentUrl/></p>
+          <p>post.iframeCommentSrc: <data:post.iframeCommentSrc/></p>
+          <p>post.cmtfpIframe: <data:post.cmtfpIframe/></p>
+          <p>post.appRpcRelayPath: <data:post.appRpcRelayPath/></p>
+          <p>post.commentSource: <data:post.commentSource/></p>
+          <p>post.oldLinkClass: <data:post.oldLinkClass/></p>
+          <p>post.oldestLinkUrl: <data:post.oldestLinkUrl/></p>
+          <p>post.newLinkClass: <data:post.newLinkClass/></p>
+          <p>post.newestLinkUrl: <data:post.newestLinkUrl/></p>
+          <p>postCommentMsg: <data:postCommentMsg/></p>
+          <p>blogCommentMessage: <data:blogCommentMessage/></p>
+          <p>post.commentFormIframeSrc: <data:post.commentFormIframeSrc/></p>
+			<b:loop values='data:post.feedLinks' var='feed'>
+              <a expr:href='data:feed.url' expr:title='data:feed.mimeType'><data:feed.name/> (<data:feed.feedType/>)</a><br/>
+          </b:loop>
+      </b:loop>
+	</b:includable>
+    
+	  </b:widget>
+    </b:section>
+    </b:if>
+	
+		
+  </body>
+
+
+</html>

@@ -19,3 +19,5 @@ into the same window with AJAX.
 - [Help & Manual](helpandmanual/)
 - [HelpNDoc](helpndoc/)
 - [TeXinfo](texinfo/)
+- [Blogger](blogger/)
+

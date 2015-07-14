@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html expr:dir='data:blog.languageDirection' 
+	xmlns='http://www.w3.org/1999/xhtml'
+	xmlns:b='http://www.google.com/2005/gml/b'
+	xmlns:data='http://www.google.com/2005/gml/data'
+	xmlns:expr='http://www.google.com/2005/gml/expr'
+	xmlns:xi='http://www.w3.org/2001/XInclude'>
+<head>
+
+<b:if cond='data:blog.view not in {"edit", "debug"}'>
+<script src="http://localhost/dist/meeko-panner/3.0.x/boot.js" data-generator="blogger"></script>
+</b:if>
+
+<title><data:blog.pageTitle/></title>
+
+<b:if cond='data:blog.url == data:blog.homepageUrl'>
+<meta name="page-type" content="home" />
+<b:else/>
+<meta name="page-type" expr:content="data:blog.pageType" />	
+</b:if>
+
+<link rel="stylesheet" href="http://localhost/dist/meeko-panner/3.0.x/generators/blogger/basic.css" />
+
+<b:skin/>
+
+</head>
+<body expr:class='data:blog.view in {"edit", "debug"} ? data:blog.view : ""'>
+
+<nav>
+<b:with var='query' value='data:blog.view in {"edit", "debug"} ? "?view=" + data:blog.view : ""'>
+<a expr:href='"/" + data:query'>Home</a>
+<a expr:href='"/" + data:query + "#PageList1"'>Pages</a>
+<a expr:href='"/" + data:query + "#Blog1"'>Latest</a>
+<a expr:href='"/" + data:query + "#PopularPosts1"'>Popular</a>
+<a expr:href='"/" + data:query + "#BlogArchive1"'>Archive</a>
+<a expr:href='"/" + data:query + "#Label1"'>Labels</a>
+<a expr:href='"/" + data:query + "#HTML1"'>Search</a>
+</b:with>
+</nav>
+
+<b:if cond='data:blog.view == "debug"'>
+<h2>Globally Available Layout Data Tags</h2>
+<ul>
+<li><code>blog.isMobile</code> <data:blog.isMobile/></li>
+<li><code>blog.mobileClass</code> <data:blog.mobileClass/></li>
+<li><code>blog.title</code> <data:blog.title/></li>
+<li><code>blog.pageTitle</code> <data:blog.pageTitle/></li>
+<li><code>blog.pageName</code> <data:blog.pageName/></li>
+<li><code>blog.pageType</code> <data:blog.pageType/></li>
+<li><code>blog.searchLabel</code> <data:blog.searchLabel/></li>
+<li><code>blog.searchQuery</code> <data:blog.searchQuery/></li>
+<li><code>blog.url</code> 
+<a expr:href="data:blog.url"><data:blog.url /></a></li> 
+<li><code>blog.homepageUrl</code> <a expr:href="data:blog.homepageUrl"><data:blog.homepageUrl /></a></li>
+<li><code>blog.canonicalUrl</code> 
+<a expr:href="data:blog.canonicalUrl"><data:blog.canonicalUrl /></a></li> 
+<li><code>blog.canonicalHomepageUrl</code> <a expr:href="data:blog.canonicalHomepageUrl"><data:blog.canonicalHomepageUrl /></a></li>
+<li><code>blog.isPrivate</code> <data:blog.isPrivate/></li>
+<li><code>blog.enabledCommentProfileImages</code> <data:blog.enabledCommentProfileImages/></li>
+<li><code>blog.encoding</code> <data:blog.encoding/></li>
+<li><code>blog.locale</code> <data:blog.locale/></li>
+<li><code>blog.languageDirection</code> <data:blog.languageDirection/></li>
+<li><code>blog.meTag</code> <data:blog.meTag/></li>
+<li><code>blog.ieCssRetrofitLinks</code> <data:blog.ieCssRetrofitLinks/></li>
+<li><code>blog.layout-title</code> <data:blog.layout-title/></li>
+</ul>
+</b:if>
+
+<header>
+<b:section class='header' id='header'>
+  <b:widget id='Header1' locked='true' title='Header' type='Header'>
+
+	<b:includable id='main'>
+
+  <h1><a expr:href='data:blog.homepageUrl'><data:blog.title/></a></h1>
+  <h2><data:description/></h2>
+
+	</b:includable>
+
+  </b:widget>
+ 
+</b:section>
+</header>
+
+<b:section class='body' id='main'>
+
+   <b:widget id='PageList1' locked='true' title='Pages' type='PageList'>
+
+	<b:includable id='main'>
+	<b:if cond='data:blog.pageType == "index"'> 
+		<b:if cond='data:blog.url == data:blog.homepageUrl'>
+			<b:if cond='data:blog.view != "debug"'>
+				<b:include name='normal' />
+			<b:else />
+				<b:include name='debug' />
+			</b:if>
+		</b:if>
+	</b:if>
+	</b:includable>
+
+	<b:includable id='normal'>
+	<b:if cond='data:blog.view in {"edit", "debug"}'>
+		<a expr:href='data:widget.quickEditUrl'>
+		<b:if cond='data:widget.edit-link'><data:widget.edit-link/><b:else />Edit <data:widget.type /> Widget</b:if>
+		</a>
+	</b:if>
+	<b:include name='home_main' />
+	</b:includable>
+
+	<b:includable id='debug'>
+		<!-- TODO -->
+	</b:includable>
+	
+	<xi:include href="home.xhtml" xpointer="xmlns(b=http://www.google.com/2005/gml/b)xpointer(//b:widget[@type='PageList']/*)" />
+
+  </b:widget>
+
+
+  <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'>
+	
+	<b:includable id='main'>
+		<b:if cond='data:blog.view != "debug"'>
+			<b:include name='normal' />
+		<b:else />
+			<b:include name='debug' />
+		</b:if>
+	</b:includable>
+
+	<b:includable id='normal'>
+	<b:if cond='data:blog.view in {"edit" "debug"}'>
+		<a expr:href='data:widget.quickEditUrl'>
+		<b:if cond='data:widget.edit-link'><data:widget.edit-link/><b:else />Edit <data:widget.type /> Widget</b:if>
+		</a>
+	</b:if>
+	<b:include name='_normal' />
+	</b:includable>
+
+	<b:includable id='_normal'>
+
+<main role='main'>
+
+<b:switch var='data:blog.pageType'>
+<b:case value='item' />
+	<b:include name='item_main' />
+
+<b:case value='static_page' />
+	<b:include name='page_main' />
+		
+<b:case value='archive' />
+	<b:include name='archive_main' />
+
+<b:case value='index' />
+	<b:if cond='data:blog.url == data:blog.homepageUrl'>
+		<b:include name='home_main' />
+
+	<b:else />
+		<b:include name='search_main' />
+
+	</b:if>
+
+</b:switch>
+
+</main>
+
+  </b:includable>
+
+  <b:includable id='debug'>
+
+	<p>blog.postImageUrl: <data:blog.postImageUrl/></p>
+	<p>blog.postImageThumbnailUrl: <data:blog.postImageThumbnailUrl/></p>
+
+	<b:loop values='data:posts' var='post'>
+	<p>post.dateHeader: <data:post.dateHeader/></p>
+	<p>post.timestamp: <data:post.timestamp/></p>
+	<p>post.timestampLabel: <data:post.timestampLabel/></p>
+	<p>post.timestampISO8601: <data:post.timestampISO8601/></p>
+
+	<p>post.firstImageUrl: <data:post.firstImageUrl/></p>
+	<p>post.thumbnailUrl: <data:post.thumbnailUrl/></p>
+	<p>post.embedCommentForm: <data:post.embedCommentForm/></p>
+	<p>post.numComments: <data:post.numComments/></p>
+	<p>post.allowComments: <data:post.allowComments/></p>
+	<p>post.allowNewComments: <data:post.allowNewComments/></p>
+	<p>post.allowIframeComments: <data:post.allowIframeComments/></p>
+	<p>post.addCommentUrl: <data:post.addCommentUrl/></p>
+	<p>post.iframeCommentSrc: <data:post.iframeCommentSrc/></p>
+	<p>post.cmtfpIframe: <data:post.cmtfpIframe/></p>
+	<p>post.appRpcRelayPath: <data:post.appRpcRelayPath/></p>
+	<p>post.commentSource: <data:post.commentSource/></p>
+	<p>post.oldLinkClass: <data:post.oldLinkClass/></p>
+	<p>post.oldestLinkUrl: <data:post.oldestLinkUrl/></p>
+	<p>post.newLinkClass: <data:post.newLinkClass/></p>
+	<p>post.newestLinkUrl: <data:post.newestLinkUrl/></p>
+	<p>postCommentMsg: <data:postCommentMsg/></p>
+	<p>blogCommentMessage: <data:blogCommentMessage/></p>
+	<p>post.commentFormIframeSrc: <data:post.commentFormIframeSrc/></p>
+
+	<b:loop values='data:post.feedLinks' var='feed'>
+	  <a expr:href='data:feed.url' expr:title='data:feed.mimeType'><data:feed.name/> (<data:feed.feedType/>)</a><br/>
+	</b:loop>
+
+	</b:loop>
+
+  </b:includable>
+
+ 	<xi:include href="item.xhtml" xpointer="xmlns(b=http://www.google.com/2005/gml/b)xpointer(//b:widget[@type='Blog']/*)" />
+
+	<xi:include href="page.xhtml" xpointer="xmlns(b=http://www.google.com/2005/gml/b)xpointer(//b:widget[@type='Blog']/*)" />
+		
+	<xi:include href="archive.xhtml" xpointer="xmlns(b=http://www.google.com/2005/gml/b)xpointer(//b:widget[@type='Blog']/*)" />
+		
+	<xi:include href="home.xhtml" xpointer="xmlns(b=http://www.google.com/2005/gml/b)xpointer(//b:widget[@type='Blog']/*)" />
+
+	<xi:include href="search.xhtml" xpointer="xmlns(b=http://www.google.com/2005/gml/b)xpointer(//b:widget[@type='Blog']/*)" />
+
+  </b:widget>
+
+  <b:widget id='PopularPosts1' locked='true' title='Popular' type='PopularPosts'>
+
+	<b:includable id='main'>
+	<b:if cond='data:blog.pageType == "index"'> 
+		<b:if cond='data:blog.url == data:blog.homepageUrl'>
+			<b:if cond='data:blog.view != "debug"'>
+				<b:include name='normal' />
+			<b:else />
+				<b:include name='debug' />
+			</b:if>
+		</b:if>
+	</b:if>
+	</b:includable>
+
+	<b:includable id='normal'>
+	<b:if cond='data:blog.view in {"edit", "debug"}'>
+		<a expr:href='data:widget.quickEditUrl'>
+		<b:if cond='data:widget.edit-link'><data:widget.edit-link/><b:else />Edit <data:widget.type /> Widget</b:if>
+		</a>
+	</b:if>
+	<b:include name='home_main' />
+	</b:includable>
+
+
+	<xi:include href="home.xhtml" xpointer="xmlns(b=http://www.google.com/2005/gml/b)xpointer(//b:widget[@type='PopularPosts']/*)" />
+
+  </b:widget>
+
+  <b:widget id='BlogArchive1' locked='true' title='Archive' type='BlogArchive'>
+
+	<b:includable id='main'>
+	<b:if cond='data:blog.pageType == "index"'> 
+		<b:if cond='data:blog.url == data:blog.homepageUrl'>
+			<b:if cond='data:blog.view != "debug"'>
+				<b:include name='normal' />
+			<b:else />
+				<b:include name='debug' />
+			</b:if>
+		</b:if>
+	</b:if>
+	</b:includable>
+
+	<b:includable id='normal'>
+	<b:if cond='data:blog.view in {"edit", "debug"}'>
+		<a expr:href='data:widget.quickEditUrl'>
+		<b:if cond='data:widget.edit-link'><data:widget.edit-link/><b:else />Edit <data:widget.type /> Widget</b:if>
+		</a>
+	</b:if>
+	<b:include name='home_main' />
+	</b:includable>
+
+	<xi:include href="home.xhtml" xpointer="xmlns(b=http://www.google.com/2005/gml/b)xpointer(//b:widget[@type='BlogArchive']/*)" />
+
+	<b:includable id='debug'>
+	<p>widget.type: <data:widget.type/></p>
+	    <p>widget.quickEditUrl: <a expr:href='data:widget.quickEditUrl'><data:widget.quickEditUrl/></a></p>
+	    <p>archive.style: <data:style/></p>
+	    <p>archive.name: <data:name/></p>
+	    <p>archive.title: <data:title/></p>
+	    <b:include data='data' name='interval_debug' />
+	</b:includable>
+
+	<b:includable id='interval_debug' var='intervalData'>
+
+	    <b:loop var='interval' values='data:intervalData'>
+	    <p>interval.name: <data:interval.name/></p>
+	    <p>interval.url: <data:interval.url/></p>
+	    <p>interval.post-count: <data:interval.post-count/></p>
+	    <p>interval.expclass: <data:interval.expclass/></p>
+          <b:if cond='data:interval.data'>
+            <b:include data='interval.data' name='interval_debug' />
+          </b:if>
+          <b:if cond='data:interval.posts'>
+            <b:include data='interval.posts' name='flat_debug' />
+          </b:if>
+	    </b:loop>
+
+	</b:includable>
+
+        <b:includable id='flat_debug' var='posts'>
+
+	    <b:loop values='data:posts' var='post'>
+      	    <p>post.title: <data:post.title/></p>
+      	    <p>post.description: <data:post.description/></p>
+      	    <p>post.dateHeader: <data:post.dateHeader/></p>
+      	    <p>post.timestamp: <data:post.timestamp/></p>
+      	    <p>post.timestampLabel: <data:post.timestampLabel/></p>
+      	    <p>post.timestampISO8601: <data:post.timestampISO8601/></p>
+	    <p>post.url: <data:post.url/></p>
+    	    </b:loop>
+
+ 	</b:includable>
+
+  </b:widget>
+
+  <b:widget id='Label1' locked='true' title='Labels' type='Label'>
+
+	<b:includable id='main'>
+	<b:if cond='data:blog.pageType == "index"'> 
+		<b:if cond='data:blog.url == data:blog.homepageUrl'>
+			<b:if cond='data:blog.view != "debug"'>
+				<b:include name='normal' />
+			<b:else />
+				<b:include name='debug' />
+			</b:if>
+		</b:if>
+	</b:if>
+	</b:includable>
+
+	<b:includable id='normal'>
+	<b:if cond='data:blog.view in {"edit", "debug"}'>
+		<a expr:href='data:widget.quickEditUrl'>
+		<b:if cond='data:widget.edit-link'><data:widget.edit-link/><b:else />Edit <data:widget.type /> Widget</b:if>
+		</a>
+	</b:if>
+	<b:include name='home_main' />
+	</b:includable>
+
+
+	<xi:include href="home.xhtml" xpointer="xmlns(b=http://www.google.com/2005/gml/b)xpointer(//b:widget[@type='Label']/*)" />
+
+  </b:widget>
+
+  <b:widget id='HTML1' locked='true' title='Search' type='HTML'>
+
+	<b:includable id='main'>
+	<b:if cond='data:blog.pageType == "index"'> 
+		<b:if cond='data:blog.url == data:blog.homepageUrl'>
+			<b:if cond='data:blog.view != "debug"'>
+				<b:include name='normal' />
+			<b:else />
+				<b:include name='debug' />
+			</b:if>
+		</b:if>
+	</b:if>
+	</b:includable>
+
+	<b:includable id='normal'>
+	<b:if cond='data:blog.view in {"edit", "debug"}'>
+		<a expr:href='data:widget.quickEditUrl'>
+		<b:if cond='data:widget.edit-link'><data:widget.edit-link/><b:else />Edit <data:widget.type /> Widget</b:if>
+		</a>
+	</b:if>
+	<b:include name='home_main' />
+	</b:includable>
+
+
+	<xi:include href="home.xhtml" xpointer="xmlns(b=http://www.google.com/2005/gml/b)xpointer(//b:widget[@title='Search']/*)" />
+
+  </b:widget>
+
+</b:section>
+
+
+
+
+<plaintext style="display: none;" />
+
+</body>
+</html>

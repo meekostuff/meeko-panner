@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html expr:dir='data:blog.languageDirection'
+	xmlns='http://www.w3.org/1999/xhtml'
+	xmlns:b='http://www.google.com/2005/gml/b'
+	xmlns:data='http://www.google.com/2005/gml/data'
+	xmlns:expr='http://www.google.com/2005/gml/expr'>
+  <head>
+
+    <title><data:blog.pageTitle/></title>
+	<meta name="page-type" content="home" />
+
+  </head>
+  <body>
+
+<b:section class='body' id='home'>
+  <b:widget id='PageList1' locked='false' title='Pages' type='PageList'>
+
+	<b:includable id='home_main'>
+
+  <h2><b:if cond='data:title'><data:title/><b:else/>Pages</b:if></h2>
+  <ul>
+    <b:loop values='data:links' var='link'>
+      <li><a expr:href='data:link.href'><data:link.title/></a></li>
+    </b:loop>
+  </ul>
+
+	</b:includable>
+
+  </b:widget>
+
+  <b:widget id='Blog1' locked='false' title='Recent' type='Blog'>
+
+    <b:includable id='home_main'>
+
+  <h2>Recent Posts</h2>
+	<div class="items">
+		<b:loop values='data:posts' var='post'>
+      <div class="hentry item" itemprop="blogPost" itemscope="" itemtype="http://schema.org/BlogPosting">
+		<h3 class="entry-title"><a rel="bookmark" itemprop="url" expr:href="data:post.url"><span itemprop="name"><data:post.title /></span></a></h3>
+		<div>
+			<b:if cond="data:post.timestampLabel"><data:post.timestampLabel/><b:else/>Published: </b:if>
+			 <time class="published" itemprop="datePublished" expr:datetime="data:post.timestampISO8601"><data:post.dateHeader/></time>
+		</div>
+		<b:if cond="data:post.thumbnailUrl">
+		<img class="entry-photo" itemprop="thumbnailUrl" expr:src="data:post.thumbnailUrl" />
+		</b:if>
+		<b:if cond="data:post.hasJumpLink">
+		<div class="entry-summary" itemprop="description"><data:post.body/></div>
+		<a expr:href="data:post.url"><data:post.jumpText/></a>
+		<b:else/>
+		<div class="entry-summary" itemprop="description"><data:post.snippet/></div>
+		<a expr:href="data:post.url">Link</a>
+		</b:if>
+
+		<div><span itemprop="commentCount"><data:post.numComments/></span> comments</div>
+	  </div>
+      </b:loop>
+    </div>
+
+    </b:includable>
+
+  </b:widget>
+
+  <b:widget id='PopularPosts1' locked='false' title='Popular' type='PopularPosts'>
+
+	<b:includable id='home_main'>
+
+  <h2><b:if cond='data:title'><data:title/><b:else/>Popular Posts</b:if></h2>
+    <meta name="showSnippets" expr:content='data:showSnippets' />
+	<div class="items">
+		<b:loop values='data:posts' var='post'>
+      <div class="hentry item" itemprop="blogPost" itemscope="" itemtype="http://schema.org/BlogPosting">
+		<h3><a rel="bookmark" itemprop="url" expr:href="data:post.href"><span class="entry-title" itemprop="name"><data:post.title/></span></a></h3>
+		<b:if cond='data:showSnippets'>
+			<b:if cond='data:post.hasJumpLink'>
+			<div class="entry-summary" itemprop="description"><data:post.body/></div>
+			<a expr:href="data:post.url"><data:post.jumpText/></a>
+			<b:else/>
+			<div class="entry-summary" itemprop="description"><data:post.snippet/></div>
+			<a expr:href="data:post.url">Link</a>
+			</b:if>
+		</b:if>
+	  </div>
+      </b:loop>
+    </div>
+
+	</b:includable>
+
+  </b:widget>
+
+  <b:widget id='BlogArchive1' title='BlogArchive' type='BlogArchive'>
+
+    <b:includable id='home_main'>
+
+  <b:if cond='data:title'>
+    <h2><data:title/></h2>
+  </b:if>
+  <nav id='ArchiveList'>
+    <b:include data='data' name='home_interval' />
+ </nav>
+
+    </b:includable>
+
+    <b:includable id='home_interval' var='intervalData'>
+
+  <b:loop values='data:intervalData' var='i'>
+      <ul class='hierarchy'>
+        <li class='archivedate'>
+          <a class='post-count-link' expr:href='data:i.url'><data:i.name/></a>
+            <span class='post-count'>(<data:i.post-count/>)</span>
+          <b:if cond='data:i.data'>
+            <b:include data='i.data' name='home_interval'/>
+          </b:if>
+          <b:if cond='data:i.posts'>
+            <b:include data='i.posts' name='home_posts'/>
+          </b:if>
+        </li>
+      </ul>
+  </b:loop>
+
+	</b:includable>
+
+   <b:includable id='home_posts' var='posts'>
+
+  <ul class='posts'>
+    <b:loop values='data:posts' var='i'>
+      <li><a expr:href='data:i.url'><data:i.title/></a></li>
+    </b:loop>
+  </ul>
+
+	</b:includable>
+  </b:widget>
+
+  <b:widget id='Label1' title='Labels' type='Label'>
+
+	<b:includable id='home_main'>
+
+	<h2><b:if cond='data:title != ""'><data:title/><b:else/>Labels</b:if></h2>
+	<nav>
+		<ul>
+			<b:loop values="data:labels" var="label">
+			<li expr:data-size='data:label.cssSize'>
+			<a expr:href="data:label.url"><data:label.name /></a>
+			<b:if cond='data:showFreqNumbers'>
+			<span>(<data:label.count />)</span>
+			</b:if>
+			</li>
+			</b:loop>
+		</ul>
+	</nav>
+
+	</b:includable>
+
+  </b:widget>
+
+
+  <b:widget id='HTML1' title='Search' type='HTML'>
+    <b:includable id='home_main'>
+  		<!-- only display title if it's non-empty -->
+  		<h2><b:if cond='data:title != ""'><data:title/><b:else />Search</b:if></h2>
+	<form method="GET" action="/search">
+    	<label><data:content/><input type="text" name="q" /></label>
+	</form>
+
+	</b:includable>
+  </b:widget>
+
+
+</b:section>
+
+  </body>
+</html>

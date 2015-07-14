@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:b="http://www.google.com/2005/gml/b" xmlns:data="http://www.google.com/2005/gml/data" xmlns:expr="http://www.google.com/2005/gml/expr" xmlns:xi="http://www.w3.org/2001/XInclude" expr:dir="data:blog.languageDirection">
+<head>
+
+<b:if cond="data:blog.view not in {&quot;edit&quot;, &quot;debug&quot;}">
+<script src="http://localhost/dist/meeko-panner/3.0.x/boot.js" data-generator="blogger"/>
+</b:if>
+
+<title><data:blog.pageTitle/></title>
+
+<b:if cond="data:blog.url == data:blog.homepageUrl">
+<meta name="page-type" content="home"/>
+<b:else/>
+<meta name="page-type" expr:content="data:blog.pageType"/>	
+</b:if>
+
+<link rel="stylesheet" href="http://localhost/dist/meeko-panner/3.0.x/generators/blogger/basic.css"/>
+
+<b:skin/>
+
+</head>
+<body expr:class="data:blog.view in {&quot;edit&quot;, &quot;debug&quot;} ? data:blog.view : &quot;&quot;">
+
+<nav>
+<b:with var="query" value="data:blog.view in {&quot;edit&quot;, &quot;debug&quot;} ? &quot;?view=&quot; + data:blog.view : &quot;&quot;">
+<a expr:href="&quot;/&quot; + data:query">Home</a>
+<a expr:href="&quot;/&quot; + data:query + &quot;#PageList1&quot;">Pages</a>
+<a expr:href="&quot;/&quot; + data:query + &quot;#Blog1&quot;">Recent</a>
+<a expr:href="&quot;/&quot; + data:query + &quot;#PopularPosts1&quot;">Popular</a>
+<a expr:href="&quot;/&quot; + data:query + &quot;#BlogArchive1&quot;">Archive</a>
+<a expr:href="&quot;/&quot; + data:query + &quot;#Label1&quot;">Labels</a>
+<a expr:href="&quot;/&quot; + data:query + &quot;#HTML1&quot;">Search</a>
+</b:with>
+</nav>
+
+<b:if cond="data:blog.view == &quot;debug&quot;">
+<h2>Globally Available Layout Data Tags</h2>
+<ul>
+<li><code>blog.isMobile</code> <data:blog.isMobile/></li>
+<li><code>blog.mobileClass</code> <data:blog.mobileClass/></li>
+<li><code>blog.title</code> <data:blog.title/></li>
+<li><code>blog.pageTitle</code> <data:blog.pageTitle/></li>
+<li><code>blog.pageName</code> <data:blog.pageName/></li>
+<li><code>blog.pageType</code> <data:blog.pageType/></li>
+<li><code>blog.searchLabel</code> <data:blog.searchLabel/></li>
+<li><code>blog.searchQuery</code> <data:blog.searchQuery/></li>
+<li><code>blog.url</code> 
+<a expr:href="data:blog.url"><data:blog.url/></a></li> 
+<li><code>blog.homepageUrl</code> <a expr:href="data:blog.homepageUrl"><data:blog.homepageUrl/></a></li>
+<li><code>blog.canonicalUrl</code> 
+<a expr:href="data:blog.canonicalUrl"><data:blog.canonicalUrl/></a></li> 
+<li><code>blog.canonicalHomepageUrl</code> <a expr:href="data:blog.canonicalHomepageUrl"><data:blog.canonicalHomepageUrl/></a></li>
+<li><code>blog.isPrivate</code> <data:blog.isPrivate/></li>
+<li><code>blog.enabledCommentProfileImages</code> <data:blog.enabledCommentProfileImages/></li>
+<li><code>blog.encoding</code> <data:blog.encoding/></li>
+<li><code>blog.locale</code> <data:blog.locale/></li>
+<li><code>blog.languageDirection</code> <data:blog.languageDirection/></li>
+<li><code>blog.meTag</code> <data:blog.meTag/></li>
+<li><code>blog.ieCssRetrofitLinks</code> <data:blog.ieCssRetrofitLinks/></li>
+<li><code>blog.layout-title</code> <data:blog.layout-title/></li>
+</ul>
+</b:if>
+
+<header>
+<b:section class="header" id="header">
+  <b:widget id="Header1" locked="true" title="Header" type="Header">
+
+	<b:includable id="main">
+
+  <h1><a expr:href="data:blog.homepageUrl"><data:blog.title/></a></h1>
+  <h2><data:description/></h2>
+
+	</b:includable>
+
+  </b:widget>
+ 
+</b:section>
+</header>
+
+<b:section class="body" id="main">
+
+   <b:widget id="PageList1" locked="true" title="Pages" type="PageList">
+
+	<b:includable id="main">
+	<b:if cond="data:blog.pageType == &quot;index&quot;"> 
+		<b:if cond="data:blog.url == data:blog.homepageUrl">
+			<b:if cond="data:blog.view != &quot;debug&quot;">
+				<b:include name="normal"/>
+			<b:else/>
+				<b:include name="debug"/>
+			</b:if>
+		</b:if>
+	</b:if>
+	</b:includable>
+
+	<b:includable id="normal">
+	<b:if cond="data:blog.view in {&quot;edit&quot;, &quot;debug&quot;}">
+		<a expr:href="data:widget.quickEditUrl">
+		<b:if cond="data:widget.edit-link"><data:widget.edit-link/><b:else/>Edit <data:widget.type/> Widget</b:if>
+		</a>
+	</b:if>
+	<b:include name="home_main"/>
+	</b:includable>
+
+	<b:includable id="debug">
+		<!-- TODO -->
+	</b:includable>
+	
+	<b:includable id="home_main">
+
+  <h2><b:if cond="data:title"><data:title/><b:else/>Pages</b:if></h2>
+  <ul>
+    <b:loop values="data:links" var="link">
+      <li><a expr:href="data:link.href"><data:link.title/></a></li>
+    </b:loop>
+  </ul>
+
+	</b:includable>
+
+  </b:widget>
+
+
+  <b:widget id="Blog1" locked="true" title="Blog Posts" type="Blog">
+	
+	<b:includable id="main">
+		<b:if cond="data:blog.view != &quot;debug&quot;">
+			<b:include name="normal"/>
+		<b:else/>
+			<b:include name="debug"/>
+		</b:if>
+	</b:includable>
+
+	<b:includable id="normal">
+	<b:if cond="data:blog.view in {&quot;edit&quot; &quot;debug&quot;}">
+		<a expr:href="data:widget.quickEditUrl">
+		<b:if cond="data:widget.edit-link"><data:widget.edit-link/><b:else/>Edit <data:widget.type/> Widget</b:if>
+		</a>
+	</b:if>
+	<b:include name="_normal"/>
+	</b:includable>
+
+	<b:includable id="_normal">
+
+<main role="main">
+
+<b:switch var="data:blog.pageType">
+<b:case value="item"/>
+	<b:include name="item_main"/>
+
+<b:case value="static_page"/>
+	<b:include name="page_main"/>
+		
+<b:case value="archive"/>
+	<b:include name="archive_main"/>
+
+<b:case value="index"/>
+	<b:if cond="data:blog.url == data:blog.homepageUrl">
+		<b:include name="home_main"/>
+
+	<b:else/>
+		<b:include name="search_main"/>
+
+	</b:if>
+
+</b:switch>
+
+</main>
+
+  </b:includable>
+
+  <b:includable id="debug">
+
+	<p>blog.postImageUrl: <data:blog.postImageUrl/></p>
+	<p>blog.postImageThumbnailUrl: <data:blog.postImageThumbnailUrl/></p>
+
+	<b:loop values="data:posts" var="post">
+	<p>post.dateHeader: <data:post.dateHeader/></p>
+	<p>post.timestamp: <data:post.timestamp/></p>
+	<p>post.timestampLabel: <data:post.timestampLabel/></p>
+	<p>post.timestampISO8601: <data:post.timestampISO8601/></p>
+
+	<p>post.firstImageUrl: <data:post.firstImageUrl/></p>
+	<p>post.thumbnailUrl: <data:post.thumbnailUrl/></p>
+	<p>post.embedCommentForm: <data:post.embedCommentForm/></p>
+	<p>post.numComments: <data:post.numComments/></p>
+	<p>post.allowComments: <data:post.allowComments/></p>
+	<p>post.allowNewComments: <data:post.allowNewComments/></p>
+	<p>post.allowIframeComments: <data:post.allowIframeComments/></p>
+	<p>post.addCommentUrl: <data:post.addCommentUrl/></p>
+	<p>post.iframeCommentSrc: <data:post.iframeCommentSrc/></p>
+	<p>post.cmtfpIframe: <data:post.cmtfpIframe/></p>
+	<p>post.appRpcRelayPath: <data:post.appRpcRelayPath/></p>
+	<p>post.commentSource: <data:post.commentSource/></p>
+	<p>post.oldLinkClass: <data:post.oldLinkClass/></p>
+	<p>post.oldestLinkUrl: <data:post.oldestLinkUrl/></p>
+	<p>post.newLinkClass: <data:post.newLinkClass/></p>
+	<p>post.newestLinkUrl: <data:post.newestLinkUrl/></p>
+	<p>postCommentMsg: <data:postCommentMsg/></p>
+	<p>blogCommentMessage: <data:blogCommentMessage/></p>
+	<p>post.commentFormIframeSrc: <data:post.commentFormIframeSrc/></p>
+
+	<b:loop values="data:post.feedLinks" var="feed">
+	  <a expr:href="data:feed.url" expr:title="data:feed.mimeType"><data:feed.name/> (<data:feed.feedType/>)</a><br/>
+	</b:loop>
+
+	</b:loop>
+
+  </b:includable>
+
+ 	<b:includable id="item_main">
+	<b:loop values="data:posts" var="post">
+	<article class="hentry" itemprop="blogPost" itemscope="" itemtype="http://schema.org/BlogPosting">
+      <h1 class="entry-title" itemprop="name"><data:post.title/></h1>
+		<div>
+			<b:if cond="data:post.timestampLabel"><data:post.timestampLabel/><b:else/>Published: </b:if>
+			 <time class="published" itemprop="datePublished" expr:datetime="data:post.timestampISO8601"><data:post.dateHeader/></time>
+		</div>
+      <div class="entry-content" itemprop="articleBody"><data:post.body/></div>
+	</article>
+	<div><a expr:href="data:blog.url + &quot;?view=comments&quot;"><span itemprop="commentCount"><data:post.numComments/></span> comments</a></div>
+	</b:loop>
+  </b:includable>
+
+	<b:includable id="page_main">
+
+  <b:loop values="data:posts" var="post">
+
+	  <div class="hentry" itemprop="blogPost" itemscope="" itemtype="http://schema.org/BlogPosting">
+		<h1 class="entry-title" itemprop="name"><data:post.title/></h1>
+		<div class="entry-content" itemprop="articleBody"><data:post.body/></div>
+	  </div>
+
+      </b:loop>
+
+	</b:includable>
+		
+	<b:includable id="archive_main">
+
+	<div class="hfeed items">
+	  <b:loop values="data:posts" var="post">
+
+      <article class="hentry item" itemprop="blogPost" itemscope="" itemtype="http://schema.org/BlogPosting">
+		<meta itemprop="postId" expr:content="data:post.id"/>
+		<h3><a rel="bookmark" itemprop="url" expr:href="data:post.url"><span class="entry-title" itemprop="name"><data:post.title/></span></a></h3>
+		<div>
+			<b:if cond="data:post.timestampLabel"><data:post.timestampLabel/><b:else/>Published: </b:if>
+			 <time class="published" itemprop="datePublished" expr:datetime="data:post.timestampISO8601"><data:post.timestamp/></time>
+		</div>
+		<b:if cond="data:post.thumbnailUrl"><img class="entry-photo" itemprop="thumbnailUrl" expr:src="data:post.thumbnailUrl"/></b:if>
+
+		<b:if cond="data:post.hasJumpLink">
+		<div class="entry-summary" itemprop="description"><data:post.body/></div>
+		<a expr:href="data:post.url"><data:post.jumpText/></a>
+		<b:else/>
+		<div class="entry-summary" itemprop="description"><data:post.snippet/></div>
+		<a expr:href="data:post.url">Link</a>
+		</b:if>
+
+		<div><span itemprop="commentCount"><data:post.numComments/></span> comments</div>
+	  </article>
+
+      </b:loop>
+    </div>
+
+    </b:includable>
+		
+	<b:includable id="home_main">
+
+  <h2>Recent Posts</h2>
+	<div class="items">
+		<b:loop values="data:posts" var="post">
+      <div class="hentry item" itemprop="blogPost" itemscope="" itemtype="http://schema.org/BlogPosting">
+		<h3 class="entry-title"><a rel="bookmark" itemprop="url" expr:href="data:post.url"><span itemprop="name"><data:post.title/></span></a></h3>
+		<div>
+			<b:if cond="data:post.timestampLabel"><data:post.timestampLabel/><b:else/>Published: </b:if>
+			 <time class="published" itemprop="datePublished" expr:datetime="data:post.timestampISO8601"><data:post.dateHeader/></time>
+		</div>
+		<b:if cond="data:post.thumbnailUrl">
+		<img class="entry-photo" itemprop="thumbnailUrl" expr:src="data:post.thumbnailUrl"/>
+		</b:if>
+		<b:if cond="data:post.hasJumpLink">
+		<div class="entry-summary" itemprop="description"><data:post.body/></div>
+		<a expr:href="data:post.url"><data:post.jumpText/></a>
+		<b:else/>
+		<div class="entry-summary" itemprop="description"><data:post.snippet/></div>
+		<a expr:href="data:post.url">Link</a>
+		</b:if>
+
+		<div><span itemprop="commentCount"><data:post.numComments/></span> comments</div>
+	  </div>
+      </b:loop>
+    </div>
+
+    </b:includable>
+
+	<b:includable id="search_main">
+
+	<div class="hfeed items">
+	  <b:loop values="data:posts" var="post">
+
+      <article class="hentry item" itemprop="blogPost" itemscope="" itemtype="http://schema.org/BlogPosting">
+		<meta itemprop="postId" expr:content="data:post.id"/>
+		<h3><a rel="bookmark" itemprop="url" expr:href="data:post.url"><span class="entry-title" itemprop="name"><data:post.title/></span></a></h3>
+		<div>
+			<b:if cond="data:post.timestampLabel"><data:post.timestampLabel/><b:else/>Published: </b:if>
+			 <time class="published" itemprop="datePublished" expr:datetime="data:post.timestampISO8601"><data:post.timestamp/></time>
+		</div>
+		<b:if cond="data:post.thumbnailUrl"><img class="entry-photo" itemprop="thumbnailUrl" expr:src="data:post.thumbnailUrl"/></b:if>
+
+		<b:if cond="data:post.hasJumpLink">
+		<div class="entry-summary" itemprop="description"><data:post.body/></div>
+		<a expr:href="data:post.url"><data:post.jumpText/></a>
+		<b:else/>
+		<div class="entry-summary" itemprop="description"><data:post.snippet/></div>
+		<a expr:href="data:post.url">Link</a>
+		</b:if>
+
+		<div><span itemprop="commentCount"><data:post.numComments/></span> comments</div>
+	  </article>
+
+      </b:loop>
+    </div>
+
+    </b:includable>
+
+  </b:widget>
+
+  <b:widget id="PopularPosts1" locked="true" title="Popular" type="PopularPosts">
+
+	<b:includable id="main">
+	<b:if cond="data:blog.pageType == &quot;index&quot;"> 
+		<b:if cond="data:blog.url == data:blog.homepageUrl">
+			<b:if cond="data:blog.view != &quot;debug&quot;">
+				<b:include name="normal"/>
+			<b:else/>
+				<b:include name="debug"/>
+			</b:if>
+		</b:if>
+	</b:if>
+	</b:includable>
+
+	<b:includable id="normal">
+	<b:if cond="data:blog.view in {&quot;edit&quot;, &quot;debug&quot;}">
+		<a expr:href="data:widget.quickEditUrl">
+		<b:if cond="data:widget.edit-link"><data:widget.edit-link/><b:else/>Edit <data:widget.type/> Widget</b:if>
+		</a>
+	</b:if>
+	<b:include name="home_main"/>
+	</b:includable>
+
+
+	<b:includable id="home_main">
+
+  <h2><b:if cond="data:title"><data:title/><b:else/>Popular Posts</b:if></h2>
+    <meta name="showSnippets" expr:content="data:showSnippets"/>
+	<div class="items">
+		<b:loop values="data:posts" var="post">
+      <div class="hentry item" itemprop="blogPost" itemscope="" itemtype="http://schema.org/BlogPosting">
+		<h3><a rel="bookmark" itemprop="url" expr:href="data:post.href"><span class="entry-title" itemprop="name"><data:post.title/></span></a></h3>
+		<b:if cond="data:showSnippets">
+			<b:if cond="data:post.hasJumpLink">
+			<div class="entry-summary" itemprop="description"><data:post.body/></div>
+			<a expr:href="data:post.url"><data:post.jumpText/></a>
+			<b:else/>
+			<div class="entry-summary" itemprop="description"><data:post.snippet/></div>
+			<a expr:href="data:post.url">Link</a>
+			</b:if>
+		</b:if>
+	  </div>
+      </b:loop>
+    </div>
+
+	</b:includable>
+
+  </b:widget>
+
+  <b:widget id="BlogArchive1" locked="true" title="Archive" type="BlogArchive">
+
+	<b:includable id="main">
+	<b:if cond="data:blog.pageType == &quot;index&quot;"> 
+		<b:if cond="data:blog.url == data:blog.homepageUrl">
+			<b:if cond="data:blog.view != &quot;debug&quot;">
+				<b:include name="normal"/>
+			<b:else/>
+				<b:include name="debug"/>
+			</b:if>
+		</b:if>
+	</b:if>
+	</b:includable>
+
+	<b:includable id="normal">
+	<b:if cond="data:blog.view in {&quot;edit&quot;, &quot;debug&quot;}">
+		<a expr:href="data:widget.quickEditUrl">
+		<b:if cond="data:widget.edit-link"><data:widget.edit-link/><b:else/>Edit <data:widget.type/> Widget</b:if>
+		</a>
+	</b:if>
+	<b:include name="home_main"/>
+	</b:includable>
+
+	<b:includable id="home_main">
+
+  <b:if cond="data:title">
+    <h2><data:title/></h2>
+  </b:if>
+  <nav id="ArchiveList">
+    <b:include data="data" name="home_interval"/>
+ </nav>
+
+    </b:includable><b:includable id="home_interval" var="intervalData">
+
+  <b:loop values="data:intervalData" var="i">
+      <ul class="hierarchy">
+        <li class="archivedate">
+          <a class="post-count-link" expr:href="data:i.url"><data:i.name/></a>
+            <span class="post-count">(<data:i.post-count/>)</span>
+          <b:if cond="data:i.data">
+            <b:include data="i.data" name="home_interval"/>
+          </b:if>
+          <b:if cond="data:i.posts">
+            <b:include data="i.posts" name="home_posts"/>
+          </b:if>
+        </li>
+      </ul>
+  </b:loop>
+
+	</b:includable><b:includable id="home_posts" var="posts">
+
+  <ul class="posts">
+    <b:loop values="data:posts" var="i">
+      <li><a expr:href="data:i.url"><data:i.title/></a></li>
+    </b:loop>
+  </ul>
+
+	</b:includable>
+
+	<b:includable id="debug">
+	<p>widget.type: <data:widget.type/></p>
+	    <p>widget.quickEditUrl: <a expr:href="data:widget.quickEditUrl"><data:widget.quickEditUrl/></a></p>
+	    <p>archive.style: <data:style/></p>
+	    <p>archive.name: <data:name/></p>
+	    <p>archive.title: <data:title/></p>
+	    <b:include data="data" name="interval_debug"/>
+	</b:includable>
+
+	<b:includable id="interval_debug" var="intervalData">
+
+	    <b:loop var="interval" values="data:intervalData">
+	    <p>interval.name: <data:interval.name/></p>
+	    <p>interval.url: <data:interval.url/></p>
+	    <p>interval.post-count: <data:interval.post-count/></p>
+	    <p>interval.expclass: <data:interval.expclass/></p>
+          <b:if cond="data:interval.data">
+            <b:include data="interval.data" name="interval_debug"/>
+          </b:if>
+          <b:if cond="data:interval.posts">
+            <b:include data="interval.posts" name="flat_debug"/>
+          </b:if>
+	    </b:loop>
+
+	</b:includable>
+
+        <b:includable id="flat_debug" var="posts">
+
+	    <b:loop values="data:posts" var="post">
+      	    <p>post.title: <data:post.title/></p>
+      	    <p>post.description: <data:post.description/></p>
+      	    <p>post.dateHeader: <data:post.dateHeader/></p>
+      	    <p>post.timestamp: <data:post.timestamp/></p>
+      	    <p>post.timestampLabel: <data:post.timestampLabel/></p>
+      	    <p>post.timestampISO8601: <data:post.timestampISO8601/></p>
+	    <p>post.url: <data:post.url/></p>
+    	    </b:loop>
+
+ 	</b:includable>
+
+  </b:widget>
+
+  <b:widget id="Label1" locked="true" title="Labels" type="Label">
+
+	<b:includable id="main">
+	<b:if cond="data:blog.pageType == &quot;index&quot;"> 
+		<b:if cond="data:blog.url == data:blog.homepageUrl">
+			<b:if cond="data:blog.view != &quot;debug&quot;">
+				<b:include name="normal"/>
+			<b:else/>
+				<b:include name="debug"/>
+			</b:if>
+		</b:if>
+	</b:if>
+	</b:includable>
+
+	<b:includable id="normal">
+	<b:if cond="data:blog.view in {&quot;edit&quot;, &quot;debug&quot;}">
+		<a expr:href="data:widget.quickEditUrl">
+		<b:if cond="data:widget.edit-link"><data:widget.edit-link/><b:else/>Edit <data:widget.type/> Widget</b:if>
+		</a>
+	</b:if>
+	<b:include name="home_main"/>
+	</b:includable>
+
+
+	<b:includable id="home_main">
+
+	<h2><b:if cond="data:title != &quot;&quot;"><data:title/><b:else/>Labels</b:if></h2>
+	<nav>
+		<ul>
+			<b:loop values="data:labels" var="label">
+			<li expr:data-size="data:label.cssSize">
+			<a expr:href="data:label.url"><data:label.name/></a>
+			<b:if cond="data:showFreqNumbers">
+			<span>(<data:label.count/>)</span>
+			</b:if>
+			</li>
+			</b:loop>
+		</ul>
+	</nav>
+
+	</b:includable>
+
+  </b:widget>
+
+  <b:widget id="HTML1" locked="true" title="Search" type="HTML">
+
+	<b:includable id="main">
+	<b:if cond="data:blog.pageType == &quot;index&quot;"> 
+		<b:if cond="data:blog.url == data:blog.homepageUrl">
+			<b:if cond="data:blog.view != &quot;debug&quot;">
+				<b:include name="normal"/>
+			<b:else/>
+				<b:include name="debug"/>
+			</b:if>
+		</b:if>
+	</b:if>
+	</b:includable>
+
+	<b:includable id="normal">
+	<b:if cond="data:blog.view in {&quot;edit&quot;, &quot;debug&quot;}">
+		<a expr:href="data:widget.quickEditUrl">
+		<b:if cond="data:widget.edit-link"><data:widget.edit-link/><b:else/>Edit <data:widget.type/> Widget</b:if>
+		</a>
+	</b:if>
+	<b:include name="home_main"/>
+	</b:includable>
+
+
+	<b:includable id="home_main">
+  		<!-- only display title if it's non-empty -->
+  		<h2><b:if cond="data:title != &quot;&quot;"><data:title/><b:else/>Search</b:if></h2>
+	<form method="GET" action="/search">
+    	<label><data:content/><input type="text" name="q"/></label>
+	</form>
+
+	</b:includable>
+
+  </b:widget>
+
+</b:section>
+
+
+
+
+<plaintext style="display: none;"/>
+
+</body>
+</html>
