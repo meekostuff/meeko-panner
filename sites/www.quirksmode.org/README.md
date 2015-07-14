@@ -1,6 +1,8 @@
 www.quirksmode.org
 ------------------
 
+**NOT CURRENTLY WORKING**
+
 This is a personal site with each page containing primary content
 plus some meta content.
 

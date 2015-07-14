@@ -1,6 +1,8 @@
 adactio.com
 -----------
 
+**NOT CURRENTLY WORKING**
+
 This is a personal site with each page containing primary content
 plus some combination of various auxiliary panels.
 

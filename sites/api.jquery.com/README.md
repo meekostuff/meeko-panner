@@ -1,6 +1,7 @@
 api.jquery.com
 --------------
 
+**NOT CURRENTLY WORKING**
 This is the API reference site for jQuery. 
 
 Every page contains the primary content - which is specific to the URL - and auxiliary content - banner, navigation, etc.
