@@ -18,4 +18,4 @@ into the same window with AJAX.
 - [MadCap Flare Mobile WebHelp](flare8mobile/)
 - [Help & Manual](helpandmanual/)
 - [HelpNDoc](helpndoc/)
-
+- [TeXinfo](texinfo/)
