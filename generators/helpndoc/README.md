@@ -1,6 +1,8 @@
 Help and Manual
 ---------------
 
+**NOT CURRENTLY WORKING**
+
 [Help and Manual](http://www.helpandmanual.com/) generates documentation sets based on `<iframe>`.
 
 Just like the (now deprecated) [frameset](http://en.wikipedia.org/wiki/Framing_\(World_Wide_Web\)) presentation, these sites don't sync the URL in the address bar with the primary content in the `<iframe>`.
