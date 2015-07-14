@@ -1,60 +1,240 @@
 ﻿<!DOCTYPE html>
-<html class="left-layout">
+<html custom-hf="HyperFrameset" class="left-layout">
     <head>
         <meta charset="UTF-8" />
         <title></title>
 
         <!-- Stylesheets for primary content -->
-        <link href="http://webhelp.madcapsoftware.com/flare9/Content/Resources/Stylesheets/styles.css" rel="stylesheet" />
-        <link href="http://webhelp.madcapsoftware.com/flare9/Content/Resources/TableStyles/Simple.css" rel="stylesheet" />
-        <link href="http://webhelp.madcapsoftware.com/flare9/Content/Resources/TableStyles/SimpleDarkBackground.css" rel="stylesheet" />
-        <link href="http://webhelp.madcapsoftware.com/flare9/Content/Resources/TableStyles/Columns1.css" rel="stylesheet" />
-        <link href="http://webhelp.madcapsoftware.com/flare9/Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
-        <link href="http://webhelp.madcapsoftware.com/flare9/Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link rel="stylesheet" href="./Content/Resources/Stylesheets/styles.css" />
+        <link rel="stylesheet" href="./Content/Resources/TableStyles/Simple.css" />
+        <link rel="stylesheet" href="./Content/Resources/TableStyles/SimpleDarkBackground.css" />
+        <!--<link rel="stylesheet" href="./Content/Resources/TableStyles/Columns1.css" />-->
+        <link rel="stylesheet" href="./Skins/Default/Stylesheets/TextEffects.css" />
+        <link rel="stylesheet" href="./Skins/Default/Stylesheets/Topic.css" />
 
         <!-- Stylesheets for layout and navigation --> 
-        <link rel="Stylesheet" href="http://webhelp.madcapsoftware.com/flare9/Skins/Default/Stylesheets/Styles.css" />
-        <link rel="Stylesheet" href="http://webhelp.madcapsoftware.com/flare9/Skins/Default/Stylesheets/TextEffects.css" />
-
-<!--
-        <script type="text/javascript" src="http://webhelp.madcapsoftware.com/flare9/Resources/Scripts/jquery.min.js">
-        </script>
-        <script type="text/javascript" src="http://webhelp.madcapsoftware.com/flare9/Resources/Scripts/plugins.min.js">
-        </script>
-        <script type="text/javascript" src="http://webhelp.madcapsoftware.com/flare9/Resources/Scripts/require.min.js">
-        </script>
-        <script type="text/javascript" src="http://webhelp.madcapsoftware.com/flare9/Resources/Scripts/require.config.js">
-        </script>
-        <script type="text/javascript" src="http://webhelp.madcapsoftware.com/flare9/Resources/Scripts/MadCapAll.js">
-        </script>
--->
-
+        <link rel="Stylesheet" href="./Skins/Default/Stylesheets/Styles.css" />
+        <link rel="Stylesheet" href="./Skins/Default/Stylesheets/TextEffects.css" />
 <style>
 #toc span.childCount { display: none; }
 #toc li { margin: 0 auto; }
 #toc a:link { font-weight: normal; }
-</style>
-<script src="../../DOMSprockets/Sprocket.js"></script>
-<!--[if lte IE 8]>
-<script src="../../DOMSprockets/Legacy.js"></script>
-<![endif]-->
-<script src="../../DOMSprockets/UI.js"></script>
+#toc .tree-node > div.inner { background-image: none; }
+#toc .tree-node > div.inner:hover { background-color: transparent; }
 
-<style type="text/css">
-#topic { 
--webkit-transition: opacity 0.25s linear;
--moz-transition: opacity 0.25s linear;
--ms-transition: opacity 0.25s linear;
--o-transition: opacity 0.25s linear;
-transition: opacity 0.25s linear;
-}
-#topic[hidden] {
-display: block;
-visibility: visible;
-opacity: 0;
-}
+#topic .MCBreadcrumbsBox_0, #topic h1 { position: static; }
 </style>
 
+<script for="hf-frameset">
+({
+    lookup: function(url, details) {
+        return 'topic';
+    } 
+})
+</script>
+<script src="../../DOMSprockets/ARIA.js"></script>
+<script>
+(function() {
+  var _ = Meeko.stuff;
+  var DOM = Meeko.DOM;
+
+  var sprockets = Meeko.sprockets;
+  var UI = sprockets.UI;
+  
+  var TreeItem = sprockets.evolve(UI.TreeItem, {
+    selected: {
+        type: 'boolean',
+        can: function() {
+            return !this.find('div.inner');
+        },
+        get: function() {
+            return this.hasClass('tree-node-selected');            
+        },
+        set: function(state) {
+            this.toggleClass('tree-node-selected', state);            
+        }
+    },
+    
+    expanded: {
+        type: 'boolean',
+        can: function() {
+            return this.find('div.inner');
+        },
+        get: function() {
+            return this.hasClass('tree-node-expanded');
+        },
+        set: function(state) {
+            if (state) {
+                this.removeClass('tree-node-collapsed');
+                this.addClass('tree-node-expanded');
+                this.find('div.inner').hidden = false;
+            }
+            else {
+                this.removeClass('tree-node-expanded');
+                this.addClass('tree-node-collapsed');
+                this.find('div.inner').hidden = true;
+            }
+        }    
+    }
+  });
+
+  sprockets.registerComponent('ui-tree', UI.Tree, {
+    sprockets: [
+        { matches: 'li', sprocket: TreeItem },
+        { matches: 'ul', sprocket: UI.Group }
+    ],
+    handlers: [
+    {
+        type: "requestnavigation",
+        action: function(event) {
+            var treeitem = event.target.ariaClosest('treeitem');
+            if (!treeitem) return;
+            if (treeitem.ariaCan('selected')) {
+                this.ariaSet('activedescendant', treeitem);
+            }
+            else {
+                if (event.defaultPrevented) return;
+                event.preventDefault();
+                treeitem.ariaToggle('expanded');
+            }
+        }
+    }
+    ]
+  });
+  
+/*  
+  var Panel = UI.Panel.evolve({ // panel is an abstract class. Sub-classes must define the load() method
+    setHidden: function(state) {
+      this.toggleClass('tabs-panel-active', !state);
+      if (!!state) return; 
+      if (this.hasClass('ready')) return;
+      // if panel is to be shown and content not already loaded ...
+      this.load();
+      this.addClass('ready'); // assume that the load succeeds
+    },
+    getHidden: function() {
+        return !this.hasClass('tabs-panel-active');
+    }
+  });
+  
+  function transformTOC(ul) {
+    ul.className = 'tree';
+    _.forEach(DOM.findAll('li', ul), function(li) {
+       li.className = 'tree-node';
+       if (DOM.find('span.childCount', li)) li.className += ' tree-node-collapsed';
+       else li.className += ' tree-node-leaf';
+    });
+    return ul;
+  }
+  
+  function getTOCPath() {
+    var path = [];
+    var breadcrumbsBox = DOM.find('#topic > div.MCBreadcrumbsBox_0');
+    var breadcrumbs = DOM.findAll('span.MCBreadcrumbsSelf, span.MCBreadcrumbs', breadcrumbsBox);
+    _.forEach(breadcrumbs, function(node) {
+        var name = node.textContent || node.innerText;
+        path.push(name);
+    });
+    return path;
+  }
+
+  var contentsPanel = Panel.evolve({
+    load: function() {
+      var panel = this;
+	  var url = this.find('a').href;
+      DOM.loadHTML(url)
+	  .then(function(doc) {
+        var treeEl = panel.find('.tabs-panel-content');
+        treeEl.innerHTML = transformTOC(DOM.find('#stackLayout ul', doc)).outerHTML;
+        var path = getTOCPath();
+        var tree = AjaxTree(treeEl);
+        tree.showTocItem(path, true);
+      });
+    }
+  });
+  
+  var indexPanel = Panel.evolve({
+    load: function() {
+      var panel = this;
+	  var url = this.find('a').href;
+      DOM.loadHTML(url)
+	  .then(function(doc) {
+        panel.find('.tabs-panel-content').innerHTML = transformTOC(DOM.find('#stackLayout ul', doc)).outerHTML; // FIXME transformIndex
+      });
+    }
+  });
+  
+  var glossaryPanel = Panel.evolve({
+    load: function() {
+      var panel = this;
+	  var url = this.find('a').href;
+      DOM.loadHTML(url)
+	  .then(function(doc) {
+        panel.find('.tabs-panel-content').innerHTML = transformTOC(DOM.find('#stackLayout ul', doc)).outerHTML; // FIXME transformGlossary
+      });
+    }
+  });
+  
+  sprockets.register("#toc", contentsPanel);
+  sprockets.register("#index", indexPanel);
+  sprockets.register("#glossary", glossaryPanel);
+  sprockets.register("#tabs-panels", UI.SwitchBox);
+
+  var Tab = UI.NavTreeItem.evolve({
+    getView: function() {
+        var ref = this.find('a');
+		if (!ref.getAttribute("href")) return;
+		var href = ref.href;
+		var base = document.URL.replace(/#.*$/, '')  + "#";
+		if (href.indexOf(base) != 0) return;
+		var id = href.replace(base, "");
+		return DOM.findId(id);
+    },
+    setSelected: function(state) {
+        this.toggleClass('tabs-nav-active', state);
+    },
+    getSelected: function() {
+        return this.hasClass('tabs-nav-active');
+    }
+  });
+  var TabList = UI.List;
+  var TabStrip = UI.NavTree;
+
+  sprockets.register("#navigation .tabs ul.tabs-nav li", Tab);
+  sprockets.register("#navigation .tabs ul.tabs-nav", TabList);
+  sprockets.register("#navigation .tabs", TabStrip, {
+  handlers: [
+	{
+		type: 'click',
+		delegator: 'a',
+		preventDefault: true
+	},
+	{
+		type: "click",
+		delegator: 'li',
+		action: function(event, item) {
+			this.selectItem(item);
+		}
+	},
+	{
+		type: "change",
+		action: function(event) {
+			var viewer = this.getView();
+			var target = UI.NavTreeItem(this.getSelectedItem()).getView();
+			UI.SwitchBox(viewer).setView(target);
+		}
+	}
+  ],
+  callbacks: {
+	enteredDocument: function() {
+		this.selectItem(this.getListElement().children[0]);
+	}
+  }
+  });
+*/
+
+})();
+</script>
         
     </head>
     <body>
@@ -92,14 +272,14 @@ opacity: 0;
                                 </a>
                             </div>
                         </li>
-                        <li id="IndexTab" class="needs-pie">
+                        <li id="IndexTab" class="needs-pie" hidden>
                             <div>
                                 <a href="#index">
                                 <span class="tabs-nav-icon active" title="Index"></span><span class="tabs-nav-text">Index</span>
                                 </a>
                             </div>
                         </li>
-                        <li id="GlossaryTab" class="needs-pie">
+                        <li id="GlossaryTab" class="needs-pie" hidden>
                             <div>
                                 <a href="#glossary">
                                 <span class="tabs-nav-icon active" title="Glossary"></span><span class="tabs-nav-text">Glossary</span>
@@ -111,66 +291,37 @@ opacity: 0;
                 <div>
                     <div class="tabs-panels" id="tabs-panels">
                         <div class="tabs-panel tabs-panel-active" id="toc">
-                            <div class="tabs-panel-content needs-pie">
-                                <a href="base-url:Resources/Toc_0.htm"></a>
-                                <div style="width: 100%; text-align: center;"><img src="../../decor/waiting-small.gif" /></div>
-                                <!--
-                            <ul class="tree">
-                                <li class="tree-node tree-node-inner tree-node-expanded">
-                                    <div>
-                                        <span>Book A</span>
-                                    </div>
-                                    <ul class="tree inner">
-                                        <li class="tree-node tree-node-inner tree-node-expanded">
-                                            <div>
-                                                <span class="label">Book A-A</span>
-                                            </div>
-                                            <ul class="tree inner">
-                                                <li class="tree-node tree-node-leaf">
-                                                    <div>
-                                                        <span><a href="#TopicA.htm">Topic A-A</a></span>
+                            <ui-tree class="tabs-panel-content needs-pie">
+                                <hf-frame id="hf_toc" src="scope:Resources/Toc_0.htm">
+                                    <hf-body condition="loaded">
+                                        <hf-transform type="hazard" format="css">
+                                                    
+                                            <ul class="tree" haz:each="#stackLayout .listLevel > ul">
+                                                <li haz:each="> li" mexpr:class="tree-node {{ > .rowContent > a.rowTitle > span.childCount_TOC {_text} | value ? 'tree-node-collapsed' : 'tree-node-leaf' }}">
+                                                    <div link>
+                                                        <span class="label">
+                                                            <a expr:href="> .rowContent > a.rowTitle {@href}" expr:_text="> .rowContent > a.rowTitle > span {_text}">{{ link.name }}</a>
+                                                        </span>
                                                     </div>
-                                                </li>
-                                                <li class="tree-node tree-node-leaf">
-                                                    <div>
-                                                        <span class="new-indicator"></span>
-                                                        <span><a href="#TopicB.htm">Topic A-B</a></span>
+                                                    <div haz:if="> .rowContent > a.rowTitle > span.childCount_TOC" class="inner" hidden>
+                                                        <hf-frame def="hf_toc" expr:src="> .rowContent > a.rowTitle {@href}"></hf-frame>
                                                     </div>
                                                 </li>
                                             </ul>
-                                        </li>
-                                        <li class="tree-node tree-node-inner">
-                                            <div>
-                                                <span class="tree-node-leaf">Topic B</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="tree-node tree-node-inner tree-node-collapsed">
-                                    <div>
-                                        <span>Book B</span>
-                                    </div>
-                                    <ul class="tree inner">
-                                        <li class="tree-node tree-node-leaf">
-                                            <div>
-                                                <span>Topic B-A</span>
-                                            </div>
-                                        </li>
-                                        <li class="tree-node tree-node-leaf">
-                                            <div>
-                                                <span>Topic B-B</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            -->
-                            </div>
+                                        </hf-transform>
+                                    </hf-body>
+                                    <hf-body condition="loading">
+                                        <div style="width: 100%; text-align: center; padding-top: 2em; ">
+                                            <img src="../../decor/waiting-small.gif" style="border: none;" />
+                                        </div>
+                                    </hf-body>
+                                </hf-frame>
+                            </ui-tree>
                         </div>
                         <div class="tabs-panel" id="index">
                             <input type="text" id="search-index" class="tabs-panel-search" placeholder="Search" />
                             <div class="tabs-panel-content searchable needs-pie popup-container" data-see-prefix="See" data-see-also-prefix="See Also">
-                                <a href="base-url:Resources/Index.htm"></a>
+                                <a href="scope:Resources/Index.htm"></a>
                                 <div style="width: 100%; text-align: center;"><img src="../../decor/waiting-small.gif" /></div>
                                 <div class="index-wrapper">
                                     <!--
@@ -193,7 +344,7 @@ opacity: 0;
                         <div class="tabs-panel" id="glossary">
                             <input type="text" id="search-glossary" class="tabs-panel-search" placeholder="Search" />
                             <div class="tabs-panel-content searchable needs-pie popup-container">
-                                <a href="base-url:Resources/Glossary.htm"></a>
+                                <a href="scope:Resources/Glossary.htm"></a>
                                 <div style="width: 100%; text-align: center;"><img src="../../decor/waiting-small.gif" /></div>
                                 <!--
                             <ul>
@@ -261,9 +412,29 @@ opacity: 0;
                 <div id="contentBodyInner">
                     <!-- frameBorder="0" is for IE 8 and below -->
                     <!-- <iframe id="topic" class="content" name="topic" frameBorder="0"></iframe> -->
-                    <div id="topic" class="content">
-                        <div style="width: 100%; text-align: center; padding-top: 2em; "><img src="../../decor/waiting-big.gif" style="border: none;" />
-                    </div>
+                    <hf-frame id="topic" name="topic" class="content" main=".MCTopicBody">
+                        <hf-body condition="loaded">
+                            <hf-transform type="script">
+                                <script>
+                                ({
+                                    transform: function(doc) {
+                                        var DOM = Meeko.DOM;
+                                        var breadcrumbs = DOM.find('.MCBreadcrumbsBox_Mobile_0', doc);
+                                        if (breadcrumbs) breadcrumbs.className = "MCBreadcrumbsBox_0";
+                                        return doc;
+                                    }
+                                })
+                                </script>
+                            </hf-transform>
+                            <hf-transform type="main">
+                            </hf-transform>
+                        </hf-body>
+                        <hf-body condition="loading">
+                            <div style="width: 100%; text-align: center; padding-top: 2em; ">
+                                <img src="../../decor/waiting-big.gif" style="border: none;" />
+                            </div>
+                        </hf-body>
+                    </hf-frame>
                     
                     <!--
                     <iframe id="pulse" class="content" name="pulse" frameBorder="0"></iframe>
@@ -350,281 +521,6 @@ opacity: 0;
             </div>
         </div>
     </div>
-
-
-<script>
-(function() {
-  var DOM = Meeko.DOM, $id = DOM.$id, $$ = DOM.$$, $ = DOM.$,
-      _ = Meeko.stuff, extend = _.extend, forEach = _.forEach, some = function(a, fn) { return !_.every(a, function(item) { return !fn(item); }); }, // TODO HTMLDecor should provide some()
-      Promise = Meeko.Promise, decor = Meeko.decor, panner = Meeko.panner;
-
-  var sprockets = Meeko.sprockets;
-  var UI = sprockets.UI;
-  
-  var TreeItem = UI.TreeItem.evolve({
-    setSelected: function(state) {
-        this.toggleClass('tree-node-selected', state);
-    },
-    getSelected: function() {
-        return this.hasClass('tree-node-selected');
-    },
-    setExpanded: function(state) {
-        if (state) {
-            this.removeClass('tree-node-collapsed');
-            this.addClass('tree-node-expanded');
-        }
-        else {
-            this.removeClass('tree-node-expanded');
-            this.addClass('tree-node-collapsed');
-        }
-    },
-    getExpanded: function() {
-        return this.hasClass('tree-node-expanded');
-    }
-  });
-  var List = UI.List;
-  var Tree = UI.Tree.evolve({
-    selectItem: function(node) {
-        var previous = this.__selectedItem;
-        if (previous) UI.TreeItem(previous).setSelected(false);
-        UI.TreeItem(node).setSelected(true);
-        this.__selectedItem = node;
-    },
-    getSelectedItem: function() {
-        return this.__selectedItem;
-    }
-  });
-
-  var AjaxTreeItem = TreeItem.evolve({
-    getName: function() {
-        var nameContainer = this.$('a span');
-        return nameContainer.textContent || nameContainer.innerText; // FIXME is this white-space resilient?
-    },
-    setExpanded: function(state) {
-        if (this.hasClass('tree-node-leaf')) return Promise.resolve(); // FIXME perhaps should throw??
-        TreeItem.prototype.setExpanded.apply(this, arguments);
-        if (!state) return Promise.resolve();
-        if (this.$('ul')) return Promise.resolve();
-      var panel = this;
-	  var url = this.$('a').href;
-      return DOM.loadHTML(url)
-	  .then(function(doc) {
-        panel.boundElement.insertAdjacentHTML('beforeend', transformTOC(DOM.$('#stackLayout ul', doc)).outerHTML);
-        panel.$('ul').className += " inner";
-      });
-    }
-  });
-
-  var AjaxTree = Tree.evolve({
-    showTocItem: function(path, select) {
-        var tree = this;
-        return expand(tree, path)
-        .then(function(treeitem) {
-            var element = treeitem.boundElement;
-            if (select) tree.selectItem(element);
-            element.scrollIntoView(false);
-        });
-    }
-  });
-
-  function expand(treeitem, path) {
-    var myPath = path.slice(0);
-    function _expand(_treeitem) {
-        return Promise.resolve()
-        .then(function() {
-            var name = myPath.shift();
-            if (!name) return _treeitem;
-
-            var list = UI.List(_treeitem.getListElement());
-            var subitem;
-            var found = some(list.getItems(), function(node) {
-                subitem = AjaxTreeItem(node);
-                return (subitem.getName() === name);
-            });
-            if (found) return subitem.setExpanded(true).then(function() { return _expand(subitem); });
-            else throw 'Could not find entry for ' + name;
-        });
-    }
-    return _expand(treeitem);
-  }
-  
-  sprockets.register('#toc .tabs-panel-content li', AjaxTreeItem);
-  sprockets.register('#toc .tabs-panel-content ul', List);
-  sprockets.register('#toc .tabs-panel-content', AjaxTree, {
-    handlers: [
-    {
-        type: "click",
-        delegator: 'li',
-        preventDefault: true,
-        action: function(event, delegator) {
-            var treeitem = UI.TreeItem(delegator);
-            if (treeitem.hasClass('tree-node-leaf')) {
-                // event.preventDefault(); // FIXME throws on IE <= 8. Should be fixed in legacy.js??
-                this.selectItem(delegator);
-                panner.assign(treeitem.$('a').href);
-            }
-            else {
-                // event.preventDefault();
-                var expanded = treeitem.getExpanded();
-                treeitem.setExpanded(!expanded);
-            }
-        }
-    }
-    ]
-  });
-  
-  
-  var Panel = UI.Panel.evolve({ // panel is an abstract class. Sub-classes must define the load() method
-    setHidden: function(state) {
-      this.toggleClass('tabs-panel-active', !state);
-      if (!!state) return; 
-      if (this.hasClass('ready')) return;
-      // if panel is to be shown and content not already loaded ...
-      this.load();
-      this.addClass('ready'); // assume that the load succeeds
-    },
-    getHidden: function() {
-        return !this.hasClass('tabs-panel-active');
-    }
-  });
-  
-  function transformTOC(ul) {
-    ul.className = 'tree';
-    forEach($$('li', ul), function(li) {
-       li.className = 'tree-node';
-       if ($('span.childCount', li)) li.className += ' tree-node-collapsed';
-       else li.className += ' tree-node-leaf';
-    });
-    return ul;
-  }
-  
-  function getTOCPath() {
-    var path = [];
-    var breadcrumbsBox = $('#topic > div.MCBreadcrumbsBox_0');
-    var breadcrumbs = $$('span.MCBreadcrumbsSelf, span.MCBreadcrumbs', breadcrumbsBox);
-    forEach(breadcrumbs, function(node) {
-        var name = node.textContent || node.innerText;
-        path.push(name);
-    });
-    return path;
-  }
-
-  var contentsPanel = Panel.evolve({
-    load: function() {
-      var panel = this;
-	  var url = this.$('a').href;
-      DOM.loadHTML(url)
-	  .then(function(doc) {
-        var treeEl = panel.$('.tabs-panel-content');
-        treeEl.innerHTML = transformTOC(DOM.$('#stackLayout ul', doc)).outerHTML;
-        var path = getTOCPath();
-        var tree = AjaxTree(treeEl);
-        tree.showTocItem(path, true);
-      });
-    }
-  });
-  
-  var indexPanel = Panel.evolve({
-    load: function() {
-      var panel = this;
-	  var url = this.$('a').href;
-      DOM.loadHTML(url)
-	  .then(function(doc) {
-        panel.$('.tabs-panel-content').innerHTML = transformTOC(DOM.$('#stackLayout ul', doc)).outerHTML; // FIXME transformIndex
-      });
-    }
-  });
-  
-  var glossaryPanel = Panel.evolve({
-    load: function() {
-      var panel = this;
-	  var url = this.$('a').href;
-      DOM.loadHTML(url)
-	  .then(function(doc) {
-        panel.$('.tabs-panel-content').innerHTML = transformTOC(DOM.$('#stackLayout ul', doc)).outerHTML; // FIXME transformGlossary
-      });
-    }
-  });
-  
-  sprockets.register("#toc", contentsPanel);
-  sprockets.register("#index", indexPanel);
-  sprockets.register("#glossary", glossaryPanel);
-  sprockets.register("#tabs-panels", UI.SwitchBox);
-
-  var Tab = UI.NavTreeItem.evolve({
-    getView: function() {
-        var ref = this.$('a');
-		if (!ref.getAttribute("href")) return;
-		var href = ref.href;
-		var base = document.URL.replace(/#.*$/, '')  + "#";
-		if (href.indexOf(base) != 0) return;
-		var id = href.replace(base, "");
-		return $id(id);
-    },
-    setSelected: function(state) {
-        this.toggleClass('tabs-nav-active', state);
-    },
-    getSelected: function() {
-        return this.hasClass('tabs-nav-active');
-    }
-  });
-  var TabList = UI.List;
-  var TabStrip = UI.NavTree;
-
-  sprockets.register("#navigation .tabs ul.tabs-nav li", Tab);
-  sprockets.register("#navigation .tabs ul.tabs-nav", TabList);
-  sprockets.register("#navigation .tabs", TabStrip, {
-  handlers: [
-	{
-		type: 'click',
-		delegator: 'a',
-		preventDefault: true
-	},
-	{
-		type: "click",
-		delegator: 'li',
-		action: function(event, item) {
-			this.selectItem(item);
-		}
-	},
-	{
-		type: "change",
-		action: function(event) {
-			var viewer = this.getView();
-			var target = UI.NavTreeItem(this.getSelectedItem()).getView();
-			UI.SwitchBox(viewer).setView(target);
-		}
-	}
-  ],
-  callbacks: {
-	enteredDocument: function() {
-		this.selectItem(this.getListElement().children[0]);
-	}
-  }
-  });
-  
-  sprockets.domReady(); // WARN this line must be after all content in decor
-
-})();
-</script>
-  
-<script>
-(function() {
-var _ = Meeko.stuff;
-var DOM = Meeko.DOM, $ = DOM.$, $$ = DOM.$$;
-Meeko.panner.config({
-	duration: 250,
-    nodeRemoved: { before: hide, after: show },
-    nodeInserted: { before: hide, after: show },
-    pageIn: function() { // TODO this shoud be part of the binding, or at least after decorIn.
-    }
-});
-
-function hide(msg) { msg.node.setAttribute("hidden", "hidden"); }
-function show(msg) { msg.node.removeAttribute("hidden"); }
-
-})();
-</script>
 
 
     </body>
