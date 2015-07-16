@@ -1,24 +1,30 @@
 (function() {
 
-var DOM = Meeko.DOM, $ = DOM.$, $$ = DOM.$$, $id = DOM.$id;
-var URL = DOM.URL;
+var logger = Meeko.logger;
+var _ = Meeko.stuff;
+var DOM = Meeko.DOM;
+var URL = Meeko.URL, baseURL = URL(document.URL);
 
-var decorURL = 'decor.html';
-var baseURL;
+var framesetURL = 'frameset.html'; // relative to config.js
+var scope;
 
-Meeko.decor.config({
+Meeko.framer.config({
+
 	lookup: function(url) {
-		if (!baseURL) return; // first time
+		if (!scope) return; // first time
 
 		// FIXME better notification for leaving doc-set
-		if (url.indexOf(baseURL) !== 0) return; 
-		return decorURL;
+		if (url.indexOf(scope) !== 0) return; 
+		return {
+			framesetURL: framesetURL,
+			scope: scope
+		}
 	},
 	
 	detect: function(doc) {
-		if (baseURL) return; // shouldn't be needed. lookup() will be valid
+		if (scope) return this.lookup(document.URL); // shouldn't be needed. lookup() will be valid
 	
-		var homeButton = $('span#sync-toc > a', doc);
+		var homeButton = DOM.find('p.sync-toc > a', doc);
 	
 		if (!homeButton) {
 			alert("This doesn't look like a supported Help And Manual site. Sorry");
@@ -27,16 +33,14 @@ Meeko.decor.config({
 	
 		var docURL = URL(document.URL);
 		var homeHref = docURL.resolve(homeButton.getAttribute('href'));
-		baseURL = URL(homeHref).base;
-	
-		return decorURL;
-	},
-	
-	normalize: function(doc) {
-		Meeko.decor.rebase(doc, baseURL);
+		scope = URL(homeHref).base;
+
+		return this.lookup(document.URL);
 	}
 
 });
+
+/*
 
 Meeko.panner.config({
 	normalize: function(doc, details) {
@@ -56,5 +60,6 @@ Meeko.panner.config({
 	}
 });
 
-	
+*/
+
 })();

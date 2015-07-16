@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Help &amp; Manual</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">   
+  <meta name=viewport content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,follow" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="-1">
+  <meta http-equiv="cache-control" content="no-cache" />
+
+<!--
+  <script type="text/javascript" src="jquery.js"></script>
+  <script type="text/javascript" src="helpman_settings.js"></script>
+  <script type="text/javascript" src="helpman_navigation.js"></script>
+  <script type="text/javascript" src="hmcontextids.js"></script>
+  <script type="text/javascript" src="cachehash.js"></script>
+-->
+
+  <link type="text/css" href="styles.css" rel="stylesheet" />
+  <link type="text/css" href="style_header.css" rel="stylesheet" />
+  <link type="text/css" href="custom.css" rel="stylesheet" />
+
+  <style type="text/css">
+    html {
+      overflow: hidden;
+    }
+    body { 
+      margin:0;
+      padding:0;
+      height:100%;
+      overflow:hidden; 
+      background: #fff;
+    }
+    #hmheadbox {
+      position: absolute;
+      left: 0px;
+      right: 0px;
+      top: 0px;
+      height: 70px;
+      }
+    #hmheadbox .mobilemenu {
+      width: 32px;
+      height: 32px;
+      /* Mobile menu color: change the background-url to switch */
+      background:url('hm_webhelp_buttons_white.png') top left no-repeat;
+      background-position: 0 0;
+      margin-right: 20px;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      display: none;
+    }
+    #hmheadbox .mobilemenu:hover {
+      /* Mobile menu highlight color: change the background-url to switch */
+      background:url('hm_webhelp_buttons_orange.png') top left no-repeat;
+      opacity: 1;
+    }
+    #hmcontentslider {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      top: 70px;
+      bottom: 0;     
+      background: #FFF;
+      border-top: thin solid #95B3CA; 
+    }
+    #hmsplitter { 
+      display: block; 
+    }
+    #navbar {
+    }
+    #navbar a {
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      margin: 4px 14px 4px 10px;
+      /* Navigation buttons: change the background-url to switch color */
+      background:url('hm_webhelp_buttons_blue.png') top left no-repeat;
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
+    } 
+    #navbar a:hover {
+      background:url('hm_webhelp_buttons_orange.png') top left no-repeat;
+      opacity: 1;
+    }
+    #navbar a.hmbtntoc    { background-position: -32px 0 }
+    #navbar a.hmbtnindex  { background-position: -64px 0 }
+    #navbar a.hmbtnsearch { background-position: -96px 0 }
+
+    #hmnavbox {
+      position: absolute;
+      left: 0;
+      width: 29.7%;
+      min-width: 100px;
+      height: 100%;
+      }
+    #hmnavframe {
+      position: absolute;
+      left: 0;
+      top: 60px;
+      right: 0;
+      bottom: 0;
+      }
+    #hmcontentbox {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 30%;      
+      background: #FFF;
+      border-left: 1px dashed #ccc;
+    }
+
+    nav #menu-wrapper { max-width: 100% }
+
+    iframe { left:0;top:0;width:100%;height:100%;border:none;background:#FFF }
+    #hmcontentbox iframe { position: absolute }
+	
+    /* This media query hides the navigation panel when window width <= 760px */
+    @media only screen and (max-width: 760px) {
+	#hmcontentslider { 
+		width: 200%;
+		left: -100%;
+		transition: left 0.5s ease;
+	}
+	#hmsplitter { 
+		display: none;
+	}
+	#hmnavbox { 
+		width: 50%;
+		left: 0;
+	}
+	#hmcontentbox { 
+		width: 50%;
+		left: 50%;
+		right: 0;
+		border: none;
+	}
+	#hmheadbox .fullmenu {
+		display: none;
+	}
+	#hmheadbox .mobilemenu {
+		display: inline-block;
+	}
+    }
+  </style>
+
+  <script type="text/plain">
+    $(document).ready(function(){
+      $(window).bind("resize", function() {
+        if (!hmSupportsAbspos()) {
+      	  hmNoAbsposResize($("#hmheadbox"), true, false);
+      	  hmNoAbsposResize($("#hmnavbox"), false, true);
+      	  hmNoAbsposResize($("#hmcontentbox"), true, true);
+          $(window).trigger("resize");
+	}
+
+   	var splitBar = $("#hmsplitter");
+	var isReduced = ($("body").width() < $("#hmcontentslider").width());
+	if (isReduced) { 
+	  $("#hmnavbox").css({"left": "", "width": "", "right": ""});
+	  $("#hmcontentbox").css({"left": "", "width": "", "right": ""});
+	  $("#hmcontentslider").css({"left": "-100%"});
+	  //when switching to a topic, hide navigation, show topic:
+	  $("#hmcontent").load(function (){ showNav('hide'); });	
+	}
+	else {
+	  $("#hmcontentslider").css({"left": "0"});
+	  $("#hmcontent").unbind("load");	
+	}
+      });
+      hmCreateVSplitter($("#hmnavbox"),$("#hmcontentbox"));
+    });
+	
+    function showNav(value) {
+        var doShow = false;
+	switch (value) {
+	  case "toggle": 
+	    var navPos = $("#hmcontentslider").position();
+	    doShow = (navPos.left != 0);
+	    break;
+	  case "show":
+	    doShow = true;
+	    break;
+	}	    
+	if (doShow) {  
+	  $("#hmcontentslider").css({"left": "0"}); 
+	}
+	else {  
+	  $("#hmcontentslider").css({"left": "-100%"}); 
+	}
+    }
+  </script>
+
+<script for="hf-frameset">
+({
+lookup: function(url, details) {
+	return "hmcontent";
+}
+})
+</script>
+</head>
+<body>
+<div id="hmheadbox">
+<!-- Begin of EC Software Menu --> 
+  <nav id="main-nav">
+    <div id="menu-wrapper">
+      <ul>
+        <li id="homebutton"><a href="http://www.helpandmanual.com/index.html">&nbsp;</a></li>
+	<li class="fullmenu"><a href="http://www.helpandmanual.com/products_hm_overview.html">Products</a>
+	<ul>
+          <div class="mega-menu" id="menu-hm">
+	    <div class="mega-left">
+	         <span class="mmh1">Online help made easy</span>
+                 <li><a href="http://www.helpandmanual.com/products_hm_overview.html"><span class="mmicon" id="h-multi"></span><span class="mmh2">Multi-Channel Publishing</span></a></li>
+	         <li><a href="http://www.helpandmanual.com/products_hm_features.html"><span class="mmicon" id="h-team"></span><span class="mmh2">Teamwork Features</span></a></li>
+	    </div>
+	    <div class="mega-middle">
+	         <span class="mmh1">Power features</span>
+		 <li><a href="http://www.helpandmanual.com/products_hm_templates.html"><span class="mmicon" id="h-skins"></span><span class="mmh2">Templates + Skins</span></a></li>
+		 <li><a href="http://www.helpandmanual.com/products_hm_pluspack.html"><span class="mmicon" id="h-star"></span><span class="mmh2">H+M Premium Pack</span></a></li>
+	    </div>
+	    <div class="mega-right">
+	         <li><a href="http://www.helpandmanual.com/products_hm_screenshots.html"><span class="mmsmall">Screenshots</span></a></li>
+		 <li><a href="http://www.helpandmanual.com/products_hm_new.html"><span class="mmsmall">New in H+M 7</span></a></li>
+		 <li><a href="http://www.helpandmanual.com/products_hm_case.html"><span class="mmsmall">Customer Case Studies</span></a></li>
+		 <li><a href="http://www.helpandmanual.com/products_hm_quotes.html"><span class="mmsmall">User Quotes</span></a></li>
+		 <li><a href="http://www.helpandmanual.com/products_hm_matrix.html"><span class="mmsmall">Compare Versions</span></a></li>
+	    </div>
+	  </div>
+	</ul>
+        </li>
+        <li class="fullmenu"><a href="http://www.helpandmanual.com/downloads.html">Free Trial</a>
+	<ul>
+          <div class="mega-menu" id="menu-download">
+            <div class="mega-left">
+	         <li><a href="http://www.helpandmanual.com/downloads.html"><span class="mmicon" id="d-hm"></span><span class="mmh1">Help+Manual</span><span class="mmh2">Free Trial Version</span><span class="mmsmall">30 days fully functional</span></a></li>
+            </div>
+	    <div class="mega-right">
+		 <span class="mmh2">More Downloads</span>
+		 <div class="mega-right-sub">
+		      <li><a href="http://www.helpandmanual.com/downloads_mscomp.html"><span class="mmsmall">HTML Help Compiler</span></a></li>
+		      <li><a href="http://www.helpandmanual.com/downloads.html#spell"><span class="mmsmall">Spell Checker Dictionarites</span></a></li>
+		      <li><a href="http://www.helpandmanual.com/downloads.html#oldver"><span class="mmsmall">Older Versions of H+M</span></a></li>
+		      <li><a href="http://www.helpandmanual.com/hm2go.html"><span class="mmsmall">HM2Go Webserver</span></a></li>
+		      <li><a href="http://www.helpandmanual.com/products_hhreg.html"><span class="mmsmall">HHReg Utility</span></a></li>
+		      <li><a href="http://www.helpandmanual.com/downloads_delphi.html"><span class="mmsmall">Delphi Components</span></a></li>
+		 </div>
+	    </div>
+	  </div>
+        </ul>
+	</li>
+	<li class="fullmenu"><a href="http://www.helpandmanual.com/order.html">Buy</a>
+	<ul>
+	  <div class="mega-menu" id="menu-shop">
+	    <div class="mega-left">
+	         <li><a href="order.html"><span class="mmicon" id="b-cart"></span><span class="mmh1">Buy Online</span><span class="mmsmall">Get started with Help+Manual now and unlock your trial version within minutes!</a></li>
+            </div>
+	    <div class="mega-right">
+	         <li><a href="http://www.helpandmanual.com/order.html?promotion=upgrade"><span class="mmicon" id="b-upgrade"></span><span class="mmh2">Upgrade from older versions</span></a></li>
+		 <li><a href="http://www.helpandmanual.com/partner_resellers.html"><span class="mmicon" id="b-reseller"></span><span class="mmh2">Purchase from a reseller</span></a></li>
+		 <li><a href="http://www.helpandmanual.com/partner_training.html"><span class="mmicon" id="b-training"></span><span class="mmh2">Training on Help+Manual</span></a></li>
+	    </div>
+ 	  </div>
+	</ul>
+	</li>
+        <li class="fullmenu"><a class="selected" href="http://www.helpandmanual.com/support_help.html">Support</a>
+	<ul>
+	  <div class="mega-menu" id="menu-support">
+            <div class="mega-left">
+	         <li><a href="http://www.helpandmanual.com/help/"><span class="mmicon" id="s-doc"></span><span class="mmh1">Documentation</span><span class="mmsmall">The complete guide to Help+Manual online</span></a></li>
+            </div>
+	    <div class="mega-middle">
+		 <li><a href="http://www.helpandmanual.com/support_help.html"><span class="mmicon" id="s-help"></span><span class="mmh2">Help &amp; Support</span></a></li>
+		 <li><a href="http://www.helpandmanual.com/support_forum.html"><span class="mmicon" id="s-forum"></span><span class="mmh2">Community &amp; Forums</span></a></li>
+            </div>
+	    <div class="mega-right">
+	         <li><a href="http://www.helpandmanual.com/support_tutorials.html"><span class="mmh2">Programming Tutorials</span></a></li>
+		 <li><a href="http://www.helpandmanual.com/partner_training.html"><span class="mmh2">Training</span></a></li>
+		 <li><a href="http://www.helpandmanual.com/partner_translation.html"><span class="mmh2">Translation Services</span></a></li>
+	    </div>
+	  </div>
+	</ul>
+	</li>
+	<li class="fullmenu"><a href="http://www.helpandmanual.com/company_about.html">Company</a>
+	<ul>
+	  <div class="mega-menu" id="menu-company">
+	       <li><a href="http://www.helpandmanual.com/company_about.html"><span id="c-about"></span><span>About us</span></a></li>
+	       <li><a href="http://www.helpandmanual.com/company_contact.html"><span id="c-contact"></span><span>Contact</span></a></li>
+	       <li><a href="http://news.helpandmanual.com"><span id="c-news"></span><span>News Blog</span></a></li>
+	  </div>
+	</ul>
+        </li>
+
+        <!-- this is the lonely burger menu that switches the navigation panel -->
+        <li class="mobilemenu"><a href="javascript:showNav('toggle')" title="Show navigation"></a></li>
+      </ul>
+    </div>
+  </nav>
+<!-- End of EC Software Menu --> 
+</div>
+<!-- end of header  --> 
+
+<div id="hmcontentslider">
+  <div id="hmnavbox">
+    <!-- buttons to switch navigation panel --> 
+    <div id="navbar" hidden>
+         <a class="hmbtntoc" href="hmcontent.htm" title="Table of Contents" target="hmnavigation"></a>
+	 <a class="hmbtnindex" href="hmkwindex.htm" title="Keyword Index" target="hmnavigation"></a>
+	 <a class="hmbtnsearch" href="search.php" title="Search" target="hmnavigation"></a>
+    </div>
+    <!-- the navigation panel --> 
+    <div id="hmnavframe"> 
+	<hf-frame name="hmtoc" id="hmtoc" src="scope:hmcontent.htm">
+   <style type="text/css">
+       body { font-size: 1.1em }
+       .heading1 { color: #000000; text-decoration: none; }
+       .heading2 { color: #000000; text-decoration: none; }
+       .heading3 { color: #000000; text-decoration: none; }
+       .heading4 { color: #000000; text-decoration: none; }
+       .heading5 { color: #000000; text-decoration: none; }
+       .heading6 { color: #000000; text-decoration: none; }
+
+       .hilight1 { color: #FFFFFF; background: #2C5D88; text-decoration: none; }
+       .hilight2 { color: #FFFFFF; background: #2C5D88; text-decoration: none; }
+       .hilight3 { color: #FFFFFF; background: #2C5D88; text-decoration: none; }
+       .hilight4 { color: #FFFFFF; background: #2C5D88; text-decoration: none; }
+       .hilight5 { color: #FFFFFF; background: #2C5D88; text-decoration: none; }
+       .hilight6 { color: #FFFFFF; background: #2C5D88; text-decoration: none; }
+
+       /* TOC LIST CSS */
+       #toc    { padding:0; margin:0 }
+       #toc li { margin-top:2px; margin-left:0; padding:1px }
+       #toc ul { padding-left:0; margin-left:0px }       
+       /* TOC LIST CSS */
+   </style>
+		<hf-body>
+			<hf-transform type="main">
+			</hf-transform>
+		</hf-body>
+	</hf-frame>
+   	<hf-frame name="hmindex" id="hmindex" src="scope:hmindex.htm" hidden>
+   <style type="text/css">
+	body { 
+		margin: 0; 
+		padding: 0; 
+	}
+	#keyword_entry_div {
+		position: absolute;
+		left: 5px;
+		top: 5px;
+		right: 5px;
+	} 
+	#keyword_entry_div p {
+		font-weight: bold;
+	}
+	#keyword_list_div {
+		position: absolute;
+		left: 5px;
+		top: 45px;
+		right: 5px;
+		bottom: 5px;
+		padding:0;
+	} 
+	#keyword_entry {
+		border: 1px solid silver;
+		width: 100px;
+	}
+	#keyword_list {
+		border: 1px solid silver;
+		width: 100%;
+		height: 100%; 
+	}
+	#keyword_menu {
+		display: none;
+		background: #fff;
+		border: 1px solid silver;
+		padding: 10px;
+		box-shadow: 4px 4px 8px #888;
+		border-radius: 6px 6px;
+	}
+	#keyword_menu a {
+		display: block;
+		text-decoration: none;
+		color: #000;
+		padding: 2px 2px 2px 18px;
+		background: url(hm-keyword-page-icon.png) 2px 2px no-repeat;
+	}
+	#keyword_menu a:hover {
+		background: #225687 url(hm-keyword-page-icon.png) 2px 2px no-repeat;
+		text-decoration: none;
+		color: #fff;
+	}               
+	#keyword_menu_no_entry {
+		display: none;
+		background: #fff;
+		border: 1px solid silver;
+		padding: 5px;
+		box-shadow: 4px 4px 8px #888;
+		border-radius: 6px 6px;
+		width: 50%;
+		font-size:80%;
+	}
+   </style>       
+
+		<hf-body>
+			<hf-transform type="main">
+			</hf-transform>
+		</hf-body>
+	</hf-frame>
+	<hf-frame name="hmsearch" id="hmsearch" src="scope:search.php" hidden>
+   <style type="text/css">
+	body { }
+	.submit { font-size: 9pt; }
+	.highlight { background: #FFFF40; }
+	.searchheading { font-size: 9pt; font-weight: bold; }
+	.summary { font-size: 8pt; font-style: italic; }
+	.results { font-size: 9pt; }
+	.description { font-size: 9pt; }
+	.context { font-size: 9pt; }
+	.result_title { font-size: 9pt; }
+	
+	.suggestion { font-size: 100%; }
+	.category { color: #999999; }
+	.sorting { text-align: right; }
+	.zoom_searchform { font-size: 100%; }
+	.zoom_results_per_page { font-size: 80%; margin-left: 10px; }
+	.zoom_match { font-size: 80%; margin-left: 10px;}
+	.zoom_categories { font-size: 80%; }
+	.zoom_categories ul { display: inline; margin: 0px; padding: 0px;}
+	.zoom_categories li { display: inline; margin-left: 15px; list-style-type: none;}
+	input.zoom_button {  }
+	input.zoom_searchbox {  }
+	.result_image { float: left; display: block; }
+	.result_image img { margin: 10px; width: 80px; border: 0px; }
+	.result_block { margin-top: 15px; margin-bottom: 15px; clear: left; }
+	.result_altblock { margin-top: 15px; margin-bottom: 15px; clear: left; }
+	.result_pages { font-size: 100%; }
+	.result_pagescount { font-size: 100%; }
+	.searchtime { font-size: 80%; }
+	.recommended
+	{
+		background: #DFFFBF;
+		border-top: 1px dotted #808080;
+		border-bottom: 1px dotted #808080;
+		margin-top: 15px;
+		margin-bottom: 15px;
+	}
+	.recommended_heading { float: right; font-weight: bold; }
+	.recommend_block { margin-top: 15px; margin-bottom: 15px; clear: left; }
+	.recommend_title { font-size: 100%; }
+	.recommend_description { font-size: 100%; color: #008000; }
+	.recommend_infoline { font-size: 80%; font-style: normal; color: #808080;}
+	
+ 	</style>
+		<hf-body>
+			<hf-transform type="main">
+			</hf-transform>
+		</hf-body>
+	</hf-frame>
+ </div>
+  </div>
+
+  <div id="hmcontentbox" >
+	<hf-frame name="hmcontent" id="hmcontent" src="scope:hm_welcome.htm">
+   <style type="text/css" media="screen"> 
+      html, body { 
+		margin:0; 
+        padding:0; 
+        overflow: hidden;
+        background: #ffffff; 
+      } 
+
+      div#printheader { display: none; }
+      #idheader { 
+        width:100%; 
+        height:auto; 
+        padding: 0; 
+        margin: 0;
+      } 
+      #idheader table { background: #2C5D88; }             
+      #idheader h1 { color: #FFF; }     
+      #idnav {
+        text-align: right;
+        width: 120px;
+        vertical-align: middle;        
+      } 
+      #idnav a { text-decoration: none }
+      #idnav span {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        margin-left: 4px;
+        background:url('hm_webhelp_buttons_grey.png') top left no-repeat;
+      } 
+      #idnav a span {
+        background-image:url('hm_webhelp_buttons_white.png');
+      } 
+      #idnav a span:hover {
+        background-image:url('hm_webhelp_buttons_orange.png');
+      } 
+      #idnav span.hmbtnprev { background-position: 0 -32px }
+      #idnav span.hmbtnnext { background-position: -24px -32px }
+      #idnav span.hmbtntop  { background-position: -48px -32px }
+
+      #callout-table, #overview-table {display:block; position:relative; top:0; left:0;}
+      #callout-icon {display:block; position:absolute; top:-11px; left:-11px;}
+      #callout-icon-flag {display:block; position:absolute; top:-11px; left:-8px;}
+      #callout-table a {text-decoration: none; color: blue;}
+      #callout-table a:visited {text-decoration: none; color: blue;}
+      #overview-table a {text-decoration: none; color: black;}
+      #overview-table a:visited {text-decoration: none; color: black;}
+      #callout-table a:hover, #overview-table a:hover {text-decoration: underline;}       
+      p.help-url { margin: 20px 0 5px 0; text-align: center; font-size: 80%; text-decoration: none }      
+      #switchtoggles { text-align: right; padding: 0 2px 0 0; font-size: 90%; } 
+      .sync-toc { color: #ffffff; font-size: 8pt; font-weight: bold; display: none; }
+      .sync-toc a { color: #ffffff; text-decoration: none; font-weight: bold;}
+      .sync-toc a:visited { color: #ffffff; }
+      .sync-toc a:hover { text-decoration: underline; }
+  </style>
+   <style type="text/css" media="print">
+      span.f_Heading1 { color: black; }
+      #idheader, #printheader img { display:none; }
+      #printheader { display: block; margin-top: 20px; }
+      #idcontent { margin-top: 10px; }
+   </style>   
+
+		<hf-body>
+			<hf-transform type="main">
+			</hf-transform>
+		</hf-body>	
+	</hf-frame>
+  </div>
+
+</div>
+</body>
+</html>
+
