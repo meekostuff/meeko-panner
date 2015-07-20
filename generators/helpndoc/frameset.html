@@ -68,42 +68,7 @@
 #mk_toc #tabs .ui-tabs-panel { position: static; }
 </style>
 
-<!-- layout -->
-<style>
-html, body { width: 100%; height: 100%; overflow: hidden; }
-#mk_header { width: 100%; border-bottom: 2px ridge black; }
-#mk_browser { display: table-row; width: 100%; }
-#mk_browser > div { display: table-cell; vertical-align: top; }
-#mk_navigation { width: 300px; }
-#mk_separator { width: 1px; background-color: black; }
-#mk_main { }
-#mk_toc, #mk_topic { width: 100%; height: 100%; overflow: hidden; }
-#mk_topic { overflow-y: auto; }
-/* need to manually set height for mk_navigation, mk_separator, mk_main */
-</style>
-
-<!-- paging animation -->
-<style type="text/css">
-#mk_topic { 
--webkit-transition: opacity 0.25s linear;
--moz-transition: opacity 0.25s linear;
--ms-transition: opacity 0.25s linear;
--o-transition: opacity 0.25s linear;
-transition: opacity 0.25s linear;
-}
-#mk_topic[hidden] {
-display: block;
-visibility: visible;
-opacity: 0;
-}
-</style>
-
-
-<script src="../../DOMSprockets/Sprocket.js"></script>
-<!--[if lte IE 8]>
-<script src="../../DOMSprockets/Legacy.js"></script>
-<![endif]-->
-<script src="../../DOMSprockets/UI.js"></script>
+<script src="../../DOMSprockets/ARIA.js"></script>
 
 <!-- toc.html -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -288,10 +253,23 @@ opacity: 0;
 	}
 </script>
 
+<script for="hf-frameset">
+({
+lookup: function(url, details) {
+	return 'hmcontent';
+}
+})
+</script>
+
 </head>
 <body>
  
-<div id="mk_header">
+<hf-layer>
+
+<hf-vlayout width="100%">
+	<hf-panel height="95px">
+		<hf-body>
+	
 <!-- header.html -->
 <table id="header-table" width="960" border="0" align="center" cellpadding="5" cellspacing="0">
 	<tr>
@@ -315,98 +293,41 @@ opacity: 0;
 		</td>
 	</tr>
 </table>
-</div>
 
-<div id="mk_browser">
+		</hf-body>
+	</hf-panel>
+	<hf-hlayout height="calc(100vh - 95px)">
+		<hf-panel width="300px">
+			<hf-body>
 
-<div id="mk_navigation">
-  <div id="mk_toc">
-	<a href="base-url:toc.html"></a>
-	<div style="width: 100%; text-align: center; margin-top: 5em;"><img src="../../decor/waiting-small.gif" style="border: none;"/></div>
-  </div>  
-</div>
+<hf-frame src="scope:toc.html" main="#topic_content">
+	<hf-body>
+		<hf-transform type="main">
+		</hf-transform>
+	</hf-body>
+</hf-frame>
 
-<div id="mk_separator"></div>
+			</hf-body>
+		</hf-panel>
 
-<div id="mk_main">
-  <div id="mk_topic">
-    <div style="width: 100%; text-align: center; margin-top: 5em;"><img src="../../decor/waiting-big.gif" style="border: none;" /></div>	
-  </div>
-</div>
+		<hf-panel width="calc(100vw - 300px)">
+			<hf-body>
 
-</div>
+<hf-frame src="scope:hm_welcome.html" name="hmcontent" main="body">
+	<hf-body>
+		<hf-transform type="main">
+		</hf-transform>
+	</hf-body>
+</hf-frame>
 
-<script>
-(function() {
-  var DOM = Meeko.DOM;
-      $id = DOM.$id, $$ = DOM.$$,
-      _ = Meeko.stuff, extend = _.extend, forEach = _.forEach;
+			</hf-body>
+		</hf-panel>
 
-  var sprockets = Meeko.sprockets;
-  var UI = sprockets.UI;
+	</hf-hlayout>
 
-  var Panel = UI.Panel.evolve({ // panel is an abstract class. Sub-classes must define the load() method
-    setHidden: function(state) {
-      UI.Panel.prototype.setHidden.apply(this, arguments);
-      if (!!state) return; 
-      if (this.loaded) return;
-      // if panel is to be shown and content not already loaded ...
-      this.load();
-      this.loaded = true; // assume that the load succeeds
-    }
-  });
-  
-  var navPanel = Panel.evolve({
-    load: function() {
-      var element = this.boundElement;
-	  var url = this.$('a').href;
-      DOM.loadHTML(url)
-	  .then(function(doc) {
-		forEach($$('a', doc), function(el) { el.removeAttribute('target'); });
-        element.innerHTML = $id('tabs', doc).outerHTML;
-  		navInit();
-		SelectTocItem(document.URL.match(/\/([^\/\.]+)\.html?$/)[1]); // FIXME robustness
-      });
-    }
-  });
+</hf-vlayout>
 
-  sprockets.register("#mk_toc", navPanel, {
-	callbacks: {
-	  enteredDocument: function() { this.setHidden(false); }
-	}
-  });
-
-  
-  sprockets.domReady(); // WARN this line must be after all content in decor
-
-})();
-</script>
-  
-
-<script>
-(function() {
-var _ = Meeko.stuff;
-var DOM = Meeko.DOM, $ = DOM.$, $$ = DOM.$$, $id = DOM.$id;
-Meeko.panner.config({
-	duration: 250,
-    nodeRemoved: { before: hide, after: show },
-    nodeInserted: { before: hide, after: show },
-    pageIn: function() { // TODO this shoud be part of the binding, or at least after decorIn.
-	  var height = document.body.clientHeight - $id('mk_header').clientHeight;
-	  $id('mk_navigation').style.height = height + 'px';
-	  $id('mk_separator').style.height = height + 'px';
-	  $id('mk_main').style.height = height + 'px';
-	  
-	  var width = document.body.clientWidth - $id('mk_navigation').clientWidth - $id('mk_separator').clientWidth;
-	  $id('mk_main').style.width = width + 'px';
-    }
-});
-
-function hide(msg) { msg.node.setAttribute("hidden", "hidden"); }
-function show(msg) { msg.node.removeAttribute("hidden"); }
-
-})();
-</script>
+</hf-layer>
 
 </body>
 </html>

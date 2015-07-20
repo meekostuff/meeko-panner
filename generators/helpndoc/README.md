@@ -1,7 +1,7 @@
 HelpNDoc
 --------
 
-**NOT CURRENTLY WORKING**
+** UNDER DEVELOPMENT **
 
 [HelpNDoc](http://www.helpndoc.com/) generates documentation sets based on `<frameset>`.
 
@@ -9,6 +9,7 @@ Frameset sites don't sync the URL in the address bar with the primary content in
 
 AJAX + pushState to the rescue.
 
-meeko-panner is compatible with the following sets:
+This is currently under development and requires a custom HelpNDoc template. 
+It can be viewed (if working) at 
 
-- [HelpNDoc Online Help](http://www.helpndoc.com/sites/default/files/documentation/html/index.html)
+- [HelpNDoc Help Manual](http://playground.meekostuff.net/helpndoc/online-help2/)
