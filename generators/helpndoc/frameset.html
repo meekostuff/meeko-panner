@@ -48,19 +48,15 @@
 </style>
 
 <!-- toc and topic styles -->
-<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
+<!--
 <link type="text/css" rel="stylesheet" media="all" href="css/silver-theme/jquery-ui-1.8.12.custom.css" />
 <link type="text/css" rel="stylesheet" media="all" href="css/dynatree/chm/ui.dynatree.css" />
+<link type="text/css" rel="stylesheet" media="all" href="basic.css" />	
+-->
+<link type="text/css" rel="stylesheet" media="all" href="css/reset.css" />
 <link type="text/css" rel="stylesheet" media="all" href="css/base.css" />
 <link type="text/css" rel="stylesheet" media="all" href="css/hnd.css" />
 <link type="text/css" rel="stylesheet" media="all" href="css/toc.css" />	
-
-<style type="text/css">
-	#tabs .ui-widget-header
-	{
-		background-color: #EFEFEF;
-	}
-</style>
 
 <!-- override toc styles -->
 <style> /* #mk_toc is needed to win the specificity */
@@ -71,6 +67,7 @@
 <script src="../../DOMSprockets/ARIA.js"></script>
 
 <!-- toc.html -->
+<!--
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
 <script type="text/javascript" src="js/jquery.cookie.js"></script>
@@ -252,6 +249,7 @@
 		}
 	}
 </script>
+-->
 
 <script for="hf-frameset">
 ({
@@ -264,43 +262,17 @@ lookup: function(url, details) {
 </head>
 <body>
  
+<hf-frame src="scope:index.html">
+	<hf-body>
+		<hf-transform type="hazard" format="css">
+
 <hf-layer>
 
-<hf-vlayout width="100%">
-	<hf-panel height="95px">
-		<hf-body>
-	
-<!-- header.html -->
-<table id="header-table" width="960" border="0" align="center" cellpadding="5" cellspacing="0">
-	<tr>
-		<td rowspan="2">
-			<a href="http://www.helpndoc.com" target="_top">
-				<img src="img/helpndoc-logo.png" alt="HelpNDoc help authoring tool"/>
-			</a>
-		</td>
-		<td class="secondary-menu">
-			<a href="http://www.helpndoc.com/news-and-articles" target="_top">News &amp; Articles</a>
-			<a href="http://www.helpndoc.com/online-help" target="_top" class="selected">Online Help</a>
-			<a href="http://www.helpndoc.com/contact" target="_top">Contact Us</a>
-		</td>
-	</tr>
-	<tr>
-		<td class="primary-menu">
-			<a href="http://www.helpndoc.com" target="_top">Home</a>
-			<a href="http://www.helpndoc.com/feature-tour" target="_top">Feature Tour</a>
-			<a href="http://www.helpndoc.com/download" target="_top">Download</a>
-			<a href="http://www.helpndoc.com/store" target="_top">Store</a>
-		</td>
-	</tr>
-</table>
-
-		</hf-body>
-	</hf-panel>
-	<hf-hlayout height="calc(100vh - 95px)">
+	<hf-hlayout height="calc(100vh)">
 		<hf-panel width="300px">
 			<hf-body>
 
-<hf-frame src="scope:toc.html" main="#topic_content">
+<hf-frame expr:src="a.toc {@href}" main="#topic_content">
 	<hf-body>
 		<hf-transform type="main">
 		</hf-transform>
@@ -313,7 +285,7 @@ lookup: function(url, details) {
 		<hf-panel width="calc(100vw - 300px)">
 			<hf-body>
 
-<hf-frame src="scope:hm_welcome.html" name="hmcontent" main="body">
+<hf-frame expr:src="#topic_header_nav a {@href}" name="hmcontent" main="body"><!-- FIXME -->
 	<hf-body>
 		<hf-transform type="main">
 		</hf-transform>
@@ -325,9 +297,11 @@ lookup: function(url, details) {
 
 	</hf-hlayout>
 
-</hf-vlayout>
-
 </hf-layer>
+
+		</hf-transform>
+	</hf-body>
+</hf-frame>
 
 </body>
 </html>
