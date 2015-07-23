@@ -272,7 +272,7 @@ lookup: function(url, details) {
 		<hf-panel width="300px">
 			<hf-body>
 
-<hf-frame expr:src="a.toc {@href}" main="#topic_content">
+<hf-frame expr:src="a[rel=contents] {@href}" main="#topic_content">
 	<hf-body>
 		<hf-transform type="main">
 		</hf-transform>
@@ -285,7 +285,7 @@ lookup: function(url, details) {
 		<hf-panel width="calc(100vw - 300px)">
 			<hf-body>
 
-<hf-frame expr:src="#topic_header_nav a {@href}" name="hmcontent" main="body"><!-- FIXME -->
+<hf-frame expr:src="a[rel=first] {@href}" name="hmcontent" main="body">
 	<hf-body>
 		<hf-transform type="main">
 		</hf-transform>
