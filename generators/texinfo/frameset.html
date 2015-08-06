@@ -304,16 +304,18 @@ lookup: function(url, details) {
 		<hf-body condition="loaded">
 			<hf-transform type="hazard" format="css">
 	
-	<div class="contents">
-		<ul id="haz_tocFrame_group" haz:each="> ul">
+<div class="contents">
+	<haz:template name="haz_tocFrame_group">
+	<ul haz:each="> ul">
 		<li haz:each="> li">
 			<span>
 				<a expr:href="> a {href}" expr:_html="> a {_html} | (function(value) { var textNode = value.firstChild; textNode.nodeValue = textNode.nodeValue.replace(/^[.0-9]+\s+/, ''); return value; })(value)">{{Section-Link}}</a>
 			</span>
-			<ul haz:template="haz_tocFrame_group" haz:each="> ul"></ul>
+			<haz:include name="haz_tocFrame_group"></haz:include>
 		</li>
-		</ul>
-	</div>
+	</ul>
+	</haz:template>
+</div>
 	
 			</hf-transform>
 		</hf-body>
@@ -348,16 +350,25 @@ return frag;
 		<hf-transform type="hazard" format="css">
 
 <!-- <div expr:_html="h2.unnumbered + table tr td { _html }"></div> -->
-<nav haz:each="table.index-cp" class="contents">
-	<div haz:each="tr">
-	<hr haz:if="td:first-child > hr" />
-	<h4 class="nav-index-group-heading" haz:if="th:first-child" expr:_html="th:first-child > a">{{Concept-Group}}</h4>
-	<div haz:if="td:first-child + td > a">
+<haz:each select="table.index-cp">
+<nav class="contents">
+	<haz:each select="tr">
+		<haz:choose>
+	<haz:when test="td:first-child > hr">
+	<hr />
+	</haz:when>
+	<haz:when test="th:first-child">
+	<h4 class="nav-index-group-heading" expr:_html="th:first-child > a">{{Concept-Group}}</h4>
+	</haz:when>
+	<haz:when test="td:first-child + td > a">
+	<div>
 		<a expr:href="td:first-child + td > a {href}" mexpr:title="Section: {{ td:first-child + td + td + td > a { _text } }}" expr:_html="td:first-child + td > a {_html}">{{Concept-Link}}</a>
 	</div>
-	</div>
+	</haz:when>
+		</haz:choose>
+	</haz:each>
 </nav>
-
+</haz:each>
 		</hf-transform>
 	</hf-body>
 	<hf-body condition="loaded">
@@ -398,15 +409,25 @@ return frag;
 		<hf-transform type="hazard" format="css">
 
 <!-- <div expr:_html="h2.unnumbered + table tr td { _html }"></div> -->
-<nav haz:each="table.index-fn" class="contents">
-	<div haz:each="tr">
-	<hr haz:if="td:first-child > hr" />
-	<h4 class="nav-index-group-heading" haz:if="th:first-child" expr:_html="th:first-child > a">{{Function-Group}}</h4>
-	<div haz:if="td:first-child + td > a">
+<haz:each select="table.index-fn">
+<nav class="contents">
+	<haz:each select="tr">
+		<haz:choose>
+	<haz:when test="td:first-child > hr">
+	<hr />
+	</haz:when>
+	<haz:when test="th:first-child">
+	<h4 class="nav-index-group-heading" expr:_html="th:first-child > a">{{Function-Group}}</h4>
+	</haz:when>
+	<haz:when test="td:first-child + td > a">
+	<div>
 		<a expr:href="td:first-child + td > a {href}" mexpr:title="Section: {{ td:first-child + td + td + td > a { _text } }}" expr:_html="td:first-child + td > a {_html}">{{Function-Link}}</a>
 	</div>
-	</div>
+	</haz:when>
+		</haz:choose>
+	</haz:each>
 </nav>
+</haz:each>
 
 		</hf-transform>
 	</hf-body>
@@ -485,7 +506,8 @@ return frag;
 	<a haz:if="header a[rel=up]" class="btn btn-primary" expr:href="header a[rel=up] {@href}" expr:title="header a[rel=up] {_text}"><i class="glyphicon glyphicon -step-up">▲</i> Up</a>
 	<a haz:if="header a[rel=next]" class="btn btn-primary" expr:href="header a[rel=next] {@href}" expr:title="header a[rel=next] { _text }">Next <i class="glyphicon glyphicon -step-forward">►</i></a>
 </nav>
-<main expr:_html="main {_html}">{{Section-Contents}}
+<main expr:_html="main {_html}">
+{{Section-Contents}}
 </main>
 			</hf-transform>
 		</hf-body>
