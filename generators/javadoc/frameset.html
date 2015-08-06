@@ -103,6 +103,7 @@ enteredState: function(msg) {
 
 <!-- ========= START OF TOP NAVBAR ======= -->
 <div id="hierarchy" class="topNav">
+
 <ul class="navList" title="Navigation">
 <li><a href="scope:./overview-summary.html">Overview</a></li>
 <li><a href="scope:deprecated-list.html">Deprecated</a></li>
@@ -112,9 +113,20 @@ enteredState: function(msg) {
 <li><a href="scope:overview-tree.html">Tree</a></li>
 <li><a href="scope:index-files/index-1.html">Index</a></li> 
 -->
-<div class="aboutLanguage" haz:if=".aboutLanguage" expr:_html=".aboutLanguage {_html}">{title}</div>
-<div class="aboutLanguage" haz:unless=".aboutLanguage"><strong><em expr:_text="title {_text} | value.replace(/^[^\(]*\(\s*/, '').replace(/\s*\)\s*$/, '')">{alt title}</em></strong></div>
+
+<div class="aboutLanguage">
+<haz:choose>
+<haz:when test=".aboutLanguage">
+	<haz:eval select=".aboutLanguage {_html}">{title}</haz:eval>
+</haz:when>
+<haz:otherwise>
+<strong><em expr:_text="title {_text} | value.replace(/^[^\(]*\(\s*/, '').replace(/\s*\)\s*$/, '')">{alt title}</em></strong>
+</haz:otherwise>
+</haz:choose>
 </div>
+
+</div>
+
 <!--
 <div class="subNav">
 <ul class="navList">
@@ -127,25 +139,24 @@ enteredState: function(msg) {
 </div>
 -->
 <!-- ========= END OF TOP NAVBAR ========= -->
-<div class="header">
-</div>
 
-<div id="content">
+<div class="header"></div>
+
 <hf-frame src="scope:./overview-summary.html" name="classFrame">
-  <hf-body>
+  <hf-body condition="loaded">
     <hf-transform type="script">
-      <script>
-      ({
-      
-      transform: function(doc, details) {
-        
+	<script>
+	({
+
+	transform: function(doc, details) {
         var _ = Meeko.stuff, DOM = Meeko.DOM, URL = Meeko.URL;
         
         var oURL = URL(details.url);
 		var path = oURL.pathname;
 		var dirs = oURL.href.replace(details.scope, '').replace(/#.*$/, '').split('/');
 		var basename = dirs.pop().replace('.html', '');
-		var pkg, className;
+		var pkg, packageName, className;
+		var pageType, titleType;
 		if (dirs.length <= 0) {
 			pageType = basename; // overview-summary, overview-tree, deprecated-list
 		}
@@ -158,12 +169,17 @@ enteredState: function(msg) {
 				dirs.pop();
 				pkg = dirs;
 				pageType = "class-use";
+				titleType = 'class';
 				className = basename;
 				break;
 			default:
-				if (/^package-/.test(basename)) pageType = basename; // package-summary, package-use, package-tree
+				if (/^package-/.test(basename)) {
+					pageType = basename; // package-summary, package-use, package-tree
+					titleType = 'package';
+				}
 				else {
 					pageType = 'class';
+					titleType = 'class';
 					className = basename;
 				}
 				pkg = dirs;
@@ -171,113 +187,134 @@ enteredState: function(msg) {
 			}
 		}
 
-		var supportedPageSubtypes = DOM.find('ul.navList[title=Navigation]', doc).textContent.split(/\s+/);
-		var supportsUse = supportedPageSubtypes.indexOf('Use') >= 0;
-		var supportsTree = supportedPageSubtypes.indexOf('Tree') >= 0;
-
-		var header = doc.createElement("div");
-		header.id = "header";
-		_.forEach(DOM.findAll(".header", doc), function(el) { header.appendChild(el); });
-		
-		var title = DOM.find(".title", header);
+		var title = DOM.find(".title", doc);
 		if (title) {
 			if (pageType == 'class' && /^Interface/.test(title.title)) pageType = 'interface';
+			if (pageType == 'class' && /^Enum/.test(title.title)) pageType = 'enum';
 			if (pageType == 'class-use' && /^Uses of Interface/.test(title.title)) pageType = 'interface-use';
+			if (pageType == 'class-use' && /^Uses of Enum/.test(title.title)) pageType = 'enum-use';
 		}
-		if (title) {
-			var title1 = doc.createElement("div");
-			title1.className = "title";
-			var innerHTML;
-			switch (pageType) { // TODO a lot of repetition here
-			default:
-				innerHTML = '<h1>' + title.innerHTML + '</h1>';
+	
+		if (pkg && pkg.length) packageName = pkg.join('.'); // TODO get `packageName` by scraping title
+
+		var packageUrl, packageUseUrl, packageTreeUrl, classUrl, classUseUrl;
+		_.forEach(DOM.findAll('ul.navList[title=Navigation] a', doc), function(link) {
+			var text = _.lc(DOM.textContent(link));
+			var href = link.href;
+			switch (text) {
+			case 'package': packageUrl = href; break;
+			case 'class': classUrl = href; break;
+			case 'use': 
+				switch (titleType) {
+				case 'package': packageUseUrl = href; break;
+				case 'class': classUseUrl = href; break;
+				}
 				break;
-			case "package-summary":
-				innerHTML =
-					'<h1>Package <a href="package-summary.html">' + pkg.join('.') + '</a></h1>' +
-					'<ul class="contextNav">' +
-					(supportsUse ? '<li><a href="package-use.html">Use</a></li>' : '') +
-					(supportsTree ? '<li><a href="package-tree.html">Tree</a></li>' : '') +
-					'</ul>';
-				break;
-			case "package-use":
-				innerHTML =
-					'<h1>Package <a href="package-summary.html">' + pkg.join('.') + '</a></h1>' +
-					'<ul class="contextNav">' +
-					'<li class="navBarCell1Rev"><a href="package-use.html">Use</a></li>' +
-					(supportsTree ? '<li><a href="package-tree.html">Tree</a></li>' : '') +
-					'</ul>';
-				break;
-			case "package-tree":
-				innerHTML =
-					'<h1>Package <a href="package-summary.html">' + pkg.join('.') + '</a></h1>' +
-					'<ul class="contextNav">' +
-					(supportsUse ? '<li><a href="package-use.html">Use</a></li>' : '') +
-					'<li class="navBarCell1Rev"><a href="package-tree.html">Tree</a></li>' +
-					'</ul>';
-				break;
-			case "class":
-				innerHTML =
-					'<h1>Class <a href="' + className + '.html">' + className + '</a></h1>' +
-					'<ul class="contextNav">' +
-					(supportsUse ? '<li><a href="class-use/' + className + '.html">Use</a></li>' : '') +
-					'</ul>';
-				break;
-			case "class-use":
-				innerHTML =
-					'<h1>Class <a href="../' + className + '.html">' + className + '</a></h1>' +
-					'<ul class="contextNav">' +
-					'<li class="navBarCell1Rev"><a href="' + className + '.html">Use</a></li>' +
-					'</ul>';
-				break;
-			case "interface":
-				innerHTML =
-					'<h1>Interface <a href="' + className + '.html">' + className + '</a></h1>' +
-					(supportsUse ? '<ul class="contextNav"><li><a href="class-use/' + className + '.html">Use</a></li></ul>' : '');
-				break;
-			case "interface-use":
-				innerHTML =
-					'<h1>Interface <a href="../' + className + '.html">' + className + '</a></h1>' +
-					'<ul class="contextNav"><li class="navBarCell1Rev"><a href="' + className + '.html">Use</a></li></ul>';
-				break;
+			case 'tree': packageTreeUrl = href; break;
 			}
-			title1.innerHTML = innerHTML;
-			title.parentNode.replaceChild(title1, title);
-		}
-
-		if (/class|interface/.test(pageType)) { // replace current subTitle - a bare pkg name - with a hyperlink to the pkg page
-			var subTitle = DOM.find(".subTitle", header);
-			if (subTitle) subTitle.parentNode.removeChild(subTitle);
-
-			var subTitle1 = doc.createElement("h2");
-			subTitle1.className = "subTitle";
-			subTitle1.innerHTML = 'Package <a href="' + (/-use/.test(pageType) ? '../' : '') + 'package-summary.html">' + pkg.join('.') + '</a>';
-			title1.parentNode.insertBefore(subTitle1, title1);
-		}
-
-		// remove method filtering tabs
-		var t0 = DOM.findId('t0', doc);
-		if (t0) t0.parentNode.innerHTML = t0.innerHTML;
+		});
 		
-		var content = doc.createElement('div');
-		content.id = "content";
-        _.forEach(DOM.findAll(".contentContainer, .classUseContainer", doc), function(el) { content.appendChild(el); });
+		switch (pageType) {
+		case 'package-summary': packageUrl = details.url; break;
+		case 'package-use': packageUseUrl = details.url; break;
+		case 'package-tree': packageTreeUrl = details.url; break;
+		case 'class': case 'interface': case 'enum': classUrl = details.url; break;
+		case 'class-use': case 'interface-use': case 'enum-use': classUseUrl = details.url; break;
+		default: break;
+		}
 
-		var footer = doc.createElement("div");
-		footer.id = "footer";
-		_.forEach(DOM.findAll(".footer", doc), function(el) { footer.appendChild(el); });
+		var result = {
+			header: DOM.findAll('.header', doc),
+			content: DOM.findAll('.contentContainer, .classUseContainer', doc),
+			footer: DOM.findAll('.footer', doc),
+			titleType: titleType,
+			pageType: pageType,
+			title: title,
+			packageName: packageName,
+			packageUrl: packageUrl,
+			packageUseUrl: packageUseUrl,
+			packageTreeUrl: packageTreeUrl,
+			className: className,
+			classUrl: classUrl,
+			classUseUrl: classUseUrl
+		}
+		return result;
 
-        var frag = doc.createDocumentFragment();
-		frag.appendChild(header);
-		frag.appendChild(content);
-		frag.appendChild(footer);
-		_.forEach(DOM.findAll("a[name]", frag), function(el) { if (!el.id) el.id = el.name; });
-        
-        return frag;
-        
-      }
+	}
+
+	})
+	</script>
+	</hf-transform>
+    <hf-transform type="hazard" format="json">
+	<div id="header">
+	<haz:choose>
+		<haz:otherwise>
+		<haz:each select="header">
+			<haz:eval select="."></haz:eval>
+		</haz:each>
+		</haz:otherwise>
+		<haz:when test="titleType | ['class', 'package'].indexOf(value) >= 0">
+		<div class="header">
+			<h2 haz:if="titleType | 'class' === value" class="subTitle">Package <a expr:href="packageUrl" expr:_text="packageName"></a></h2>
+			<div class="title">
+			<haz:choose>
+				<haz:otherwise>
+				<h1 expr:_html="title"></h1>
+				</haz:otherwise>
+				<haz:when test="titleType | 'package' === value">
+				<h1>Package <a expr:href="packageUrl" expr:_text="packageName"></a></h1>
+				<ul class="contextNav">
+					<li haz:if="packageUseUrl" expr:class="pageType | value === 'package-use' ? 'navBarCell1Rev': false"><a expr:href="packageUseUrl">Use</a></li>
+					<li haz:if="packageTreeUrl" expr:class="pageType | value === 'package-tree' ? 'navBarCell1Rev': false"><a expr:href="packageTreeUrl">Tree</a></li>
+				</ul>
+				</haz:when>
+				<haz:when test="titleType | 'class' === value">
+				<h1>
+					<span expr:_text="pageType | /^enum/.test(value) ? 'Enum' : /^interface/.test(value) ? 'Interface' : 'Class'"></span>
+					<a expr:href="classUrl" expr:_text="className"></a>
+				</h1>
+				<ul class="contextNav">
+					<li haz:if="classUseUrl" expr:class="pageType | /-use$/.test(value) ? 'navBarCell1Rev': false"><a expr:href="classUseUrl">Use</a></li>
+				</ul>
+				</haz:when>
+			</haz:choose>
+			</div>
+		</div>
+		</haz:when>
+	</haz:choose>
+	</div>
+
+	<div id="content">
+		<haz:each select="content">
+			<haz:eval select="."></haz:eval>
+		</haz:each>
+	</div>
+
+	<div id="footer">
+		<haz:each select="footer">
+			<haz:eval select="."></haz:eval>
+		</haz:each>
+	</div>
+
+    </hf-transform>
+    <hf-transform type="script">
+      <script>
+      ({
       
-      })  
+      transform: function(frag, details) {
+		var _ = Meeko.stuff, DOM = Meeko.DOM;
+        
+   		// remove method filtering tabs
+		var t0 = DOM.findId('t0', frag);
+		if (t0) t0.parentNode.innerHTML = t0.innerHTML;
+
+		// use @ID instead of anchors
+	    _.forEach(DOM.findAll("a[name]", frag), function(el) { if (!el.id) el.id = el.name; });
+        return frag;
+
+      }
+
+      })
       </script>
     </hf-transform>
   </hf-body>
@@ -285,11 +322,6 @@ enteredState: function(msg) {
     <div style="width: 100%; text-align: center;"><img src="../../decor/waiting-big.gif" style="border: none;" /></div>
   </hf-body>
 </hf-frame>
-</div>
-
-<div id="footer">
-</div>
-
 
     </hf-body>
   </hf-panel>
