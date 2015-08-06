@@ -621,13 +621,16 @@ return ({
   <div id="content">
 	<div class="items hfeed">
 
-    <div style="width: 125px; height: 125px;" class="item hentry" link="link[rel=bookmark]" haz:each="blogPost">
+	<haz:each select="blogPost">
+    <div style="width: 125px; height: 125px;" class="item hentry" link="link[rel=bookmark]">
       <meta name="uid" expr:content="postId" />
       <link rel="bookmark" expr:href="url" />
       <div class="card" >
         <div class="front">
           <div class="overlay">
+            <haz:if test="thumbnailUrl">
             <img haz:if="thumbnailUrl" class="entry-photo" expr:src="thumbnailUrl | value.replace('/s72-c/post-image-01.png', '/s125-c/')" />
+	    </haz:if>
             <div class="title entry-title" expr:_text="name"></div>
           </div>
         </div>
@@ -650,6 +653,7 @@ return ({
       </div>
       <div class="space"></div>
     </div>
+	</haz:each>
 
   </div>
   </div><!-- #content -->
