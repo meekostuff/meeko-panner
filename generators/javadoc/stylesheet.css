@@ -9,7 +9,7 @@ body {
     background-color:#ffffff;
     color:#353833;
     font-family:'DejaVu Sans', Arial, Helvetica, sans-serif;
-    font-size:14px;
+/*    font-size:14px;*/
     margin:0;
     padding:0;
     height:100%;
@@ -36,50 +36,50 @@ a[name]:hover {
 }
 pre {
     font-family:'DejaVu Sans Mono', monospace;
-    font-size:14px;
+/*    font-size:14px;*/
 }
 h1 {
-    font-size:20px;
+/*    font-size:20px;*/
 }
 h2 {
-    font-size:18px;
+/*    font-size:18px;*/
 }
 h3 {
-    font-size:16px;
+/*    font-size:16px;*/
     font-style:italic;
 }
 h4 {
-    font-size:13px;
+/*    font-size:13px;*/
 }
 h5 {
-    font-size:12px;
+/*    font-size:12px;*/
 }
 h6 {
-    font-size:11px;
+/*    font-size:11px;*/
 }
 ul {
     list-style-type:disc;
 }
 code, tt {
     font-family:'DejaVu Sans Mono', monospace;
-    font-size:14px;
+/*    font-size:14px;*/
     padding-top:4px;
     margin-top:8px;
     line-height:1.4em;
 }
 dt code {
     font-family:'DejaVu Sans Mono', monospace;
-    font-size:14px;
+/*    font-size:14px;*/
     padding-top:4px;
 }
 table tr td dt code {
     font-family:'DejaVu Sans Mono', monospace;
-    font-size:14px;
+/*    font-size:14px;*/
     vertical-align:top;
     padding-top:4px;
 }
 sup {
-    font-size:8px;
+/*    font-size:8px;*/
 }
 /*
 Document title and Copyright styles
@@ -87,7 +87,7 @@ Document title and Copyright styles
 .aboutLanguage {
     float:right;
     padding:0px 21px;
-    font-size:11px;
+/*    font-size:11px;*/
     z-index:200;
     margin-top:-9px;
 }
@@ -116,7 +116,8 @@ Navigation bar styles
     color:#FFFFFF;
     padding:.8em .5em .4em .8em;
     height:auto;/*height:1.8em;*/
-    font-size:11px;
+/*    font-size:11px;*/
+    font-size: 1em;
     margin:0;
 }
 .topNav {
@@ -126,17 +127,20 @@ Navigation bar styles
     padding:0;
     width:100%;
     clear:right;
-    height:2.8em;
+/*    height:2.8em;*/
     padding-top:10px;
     overflow:hidden;
-    font-size:12px; 
+/*    font-size:12px; */
+}
+.topNav::after {
+    clear: both;
 }
 .subNav {
     background-color:#dee3e9;
     float:left;
     width:100%;
     overflow:hidden;
-    font-size:12px;
+/*    font-size:12px;*/
 }
 .subNav div {
     clear:left;
@@ -196,7 +200,7 @@ Page header and footer styles
     padding-right:10px;
 }
 .indexNav h1 {
-    font-size:13px;
+/*    font-size:13px;*/
 }
 .title {
     color:#2c4557;
@@ -214,7 +218,7 @@ Page header and footer styles
 }
 .header ul li, .footer ul li {
     list-style:none;
-    font-size:13px;
+/*    font-size:13px;*/
 }
 /*
 Heading styles
@@ -249,10 +253,11 @@ Page layout container styles
 .indexContainer {
     margin:10px;
     position:relative;
-    font-size:12px;
+/*    font-size:12px;*/
 }
 .indexContainer h2 {
-    font-size:13px;
+/*    font-size:13px;*/
+    font-size: 1em;
     padding:0 0 3px 0;
 }
 .indexContainer ul {
@@ -264,25 +269,25 @@ Page layout container styles
     padding-top:2px;
 }
 .contentContainer .description dl dt, .contentContainer .details dl dt, .serializedFormContainer dl dt {
-    font-size:12px;
+/*    font-size:12px;*/
     font-weight:bold;
     margin:10px 0 0 0;
     color:#4E4E4E;
 }
 .contentContainer .description dl dd, .contentContainer .details dl dd, .serializedFormContainer dl dd {
     margin:5px 0 10px 0px;
-    font-size:14px;
+/*    font-size:14px;*/
     font-family:'DejaVu Sans Mono',monospace;
 }
 .serializedFormContainer dl.nameValue dt {
     margin-left:1px;
-    font-size:1.1em;
+/*    font-size:1.1em;*/
     display:inline;
     font-weight:bold;
 }
 .serializedFormContainer dl.nameValue dd {
     margin:0 0 0 1px;
-    font-size:1.1em;
+/*    font-size:1.1em;*/
     display:inline;
 }
 /*
@@ -293,7 +298,7 @@ li.circle {
 }
 ul.horizontal li {
     display:inline;
-    font-size:0.9em;
+/*    font-size:0.9em;*/
 }
 ul.inheritance {
     margin:0;
@@ -445,13 +450,13 @@ th.colFirst, th.colLast, th.colOne, .constantsSummary th {
 }
 td.colFirst, th.colFirst {
     white-space:nowrap;
-    font-size:13px;
+/*    font-size:13px;*/
 }
 td.colLast, th.colLast {
-    font-size:13px;
+/*    font-size:13px;*/
 }
 td.colOne, th.colOne {
-    font-size:13px;
+/*    font-size:13px;*/
 }
 .overviewSummary td.colFirst, .overviewSummary th.colFirst,
 .useSummary td.colFirst, .useSummary th.colFirst,
@@ -493,7 +498,7 @@ ul.blockList ul.blockList ul.blockList li.blockList h3 {
 }
 
 div.block {
-    font-size:14px;
+/*    font-size:14px;*/
     font-family:'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
 }
 
@@ -515,7 +520,7 @@ Formatting effect styles
 h1.hidden {
     visibility:hidden;
     overflow:hidden;
-    font-size:10px;
+/*    font-size:10px;*/
 }
 .block {
     display:block;
