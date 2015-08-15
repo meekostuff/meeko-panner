@@ -17,14 +17,112 @@ caption span { height: auto !important; }
 #packageListFrame { border: 2px inset; }
 #packageFrame { border: 2px inset; }
 
-#header .title h1 { display: inline-block; vertical-align: bottom; margin-right: 0.5em; }
-.contextNav { display: inline-block; margin-left: 0.5em; }
-.contextNav li { display: inline; margin: 0 0.2em; padding: 0 0.5em; background: #4C6B87; }
-.contextNav .navBarCell1Rev { background: #bb7a2a; }
-.contextNav a:link, .contextNav a:visited, .contextNav a:active { color: white; text-decoration: none; }
-.contextNav a:active { color: #A88834; }
+#header .title h1 { display: inline; vertical-align: bottom; margin-right: 0.5em; }
+ul.contextNav { display: inline-block; margin: 0; vertical-align: top; }
+ul.contextNav li { display: inline; margin: 0 0.2em; padding: 0 0.5em; background: #4C6B87; }
+ul.contextNav li.navBarCell1Rev { background: #bb7a2a; }
+ul.contextNav a:link, .contextNav a:visited, .contextNav a:active { color: white; text-decoration: none; }
+ul.contextNav a:active { color: #A88834; }
 
 </style>
+
+<script>
+var controllers = Meeko.framer.controllers;
+
+controllers.create('navigation');
+controllers.set('navigation', 'packages');
+
+controllers.create('namespace');
+</script>
+<script>
+(function() {
+
+var _ = Meeko.stuff, DOM = Meeko.DOM;
+var sprockets = Meeko.sprockets, UI = sprockets.UI;
+var framer = Meeko.framer, controllers = framer.controllers;
+
+sprockets.registerComposite('ui-tablist', {
+prototype: UI.Tree.prototype,
+enteredDocument: function() {
+	var tablist = this;
+	var element = tablist.element;
+	element.ariaSet('activedescendant', element.ariaFind('treeitem'));
+	var name = tablist.attr('name');
+	controllers.listen(name, function(value) { 
+		var elts = element.ariaFindAll('treeitem');
+		var treeitem;
+		_.some(elts, function(elt) {
+			var testVal = elt.$.attr('value');
+			if (testVal !== value) return false;
+			treeitem = elt;
+		});
+		if (treeitem) element.ariaSet('activedescendant', treeitem);
+	});
+},
+rules: [
+	[ 'li', UI.TreeItem ],
+	[ 'ul', UI.Group ]
+],
+handlers: [
+{
+	type: "click",
+	action: function(event) {
+		var tablist = this;
+		if (event.defaultPrevented) return;
+		var treeitem = event.target.ariaClosest('treeitem');
+		if (!treeitem) return;
+		var name = tablist.attr('name');
+		var value = treeitem.$.attr('value');
+		controllers.set(name, value);
+	}
+}
+]
+});
+
+var Promise = Meeko.Promise;
+var filterQueue = [];
+var filterFu;
+
+var throttleTimeout = 500;
+
+window.filterOptions = function filterItems(desc) {
+	filterQueue.push(desc);
+	if (filterFu) return;
+	filterFu = Promise.delay(throttleTimeout)
+	.then(function() {
+
+		filterFu = null;
+		var desc = filterQueue.pop();
+		filterQueue.length = 0;
+
+		var root = DOM.find(desc.root);
+
+		var value = desc.value;
+		var hideAll = desc.testNull && desc.testNull(value) || false;
+		if (hideAll && desc.hideAll) root.hidden = true;
+		var groups = desc.group ? DOM.findAll(desc.group, root) : [ root ];
+		_.forEach(groups, function(group) {
+			var items = DOM.findAll(desc.item, group);
+			var found = false;
+			_.forEach(items, function(item) {
+				var show = desc.test(item, value);
+				if (show) {
+					item.hidden = false;
+					found = true;
+				}
+				else item.hidden = true;
+			});
+			if (!found && desc.hideGroups) group.hidden = true;
+			else group.hidden = false;
+		});
+		if (!hideAll || !desc.hideAll) root.hidden = false;
+
+	});
+}
+
+
+})();
+</script>
 
 <script for="hf-frameset">
 ({
@@ -54,35 +152,157 @@ enteredState: function(msg) {
       
 <hf-layer>
 <hf-hlayout width="100%">
-    <hf-vlayout width="20%">
+
+<hf-vlayout width="20%">
+	<hf-panel height="3em">
+		<hf-body>
+
+<div class="topNav">
+<ui-tablist name="navigation">
+<ul class="navList">
+<li value="packages">Packages</li>
+<li value="classes">Classes</li>
+</ul>
+</ui-tablist>
+</div>
+
+		</hf-body>
+	</hf-panel>
+	
+<hf-deck name="navigation" height="calc(100% - 3em)">
+
+    <hf-vlayout value="packages">
       <hf-panel height="30%" id="packageListFrame">
         <hf-body>
+
     <hf-frame src="scope:./overview-frame.html" name="packageListFrame">
       <script>
       ({
       
       lookup: function(url, details) {
-        var target = details.element.target;
-        return target === 'classFrame' ? undefined : target;
+		var _ = Meeko.stuff, DOM = Meeko.DOM, URL = Meeko.URL;
+		var newURL = URL(url);
+		if (newURL.protocol === 'state:') {
+			var m = url.match(/^state:(.+)=(.*)$/);
+			var name = m[1];
+			var value = m[2];
+			Meeko.framer.controllers.set(name, value);
+			return '';
+		}
+		else return 'packageFrame';
       }
       
       })  
       </script>
   
       <hf-body>
-        <hf-transform type="main">
-          
+        <hf-transform type="script">
+		<script>
+({
+
+transform: function(srcNode, details) {
+	var _ = Meeko.stuff, DOM = Meeko.DOM;
+	
+	var srcTree = DOM.find('ul[title=Packages]', srcNode);
+	var srcItems = DOM.findAll('li', srcTree);
+	var items = [];
+	var namespaceTable = {};
+	_.forEach(srcItems, function(srcItem) {
+		var item = {};
+		item.fullName = srcItem.textContent;
+		item.href = DOM.find('a[href]', srcItem).href;
+		var pkgParts = item.fullName.split('.');
+		for (;;) {
+			var name = pkgParts.pop();
+			item.name = name;
+			if (!name) break; // WARN should always be handled in `namespace === ''`
+			var namespace = pkgParts.join('.');
+			if (namespace === '') { // WARN should never occur on first loop-thru
+				items.push(item);
+				break;
+			}
+			var namespaceItem;
+			if (namespaceTable[namespace]) {
+				namespaceItem = namespaceTable[namespace];
+				namespaceItem.items.push(item);
+				break;
+			}
+			namespaceItem = {};
+			namespaceItem.fullName = namespace;
+			namespaceItem.path = pkgParts.slice(0);
+			namespaceItem.items = [];
+			namespaceTable[namespace] = namespaceItem;
+			namespaceItem.items.push(item);
+			item = namespaceItem;
+		}
+	});
+
+	return {
+		items: items
+	};
+}
+
+})
+		</script>
         </hf-transform>
+		<hf-transform type="hazard" format="json">
+
+<div class="indexContainer">
+<hf-deck name="namespace">
+<haz:template name="haz_namespace_container">
+
+<hf-panel expr:value="fullName | value ? value : ''">
+	<hf-body>
+<label>
+<a mexpr:href="state:namespace=">&laquo;</a>
+<haz:if test="fullName">
+<span expr:_text="fullName"></span>
+</haz:if>
+</label>
+<ul>
+	<haz:each select="items">
+	<haz:choose>
+	<haz:when test="href">
+	<li link>
+		<a expr:href="href" expr:_text="name"></a>
+	</li>
+	</haz:when>
+	<haz:otherwise>
+	<li link>
+		<a mexpr:href="state:namespace={{ fullName }}" expr:_text="name"></a>
+		<span>&rsaquo;</span>
+	</li>
+	</haz:otherwise>
+	</haz:choose>
+	</haz:each>
+</ul>
+	</hf-body>
+</hf-panel>
+
+	<haz:each select="items">
+	<haz:unless test="href">
+	<haz:include name="haz_namespace_container"></haz:include>
+	</haz:unless>
+	</haz:each>
+
+</haz:template>
+<hf-deck>
+</div>
+
+		</hf-transform>
       </hf-body>
       <hf-body condition="loading">
         <div style="width: 100%; text-align: center;"><img src="../../decor/waiting-small.gif" /></div>
       </hf-body>
     </hf-frame>
+
         </hf-body>
       </hf-panel>
+
       <hf-panel height="70%" id="packageFrame">
         <hf-body>
-    <hf-frame src="scope:./allclasses-frame.html" name="packageFrame">
+
+    <hf-frame src="" name="packageFrame">
       <hf-body>
         <hf-transform type="main">
           
@@ -93,10 +313,101 @@ enteredState: function(msg) {
       </hf-body>
     </hf-frame>
     
-        </hf-body>
+		</hf-body>
       </hf-panel>
-      
-    </hf-vlayout>
+
+	</hf-vlayout>
+    
+	<hf-panel value="classes">
+		<hf-body>
+
+<form action="javascript:return false;" onsubmit="return false;" oninput="filterOptions({root:'#classList', group: 'div.group', item: 'li', value: Meeko.DOM.find('input', this).value.toLowerCase(), test: function(item, value) { return item.getAttribute('value').toLowerCase().indexOf(value) === 0; }, testNull: function(value) { return value === ''; }, hideAll: true, hideGroups: true }); return false;" >
+	<input type="text" />
+	<button type="reset">x</button>
+</form>
+
+    <hf-frame src="scope:./allclasses-frame.html" name="classListFrame">
+	<style>/* FIXME scoped stylesheets */
+[name=classListFrame] li { 
+	overflow: hidden;
+	white-space: nowrap;
+}
+	</style>
+      <hf-body>
+        <hf-transform type="script">
+			<script>
+({
+
+transform: function(doc, details) {
+	var _ = Meeko.stuff, DOM = Meeko.DOM;
+	var typeLabels = 'interface:Interfaces, class:Classes, exception:Exceptions, ' + 
+		'enum:Enums, annotation:Annotation Types';
+	var groups = [];
+	var itemsByType = {};
+	_.forEach(typeLabels.split(/,\s*/), function(token) {
+		var m = token.split(':');
+		var type = m[0];
+		var label = m[1];
+		var group = {
+			type: type,
+			label: label,
+			items: []
+		}
+		groups.push(group);
+		itemsByType[type] = group.items;
+	});
+	_.forEach(DOM.findAll('.indexContainer li', doc), function(el) {
+		var link = DOM.find('a', el);
+		var name = link.textContent;
+		var url = link.href;
+		var title = link.title;
+		var m = title.match(/^(\S+) in (\S+)$/);
+		var type = m && m[1]; // FIXME error recovery if fail
+		var pkg = m && m[2]; // FIXME
+		if (/Exception$/.test(name)) type = 'exception';
+		var item = {
+			name: name,
+			firstChar: name[0],
+			title: title,
+			type: type,
+			'package': pkg,
+			url: url
+		};
+		itemsByType[type].push(item);
+	});
+	return { groups: groups };
+}
+
+})
+			</script>          
+        </hf-transform>
+		<hf-transform type="hazard" format="json">
+<div class="indexContainer" id="classList" hidden>
+	<haz:each select="groups">
+	<div class="group">
+	<h2 expr:_text="label"></h2>
+	<ul expr:class="type">
+		<haz:each select="items">
+		<li link expr:value="name">
+			<a expr:href="url" expr:title="title" expr:_text="name"></a>
+			[ <span expr:title="package" expr:_text="package"></span> ]
+		</li>
+		</haz:each>
+	</ul>
+	</div>
+	</haz:each>
+</div>
+
+		</hf-transform>
+      </hf-body>
+    </hf-frame>
+ 
+		</hf-body>
+	</hf-panel>
+
+</hf-deck>
+
+</hf-vlayout>
 
   <hf-panel width="80%" id="main">
     <hf-body>
@@ -191,6 +502,7 @@ enteredState: function(msg) {
 		if (title) {
 			if (pageType == 'class' && /^Interface/.test(title.title)) pageType = 'interface';
 			if (pageType == 'class' && /^Enum/.test(title.title)) pageType = 'enum';
+			if (pageType == 'class' && /^Annotation/.test(title.title)) pageType = 'annotation';
 			if (pageType == 'class-use' && /^Uses of Interface/.test(title.title)) pageType = 'interface-use';
 			if (pageType == 'class-use' && /^Uses of Enum/.test(title.title)) pageType = 'enum-use';
 		}
@@ -218,7 +530,7 @@ enteredState: function(msg) {
 		case 'package-summary': packageUrl = details.url; break;
 		case 'package-use': packageUseUrl = details.url; break;
 		case 'package-tree': packageTreeUrl = details.url; break;
-		case 'class': case 'interface': case 'enum': classUrl = details.url; break;
+		case 'class': case 'interface': case 'enum': case 'annotation': classUrl = details.url; break;
 		case 'class-use': case 'interface-use': case 'enum-use': classUseUrl = details.url; break;
 		default: break;
 		}
@@ -270,7 +582,7 @@ enteredState: function(msg) {
 				</haz:when>
 				<haz:when test="titleType | 'class' === value">
 				<h1>
-					<span expr:_text="pageType | /^enum/.test(value) ? 'Enum' : /^interface/.test(value) ? 'Interface' : 'Class'"></span>
+					<span expr:_text="pageType | /^annotation/.test(value) ? 'Annotation Type' : /^enum/.test(value) ? 'Enum' : /^interface/.test(value) ? 'Interface' : 'Class'"></span>
 					<a expr:href="classUrl" expr:_text="className"></a>
 				</h1>
 				<ul class="contextNav">
@@ -325,6 +637,7 @@ enteredState: function(msg) {
 
     </hf-body>
   </hf-panel>
+
 </hf-hlayout>
 </hf-layer>
 
