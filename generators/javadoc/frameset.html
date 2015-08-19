@@ -442,7 +442,7 @@ transform: function(srcNode, details) {
 <form class="bar" 
 	action="javascript:return false;" 
 	onsubmit="return false;"
- 	onreset="this.elements[0].focus();" 
+ 	onreset="var form = this; setTimeout(function() { form.elements[0].focus(); });" 
 >
 	<input type="text" name="classnamefilter" 
  		onblur="this.oninput(event);" 
