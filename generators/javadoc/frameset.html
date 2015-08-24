@@ -358,7 +358,7 @@ transform: function(srcNode, details) {
 <hf-panel expr:value="fullName | value ? value : ''">
 	<hf-body>
 <h1 class="bar">
-<span><a mexpr:href="state:namespace=">&laquo;</a></span>
+<span><a mexpr:href="state:namespace=">&nbsp;&laquo;&nbsp;</a></span><!-- FIXME styling rather than spacing -->
 <haz:if test="path">
 	<haz:each select="path">
 <span>
@@ -666,10 +666,18 @@ transform: function(doc, details) {
 		default: break;
 		}
 
+		var headers = _.map(DOM.findAll('.header', doc), remove);
+		var content = _.map(DOM.findAll('.contentContainer, .classUseContainer', doc), remove);
+		var footers = _.map(DOM.findAll('.footer', doc), remove);
+		function remove(node) { 
+			node.parentNode.removeChild(node); 
+			return node;
+		}
+
 		var result = {
-			header: DOM.findAll('.header', doc),
-			content: DOM.findAll('.contentContainer, .classUseContainer', doc),
-			footer: DOM.findAll('.footer', doc),
+			header: headers,
+			content: content,
+			footer: footers,
 			titleType: titleType,
 			pageType: pageType,
 			title: title,
@@ -748,7 +756,7 @@ transform: function(doc, details) {
 		var _ = Meeko.stuff, DOM = Meeko.DOM;
         
    		// remove method filtering tabs
-		var t0 = DOM.findId('t0', frag);
+		var t0 = DOM.find('#t0', frag);
 		if (t0) t0.parentNode.innerHTML = t0.innerHTML;
 
 		// use @ID instead of anchors
