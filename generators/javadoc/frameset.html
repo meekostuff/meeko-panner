@@ -81,7 +81,8 @@ enteredDocument: function() {
 		var elts = element.ariaFindAll('treeitem');
 		var treeitem;
 		_.some(elts, function(el) {
-			var testVal = el.$.attr('value');
+			var $el = el.$;
+			var testVal = $el.attr('value') || $el.attr('data-value');
 			if (value.indexOf(testVal) < 0) return false;
 			treeitem = el;
 			return true;
@@ -102,7 +103,8 @@ handlers: [
 		var treeitem = event.target.ariaClosest('treeitem');
 		if (!treeitem) return;
 		var name = tablist.attr('name');
-		var value = treeitem.$.attr('value');
+		var $treeitem = treeitem.$;
+		var value = $treeitem.attr('value') || $treeitem.attr('data-value');
 		controllers.set(name, value);
 	}
 }
@@ -151,7 +153,10 @@ enteredDocument: function() {
 		group: groupSelector,
 		item: itemSelector,
 		test: function(item, value) { 
-			var itemValue = item.getAttribute('value') || '';
+			var itemValue = 
+				item.getAttribute('value') || 
+				item.getAttribute('data-value') || 
+				'';
 			if (caseInsensitive) {
 				value = _.lc(value);
 				itemValue = _.lc(itemValue);
@@ -233,8 +238,8 @@ enteredState: function(msg) {
 <div class="leftNav">
 <ui-tablist name="navigation">
 <ul class="contextNav">
-<li value="packages"><button>Packages</button></li>
-<li value="classes"><button>Classes</button></li>
+<li data-value="packages"><button>Packages</button></li>
+<li data-value="classes"><button>Classes</button></li>
 </ul>
 </ui-tablist>
 </div>
@@ -516,7 +521,7 @@ transform: function(doc, details) {
 	<h2 expr:_text="label"></h2>
 	<ul expr:class="type">
 		<haz:each select="items">
-		<li link expr:value="name">
+		<li link expr:data-value="name">
 			<a expr:href="url" expr:title="title" expr:_text="name"></a>
 			[ <span expr:title="package" expr:_text="package"></span> ]
 		</li>
