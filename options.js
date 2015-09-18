@@ -98,7 +98,7 @@ framer.options.detect = function(doc) { // NOTE only called on landing page
  TODO currently only handles POST
  FIXME assumes success
  */
-DOM.addEvent(document, "submit", onSubmit);
+document.addEventListener("submit", onSubmit, false);
 function onSubmit(e) {
 	var form = e.target;
 	var method = _.lc(form.method);
