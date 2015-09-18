@@ -647,7 +647,7 @@ transform: function(doc, details) {
 
 		var packageUrl, packageUseUrl, packageTreeUrl, classUrl, classUseUrl;
 		_.forEach(DOM.findAll('ul.navList[title=Navigation] a', doc), function(link) {
-			var text = _.lc(DOM.textContent(link));
+			var text = _.lc(link.textContent);
 			var href = link.href;
 			switch (text) {
 			case 'package': packageUrl = href; break;
