@@ -463,7 +463,7 @@ var _ = Meeko.stuff, DOM = Meeko.DOM, URL = Meeko.URL;
 var frag = doc.createDocumentFragment();
 var header;
 var main;
-_.some(_.toArray(doc.body.childNodes), function(node) {
+_.some(_.map(doc.body.childNodes), function(node) {
 	doc.body.removeChild(node);
 	if (!header) {
 		if (!DOM.matches(node, 'div.header')) return false;
