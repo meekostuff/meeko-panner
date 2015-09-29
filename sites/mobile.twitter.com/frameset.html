@@ -317,7 +317,7 @@ enteredState: {
 
     <div class="content-top">
       <div id="user_profile_panel" class="module component profile">
-<hf-frame src="scope:./twitter" main=".profile" id="hf_profile" name="hf_profile">
+<hf-frame src="scope:./twitter" main=".profile" id="hf_profile" targetname="hf_profile">
     <hf-body>
 	<hf-transform type="main">
         <table class="profile-details">
@@ -555,7 +555,7 @@ enteredState: {
     <div id="main_content">
 
     <div class="content-main component" id="tweets">
-<hf-frame src="scope:./home" name="hf_tweets"><!-- Timeline -->
+<hf-frame src="scope:./home" targetname="hf_tweets"><!-- Timeline -->
 	<hf-body condition="loaded">
 		<hf-transform type="hazard" format="css">
 	<main expr:_html=".timeline">{{timeline}}
@@ -566,7 +566,7 @@ enteredState: {
     </div>
 
     <div class="content-main component" id="permalink">
-<hf-frame src="scope:./home" name="hf_permalink"><!-- Permalink Timeline -->
+<hf-frame src="scope:./home" targetname="hf_permalink"><!-- Permalink Timeline -->
 	<hf-body condition="loaded">
 		<hf-transform type="hazard" format="css">
 	<main expr:_html="#main_content {_html}">{{permalink-timeline}}
@@ -577,7 +577,7 @@ enteredState: {
     </div>
 
      <div class="content-main component" id="people">
-<hf-frame src="scope:./who_to_follow" name="hf_people">
+<hf-frame src="scope:./who_to_follow" targetname="hf_people">
 	<hf-body condition="loaded">
 		<hf-transform type="hazard" format="css">
 	<main expr:_html=".user-list">{{people}}
@@ -588,7 +588,7 @@ enteredState: {
     </div>
 
      <div class="content-main component" id="categories">
-<hf-frame src="scope:./who_to_follow/interests" name="hf_categories">
+<hf-frame src="scope:./who_to_follow/interests" targetname="hf_categories">
 	<hf-body condition="loaded">
 		<hf-transform type="hazard" format="css">
 	<main expr:_html=".categories-list">{{categories}}

@@ -74,13 +74,11 @@ return ({
 		return 'mk_' + target;
 	},
 	
-	enteredState: {
-	before: function(msg) {
+	enteredState: function(msg) {
 		var pageType = getPageType(msg.url);
 		var target = getTargetName(pageType);
 		Meeko.framer.controllers.set('main-deck', target + '-panel');
 		return;
-	}
 	}
 
 })
@@ -155,7 +153,7 @@ return ({
 	<hf:panel id="content-panel" value="content-panel">
 		<hf:body>
 
-<hf:frame name="mk_content" src="" main="main">
+<hf:frame targetname="mk_content" src="" main="main">
 	<hf:body>
 		<hf:transform type="hazard" format="microdata">
 
@@ -356,7 +354,7 @@ return ({
   
 	<div id="index">
 
-<hf:frame src="scope:/search" main="main" name="mk_index">
+<hf:frame src="scope:/search" main="main" targetname="mk_index">
 	<style>/* TODO style scoped */
 /* the 3d flip animations/transitions */
 .item {

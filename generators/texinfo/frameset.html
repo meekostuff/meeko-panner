@@ -255,7 +255,7 @@ lookup: function(url, details) {
 
   <div id="wrapper">
 
-<hf-frame src="scope:./index.html" name="tocFrame" height="100%">
+<hf-frame src="scope:./index.html" targetname="tocFrame" height="100%">
 	<hf-body condition="loaded">
 		<hf-transform type="hazard" format="css">
 				
@@ -300,7 +300,7 @@ lookup: function(url, details) {
 		<hf-body>
 
 <ui-tree>
-	<hf-frame src="scope:./index.html" main=".contents" name="tocFrame">
+	<hf-frame src="scope:./index.html" main=".contents" targetname="tocFrame">
 		<hf-body condition="loaded">
 			<hf-transform type="hazard" format="css">
 	
@@ -328,7 +328,7 @@ lookup: function(url, details) {
 	<hf-panel id="indexPanel" value="index">
 		<hf-body>
 
-<hf-frame src="scope:./Concept-Index.html" name="indexFrame">
+<hf-frame src="scope:./Concept-Index.html" targetname="indexFrame">
 	<hf-body condition="loaded">
 		<hf-transform type="script">
 <script>
@@ -387,7 +387,7 @@ return frag;
 	<hf-panel id="apiPanel" value="api">
 		<hf-body>
 
-<hf-frame src="scope:./Name-Index.html" name="apiFrame">
+<hf-frame src="scope:./Name-Index.html" targetname="apiFrame">
 	<hf-body condition="loaded">
 		<hf-transform type="script">
 <script>
@@ -450,7 +450,7 @@ return frag;
         </div>
         <div class="grid-right">
 
-	<hf-frame src="scope:./Overview.html" name="contentFrame">
+	<hf-frame src="scope:./Overview.html" targetname="contentFrame">
 		<hf-body>
 			<hf-transform type="script">
 <script>

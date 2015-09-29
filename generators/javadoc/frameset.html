@@ -202,7 +202,9 @@ function filterOptions(desc) {
 })();
 </script>
 
-<script for="hf-frameset">
+</head>
+<body>
+<script>
 ({
 
 lookup: function(url, details) {
@@ -221,8 +223,6 @@ enteredState: function(msg) {
 
 })  
 </script>
-</head>
-<body>
   
 <hf-frame src="scope:overview-summary.html">
   <hf-body>
@@ -253,7 +253,7 @@ enteredState: function(msg) {
       <hf-panel height="30%" id="packageListPanel">
         <hf-body>
 
-    <hf-frame src="scope:./overview-frame.html" name="packageListFrame">
+    <hf-frame src="scope:./overview-frame.html" targetname="packageListFrame">
       <script>
       ({
       
@@ -417,7 +417,7 @@ transform: function(srcNode, details) {
       <hf-panel height="70%" id="packagePanel">
         <hf-body>
 
-    <hf-frame src="" name="packageFrame">
+    <hf-frame src="" targetname="packageFrame">
       <hf-body>
         <hf-transform type="main">
           
@@ -444,21 +444,32 @@ transform: function(srcNode, details) {
 
 <div id="classListPanel">
 
-<form class="bar" 
-	action="javascript:return false;" 
-	onsubmit="return false;"
- 	onreset="var form = this; setTimeout(function() { form.elements[0].focus(); });" 
->
-	<input type="text" name="classnamefilter" 
- 		onblur="this.oninput(event);" 
- 		onfocus="this.oninput(event);" 
- 		onchange="this.oninput(event);" 
-		oninput="Meeko.framer.controllers.set(this.name, this.value);"
-	/>
+<form class="bar">
+<script>
+({
+onsubmit: function(e) { e.preventDefault(); },
+onreset: function(e) { 
+	var form = this.element; 
+	setTimeout(function() { form.elements[0].focus(); }); 
+}
+})
+</script>
+	<input type="text" name="classnamefilter">
+	<script>
+({
+onblur: function(e) { this.oninput(e); },
+onfocus: function(e) { this.oninput(e); },
+onchange: function(e) { this.oninput(e); },
+oninput: function(e) {
+	var element = this.element;
+	Meeko.framer.controllers.set(element.name, element.value);
+}
+})
+	</script>
 	<button type="reset">x</button>
 </form>
 
-    <hf-frame src="scope:./allclasses-frame.html" name="classListFrame">
+    <hf-frame src="scope:./allclasses-frame.html" targetname="classListFrame">
 	<style>/* FIXME scoped stylesheets */
 #classListPanel li { 
 	overflow: hidden;
@@ -589,7 +600,7 @@ transform: function(doc, details) {
 
 <div class="header"></div>
 
-<hf-frame src="scope:./overview-summary.html" name="classFrame">
+<hf-frame src="scope:./overview-summary.html" targetname="classFrame">
   <hf-body condition="loaded">
     <hf-transform type="script">
 	<script>
