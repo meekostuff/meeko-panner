@@ -297,7 +297,7 @@
                                         <hf-transform type="hazard" format="css">
                                                     
                                             <ul class="tree" haz:each="#stackLayout .listLevel > ul">
-                                                <li haz:each="> li" mexpr:class="tree-node {{ > .rowContent > a.rowTitle > span.childCount_TOC {_text} | value ? 'tree-node-collapsed' : 'tree-node-leaf' }}">
+                                                <li haz:each="> li" mexpr:class="tree-node {{ > .rowContent > a.rowTitle > span.childCount_TOC {_text} | if_unless: 'tree-node-collapsed', 'tree-node-leaf' }}">
                                                     <div link>
                                                         <span class="label">
                                                             <a expr:href="> .rowContent > a.rowTitle {@href}" expr:_text="> .rowContent > a.rowTitle > span {_text}">{{ link.name }}</a>

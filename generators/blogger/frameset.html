@@ -165,8 +165,8 @@ return ({
             <meta expr:content="postId" />
             <div class="article-header">
               <a class="ribbon date " expr:title="datePublished" expr:href="url">
-                <div class="top ribbon-piece" expr:_text="datePublished | dateFormat(value, 'ddd')">{Mon}</div>
-                <div class="bottom ribbon-piece" expr:_text="datePublished | dateFormat(value, 'd')">{1}</div>
+                <div class="top ribbon-piece" expr:_text="datePublished | date: 'ddd'">{Mon}</div>
+                <div class="bottom ribbon-piece" expr:_text="datePublished | date: 'd'">{1}</div>
                 <div class="tail">
                   <div class="left ribbon-piece"></div>
                   <div class="right ribbon-piece"></div>
@@ -179,7 +179,7 @@ return ({
             <div class="article-content entry-content" expr:_html="articleBody">{articleBody}</div>
             <div class="article-footer">
               <div class="publish-info">
-                Posted <time class="time published" expr:datetime="datePublished" expr:_text="datePublished | dateFormat('dS mmmm YYYY')">{1st January 1970}</time>
+                Posted <time class="time published" expr:datetime="datePublished" expr:_text="datePublished | date: 'dS mmmm YYYY'">{1st January 1970}</time>
                 by <a class="url fn" expr:href="author.url" rel="author" expr:_text="author">{author}</a>
               </div>
             </div>
@@ -627,7 +627,7 @@ return ({
         <div class="front">
           <div class="overlay">
             <haz:if test="thumbnailUrl">
-            <img haz:if="thumbnailUrl" class="entry-photo" expr:src="thumbnailUrl | value.replace('/s72-c/post-image-01.png', '/s125-c/')" />
+            <img haz:if="thumbnailUrl" class="entry-photo" expr:src="thumbnailUrl | replace: '/s72-c/post-image-01.png', '/s125-c/'" />
 	    </haz:if>
             <div class="title entry-title" expr:_text="name"></div>
           </div>
@@ -635,7 +635,7 @@ return ({
         <div class="back">
           <div class="overlay">
             <div class="title entry-title" expr:_text="name"></div>
-            <time class="date published" expr:datetime="datePublished" expr:title="datePublished | dateFormat(value, 'dS mmmm yyyy')" expr:_text="datePublished | dateFormat(value, 'mmm dS')">{published}</time>
+            <time class="date published" expr:datetime="datePublished" expr:title="datePublished | date: 'dS mmmm yyyy'" expr:_text="datePublished | date: 'mmm dS'">{published}</time>
             <span class="bubble comments-count" mexpr:title="{{commentCount}} comments">
               <span class="bubble-content plus-comment-count">
                 <span expr:_text="commentCount">{??}</span>
