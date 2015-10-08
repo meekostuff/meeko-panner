@@ -25,13 +25,6 @@
 #topic .MCBreadcrumbsBox_0, #topic h1 { position: static; }
 </style>
 
-<script for="hf-frameset">
-({
-    lookup: function(url, details) {
-        return 'topic';
-    } 
-})
-</script>
 <script src="../../DOMSprockets/ARIA.js"></script>
 <script>
 (function() {
@@ -238,6 +231,13 @@
         
     </head>
     <body>
+<script>
+({
+    lookup: function(url, details) {
+        return 'topic';
+    } 
+})
+</script>
         <div id="header">
             <a href="http://www.madcapsoftware.com/">
                 <!-- <h1 class="logo"></h1> -->
@@ -297,7 +297,7 @@
                                         <hf-transform type="hazard" format="css">
                                                     
                                             <ul class="tree" haz:each="#stackLayout .listLevel > ul">
-                                                <li haz:each="> li" mexpr:class="tree-node {{ > .rowContent > a.rowTitle > span.childCount_TOC {_text} | if_unless: 'tree-node-collapsed', 'tree-node-leaf' }}">
+                                                <li haz:each="> li" mexpr:class="tree-node {{ > .rowContent > a.rowTitle > span.childCount_TOC | if_unless: 'tree-node-collapsed', 'tree-node-leaf' }}">
                                                     <div link>
                                                         <span class="label">
                                                             <a expr:href="> .rowContent > a.rowTitle {@href}" expr:_text="> .rowContent > a.rowTitle > span {_text}">{{ link.name }}</a>
