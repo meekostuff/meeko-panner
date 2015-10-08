@@ -241,7 +241,9 @@ function groupEnteredComponent(group) {
 })();
 </script>
 
-<script for="hf-frameset">
+</head>
+<body>
+<script>
 ({
 
 lookup: function(url, details) {
@@ -250,8 +252,6 @@ lookup: function(url, details) {
 
 })
 </script>
-</head>
-<body>
 
   <div id="wrapper">
 
@@ -302,15 +302,29 @@ lookup: function(url, details) {
 <ui-tree>
 	<hf-frame src="scope:./index.html" main=".contents" targetname="tocFrame">
 		<hf-body condition="loaded">
+			<hf-transform type="script">
+<script>
+({
+transform: function(main, details) {
+	var _ = Meeko.stuff, DOM = Meeko.DOM;
+	_.forEach(DOM.findAll('li > a', main), function(el) {
+		el.removeAttribute('name');
+		var textNode = el.firstChild; 
+		textNode.nodeValue = textNode.nodeValue.replace(/^[.0-9]+\s+/, ''); 
+	});
+
+	return main;
+}
+})
+</script>
+			</hf-transform>
 			<hf-transform type="hazard" format="css">
 	
 <div class="contents">
 	<haz:template name="haz_tocFrame_group">
 	<ul haz:each="> ul">
 		<li haz:each="> li">
-			<span>
-				<a expr:href="> a {href}" expr:_html="> a {_html} | (function(value) { var textNode = value.firstChild; textNode.nodeValue = textNode.nodeValue.replace(/^[.0-9]+\s+/, ''); return value; })(value)">{{Section-Link}}</a>
-			</span>
+			<span expr:_html="> a">{{Section-Link}}</span>
 			<haz:include name="haz_tocFrame_group"></haz:include>
 		</li>
 	</ul>
