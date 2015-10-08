@@ -243,7 +243,7 @@ function groupEnteredComponent(group) {
 
 </head>
 <body>
-<script>
+<script for>
 ({
 
 lookup: function(url, details) {
@@ -303,7 +303,7 @@ lookup: function(url, details) {
 	<hf-frame src="scope:./index.html" main=".contents" targetname="tocFrame">
 		<hf-body condition="loaded">
 			<hf-transform type="script">
-<script>
+<script for>
 ({
 transform: function(main, details) {
 	var _ = Meeko.stuff, DOM = Meeko.DOM;
@@ -345,7 +345,7 @@ transform: function(main, details) {
 <hf-frame src="scope:./Concept-Index.html" targetname="indexFrame">
 	<hf-body condition="loaded">
 		<hf-transform type="script">
-<script>
+<script for>
 ({
 
 transform: function(frag, details) {
@@ -404,7 +404,7 @@ return frag;
 <hf-frame src="scope:./Name-Index.html" targetname="apiFrame">
 	<hf-body condition="loaded">
 		<hf-transform type="script">
-<script>
+<script for>
 ({
 
 transform: function(frag, details) {
@@ -467,7 +467,7 @@ return frag;
 	<hf-frame src="scope:./Overview.html" targetname="contentFrame">
 		<hf-body>
 			<hf-transform type="script">
-<script>
+<script for>
 ({
 
 transform: function(doc, details) {

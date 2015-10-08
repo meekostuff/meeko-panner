@@ -204,7 +204,7 @@ function filterOptions(desc) {
 
 </head>
 <body>
-<script>
+<script for>
 ({
 
 lookup: function(url, details) {
@@ -254,7 +254,7 @@ enteredState: function(msg) {
         <hf-body>
 
     <hf-frame src="scope:./overview-frame.html" targetname="packageListFrame">
-      <script>
+      <script for>
       ({
       
       lookup: function(url, details) {
@@ -285,7 +285,7 @@ enteredState: function(msg) {
   
       <hf-body>
         <hf-transform type="script">
-		<script>
+		<script for>
 ({
 
 transform: function(srcNode, details) {
@@ -445,7 +445,7 @@ transform: function(srcNode, details) {
 <div id="classListPanel">
 
 <form class="bar">
-<script>
+<script for>
 ({
 onsubmit: function(e) { e.preventDefault(); },
 onreset: function(e) { 
@@ -455,7 +455,7 @@ onreset: function(e) {
 })
 </script>
 	<input type="text" name="classnamefilter">
-	<script>
+	<script for>
 ({
 onblur: function(e) { this.oninput(e); },
 onfocus: function(e) { this.oninput(e); },
@@ -478,7 +478,7 @@ oninput: function(e) {
 	</style>
       <hf-body>
         <hf-transform type="script">
-			<script>
+			<script for>
 ({
 
 transform: function(doc, details) {
@@ -603,7 +603,7 @@ transform: function(doc, details) {
 <hf-frame src="scope:./overview-summary.html" targetname="classFrame">
   <hf-body condition="loaded">
     <hf-transform type="script">
-	<script>
+	<script for>
 	({
 
 	transform: function(doc, details) {
@@ -765,7 +765,7 @@ transform: function(doc, details) {
 
     </hf-transform>
     <hf-transform type="script">
-      <script>
+      <script for>
       ({
       
       transform: function(frag, details) {
