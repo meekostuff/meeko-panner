@@ -339,10 +339,7 @@ transform: function(main, details) {
 		</hf-body>
 	</hf-panel>
 
-	<hf-panel id="indexPanel" value="index">
-		<hf-body>
-
-<hf-frame src="scope:./Concept-Index.html" targetname="indexFrame">
+<hf-frame id="indexPanel" value="index" src="scope:./Concept-Index.html" targetname="indexFrame">
 	<hf-body condition="loaded">
 		<hf-transform type="script">
 <script for>
@@ -395,13 +392,7 @@ return frag;
 	</hf-body>
 </hf-frame>
 
-		</hf-body>
-	</hf-panel>
-
-	<hf-panel id="apiPanel" value="api">
-		<hf-body>
-
-<hf-frame src="scope:./Name-Index.html" targetname="apiFrame">
+<hf-frame id="apiPanel" value="api" src="scope:./Name-Index.html" targetname="apiFrame">
 	<hf-body condition="loaded">
 		<hf-transform type="script">
 <script for>
@@ -454,9 +445,6 @@ return frag;
 		</hf-transform>
 	</hf-body>
 </hf-frame>
-
-		</hf-body>
-	</hf-panel>
 
 </hf-deck>
 

@@ -269,31 +269,20 @@ lookup: function(url, details) {
 <hf-layer>
 
 	<hf-hlayout height="calc(100vh)">
-		<hf-panel width="300px">
-			<hf-body>
 
-<hf-frame expr:src="a[rel=contents] {@href}" main="#topic_content">
+<hf-frame width="300px" expr:src="a[rel=contents] {@href}" main="#topic_content">
 	<hf-body>
 		<hf-transform type="main">
 		</hf-transform>
 	</hf-body>
 </hf-frame>
 
-			</hf-body>
-		</hf-panel>
-
-		<hf-panel width="calc(100vw - 300px)">
-			<hf-body>
-
-<hf-frame expr:src="a[rel=first] {@href}" targetname="hmcontent" main="body">
+<hf-frame width="calc(100vw - 300px)" expr:src="a[rel=first] {@href}" targetname="hmcontent" main="body">
 	<hf-body>
 		<hf-transform type="main">
 		</hf-transform>
 	</hf-body>
 </hf-frame>
-
-			</hf-body>
-		</hf-panel>
 
 	</hf-hlayout>
 

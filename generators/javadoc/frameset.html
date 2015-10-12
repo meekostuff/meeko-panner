@@ -250,10 +250,8 @@ enteredState: function(msg) {
 <hf-deck name="navigation" height="calc(100% - 3em)">
 
     <hf-vlayout value="packages">
-      <hf-panel height="30%" id="packageListPanel">
-        <hf-body>
 
-    <hf-frame src="scope:./overview-frame.html" targetname="packageListFrame">
+    <hf-frame height="30%" id="packageListPanel" src="scope:./overview-frame.html" targetname="packageListFrame">
       <script for>
       ({
       
@@ -411,13 +409,7 @@ transform: function(srcNode, details) {
       </hf-body>
     </hf-frame>
 
-        </hf-body>
-      </hf-panel>
-
-      <hf-panel height="70%" id="packagePanel">
-        <hf-body>
-
-    <hf-frame src="" targetname="packageFrame">
+    <hf-frame height="70%" id="packagePanel" src="" targetname="packageFrame">
       <hf-body>
         <hf-transform type="main">
           
@@ -427,9 +419,6 @@ transform: function(srcNode, details) {
         <div style="width: 100%; text-align: center;"><img src="../../decor/waiting-small.gif" /></div>
       </hf-body>
     </hf-frame>
-    
-		</hf-body>
-      </hf-panel>
 
 	</hf-vlayout>
     

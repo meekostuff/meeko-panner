@@ -30,6 +30,7 @@ var _ = Meeko.stuff;
 var DOM = Meeko.DOM;
 
 Meeko.framer.controllers.create('main-deck');
+Meeko.framer.controllers.create('views');
 
 })();
 </script>
@@ -112,21 +113,19 @@ return ({
 
 <div id="views" class="menu">
 <span class="menu-heading">Flipcard<span class="indicator"></span></span>
-<hf-panel name="views">
-	<hf-body>
-<hf-select1 name="view">
+<hf:panel name="views">
+	<hf:body>
 <ul class="menu-background">
   
-  <li value="classic" class="menu-item">Classic</li>
+  <li class="menu-item"><input type="radio" name="view" value="classic" /><label for>Classic</label></li>
 
-  <li value="flipcard" class="menu-item">Flipcard</li>
+  <li class="menu-item"><input type="radio" name="view" value="flipcard" /><label for>Flipcard</label></li>
   
-  <li value="grid" class="menu-item">Grid</li>
+  <li class="menu-item"><input type="radio" name="view" value="grid" /><label for>Grid</label></li>
   
 </ul>
-</hf-select1>
-	</hf-body>
-</hf-panel>
+	</hf:body>
+</hf:panel>
 </div>
 
 	<div id="pages" class="tabs">
@@ -148,10 +147,8 @@ return ({
 </hf:layer>
 
 <hf:deck id="main-deck" name="main-deck" style="margin-top: 105px;">
-	<hf:panel id="content-panel" value="content-panel">
-		<hf:body>
 
-<hf:frame targetname="mk_content" src="" main="main">
+<hf:frame value="content-panel" targetname="mk_content" src="" main="main">
 	<hf:body>
 		<hf:transform type="hazard" format="microdata">
 
@@ -177,7 +174,7 @@ return ({
             <div class="article-content entry-content" expr:_html="articleBody">{articleBody}</div>
             <div class="article-footer">
               <div class="publish-info">
-                Posted <time class="time published" expr:datetime="datePublished" expr:_text="datePublished | date: 'dS mmmm YYYY'">{1st January 1970}</time>
+                Posted <time class="time published" expr:datetime="datePublished" expr:_text="datePublished | date: 'dS mmmm yyyy'">{1st January 1970}</time>
                 by <a class="url fn" expr:href="author.url" rel="author" expr:_text="author">{author}</a>
               </div>
             </div>
@@ -189,9 +186,6 @@ return ({
 		</hf:transform>
 	</hf:body>
 </hf:frame>
-
-		</hf:body>
-	</hf:panel>
 
 	<hf:panel id="index-panel" value="index-panel">
 		<hf:body>
