@@ -21,11 +21,11 @@ var screens = {
 	},
 	connect: {
 		tab: "connect",
-		panels: [ "connect_nav", "who_to_follow" ]
+		panels: [ "connect_nav", "who_to_follow", "trends_panel" ]
 	},
 	discover: {
 		tab: "discover",
-		panels: [ "discover_nav", "trends_panel" ]
+		panels: [ "discover_nav" ]
 	},
 	me: {
 		tab: "me",
@@ -33,7 +33,7 @@ var screens = {
 	},
 	user: {
 		tab: "",
-		panels: [ "user_profile_panel", "user_nav" ]		
+		panels: [ "user_profile_panel", "user_nav", "who_to_follow", "trends_panel" ]		
 	},
 	permalink: {
 		tab: "",
@@ -45,7 +45,7 @@ var screens = {
 	},
 	search: {
 		tab: "",
-		panels: [ "search_nav", "who_to_follow" ]
+		panels: [ "search_nav", "who_to_follow", "trends_panel" ]
 	},
 	unknown: {
 		tab: "",
@@ -66,6 +66,8 @@ main_panels = {
 	permalink: {
 	},
 	people: {
+	},
+	trends: {
 	},
 	categories: {
 	}
@@ -137,11 +139,9 @@ function decodeURL(url) {
 		}
 		break;
 	case "activity":
-		spec.screen = "discover";
-		spec.option = "activity";
-		break;
 	case "trends":
 		spec.screen = "discover";
+		spec.main = "trends";
 		spec.option = "trends";
 		break;
 	case "who_to_follow":
@@ -175,6 +175,7 @@ function decodeURL(url) {
 			break;
 		case "status":
 			spec.screen = "permalink";
+			spec.main = 'permalink';
 			break;
 		case "following":
 		case "followers":
@@ -246,7 +247,7 @@ lookup: function(url, details) {
 },
 
 enteredState: {
-	before: function(msg) {
+	after: function(msg) {
 		beforeEnteredState(msg.url, document.URL);
 	}
 }
@@ -281,7 +282,7 @@ enteredState: {
         </li>
 
         <li id="discover-tab">
-          <a href="scope:/i/discover">
+          <a href="scope:/trends">
             <img class="normal" src="https://si0.twimg.com/twitter-mobile/0a7a045aa4dda0b701d3d8d13937fe7b82adb75d/images/sprites/nav_discover.gif?1351812805" />
             <img class="focus" src="https://si0.twimg.com/twitter-mobile/0a7a045aa4dda0b701d3d8d13937fe7b82adb75d/images/sprites/nav_discover_selected.gif?1351812805" />
             Discover
@@ -316,8 +317,8 @@ enteredState: {
   <div id="page-outer">
 
     <div class="content-top">
-      <div id="user_profile_panel" class="module component profile">
-<hf-frame src="scope:./twitter" main=".profile" id="hf_profile" targetname="hf_profile">
+      <div id="user_profile_panel" class="module component profile" hidden>
+<hf-frame src="" main=".profile" defid="hf_profile" targetname="hf_profile">
     <hf-body>
 	<hf-transform type="main">
         <table class="profile-details">
@@ -398,14 +399,14 @@ enteredState: {
 </hf-frame>
       </div>
 
-	<div id="profile_panel" class="module component profile">
+	<div id="profile_panel" class="module component profile" hidden>
 <hf-frame def="hf_profile" main=".profile" src="scope:./account"></hf-frame>
 	</div>
     </div><!-- /#profile_card -->
 
     <div class="dashboard">
 
-      <div id="mini_profile" class="component profile">
+      <div id="mini_profile" class="component profile" hidden>
 <hf-frame src="scope:./account" main=".profile">
     <hf-body condition="loaded">
 	<hf-transform type="main">
@@ -488,7 +489,7 @@ enteredState: {
 </hf-frame>
       </div><!-- /#mini_profile -->
 
-      <div id="connect_nav" class="component">
+      <div id="connect_nav" class="component" hidden>
         <div class="module side_nav">
           <ul class="topics-list">
             <li><a href="scope:/i/connect">Interactions</a></li>
@@ -498,18 +499,17 @@ enteredState: {
         </div>
       </div><!-- /#connect_nav -->
       
-      <div id="discover_nav" class="component">
+      <div id="discover_nav" class="component" hidden>
         <div class="module side_nav">
           <ul class="topics-list">
-            <li><a href="scope:/i/discover">Tweets</a></li>
-            <li><a href="scope:/activity">Activity</a></li>
+            <li><a href="scope:/trends">Trends</a></li>
             <li><a href="scope:/who_to_follow">Who to follow</a></li>
             <li><a href="scope:/who_to_follow/interests">Popular accounts</a></li>
           </ul>
         </div>
       </div><!-- /#search_nav -->
       
-       <div id="search_nav" class="component">
+       <div id="search_nav" class="component" hidden>
         <div class="module side_nav">
           <ul class="topics-list">
             <li><a href="scope:/search?q={search}">Tweets</a></li>
@@ -518,7 +518,41 @@ enteredState: {
         </div>
       </div><!-- /#search_nav -->
       
-      <div id="trends_panel" class="component">
+      <div id="who_to_follow" class="component" hidden>
+        <div class="module side_nav">
+<hf-frame src="scope:./who_to_follow">
+	<hf-body condition="loaded">
+		<hf-transform type="hazard" format="css">
+          <h3>Who to follow</h3>
+			<div expr:_html=".user-list">{{user-list}}</div>
+		</hf-transform>
+		<hf-transform type="script">
+			<script for>
+		{
+
+		transform: function(frag, details) {
+			var _ = Meeko.stuff, DOM = Meeko.DOM;
+			var items = DOM.findAll('.user-item', frag);
+			for (var i=items.length-1; i>=0; i--) {
+				var item = items[i];
+				if (i >= 3) item.parentNode.removeChild(item);
+				else {
+					var context = DOM.find('.tweet-content', item);
+					if (context) context.parentNode.removeChild(context);
+				}
+			}
+			return frag;
+		}
+
+		}
+			</script>
+		</hf-transform>
+	</hf-body>
+</hf-frame>
+        </div>
+      </div><!-- /#who_to_follow -->
+
+      <div id="trends_panel" class="component" hidden>
         <div class="module side_nav">
 <hf-frame src="scope:./trends">
 	<hf-body condition="loaded">
@@ -554,7 +588,7 @@ enteredState: {
 
     <div id="main_content">
 
-    <div class="content-main component" id="tweets">
+    <div class="content-main component" id="tweets" hidden>
 <hf-frame src="scope:./home" targetname="hf_tweets"><!-- Timeline -->
 	<hf-body condition="loaded">
 		<hf-transform type="hazard" format="css">
@@ -565,7 +599,7 @@ enteredState: {
 </hf-frame>
     </div>
 
-    <div class="content-main component" id="permalink">
+    <div class="content-main component" id="permalink" hidden>
 <hf-frame src="scope:./home" targetname="hf_permalink"><!-- Permalink Timeline -->
 	<hf-body condition="loaded">
 		<hf-transform type="hazard" format="css">
@@ -576,7 +610,7 @@ enteredState: {
 </hf-frame>
     </div>
 
-     <div class="content-main component" id="people">
+     <div class="content-main component" id="people" hidden>
 <hf-frame src="scope:./who_to_follow" targetname="hf_people">
 	<hf-body condition="loaded">
 		<hf-transform type="hazard" format="css">
@@ -587,7 +621,18 @@ enteredState: {
 </hf-frame>
     </div>
 
-     <div class="content-main component" id="categories">
+     <div class="content-main component" id="trends" hidden>
+<hf-frame src="scope:./trends" targetname="hf_trends">
+	<hf-body condition="loaded">
+		<hf-transform type="hazard" format="css">
+	<main expr:_html=".disco">{{trends}}
+	</main>
+		</hf-transform>
+	</hf-body>
+</hf-frame>
+    </div>
+
+     <div class="content-main component" id="categories" hidden>
 <hf-frame src="scope:./who_to_follow/interests" targetname="hf_categories">
 	<hf-body condition="loaded">
 		<hf-transform type="hazard" format="css">
