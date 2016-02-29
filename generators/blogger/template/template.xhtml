@@ -26,7 +26,7 @@
 <b:with var="query" value="data:blog.view in {&quot;edit&quot;, &quot;debug&quot;} ? &quot;?view=&quot; + data:blog.view : &quot;&quot;">
 <a expr:href="&quot;/&quot; + data:query">Home</a>
 <a expr:href="&quot;/&quot; + data:query + &quot;#PageList1&quot;">Pages</a>
-<a expr:href="&quot;/&quot; + data:query + &quot;#Blog1&quot;">Recent</a>
+<a expr:href="&quot;/&quot; + data:query + &quot;#Blog1&quot;">Latest</a>
 <a expr:href="&quot;/&quot; + data:query + &quot;#PopularPosts1&quot;">Popular</a>
 <a expr:href="&quot;/&quot; + data:query + &quot;#BlogArchive1&quot;">Archive</a>
 <a expr:href="&quot;/&quot; + data:query + &quot;#Label1&quot;">Labels</a>
@@ -132,7 +132,7 @@
 	</b:includable>
 
 	<b:includable id="normal">
-	<b:if cond="data:blog.view in {&quot;edit&quot; &quot;debug&quot;}">
+	<b:if cond="data:blog.view in {&quot;edit&quot;, &quot;debug&quot;}">
 		<a expr:href="data:widget.quickEditUrl">
 		<b:if cond="data:widget.edit-link"><data:widget.edit-link/><b:else/>Edit <data:widget.type/> Widget</b:if>
 		</a>

@@ -127,7 +127,7 @@
 	</b:includable>
 
 	<b:includable id='normal'>
-	<b:if cond='data:blog.view in {"edit" "debug"}'>
+	<b:if cond='data:blog.view in {"edit", "debug"}'>
 		<a expr:href='data:widget.quickEditUrl'>
 		<b:if cond='data:widget.edit-link'><data:widget.edit-link/><b:else />Edit <data:widget.type /> Widget</b:if>
 		</a>
