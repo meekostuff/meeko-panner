@@ -312,7 +312,7 @@ lookup: function(url, details) {
     </div>
     <!-- the navigation panel --> 
     <div id="hmnavframe"> 
-	<hf-frame targetname="hmtoc" id="hmtoc" src="scope:hmcontent.htm">
+	<hf-frame targetname="hmtoc" id="hmtoc" src="scope:hmcontent.htm" overflow="auto">
    <style type="text/css">
        body { font-size: 1.1em }
        .heading1 { color: #000000; text-decoration: none; }
@@ -340,7 +340,7 @@ lookup: function(url, details) {
 			</hf-transform>
 		</hf-body>
 	</hf-frame>
-   	<hf-frame targetname="hmindex" id="hmindex" src="scope:hmindex.htm" hidden>
+   	<hf-frame targetname="hmindex" id="hmindex" src="scope:hmindex.htm" hidden overflow="auto">
    <style type="text/css">
 	body { 
 		margin: 0; 
@@ -409,7 +409,7 @@ lookup: function(url, details) {
 			</hf-transform>
 		</hf-body>
 	</hf-frame>
-	<hf-frame targetname="hmsearch" id="hmsearch" src="scope:search.php" hidden>
+	<hf-frame targetname="hmsearch" id="hmsearch" src="scope:search.php" hidden overflow="auto">
    <style type="text/css">
 	body { }
 	.submit { font-size: 9pt; }
@@ -463,7 +463,7 @@ lookup: function(url, details) {
   </div>
 
   <div id="hmcontentbox" >
-	<hf-frame targetname="hmcontent" id="hmcontent" src="scope:hm_welcome.htm">
+	<hf-frame targetname="hmcontent" id="hmcontent" src="scope:hm_welcome.htm" overflow="auto">
    <style type="text/css" media="screen"> 
       html, body { 
 		margin:0; 

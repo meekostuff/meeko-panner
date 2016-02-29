@@ -270,14 +270,14 @@ lookup: function(url, details) {
 
 	<hf-hlayout height="calc(100vh)">
 
-<hf-frame width="300px" expr:src="a[rel=contents] {@href}" main="#topic_content">
+<hf-frame width="300px" overflow="auto" expr:src="a[rel=contents] {@href}" main="#topic_content">
 	<hf-body>
 		<hf-transform type="main">
 		</hf-transform>
 	</hf-body>
 </hf-frame>
 
-<hf-frame width="calc(100vw - 300px)" expr:src="a[rel=first] {@href}" targetname="hmcontent" main="body">
+<hf-frame width="calc(100vw - 300px)" overflow="auto" expr:src="a[rel=first] {@href}" targetname="hmcontent" main="body">
 	<hf-body>
 		<hf-transform type="main">
 		</hf-transform>

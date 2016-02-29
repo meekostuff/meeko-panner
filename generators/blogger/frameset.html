@@ -4,15 +4,570 @@
 
 <meta content="IE=edge" http-equiv="X-UA-Compatible" />
 <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+<meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport" />
+
 
 <title>{{blog.pageTitle}}</title>
 
-<link rel="openid.server" href="http://www.blogger.com/openid-server.g" />
-<meta content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" name="viewport" />
-<link type="text/css" rel="stylesheet" href="//www.blogger.com/static/v1/widgets/1535467126-widget_css_2_bundle.css" />
-<link rel="stylesheet" href="//www.google.com/uds/api/search/1.0/ee93f9aae9c9e9dba5eea831d506e69a/default+en.css" type="text/css" />
-
+<!--
 <link rel="stylesheet" href="common.css" />
+-->
+
+<style id="css">
+/* Begin: reset styles */
+
+body,div,ul,ol,li,input,textarea,p,abbr {
+  margin:0;
+  outline: none;
+  padding:0;
+}
+ol,ul {
+  list-style:none;
+}
+h1,h2,h3,h4,h5,h6 {
+  font-size: 100%;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+img {
+  border: none;
+}
+
+/* End: reset */
+
+body {
+  background-color: rgba(238, 238, 238, 1);
+  
+  background-image: url(#EEEEEE none repeat scroll top left);
+  background-position: left top;
+  background-repeat: no-repeat;
+  
+  
+}
+
+body, input, textarea {
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+a,
+a:focus {
+  color: rgba(0, 158, 184, 1);
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  outline: none;
+  text-decoration: none;
+  transition: color .3s;
+}
+
+a:visited {
+  color: rgba(0, 158, 184, 1);
+}
+
+a:hover {
+  color: rgba(0, 158, 184, 1);
+  text-decoration: underline;
+}
+
+abbr.published {
+  outline: none;
+  text-decoration: none;
+  border: none;
+}
+
+.title {
+  color: rgba(51, 51, 51, 1);
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+.title a {
+  color: rgba(51, 51, 51, 1);
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.ribbon {
+  color: #eee;
+  cursor: default;
+  display: inline-block;
+  text-align: center;
+  width: 35px;
+}
+a.ribbon {
+  color: #eee;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.ribbon .ribbon-piece {
+  background-color: rgba(102, 102, 102, 1);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.5s ease-in;
+}
+
+/* On hover color change. */
+a.ribbon:hover .ribbon-piece {
+  background-color: rgba(173, 58, 43, 1);
+  color: #eee;
+}
+
+.ribbon .top {
+  border-bottom: solid 1px rgba(255, 255, 255, 0.6);
+  border-radius: 1px 1px 0px 0px;
+  font-size: 11px;
+  padding: 4px 0;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.ribbon .bottom {
+  font-size: 17px;
+  padding: 5px 0;
+}
+
+.ribbon .tail {
+  height: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ribbon .tail .left,
+.ribbon .tail .right {
+  height: 10px;
+  position: absolute;
+  top: -10px;
+  width: 50px;
+}
+
+.ribbon .tail .left{
+  left: -9px;
+  transform: rotate(-25deg);
+}
+
+.ribbon .tail .right{
+  right: -9px;
+  transform: rotate(25deg);
+}
+
+/* Do this with a transform? */
+.ribbon.small {
+  width: 25px;
+}
+.ribbon.small .top {
+  font-size: 9px;
+  padding: 2px 0;
+}
+.ribbon.small .bottom {
+  font-size: 12px;
+  padding: 3px 0;
+}
+.ribbon.small .tail {
+  height: 6px;
+}
+.ribbon.small .tail .left,
+.ribbon.small .tail .right {
+  height: 6px;
+  top: -7px;
+  width: 40px;
+}
+.ribbon.small .tail .left {
+  left: -6px;
+}
+.ribbon.small .tail .right {
+  right: -6px;
+}
+
+.bubble {
+  background-color: rgba(102, 102, 102, 1);
+  background-position: center center;
+  border-radius: 3px;
+  border: solid 1px rgba(102, 102, 102, 1);
+  color: white;
+  cursor: default;
+  display: inline-block;
+  font-size: 12px;
+  padding: 2px 0;
+  position: relative;
+  text-align: center;
+  transition-property: background-color, border-color;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in;
+  width: 26px;
+}
+
+.bubble.light {
+  background-color: rgba(217, 217, 217, 1);
+  border-color: rgba(217, 217, 217, 1);
+}
+
+.bubble.empty {
+  color: rgba(102, 102, 102, 1);
+  border: solid 1px rgba(153, 153, 153, 1);
+  box-shadow: none;
+  background-color: white;
+}
+
+.bubble .bubble-tail,
+.bubble.empty .bubble-tail:after {
+  border-color: rgba(102, 102, 102, 1) transparent transparent transparent;
+  border-style:solid;
+  border-width: 5px;
+  bottom: -10px;
+  content: '';
+  height: 0;
+  left: 50%;
+  margin-left: -5px;
+  position: absolute;
+  transition: border-color 0.5s ease-in;
+  width: 0;
+}
+
+.bubble.light .bubble-tail {
+  border-color: rgba(217, 217, 217, 1) transparent transparent transparent;
+}
+
+.bubble.empty .bubble-tail {
+  border-color: rgba(153, 153, 153, 1) transparent transparent transparent;
+}
+
+.bubble.empty .bubble-tail:after {
+  left: 0;
+  top: -6px;
+  border-color: white transparent transparent transparent;
+}
+
+/* On hover color change.
+.bubble:hover {
+  background-color: #d14836;
+  border-color: #d14836;
+}
+
+.bubble.empty:hover {
+  /*background-color: white;
+  border-color: #d14836;
+  color: #d14836;
+}
+
+.bubble:hover .bubble-tail {
+  border-color: #d14836 transparent transparent transparent !important;
+}
+*/
+
+/* Styles here should be minimized to limit amount of explicit casing. */
+
+.article {
+  font-size: 14px;
+  margin: 0 auto;
+  max-width: 750px;
+  position: relative;
+  word-wrap: break-word;
+}
+
+/* Post Header */
+
+.article .article-header {
+  display: table;
+  text-align: center;
+  width: 100%;
+}
+
+.article .article-header .title {
+  font-size: 20px;
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  width: 100%;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  padding-right: 40px; /* Compensate for ribbon, to stay centered. */
+}
+
+.article .title .edit {
+  background-image: url(edit.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  cursor: pointer;
+  display: inline-block;
+  height: 21px;
+  opacity: 0.8;
+  position: relative;
+  top: 3px;
+  width: 21px;
+}
+
+.article .title .edit:hover {
+  opacity: 1;
+}
+
+.article .article-header .date {
+  float: left;
+  left: 0px;
+  margin: 0px 5px 5px 0px;
+  position: relative;
+  top: 5px;
+}
+
+/* Post Content */
+
+.article .article-content {
+  clear: both;
+  color: rgba(51, 51, 51, 1);
+  line-height: 1.4;
+  margin-top: 10px;
+  margin: 10px auto 5px auto;
+  text-align: justify;
+}
+
+/* This shouldn't really be added at all... it is from feeds. */
+.article .article-content .blogger-post-footer {
+  display: none;
+}
+
+/* Restore a lot of the styles we reset globally. */
+.article-content ol {
+  list-style-type: decimal;
+  margin: 0.5em 0;
+  padding-left: 2em;
+}
+.article-content ul {
+  list-style-type: disc;
+  margin: 0.5em 0;
+  padding-left: 2em;
+}
+
+.article-content p {
+  margin: 1em 0;
+}
+
+/* Defaults from: http://www.w3.org/TR/CSS2/sample.html */
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+  font-weight: bolder;
+}
+.article-content h1 {
+  font-size: 2em;
+  margin: .67em 0;
+}
+.article-content h2 {
+  font-size: 1.5em;
+  margin: .75em 0;
+}
+.article-content h3 {
+  font-size: 1.17em;
+  margin: .83em 0;
+}
+.article-content h4 {
+  margin: 1.12em 0;
+}
+.article-content h5 {
+  font-size: .83em;
+  margin: 1.5em 0;
+}
+.article-content h6 {
+  font-size: .75em;
+  margin: 1.67em 0;
+}
+
+.article .article-content a {
+  display: inline;
+}
+
+.article .article-content img {
+  box-sizing: border-box;
+  display: inline-block;
+  height: auto;
+  margin: 10px auto; /* Attempt to horizontally center. */
+  /* For Sally-Anne. Keep images to the width of the post. */
+  /* It's needed to avoid IE because of b/5420328 */
+  
+  max-width: 100%;
+  
+}
+
+.article .article-content img:not(.deferred) {
+  padding: 8px;
+  /* TODO(kiyono): re-enable box-shadow when the performance of box-shadow */
+  /* gets better.                                                          */
+/* If border-image is declared below -webkit-border-image */
+/* Webkit doesn't render correctly.                       */
+
+  border-image: url(not-deferred.png) 9 / 9px stretch;
+
+
+  border-width: 9px;
+  
+}
+
+/* Center all images/videos in posts. */
+.article .article-content iframe,
+.article .article-content embed {
+  display: block;
+  margin: 10px auto; /* Attempt to horizontally center. */
+  /* It's needed to avoid IE because of b/5420328 */
+  
+  max-width: 100%;
+  
+}
+
+/* Post Footer */
+
+.article .article-footer {
+  clear: both;
+  text-align: center;
+}
+
+.article .article-footer .publish-info,
+.article .article-footer .geolocation-info,
+.article .article-footer .labels {
+  color: rgba(128, 128, 128, 1);
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  padding: 5px 0;
+}
+
+.article .article-footer .publish-info .author a,
+.article .article-footer .publish-info .time {
+  color: rgba(51, 51, 51, 1);
+}
+
+.article .article-footer .label:not(:last-child):after {
+  content: ',';
+}
+
+.article .article-footer .share-controls {
+  display: inline-block;
+  margin: 10px 5px;
+  text-align: center;
+}
+
+.comments {
+  clear: both;
+  margin-top: 10px;
+}
+
+.comments .comments-header,
+.comments .comments-footer {
+  text-align: center;
+}
+
+.comments .comments-header .comments-count {
+  top: -2px;
+}
+
+.comments .comments-header h3 {
+  display: inline-block;
+  padding: 5px;
+}
+
+@media only screen and (max-device-width: 1024px) {
+  .comments .comments-header h3 {
+    color: #222;
+    font-family: arial,sans-serif;
+    text-decoration: underline;
+  }
+}
+.comments .toggle-switch:hover h3 {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Added by blogger for ghosted/removed comments .*/
+.comments .deleted-comment {
+  font-style: italic;
+  opacity: 0.5;
+}
+
+/* While loading, hide the comment count, and then show an indicator. */
+.comments.loading .comments-header .comments-count .bubble-content {
+  visibility: hidden;
+}
+
+.comments.loading .comments-header .comments-count {
+  background-image: url(refreshing.gif);
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition: none;
+}
+
+.comments .comment .comment-actions a {
+  padding-top: 5px;
+  padding-right: 5px;
+}
+.comments .comment .comment-actions a:hover {
+  text-decoration: underline;
+}
+
+.share-controls {
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.share-controls span,
+.share-controls iframe {
+  height: 20px !important;
+}
+
+.share-controls .share-plusone,
+.share-controls .share-twitter,
+.share-controls .share-facebook {
+  /* PlusOne tries to reset a lot of settings, don't let it. */
+  background-repeat: no-repeat !important;
+  background-position: left center !important;
+  display: inline-block;
+  margin: 0;
+}
+
+/* To avoid the 'jitter' of buttons loading, set a background image
+   of the button in its place. Once loaded, the button covers. */
+.share-controls .share-plusone {
+  background-image: url(plusone.png) !important;
+  height: 20px;
+  /* Don't touch anything other than min-width, causes havoc with +1 */
+  min-width: 90px;
+  transition: min-width 0.3s;
+}
+.share-controls .share-plusone.defer {
+  min-width: 34px;
+}
+.share-controls .share-plusone.delay {
+  min-width: 90px;
+}
+
+.share-controls .share-twitter {
+  background-image: url(tweet.png) !important;
+  height: 20px;
+  width: 110px;
+  transition: width 0.3s;
+}
+.share-controls .share-twitter.defer {
+  width: 57px;
+}
+.share-controls .share-twitter.delay {
+  width: 110px;
+}
+
+.share-controls .share-facebook {
+  background-image: url(like.png) !important;;
+  height: 20px;
+  width: 90px;
+  transition: width 0.3s;
+}
+.share-controls .share-facebook.defer {
+  width: 51px;
+}
+.share-controls .share-facebook.delay {
+  width: 90px;
+}
+
+body {
+  overflow-y: scroll; /* inevitable... skip the jitter */
+  overflow-x: hidden;
+}
+
+</style>
 <!--
 <link rel="stylesheet" href="flipcard.css" title="flipcard" />
 <link rel="stylesheet" href="magazine.css" title="magazine" />
@@ -20,20 +575,7 @@
 <link rel="stylesheet" href="sidebar.css" title="sidebar.css" />
 -->
 
-<!-- Yo Dawg... -->
 <script src="../../DOMSprockets/ARIA.js"></script>
-
-<script>
-(function() {
-
-var _ = Meeko.stuff;
-var DOM = Meeko.DOM;
-
-Meeko.framer.controllers.create('main-deck');
-Meeko.framer.controllers.create('views');
-
-})();
-</script>
 
 </head>
 <body>
@@ -42,6 +584,17 @@ Meeko.framer.controllers.create('views');
 
 var URL = Meeko.URL;
 var DOM = Meeko.DOM;
+var _ = Meeko.stuff;
+var DOM = Meeko.DOM;
+
+var controllers = Meeko.framer.controllers;
+controllers.create('view-picker');
+controllers.create('main-deck');
+controllers.create('show-finder');
+controllers.listen('show-finder', function(values) {
+	var target = _.contains(values, 'on') ? 'finder' : 'content';
+	controllers.set('main-deck', target + '-panel');
+});
 
 function getPageType(url) {
 	var nextURL = URL(url);
@@ -56,8 +609,8 @@ function getPageType(url) {
 
 function getTargetName(pageType) {
 	var target = ({
-		home: 'index',
-		search: 'index',
+		home: 'finder',
+		search: 'finder',
 		page: 'content',
 		item: 'content'
 	})[pageType];
@@ -80,13 +633,23 @@ return ({
 		var target = getTargetName(pageType);
 		Meeko.framer.controllers.set('main-deck', target + '-panel');
 		return;
+	},
+
+	// handle non-<form> inputs
+	onchange: function(e) {
+		var el = e.target;
+		if (el.type === 'radio' && !el.checked) return;
+		var value = /radio|checkbox/.test(el.type) ? 
+			( el.checked ? 'on' : 'off' ) :
+			el.value;
+		Meeko.controllers.set(el.name, value);
 	}
+
 
 });
 
 })()
 </script>
-
 
 <hf:frame src="scope:/" type="html">
   <hf:body>
@@ -95,15 +658,184 @@ return ({
 <hf:layer>
 	<hf:vlayout height="105px">
 		<hf:panel>
+<style>
+#header {
+  width: 100%;
+}
+
+#header .header-bar {
+  background-attachment: scroll; /* Chrome, really? */
+  background-color: rgba(243, 243, 243, 1);
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+  width: 100%;
+}
+
+#header .header-bar .title {
+  display: block;
+  line-height: 65px;
+  margin-left: 20px;
+  margin-right: 235px;
+  overflow: hidden;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#header .header-bar .title h1,
+#header .header-bar .title h3 {
+  display: inline;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.3);
+  white-space: nowrap;
+}
+
+#header .header-bar .title h1 {
+  color: rgba(85, 85, 85, 1);
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 28px;
+}
+
+#header .header-bar .title h3 {
+  color: rgba(85, 85, 85, 1);
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 20px;
+  margin-left: 5px;
+}
+
+#header .header-drawer {
+  /* the drawer scrolls with the page initially, then gets fixed (.sticky) */
+  background-color: rgba(51, 51, 51, 1);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  width: 100%;
+}
+
+/* Views and Pages */
+
+#header #views {
+  display: inline-block;
+}
+
+#header .menu .menu-item,
+#header .menu .menu-heading {
+  box-sizing: border-box;
+  color: rgba(255, 255, 255, 1);
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 100;
+  line-height: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-shadow: -1px -1px rgba(0, 0, 0, 0.1); /* subtle inset */
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  user-select: none;
+  width: 100%;
+}
+
+#header-drawer a, #header-drawer label {
+  font-family: 'Helvetica Neue Light', HelveticaNeue-Light, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+#header .menu .menu-heading {
+  box-sizing: border-box;
+  line-height: 35px;
+  margin-right: 15px;
+}
+
+#header .indicator {
+  /* instead of using a .heading::after actually put this in as elements
+     which will allow us to animate it rotating! */
+  border-color: rgba(255, 255, 255, 1) transparent transparent transparent;
+  border-style: solid;
+  border-width: 5px;
+  height: 0px;
+  margin: 0;
+  margin-top: -1px;
+  overflow: visible;
+  padding: 0;
+  right: 0;
+  top: 50%;
+  transition: all .3s linear;
+  transform-origin: center 2px;
+}
+
+#header .menu:hover .indicator {
+  transform: rotate(180deg);
+}
+
+#header .menu ul {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 0;
+  width: 100%;
+
+}
+
+#header .menu li {
+  display: list-item;
+  margin: 0;
+  padding: 0;
+  /* overflow: hidden; */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+#header .menu li {
+  box-sizing: border-box;
+}
+
+#header .tabs li {
+  display: inline;
+  line-height: 35px;
+  margin-left: 10px;
+}
+
+#header .tabs li a {
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 286ms ease-in;
+}
+
+#header .tabs li:hover,
+#header .menu li:hover,
+#header .tabs li.current {
+  color: rgba(255, 255, 255, 1) !important;
+}
+
+#header .tabs .menu-heading {
+  display: none;
+}
+
+#header #pages {
+  display: inline-block;
+  margin-left: 0px;
+}
+
+#header #pages::before {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  height: 20px;
+  border-left: solid 1px rgba(255, 255, 255, 1);
+  opacity: 0.5;
+}
+
+#header #pages.tabs ul {
+  display: inline-block;
+  margin-left: 0px;
+  white-space: nowrap;
+}
+
+</style>
 			<hf:body>
 
 <div id="header-container">
   <div id="header" class="header">
 
     <div class="header-bar">
-      
+     
 <span class="title">
-  <a href="scope:/"><h1 expr:_text="#header h1 {_text}">{{blog.title}}</h1></a>
+  <h1><a href="scope:/" expr:_text="#header h1 {_text}">{{blog.title}}</a></h1>
   <h3 expr:_text="#header h2 {_text}">{{blog.description}}</h3>
 </span>
       
@@ -112,27 +844,31 @@ return ({
     <div class="header-drawer sticky open">
 
 <div id="views" class="menu">
-<span class="menu-heading">Flipcard<span class="indicator"></span></span>
-<hf:panel name="views">
-	<hf:body>
-<ul class="menu-background">
-  
-  <li class="menu-item"><input type="radio" name="view" value="classic" /><label for>Classic</label></li>
 
-  <li class="menu-item"><input type="radio" name="view" value="flipcard" /><label for>Flipcard</label></li>
+<span class="menu-heading">
+  <input type="checkbox" name="show-finder" /><label for><output name="view">Flipcard</output></label> 
+  <input type="checkbox" name="view-picker" /><label for>▾</label>
+</span>
+<hf:popup name="view-picker" value="on">
+	<hf:body>
+<ul>
   
-  <li class="menu-item"><input type="radio" name="view" value="grid" /><label for>Grid</label></li>
+  <li><input type="radio" name="view" value="classic" /><label for>Classic</label></li>
+
+  <li><input type="radio" name="view" value="flipcard" /><label for>Flipcard</label></li>
+  
+  <li><input type="radio" name="view" value="grid" /><label for>Grid</label></li>
   
 </ul>
 	</hf:body>
-</hf:panel>
+</hf:popup>
 </div>
 
 	<div id="pages" class="tabs">
+		<span class="menu-heading">Pages</span>
 		<ul>          
 			<li haz:each=".widget.PageList li">
-				<span class="menu-background"></span>
-				<a class="menu-item" expr:href="a {@href}" expr:_html="a {_html}">Home</a>
+				<a expr:href="a {@href}" expr:_html="a {_html}">Home</a>
 			</li>
 		</ul>
 	</div>
@@ -187,13 +923,8 @@ return ({
 	</hf:body>
 </hf:frame>
 
-	<hf:panel id="index-panel" value="index-panel">
-		<hf:body>
-
-
-<div>
+	<hf:panel id="finder-panel" value="finder-panel">
 <style>
-
 /* the links for categories */
 
 #controls {
@@ -268,6 +999,8 @@ return ({
 #groups1 > .group > .extra > .body { position: absolute; z-index: 10; display: none; }
 #groups1 > .group:hover > .extra > .body { display: block; }
 </style>
+		<hf:body>
+<div>
   <div id="controls1">
     <div id="groups1">
     <div class="group selected" title="Latest">
@@ -302,6 +1035,7 @@ return ({
   </div>
 
 
+  <div id="labels" class="group-labels">
 <style>
 #labels {
 	left: 13px;
@@ -340,13 +1074,11 @@ return ({
 	white-space: nowrap;
 	width: 100%;
 }
-
 </style>
-  <div id="labels" class="group-labels"></div>
-  
+ </div> 
 	<div id="index">
 
-<hf:frame src="scope:/search" main="main" targetname="mk_index">
+<hf:frame src="scope:/search" main="main" targetname="mk_finder">
 	<style>/* TODO style scoped */
 /* the 3d flip animations/transitions */
 .item {

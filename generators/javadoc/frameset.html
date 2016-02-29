@@ -251,7 +251,7 @@ enteredState: function(msg) {
 
     <hf-vlayout value="packages">
 
-    <hf-frame height="30%" id="packageListPanel" src="scope:./overview-frame.html" targetname="packageListFrame">
+    <hf-frame height="30%" id="packageListPanel" src="scope:./overview-frame.html" targetname="packageListFrame" overflow="auto">
       <script for>
       ({
       
@@ -409,7 +409,7 @@ transform: function(srcNode, details) {
       </hf-body>
     </hf-frame>
 
-    <hf-frame height="70%" id="packagePanel" src="" targetname="packageFrame">
+    <hf-frame height="70%" id="packagePanel" src="" targetname="packageFrame" overflow="auto">
       <hf-body>
         <hf-transform type="main">
           
@@ -545,7 +545,7 @@ transform: function(doc, details) {
 
 </hf-vlayout>
 
-  <hf-panel width="80%" id="main">
+  <hf-panel width="80%" id="main" overflow="auto">
     <hf-body>
 
 <!-- ========= START OF TOP NAVBAR ======= -->

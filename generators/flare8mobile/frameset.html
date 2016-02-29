@@ -290,9 +290,11 @@
                 </div>
                 <div>
                     <div class="tabs-panels" id="tabs-panels">
-                        <div class="tabs-panel tabs-panel-active" id="toc">
+                        <hf-panel class="tabs-panel tabs-panel-active" id="toc" overflow="auto">
+			<hf-body>
+		
                             <ui-tree class="tabs-panel-content needs-pie">
-                                <hf-frame id="hf_toc" src="scope:Resources/Toc_0.htm">
+                                <hf-frame defid="hf_toc" src="scope:Resources/Toc_0.htm">
                                     <hf-body condition="loaded">
                                         <hf-transform type="hazard" format="css">
                                                     
@@ -317,8 +319,10 @@
                                     </hf-body>
                                 </hf-frame>
                             </ui-tree>
-                        </div>
-                        <div class="tabs-panel" id="index">
+			</hf-body>
+                        </hf-panel>
+                        <hf-panel class="tabs-panel" id="index" overflow="auto">
+			<hf-body>
                             <input type="text" id="search-index" class="tabs-panel-search" placeholder="Search" />
                             <div class="tabs-panel-content searchable needs-pie popup-container" data-see-prefix="See" data-see-also-prefix="See Also">
                                 <a href="scope:Resources/Index.htm"></a>
@@ -340,8 +344,10 @@
                                 -->
                                 </div>
                             </div>
-                        </div>
-                        <div class="tabs-panel" id="glossary">
+			</hf-body>
+                        </hf-panel>
+                        <hf-panel class="tabs-panel" id="glossary" overflow="auto">
+			<hf-body>
                             <input type="text" id="search-glossary" class="tabs-panel-search" placeholder="Search" />
                             <div class="tabs-panel-content searchable needs-pie popup-container">
                                 <a href="scope:Resources/Glossary.htm"></a>
@@ -361,7 +367,8 @@
                             </ul>
                             -->
                             </div>
-                        </div>
+			</hf-body>
+                        </hf-panel>
                     </div>
                 </div>
             </div>
@@ -412,7 +419,7 @@
                 <div id="contentBodyInner">
                     <!-- frameBorder="0" is for IE 8 and below -->
                     <!-- <iframe id="topic" class="content" name="topic" frameBorder="0"></iframe> -->
-                    <hf-frame id="topic" targetname="topic" class="content" main=".MCTopicBody">
+                    <hf-frame id="topic" targetname="topic" class="content" main=".MCTopicBody" overflow="auto">
                         <hf-body condition="loaded">
                             <hf-transform type="script">
                                 <script for>
