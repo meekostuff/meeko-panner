@@ -53,10 +53,12 @@ wasn't going to address the [extraordinarily](http://mike.teczno.com/notes/bandw
 
 ### General sites
 
+<script type="text/markdown">
 - [api.jquery.com](http://api.jquery.com) (<small>[details](api.jquery.com/)</small>)
 - [mootools.net](http://mootools.net) (<small>[details](mootools.net/)</small>)
 - [adactio.com](http://adactio.com) (<small>[details](adactio.com/)</small>)
 - [www.quirksmode.org](http://www.quirksmode.org) (<small>[details](www.quirksmode.org/)</small>)
+</script>
 
 Most (multi-page) sites consists of pages that share site decor - layout, styles, navigation and other auxiliary content.
 Typically the pages are constructed on the server, either once for static HTML files,
