@@ -13,6 +13,9 @@
 (function() {
 
 var _ = Meeko.stuff, URL = Meeko.URL, DOM = Meeko.DOM;
+var controllers = Meeko.controllers;
+controllers.create('tweetsheet');
+controllers.set('tweetsheet', 'off');
 
 var screens = {
 	home: {
@@ -300,11 +303,27 @@ enteredState: {
       </ul>
 
       <div id="global-cmds" class="cmd">
-        <div id="topbar-tweet-btn">
+        <button id="topbar-tweet-btn" name="tweetsheet">
+		  <script for>
+({
+onclick: function() { 
+	var _ = Meeko.stuff, controllers = Meeko.controllers;
+	var element = this.element;
+	var name = element.name;
+	var value = 'off';
+	var values = controllers.get(name);
+	if (_.includes(values, 'on')) value = 'off';
+	else value = 'on';
+	controllers.set(name, value);
+	return false;
+}
+})
+		  </script>
+
           <a href="scope:/compose/tweet" title="Tweet">
             <img alt="Tweet" src="https://si0.twimg.com/twitter-mobile/0a7a045aa4dda0b701d3d8d13937fe7b82adb75d/images/sprites/nav_tweet.gif?1351812805" />
           </a>
-        </div>
+        </button>
 
         <form class="form-search has-saved-searches" action="scope:/search" id="global-nav-search">
           <input class="search-input" id="search-query" placeholder="Search" name="q" autocomplete="off" spellcheck="false" type="text" />
@@ -647,17 +666,63 @@ enteredState: {
 
   </div>
 
-<div id="tweetsheet" class="tweetsheet" hidden>
+<hf-popup id="tweetsheet" class="tweetsheet" name="tweetsheet" value="on" hidden>
 <div class="backdrop"></div>
 <div class="tweetbox-container component">
-  <form action="scope:/" class="tweetform" method="post">
-    <input name="authenticity_token" type="hidden" />
+<hf-frame src="scope:/compose/tweet">
+<hf-body>
+<hf-transform type="hazard" format="css">
+<!-- FIXME 
+	Too much mix and match here.
+	Either use the HTML in Twitter's form with a bit of tweaking
+	or fully convert **all** possible attrs below to expr:attr
+-->
+  <form expr:action="form {@action}" expr:class="form {@class}" expr:method="form {@method}">
+    <script for>
+({
+onsubmit: function() {
+	var _ = Meeko.stuff, controllers = Meeko.controllers;
+	
+	// send the form. TODO allow HyperFrameset to handle this
+	var form = this.element;
+	var data = new FormData(form);
+	var xhr = new XMLHttpRequest();
+	xhr.open(form.method, form.action, true);
+	xhr.send(data);
+
+	// now close the popup
+	var name = 'tweetsheet'; // FIXME shouldn't be hard-wired
+	var value = 'off';
+	controllers.set(name, value);
+	return false;
+}
+
+})
+	</script>
+
+  <haz:each select="form">
+    <input name="authenticity_token" expr:value="input[name=authenticity_token] {@value}" type="hidden" />
     
     <table class="tweettable">
       <tr>
         <td><h1>What's happening?</h1></td>
         <td class="tweet-close">
+		  <button name="tweetsheet" value="off">
+		  <script for>
+({
+onclick: function() { 
+	var _ = Meeko.stuff, controllers = Meeko.controllers;
+	var element = this.element;
+	var name = element.name;
+	var value = 'off';
+	controllers.set(name, value);
+	return false;
+}
+})
+		  </script>
+
           <a href="#">x</a>
+		  </button>
         </td>
       </tr>
       <tr>
@@ -675,9 +740,13 @@ enteredState: {
         </td>
       </tr>
     </table>
+  </haz:each>
   </form>
+</hf-transform>
+</hf-body>
+</hf-frame>
 </div><!-- End Tweet box container -->
-</div>
+</hf-popup>
 
 </body>
 </html>
