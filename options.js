@@ -122,12 +122,13 @@ function onSubmit(e) {
  ## Startup
 */
 
+/* START HyperFrameset boot options */
+
 Meeko.options = {
 	"main_script": '{bootscriptdir}HyperFrameset/HyperFrameset.js',
 	"capturing": !isBookmarklet, // NOTE will break on IE <= 7
 	"log_level": "warn",
 	"hidden_timeout": 0, // TODO for some reason this needs to be longer to avaid FOUC
-	"polling_interval": 50, // TODO
 	"config_script": [
 		preconfig,
 		'{configdir}config.js',
@@ -136,3 +137,5 @@ Meeko.options = {
 }
 
 })();
+
+/* END HyperFrameset boot options */

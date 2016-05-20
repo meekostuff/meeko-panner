@@ -75,15 +75,16 @@ ui-tree li { -moz-user-select: none; }
 ui-tree li > * { -moz-user-select: text; }
 </style>
 
-<script src="../../DOMSprockets/ARIA.js"></script>
+<script src="../../HyperFrameset/ARIA.js"></script>
 <script>
 (function() {
 
 var _ = Meeko.stuff, DOM = Meeko.DOM;
 var sprockets = Meeko.sprockets, UI = sprockets.UI;
 var framer = Meeko.framer;
+var controllers = Meeko.controllers;
 
-framer.controllers.create('finder');
+controllers.create('finder');
 
 sprockets.registerComposite('ui-tablist', {
 prototype: UI.Tree.prototype,
@@ -111,7 +112,7 @@ handlers: [
 	action: function(event) {
 		var name = this.attr('name');
 		var value = this.ariaGet('activedescendant').$.attr('value');
-		framer.controllers.set(name, value);
+		controllers.set(name, value);
 	}
 }
 ]

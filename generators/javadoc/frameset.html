@@ -8,7 +8,7 @@
   <title>Java Platform SE</title>
   <link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
 
-<script src="../../DOMSprockets/ARIA.js"></script>
+<script src="../../HyperFrameset/ARIA.js"></script>
 
 <style type="text/css">
 #content .block, #content dd, #content th.colLast, #content td.colLast { max-width: 80ex; }
@@ -38,7 +38,7 @@ ul.contextNav a:active { color: #A88834; }
 </style>
 
 <script>
-var controllers = Meeko.framer.controllers;
+var controllers = Meeko.controllers;
 
 controllers.create('navigation');
 controllers.set('navigation', 'packages');
@@ -53,7 +53,7 @@ controllers.set('classnamefilter', '');
 var _ = Meeko.stuff, DOM = Meeko.DOM;
 var Task = Meeko.Task, Promise = Meeko.Promise;
 var sprockets = Meeko.sprockets, UI = sprockets.UI;
-var framer = Meeko.framer, controllers = framer.controllers;
+var framer = Meeko.framer, controllers = Meeko.controllers;
 
 var activeClass = 'navBarCell1Rev';
 var TreeItem = sprockets.evolve(UI.TreeItem, {
@@ -262,7 +262,7 @@ enteredState: function(msg) {
 			var m = url.match(/^state:(.+)=(.*)$/);
 			var name = m[1];
 			var value = m[2];
-			Meeko.framer.controllers.set(name, value);
+			Meeko.controllers.set(name, value);
 			return true; // `true` means the requestnavigation is handled
 		}
 		else return 'packageFrame';
@@ -451,7 +451,7 @@ onfocus: function(e) { this.oninput(e); },
 onchange: function(e) { this.oninput(e); },
 oninput: function(e) {
 	var element = this.element;
-	Meeko.framer.controllers.set(element.name, element.value);
+	Meeko.controllers.set(element.name, element.value);
 }
 })
 	</script>

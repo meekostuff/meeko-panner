@@ -1,6 +1,5 @@
 (function() {
 
-var logger = Meeko.logger;
 var _ = Meeko.stuff;
 var DOM = Meeko.DOM;
 var URL = Meeko.URL, baseURL = URL(document.URL);

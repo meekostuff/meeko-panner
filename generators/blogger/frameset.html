@@ -575,7 +575,7 @@ body {
 <link rel="stylesheet" href="sidebar.css" title="sidebar.css" />
 -->
 
-<script src="../../DOMSprockets/ARIA.js"></script>
+<script src="../../HyperFrameset/ARIA.js"></script>
 
 </head>
 <body>
@@ -587,7 +587,7 @@ var DOM = Meeko.DOM;
 var _ = Meeko.stuff;
 var DOM = Meeko.DOM;
 
-var controllers = Meeko.framer.controllers;
+var controllers = Meeko.controllers;
 controllers.create('view-picker');
 controllers.create('main-deck');
 controllers.create('show-finder');
@@ -631,7 +631,7 @@ return ({
 	enteredState: function(msg) {
 		var pageType = getPageType(msg.url);
 		var target = getTargetName(pageType);
-		Meeko.framer.controllers.set('main-deck', target + '-panel');
+		Meeko.controllers.set('main-deck', target + '-panel');
 		return;
 	},
 
