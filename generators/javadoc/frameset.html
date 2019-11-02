@@ -356,6 +356,9 @@ transform: function(srcNode, details) {
 		<hf-transform type="hazard" format="json">
 
 <hf-deck name="namespace">
+	<haz:call name="haz_namespace_container"></haz:call>
+</hf-deck>
+
 <haz:template name="haz_namespace_container">
 
 <hf-panel expr:value="fullName">
@@ -395,12 +398,11 @@ transform: function(srcNode, details) {
 
 	<haz:each select="items">
 	<haz:unless test="href">
-	<haz:include name="haz_namespace_container"></haz:include>
+	<haz:call name="haz_namespace_container"></haz:call>
 	</haz:unless>
 	</haz:each>
 
 </haz:template>
-</hf-deck>
 
 		</hf-transform>
       </hf-body>
@@ -567,7 +569,7 @@ transform: function(doc, details) {
 	<haz:eval select=".aboutLanguage {_html}">{title}</haz:eval>
 </haz:when>
 <haz:otherwise>
-<strong><em expr:_text="title {_text} | replace: /^[^\(]*\(\s*/, '' | replace: /\s*\)\s*$/, ''">{alt title}</em></strong>
+<strong><em expr:_text="title {_text} //> replace: /^[^\(]*\(\s*/, '' //> replace: /\s*\)\s*$/, ''">{alt title}</em></strong>
 </haz:otherwise>
 </haz:choose>
 </div>
@@ -709,28 +711,28 @@ transform: function(doc, details) {
 			<haz:eval select="."></haz:eval>
 		</haz:each>
 		</haz:otherwise>
-		<haz:when test="titleType | match: /^class|package$/">
+		<haz:when test="titleType //> match: /^class|package$/">
 		<div class="header">
-			<h2 haz:if="titleType | match: 'class'" class="subTitle">Package <a expr:href="packageUrl" expr:_text="packageName"></a></h2>
+			<h2 haz:if="titleType //> match: 'class'" class="subTitle">Package <a expr:href="packageUrl" expr:_text="packageName"></a></h2>
 			<div class="title">
 			<haz:choose>
 				<haz:otherwise>
 				<h1 expr:_html="title"></h1>
 				</haz:otherwise>
-				<haz:when test="titleType | match: /^package$/">
+				<haz:when test="titleType //> match: /^package$/">
 				<h1>Package <a expr:href="packageUrl" expr:_text="packageName"></a></h1>
 				<ul class="contextNav">
-					<li haz:if="packageUseUrl" expr:class="pageType | match: 'package-use', 'navBarCell1Rev'"><a expr:href="packageUseUrl">Use</a></li>
-					<li haz:if="packageTreeUrl" expr:class="pageType | match: 'package-tree', 'navBarCell1Rev'"><a expr:href="packageTreeUrl">Tree</a></li>
+					<li haz:if="packageUseUrl" expr:class="pageType //> match: 'package-use', 'navBarCell1Rev'"><a expr:href="packageUseUrl">Use</a></li>
+					<li haz:if="packageTreeUrl" expr:class="pageType //> match: 'package-tree', 'navBarCell1Rev'"><a expr:href="packageTreeUrl">Tree</a></li>
 				</ul>
 				</haz:when>
-				<haz:when test="titleType | match: 'class'">
+				<haz:when test="titleType //> match: 'class'">
 				<h1>
-					<span expr:_text="pageType | map: [ /^annotation/, 'Annotation Type', /^enum/, 'Enum', /^interface/, 'Interface', /^.*/, 'Class' ]"></span>
+					<span expr:_text="pageType //> map: [ /^annotation/, 'Annotation Type', /^enum/, 'Enum', /^interface/, 'Interface', /^.*/, 'Class' ]"></span>
 					<a expr:href="classUrl" expr:_text="className"></a>
 				</h1>
 				<ul class="contextNav">
-					<li haz:if="classUseUrl" expr:class="pageType | match: /-use$/, 'navBarCell1Rev'"><a expr:href="classUseUrl">Use</a></li>
+					<li haz:if="classUseUrl" expr:class="pageType //> match: /-use$/, 'navBarCell1Rev'"><a expr:href="classUseUrl">Use</a></li>
 				</ul>
 				</haz:when>
 			</haz:choose>

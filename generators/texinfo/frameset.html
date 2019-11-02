@@ -321,15 +321,21 @@ transform: function(main, details) {
 			<hf-transform type="hazard" format="css">
 	
 <div class="contents">
-	<haz:template name="haz_tocFrame_group">
-	<ul haz:each="> ul">
-		<li haz:each="> li">
-			<span expr:_html="> a">{{Section-Link}}</span>
-			<haz:include name="haz_tocFrame_group"></haz:include>
-		</li>
-	</ul>
-	</haz:template>
+<haz:call name="haz_tocFrame_group"></haz:call>
 </div>
+
+<haz:template name="haz_tocFrame_group">
+<haz:one select="> ul">
+<ul>
+	<haz:each select="> li">
+	<li>
+		<span expr:_html="> a">{{Section-Link}}</span>
+		<haz:call name="haz_tocFrame_group"></haz:call>
+	</li>
+	</haz:each>
+</ul>
+</haz:one>
+</haz:template>
 	
 			</hf-transform>
 		</hf-body>
@@ -361,9 +367,10 @@ return frag;
 		<hf-transform type="hazard" format="css">
 
 <!-- <div expr:_html="h2.unnumbered + table tr td { _html }"></div> -->
-<haz:each select="table.index-cp">
+<haz:one select="table.index-cp">
 <nav class="contents">
 	<haz:each select="tr">
+
 		<haz:choose>
 	<haz:when test="td:first-child > hr">
 	<hr />
@@ -379,7 +386,7 @@ return frag;
 		</haz:choose>
 	</haz:each>
 </nav>
-</haz:each>
+</haz:one>
 		</hf-transform>
 	</hf-body>
 	<hf-body condition="loaded">
@@ -414,7 +421,7 @@ return frag;
 		<hf-transform type="hazard" format="css">
 
 <!-- <div expr:_html="h2.unnumbered + table tr td { _html }"></div> -->
-<haz:each select="table.index-fn">
+<haz:one select="table.index-fn">
 <nav class="contents">
 	<haz:each select="tr">
 		<haz:choose>
@@ -432,7 +439,7 @@ return frag;
 		</haz:choose>
 	</haz:each>
 </nav>
-</haz:each>
+</haz:one>
 
 		</hf-transform>
 	</hf-body>
